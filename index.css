@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F8F9FA; /* Light Gray */
+  --sidebar: #111827;    /* Slate 900 for contrast */
+  --card: #FFFFFF;
+  --border: #DEE2E6;     /* Light border */
+  --primary: #0052CC;     /* Professional Blue */
+  --primary-rgb: 0, 82, 204;
+  --primary-hover: #0065FF; /* Brighter blue */
+  --accent: #0052CC;
+  --text-primary: #172B4D; /* Dark Charcoal for text */
+  --text-secondary: #6B778C; /* Medium Gray */
+  --green: #00875A;
+  --red: #DE350B;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ced4da;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #adb5bd;
+}
+
+/* Base animation for elements fading in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Polished focus ring for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--primary) !important;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* General transition for interactive elements */
+a, button, .quiz-option, .faq-question, .card-interactive, .chevron-icon {
+  transition: all 0.25s ease-in-out;
+}
+
+.card-interactive:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px -5px rgba(23, 43, 77, 0.1), 0 4px 6px -4px rgba(23, 43, 77, 0.05);
+    border-color: rgba(0, 82, 204, 0.3);
+}
+
+/* Polished button styles */
+.btn-primary {
+  @apply inline-block bg-primary text-white font-semibold rounded-lg shadow-md shadow-primary/20 transition-all duration-300 ease-in-out;
+}
+.btn-primary:hover {
+  @apply bg-primary-hover shadow-lg shadow-primary/30 -translate-y-px;
+}
+.btn-primary:active {
+  @apply scale-95 shadow-inner;
+}
+
+/* Polished Form Fields */
+.form-input {
+  @apply w-full bg-white border border-border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-base text-text-primary placeholder:text-text-secondary/70;
+}
+
+/* Redesigned quiz options */
+.quiz-option {
+  border: 1px solid var(--border);
+  background-color: var(--card);
+}
+.quiz-option:hover {
+  border-color: var(--primary);
+  background-color: #F0F6FF; /* Light blue tint */
+}
+.quiz-option.selected {
+  border-color: var(--primary);
+  background-color: #E6F0FF;
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.quiz-option.correct {
+  background-color: #E3FCEF;
+  border-color: var(--green) !important;
+  box-shadow: 0 0 0 2px var(--green);
+}
+.quiz-option.incorrect {
+  background-color: #FFEBE6;
+  border-color: var(--red) !important;
+  box-shadow: 0 0 0 2px var(--red);
+}
+
+/* Certificate styles */
+.certificate-template {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    min-height: 600px;
+    color: #212529;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+/* FAQ Accordion */
+.faq-question:hover {
+  background-color: rgba(0,0,0,0.02);
+}
+.faq-answer {
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.faq-item[open] .faq-answer {
+  max-height: 200px; /* Adjust as needed */
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item[open] .chevron-icon {
+  transform: rotate(180deg);
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body {
+    background-color: #fff !important;
+  }
+  .certificate-template { 
+      page-break-inside: avoid; 
+      margin: 0;
+      padding: 20px;
+      box-shadow: none !important;
+      border: 1px solid #ced4da;
+  }
+}
