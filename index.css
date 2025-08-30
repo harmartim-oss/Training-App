@@ -71,7 +71,7 @@ body {
 
 /* Polished focus ring for accessibility */
 *:focus-visible {
-  outline: 2px solid var(--primary) !important;
+  outline: 2px solid #2563EB !important;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -89,34 +89,63 @@ a, button, .quiz-option, .faq-question, .card-interactive, .chevron-icon {
 
 /* Enhanced button styles with better shadows */
 .btn-primary {
-  @apply inline-block bg-primary text-white font-semibold rounded-lg shadow-lg shadow-primary/25 transition-all duration-300 ease-in-out border-0;
+  display: inline-block;
+  background-color: #2563EB;
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 0;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 .btn-primary:hover {
-  @apply bg-primary-hover shadow-xl shadow-primary/35 -translate-y-px;
+  background-color: #1D4ED8;
+  box-shadow: 0 8px 25px 0 rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
 }
 .btn-primary:active {
-  @apply scale-95 shadow-md;
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px 0 rgba(37, 99, 235, 0.2);
 }
 .btn-primary:focus-visible {
-  @apply outline-2 outline-primary outline-offset-2;
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
 }
 
 /* Polished Form Fields */
 .form-input {
-  @apply w-full bg-white border border-border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-base text-text-primary placeholder:text-text-secondary/70;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #0F172A;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form-input:focus {
+  outline: none;
+  border-color: #2563EB;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+.form-input::placeholder {
+  color: #64748B;
 }
 
 /* Redesigned quiz options */
 .quiz-option {
-  border: 1px solid var(--border);
-  background-color: var(--card);
+  border: 1px solid #E2E8F0;
+  background-color: #FFFFFF;
 }
 .quiz-option:hover {
-  border-color: var(--primary);
+  border-color: #2563EB;
   background-color: #F0F6FF; /* Light blue tint */
 }
 .quiz-option.selected {
-  border-color: var(--primary);
+  border-color: #2563EB;
   background-color: #E6F0FF;
   box-shadow: 0 0 0 2px var(--primary);
 }
@@ -175,5 +204,88 @@ a, button, .quiz-option, .faq-question, .card-interactive, .chevron-icon {
       padding: 20px;
       box-shadow: none !important;
       border: 1px solid #ced4da;
+  }
+}
+
+/* Additional improvements */
+/* Add smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Improve mobile responsiveness */
+@media (max-width: 640px) {
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Add loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #2563EB;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Better hover states for cards */
+.card-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Improve accessibility for screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus improvements */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* Improve text contrast */
+.text-muted {
+  color: #6c757d;
+}
+
+/* Better spacing for mobile */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
