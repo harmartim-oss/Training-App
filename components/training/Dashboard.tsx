@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
+import { PrivacyIcon, ShieldIcon, AIIcon, DatabaseIcon, CheckCircleIcon, CircleIcon } from '../icons';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -20,10 +21,10 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
     
     const modules = [
-        { id: 'module1', title: 'Privacy Laws & Frameworks', icon: 'fa-balance-scale' },
-        { id: 'module2', title: 'Cybersecurity & Incident Response', icon: 'fa-shield-alt' },
-        { id: 'module3', title: 'AI Governance & Responsible Use', icon: 'fa-robot' },
-        { id: 'module4', title: 'Secure Data & Records Management', icon: 'fa-database' },
+        { id: 'module1', title: 'Privacy Laws & Frameworks', icon: PrivacyIcon },
+        { id: 'module2', title: 'Cybersecurity & Incident Response', icon: ShieldIcon },
+        { id: 'module3', title: 'AI Governance & Responsible Use', icon: AIIcon },
+        { id: 'module4', title: 'Secure Data & Records Management', icon: DatabaseIcon },
     ];
 
     const completedCount = modules.filter(m => progress[m.id as keyof Omit<Progress, 'assessment'>].completed).length;
@@ -32,8 +33,8 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
 
     const getStatus = (moduleProgress: { completed: boolean }) => {
         return moduleProgress.completed 
-            ? { text: 'Completed', icon: 'fa-check-circle text-green-500' }
-            : { text: 'Not Started', icon: 'fa-circle text-gray-400' };
+            ? { text: 'Completed', icon: CheckCircleIcon, className: 'text-green-500' }
+            : { text: 'Not Started', icon: CircleIcon, className: 'text-gray-400' };
     };
 
     return (
@@ -56,14 +57,16 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                 {modules.map(module => {
                     const moduleProgress = progress[module.id as keyof Omit<Progress, 'assessment'>];
                     const status = getStatus(moduleProgress);
+                    const IconComponent = module.icon;
+                    const StatusIconComponent = status.icon;
                     return (
                         <div key={module.id} className="card-interactive bg-card border border-border rounded-xl p-6 flex flex-col">
                             <div className="flex items-start justify-between mb-4">
-                                <div className="bg-primary/10 p-2.5 rounded-lg">
-                                    <i className={`fas ${module.icon} text-xs text-primary`}></i>
+                                <div className="bg-primary/10 p-3 rounded-lg">
+                                    <IconComponent className="w-6 h-6 text-primary" />
                                 </div>
                                 <div className="flex items-center gap-2 text-sm text-text-secondary">
-                                    <i className={`fas ${status.icon}`}></i>
+                                    <StatusIconComponent className={`w-4 h-4 ${status.className}`} />
                                     <span>{status.text}</span>
                                 </div>
                             </div>

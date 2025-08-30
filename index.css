@@ -5,26 +5,34 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8F9FA; /* Light Gray */
-  --sidebar: #111827;    /* Slate 900 for contrast */
+  --background: #FAFBFC; /* Ultra-light Gray for better contrast */
+  --sidebar: #0F172A;    /* Slate 900 for maximum contrast */
   --card: #FFFFFF;
-  --border: #DEE2E6;     /* Light border */
-  --primary: #0052CC;     /* Professional Blue */
-  --primary-rgb: 0, 82, 204;
-  --primary-hover: #0065FF; /* Brighter blue */
-  --accent: #0052CC;
-  --text-primary: #172B4D; /* Dark Charcoal for text */
-  --text-secondary: #6B778C; /* Medium Gray */
-  --green: #00875A;
-  --red: #DE350B;
+  --border: #E2E8F0;     /* Softer light border */
+  --primary: #2563EB;     /* Enhanced Professional Blue */
+  --primary-rgb: 37, 99, 235;
+  --primary-hover: #1D4ED8; /* Deeper blue for hover */
+  --accent: #2563EB;
+  --text-primary: #0F172A; /* Deep charcoal for maximum readability */
+  --text-secondary: #64748B; /* Refined medium gray */
+  --green: #059669;
+  --red: #DC2626;
+  --blue-50: #EFF6FF;
+  --blue-100: #DBEAFE;
+  --blue-600: #2563EB;
+  --slate-50: #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-700: #334155;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   background-color: var(--background);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 /* Custom scrollbar */
@@ -42,14 +50,23 @@ body {
   background-color: #adb5bd;
 }
 
-/* Base animation for elements fading in */
+/* Enhanced animations for better UX */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideInFromLeft 0.5s ease-out forwards;
 }
 
 /* Polished focus ring for accessibility */
@@ -61,24 +78,27 @@ body {
 
 /* General transition for interactive elements */
 a, button, .quiz-option, .faq-question, .card-interactive, .chevron-icon {
-  transition: all 0.25s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card-interactive:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 20px -5px rgba(23, 43, 77, 0.1), 0 4px 6px -4px rgba(23, 43, 77, 0.05);
-    border-color: rgba(0, 82, 204, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08), 0 8px 16px -6px rgba(15, 23, 42, 0.06);
+    border-color: rgba(37, 99, 235, 0.2);
 }
 
-/* Polished button styles */
+/* Enhanced button styles with better shadows */
 .btn-primary {
-  @apply inline-block bg-primary text-white font-semibold rounded-lg shadow-md shadow-primary/20 transition-all duration-300 ease-in-out;
+  @apply inline-block bg-primary text-white font-semibold rounded-lg shadow-lg shadow-primary/25 transition-all duration-300 ease-in-out border-0;
 }
 .btn-primary:hover {
-  @apply bg-primary-hover shadow-lg shadow-primary/30 -translate-y-px;
+  @apply bg-primary-hover shadow-xl shadow-primary/35 -translate-y-px;
 }
 .btn-primary:active {
-  @apply scale-95 shadow-inner;
+  @apply scale-95 shadow-md;
+}
+.btn-primary:focus-visible {
+  @apply outline-2 outline-primary outline-offset-2;
 }
 
 /* Polished Form Fields */

@@ -9,17 +9,17 @@ import { ODDILogo, CertificateIcon, CurriculumIcon, OntarioIcon, ChevronDownIcon
 
 const features = [
   {
-    icon: <CertificateIcon className="w-3.5 h-3.5 text-primary" />,
+    icon: <CertificateIcon className="w-5 h-5 text-primary" />,
     title: 'Official OCRP Designation',
     description: 'Earn the exclusive Ontario Certified Cyber Resilience Professional (OCRP) designation, a mark of excellence recognized across the province.',
   },
   {
-    icon: <CurriculumIcon className="w-3.5 h-3.5 text-primary" />,
+    icon: <CurriculumIcon className="w-5 h-5 text-primary" />,
     title: 'Expert-Led Curriculum',
     description: 'Gain practical, hands-on knowledge from a curriculum designed by industry veterans, covering the most critical and current threats.',
   },
   {
-    icon: <OntarioIcon className="w-3.5 h-3.5 text-primary" />,
+    icon: <OntarioIcon className="w-5 h-5 text-primary" />,
     title: 'Built for Ontario',
     description: 'Master the specific legal and regulatory landscape of Ontario, including PIPEDA, FIPPA, and the new provincial AI directives.',
   },
@@ -33,9 +33,9 @@ const modules = [
 ];
 
 const audience = [
-    { icon: <MunicipalityIcon className="w-3.5 h-3.5 text-primary" />, title: 'Municipalities', description: "Equip your public sector teams with the knowledge to protect citizen data and comply with FIPPA." },
-    { icon: <BusinessIcon className="w-3.5 h-3.5 text-primary" />, title: 'Small Businesses', description: "Safeguard your customer information and business operations from costly cyber threats under PIPEDA." },
-    { icon: <NonProfitIcon className="w-3.5 h-3.5 text-primary" />, title: 'Non-Profits', description: "Protect your donor and member data, maintain trust, and secure your mission-critical operations." },
+    { icon: <MunicipalityIcon className="w-5 h-5 text-primary" />, title: 'Municipalities', description: "Equip your public sector teams with the knowledge to protect citizen data and comply with FIPPA." },
+    { icon: <BusinessIcon className="w-5 h-5 text-primary" />, title: 'Small Businesses', description: "Safeguard your customer information and business operations from costly cyber threats under PIPEDA." },
+    { icon: <NonProfitIcon className="w-5 h-5 text-primary" />, title: 'Non-Profits', description: "Protect your donor and member data, maintain trust, and secure your mission-critical operations." },
 ];
 
 const testimonials = [
@@ -102,7 +102,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {features.map((feature) => (
                     <div key={feature.title} className="card-interactive bg-card border border-border p-8 rounded-2xl text-left">
-                        <div className="flex-shrink-0 bg-primary/10 w-8 h-8 flex items-center justify-center rounded-lg mb-6">
+                        <div className="flex-shrink-0 bg-primary/10 w-12 h-12 flex items-center justify-center rounded-xl mb-6">
                            {feature.icon}
                         </div>
                         <h3 className="text-xl font-bold text-text-primary">{feature.title}</h3>
@@ -118,7 +118,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {audience.map((aud) => (
                     <div key={aud.title} className="card-interactive bg-card border border-border p-8 rounded-2xl flex flex-col items-start text-left">
-                        <div className="flex-shrink-0 bg-primary/10 w-8 h-8 flex items-center justify-center rounded-full mb-6">{aud.icon}</div>
+                        <div className="flex-shrink-0 bg-primary/10 w-12 h-12 flex items-center justify-center rounded-full mb-6">{aud.icon}</div>
                         <h3 className="text-xl font-bold text-text-primary">{aud.title}</h3>
                         <p className="text-text-secondary mt-2">{aud.description}</p>
                     </div>
@@ -148,7 +148,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {testimonials.map((testimonial) => (
                     <div key={testimonial.name} className="bg-card border border-border p-8 rounded-2xl flex flex-col h-full">
-                        <QuoteIcon className="w-3 h-3 text-primary/40 mb-5" />
+                        <QuoteIcon className="w-5 h-5 text-primary/40 mb-5" />
                         <p className="text-text-secondary flex-grow">"{testimonial.quote}"</p>
                         <div className="mt-6 border-t border-border pt-6">
                             <p className="font-bold text-text-primary">{testimonial.name}</p>
@@ -167,7 +167,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
               <details key={index} className="faq-item bg-card border border-border rounded-lg overflow-hidden">
                 <summary className="faq-question p-5 cursor-pointer flex justify-between items-center">
                   <span className="font-semibold text-text-primary">{faq.q}</span>
-                  <ChevronDownIcon className="chevron-icon w-3.5 h-3.5 text-text-secondary transition-transform duration-300" />
+                  <ChevronDownIcon className="chevron-icon w-5 h-5 text-text-secondary transition-transform duration-300" />
                 </summary>
                 <div className="faq-answer px-5 text-text-secondary">
                   <p>{faq.a}</p>
@@ -199,7 +199,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-8">
            <div>
             <div className="flex items-center gap-3 justify-center sm:justify-start">
-              <ODDILogo className="w-4 h-4" />
+              <ODDILogo className="w-6 h-6" />
               <p className="font-semibold text-text-primary">Ontario Digital Defence Institute</p>
             </div>
             <p className="text-text-secondary/80 mt-2 text-sm">&copy; {new Date().getFullYear()} ODDI. All Rights Reserved.</p>
