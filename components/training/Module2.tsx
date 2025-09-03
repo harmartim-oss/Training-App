@@ -50,41 +50,41 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     return (
         <section className="animate-fade-in">
             <div className="max-w-4xl mx-auto">
-                <div className="bg-card border border-border rounded-xl p-6 sm:p-8 shadow-sm">
-                    <h1 className="text-3xl font-bold text-text-primary mb-2">Module 2: Cybersecurity Fundamentals</h1>
-                    <p className="text-text-secondary mb-6">Protecting digital assets through risk assessment and security controls.</p>
+                <div className="bg-surface border border-border p-6 sm:p-8">
+                    <h1 className="text-3xl font-bold font-mono text-text-primary mb-2 uppercase">Module 2: Cybersecurity Fundamentals</h1>
+                    <p className="text-text-secondary mb-8">Protecting digital assets through risk assessment and security controls.</p>
 
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-                        <h3 className="font-semibold text-primary mb-2 text-lg">Learning Objectives</h3>
-                        <ul className="text-blue-800 space-y-1 list-disc list-inside">
-                            <li>Implement risk assessment and management frameworks</li>
-                            <li>Develop incident response procedures</li>
-                            <li>Master data encryption and access controls</li>
+                    <div className="border-t border-b border-border py-6 mb-8">
+                        <h3 className="font-semibold text-primary mb-2 text-lg font-mono uppercase">Learning Objectives</h3>
+                        <ul className="text-text-secondary space-y-2">
+                            <li><span className="text-primary mr-2">›</span>Implement risk assessment and management frameworks</li>
+                            <li><span className="text-primary mr-2">›</span>Develop incident response procedures</li>
+                            <li><span className="text-primary mr-2">›</span>Master data encryption and access controls</li>
                         </ul>
                     </div>
 
                      <div className="space-y-8 mb-8 text-text-secondary leading-relaxed">
                         <div>
-                            <h3 className="text-2xl font-semibold mb-2 text-text-primary">Risk Assessment Framework</h3>
+                            <h3 className="text-2xl font-semibold mb-2 text-text-primary font-mono">Risk Assessment Framework</h3>
                             <p>A systematic approach to identifying, analyzing, and managing cybersecurity risks is essential for both businesses and municipalities.</p>
                         </div>
                         <div>
-                            <h3 className="text-2xl font-semibold mb-2 text-text-primary">Incident Response</h3>
+                            <h3 className="text-2xl font-semibold mb-2 text-text-primary font-mono">Incident Response</h3>
                             <p>A well-defined incident response plan is crucial for minimizing damage and recovery time during a cybersecurity incident.</p>
                         </div>
                     </div>
 
-                    <div className="bg-background border border-border rounded-lg p-6 mb-8">
-                        <h3 className="text-xl font-semibold mb-4 text-text-primary">📝 Knowledge Check</h3>
+                    <div className="bg-background border border-border p-6 mb-8">
+                        <h3 className="text-xl font-semibold mb-4 text-text-primary font-mono uppercase">Knowledge Check</h3>
                          <div className="space-y-6">
                             {Object.entries(questions).map(([qId, qData]) => (
                                 <div key={qId}>
                                     <p className="font-medium mb-3 text-text-primary">{qData.question}</p>
                                     <div className="space-y-3">
                                         {Object.entries(qData.options).map(([key, value]) => (
-                                            <label htmlFor={`${qId}-${key}`} className={`quiz-option flex items-center p-4 rounded-lg cursor-pointer ${getOptionClass(qId, key)}`}>
+                                            <label htmlFor={`${qId}-${key}`} className={`quiz-option flex items-center p-4 cursor-pointer ${getOptionClass(qId, key)}`}>
                                                 <input type="radio" id={`${qId}-${key}`} name={qId} value={key} onChange={() => handleQuizChange(qId, key)} checked={quizAnswers[qId] === key} className="hidden" disabled={!!quizResult}/>
-                                                <span className="text-text-primary">{value}</span>
+                                                <span className="text-text-primary font-mono">{value}</span>
                                             </label>
                                         ))}
                                     </div>
@@ -93,23 +93,23 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                         </div>
 
                         {!quizResult && (
-                           <button onClick={checkModuleQuiz} disabled={Object.keys(quizAnswers).length !== Object.keys(questions).length} className="mt-6 btn-primary py-2 px-6 text-sm disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">Check Answers</button>
+                           <button onClick={checkModuleQuiz} disabled={Object.keys(quizAnswers).length !== Object.keys(questions).length} className="mt-6 btn-primary py-2 px-6 text-sm">Check Answers</button>
                         )}
                         
                         {quizResult && (
-                            <div className={`mt-6 p-4 rounded-lg ${quizResult.score === 100 ? 'bg-green-100 border-green-300' : 'bg-red-100 border-red-300'} border`}>
-                                <h4 className="font-semibold mb-2 text-text-primary">Results: You scored {quizResult.score}%</h4>
+                            <div className={`mt-6 p-4 font-mono ${quizResult.score === 100 ? 'bg-green/10 border-green' : 'bg-red/10 border-red'} border-l-4`}>
+                                <h4 className="font-semibold mb-1 text-text-primary">RESULT: {quizResult.score}%</h4>
                                 <p className="text-sm text-text-secondary">Review the correct answers highlighted in green.</p>
                             </div>
                         )}
                     </div>
                     
                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-border pt-6">
-                        <button onClick={() => onNavigate('module1')} className="w-full sm:w-auto bg-slate-100 text-text-secondary font-semibold py-2 px-6 rounded-lg hover:bg-slate-200 transition-colors">
+                         <button onClick={() => onNavigate('module1')} className="w-full sm:w-auto bg-surface hover:bg-border transition-colors text-text-primary font-bold uppercase tracking-widest py-2 px-6 border border-border">
                             Previous Module
                         </button>
-                        <button onClick={() => onComplete(quizResult?.score ?? 0)} disabled={!quizResult} className="w-full sm:w-auto bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-500 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors">
-                            Complete Module <i className="fas fa-arrow-right ml-2"></i>
+                        <button onClick={() => onComplete(quizResult?.score ?? 0)} disabled={!quizResult} className="w-full sm:w-auto btn-primary font-semibold py-2 px-6">
+                            Complete Module
                         </button>
                     </div>
                 </div>

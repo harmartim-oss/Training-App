@@ -2,7 +2,7 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Login from './Login';
 import Dashboard from './Dashboard';
 import Nav from './Nav';
@@ -12,6 +12,9 @@ import Module3 from './Module3';
 import Module4 from './Module4';
 import Assessment from './Assessment';
 import Certificate from './Certificate';
+import { getTutorChat, sendMessage } from '../../services/geminiService';
+import { ChatIcon, CloseIcon, SendIcon } from '../icons';
+
 
 interface User {
     fullname: string;
@@ -40,6 +43,104 @@ const initialProgress: Progress = {
 interface TrainingPortalProps {
     onNavigateToLanding: () => void;
 }
+
+interface Message {
+  role: 'user' | 'model';
+  text: string;
+}
+
+const StudyAssistant: React.FC = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [messages, setMessages] = useState<Message[]>([
+        { role: 'model', text: "Hello! I'm your AI study assistant. How can I help you with the course material today?" }
+    ]);
+    const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const chatInstance = useRef(getTutorChat()).current;
+    const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    const handleSend = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!input.trim() || isLoading) return;
+
+        const userMessage: Message = { role: 'user', text: input };
+        setMessages(prev => [...prev, userMessage]);
+        setInput('');
+        setIsLoading(true);
+
+        try {
+            const stream = await sendMessage(chatInstance, input);
+            let modelResponse = '';
+            setMessages(prev => [...prev, { role: 'model', text: '...' }]); 
+
+            for await (const chunk of stream) {
+                modelResponse += chunk.text;
+                setMessages(prev => {
+                    const newMessages = [...prev];
+                    newMessages[newMessages.length - 1].text = modelResponse;
+                    return newMessages;
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            setMessages(prev => {
+                const newMessages = [...prev];
+                newMessages[newMessages.length-1].text = "Sorry, I encountered an error. Please try again.";
+                return newMessages;
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <>
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="assistant-fab no-print"
+                aria-label="Toggle AI Study Assistant"
+            >
+                {isOpen ? <CloseIcon className="w-8 h-8"/> : <ChatIcon className="w-8 h-8" />}
+            </button>
+            <div className={`assistant-modal no-print ${isOpen ? 'open' : ''}`}>
+                <header className="assistant-header">
+                    <h3>AI Study Assistant</h3>
+                    <button onClick={() => setIsOpen(false)} aria-label="Close chat">
+                        <CloseIcon className="w-6 h-6"/>
+                    </button>
+                </header>
+                <div className="assistant-messages">
+                    {messages.map((msg, index) => (
+                        <div key={index} className={`message-bubble ${msg.role === 'user' ? 'message-user' : 'message-model'}`}>
+                            {msg.text}
+                        </div>
+                    ))}
+                    <div ref={messagesEndRef} />
+                </div>
+                <div className="assistant-input-area">
+                    <form onSubmit={handleSend} className="assistant-input-form">
+                        <input
+                            type="text"
+                            value={input}
+                            onChange={e => setInput(e.target.value)}
+                            placeholder="Ask a question..."
+                            disabled={isLoading}
+                            aria-label="Your message"
+                        />
+                        <button type="submit" disabled={isLoading || !input.trim()} aria-label="Send message">
+                           <SendIcon className="w-6 h-6"/>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </>
+    );
+};
+
 
 const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -138,9 +239,10 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                 currentUser={currentUser}
                 onLogout={handleLogout}
             />
-            <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto bg-background">
+            <main className="flex-1 p-6 sm:p-8 lg:p-12 overflow-y-auto">
                 {renderSection()}
             </main>
+            <StudyAssistant />
         </div>
     );
 };

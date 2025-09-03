@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState, useMemo } from 'react';
+import { CheckCircleIcon, XCircleIcon } from '../icons';
 
 const assessmentQuestions = [
     // Module 1
@@ -55,11 +56,14 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
     if (progress.assessment.completed) {
         return (
              <section className="animate-fade-in">
-                 <div className="max-w-4xl mx-auto bg-card border border-border rounded-xl p-8 shadow-sm">
+                 <div className="max-w-4xl mx-auto bg-surface border border-border p-8">
                     <div className="text-center">
-                        <i className={`fas ${progress.assessment.passed ? 'fa-check-circle text-green-500' : 'fa-times-circle text-red-500'} text-6xl mb-4`}></i>
-                        <h2 className="text-3xl font-bold text-text-primary mb-4">Assessment Results</h2>
-                        <div className={`text-5xl font-bold mb-4 ${progress.assessment.passed ? 'text-green-600' : 'text-red-600'}`}>
+                        {progress.assessment.passed 
+                            ? <CheckCircleIcon className="w-16 h-16 text-green mx-auto mb-4" />
+                            : <XCircleIcon className="w-16 h-16 text-red mx-auto mb-4" />
+                        }
+                        <h2 className="text-3xl font-bold font-mono text-text-primary mb-4 uppercase">Assessment Results</h2>
+                        <div className={`text-5xl font-bold font-mono mb-4 ${progress.assessment.passed ? 'text-green' : 'text-red'}`}>
                             {progress.assessment.score}%
                         </div>
                         <div className="text-lg text-text-secondary mb-8">
@@ -68,9 +72,9 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
                                 : "A score of 80% is required to pass. Please review the modules and try again."}
                         </div>
                         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-                             <button onClick={() => onNavigate('dashboard')} className="w-full sm:w-auto bg-slate-100 text-text-secondary font-semibold py-2.5 px-6 rounded-lg hover:bg-slate-200 transition-colors">Back to Dashboard</button>
+                             <button onClick={() => onNavigate('dashboard')} className="w-full sm:w-auto bg-surface hover:bg-border transition-colors text-text-primary font-bold uppercase tracking-widest py-2.5 px-6 border border-border">Back to Dashboard</button>
                              {progress.assessment.passed && (
-                                 <button onClick={() => onNavigate('certificate')} className="w-full sm:w-auto bg-green-600 text-white font-semibold py-2.5 px-6 rounded-lg hover:bg-green-500 transition-colors">View Certificate</button>
+                                 <button onClick={() => onNavigate('certificate')} className="w-full sm:w-auto btn-primary font-semibold py-2.5 px-6">View Certificate</button>
                              )}
                         </div>
                     </div>
@@ -82,20 +86,20 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
     return (
         <section className="animate-fade-in">
             <div className="max-w-4xl mx-auto">
-                <div className="bg-card border border-border rounded-xl p-6 sm:p-8 shadow-sm">
+                <div className="bg-surface border border-border p-6 sm:p-8">
                     <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-text-primary mb-2">Final Assessment</h1>
+                        <h1 className="text-3xl font-bold font-mono text-text-primary mb-2 uppercase">Final Assessment</h1>
                         <p className="text-text-secondary">Complete this assessment to earn your certificate. A score of 80% is required to pass.</p>
                     </div>
                     <div className="space-y-8">
                         {questions.map((q, index) => (
-                            <div key={index} className="bg-background border border-border p-6 rounded-lg">
+                            <div key={index} className="bg-background border border-border p-6">
                                 <p className="font-semibold text-lg mb-4 text-text-primary">{index + 1}. {q.question}</p>
                                 <div className="space-y-3">
                                     {shuffle(q.options).map(option => (
-                                        <label key={option} className={`quiz-option flex items-center p-4 rounded-lg cursor-pointer ${getOptionClass(index, option)}`}>
+                                        <label key={option} className={`quiz-option flex items-center p-4 cursor-pointer ${getOptionClass(index, option)}`}>
                                             <input type="radio" name={`q${index}`} value={option} onChange={() => handleAnswerChange(index, option)} checked={answers[index] === option} className="hidden"/>
-                                            <span className="text-text-primary">{option}</span>
+                                            <span className="text-text-primary font-mono">{option}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -103,7 +107,7 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
                         ))}
                     </div>
                     <div className="text-center mt-8 border-t border-border pt-6">
-                        <button onClick={handleSubmit} disabled={Object.keys(answers).length < questions.length} className="btn-primary px-8 py-3 text-base disabled:opacity-60 disabled:cursor-not-allowed">
+                        <button onClick={handleSubmit} disabled={Object.keys(answers).length < questions.length} className="btn-primary px-8 py-3 text-base">
                             Submit Assessment
                         </button>
                     </div>

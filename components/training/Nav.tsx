@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { ODDILogo, DashboardIcon, PrivacyIcon, ShieldIcon, AIIcon, DatabaseIcon, AssessmentIcon, AwardIcon } from '../icons';
+import { ODDILogo, DashboardIcon, ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, AssessmentIcon, CertificateIcon, LogoutIcon } from '../icons';
 
 interface User {
     fullname: string;
@@ -18,52 +18,52 @@ interface NavProps {
 
 const Nav: React.FC<NavProps> = ({ activeSection, onNavigate, currentUser, onLogout }) => {
     const navItems = [
-        { id: 'dashboard', label: 'Dashboard', icon: DashboardIcon },
-        { id: 'module1', label: 'Module 1', icon: PrivacyIcon },
-        { id: 'module2', label: 'Module 2', icon: ShieldIcon },
-        { id: 'module3', label: 'Module 3', icon: AIIcon },
-        { id: 'module4', label: 'Module 4', icon: DatabaseIcon },
-        { id: 'assessment', label: 'Assessment', icon: AssessmentIcon },
-        { id: 'certificate', label: 'Certificate', icon: AwardIcon },
+        { id: 'dashboard', label: 'Dashboard', icon: <DashboardIcon className="w-6 h-6"/> },
+        { id: 'module1', label: 'Module 1', icon: <ModuleIcon1 className="w-6 h-6"/> },
+        { id: 'module2', label: 'Module 2', icon: <ModuleIcon2 className="w-6 h-6"/> },
+        { id: 'module3', label: 'Module 3', icon: <ModuleIcon3 className="w-6 h-6"/> },
+        { id: 'module4', label: 'Module 4', icon: <ModuleIcon4 className="w-6 h-6"/> },
+        { id: 'assessment', label: 'Assessment', icon: <AssessmentIcon className="w-6 h-6"/> },
+        { id: 'certificate', label: 'Certificate', icon: <CertificateIcon className="w-6 h-6"/> },
     ];
     
     return (
-        <aside className="no-print bg-sidebar w-64 flex-shrink-0 flex flex-col p-4">
-            <div className="flex items-center gap-3 mb-8 px-2">
-                <ODDILogo className="w-6 h-6 text-white" />
-                <span className="text-lg font-bold tracking-tight text-slate-200">
-                    ODDI Training
-                </span>
+        <aside className="no-print bg-background w-24 flex-shrink-0 flex flex-col p-4 border-r border-border items-center">
+            <div className="mb-10 pt-2">
+                <ODDILogo className="w-10 h-10 text-primary" />
             </div>
             
-            <nav className="flex-1 flex flex-col gap-2">
-                {navItems.map((item, index) => {
-                    const IconComponent = item.icon;
-                    return (
-                        <button 
-                            key={item.id}
-                            onClick={() => onNavigate(item.id)} 
-                            className={`flex items-center gap-4 w-full text-left px-3 py-2.5 rounded-lg transition-colors duration-200 text-sm animate-slide-in ${
-                                activeSection === item.id 
-                                    ? 'bg-primary/20 text-white font-semibold' 
-                                    : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'
-                            }`}
-                            style={{ animationDelay: `${index * 50}ms` }}
-                        >
-                            <IconComponent className="w-5 h-5 flex-shrink-0" />
-                            <span>{item.label}</span>
-                        </button>
-                    );
-                })}
+            <nav className="flex-1 flex flex-col gap-4 items-center w-full">
+                {navItems.map(item => (
+                    <button 
+                        key={item.id}
+                        onClick={() => onNavigate(item.id)} 
+                        title={item.label}
+                        className={`relative flex items-center justify-center w-14 h-14 text-left rounded-lg transition-all duration-200 text-base font-medium group ${
+                            activeSection === item.id 
+                                ? 'bg-primary/10 text-primary' 
+                                : 'text-text-secondary hover:bg-surface hover:text-text-primary'
+                        }`}
+                    >
+                        {item.icon}
+                        <span className="absolute left-full ml-4 w-auto p-2 min-w-max rounded-md shadow-md text-white bg-gray-800 text-xs font-bold transition-all duration-100 scale-0 origin-left group-hover:scale-100">
+                            {item.label}
+                        </span>
+                    </button>
+                ))}
             </nav>
 
-            <div className="mt-auto">
-                <div className="border-t border-slate-700 pt-4 px-2">
-                    <p className="text-sm font-medium text-slate-200 truncate">{currentUser.fullname}</p>
-                    <button onClick={onLogout} className="text-sm text-slate-400 hover:text-blue-300 transition-colors">
+            <div className="mt-auto border-t border-border pt-4 w-full flex flex-col items-center">
+                <button 
+                    onClick={onLogout} 
+                    title="Logout"
+                    className="flex items-center justify-center w-14 h-14 text-left rounded-lg transition-all duration-200 text-base font-medium text-text-secondary hover:bg-surface hover:text-text-primary group"
+                >
+                    <LogoutIcon className="w-6 h-6"/>
+                    <span className="absolute left-full ml-4 w-auto p-2 min-w-max rounded-md shadow-md text-white bg-gray-800 text-xs font-bold transition-all duration-100 scale-0 origin-left group-hover:scale-100">
                         Logout
-                    </button>
-                </div>
+                    </span>
+                </button>
             </div>
         </aside>
     );
