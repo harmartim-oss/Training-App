@@ -34,26 +34,38 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         };
         onLogin(user);
     };
-    
-    const labelStyles = "block text-sm font-medium text-text-secondary mb-2";
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background p-4 animate-fade-in">
-            <div className="w-full max-w-md">
-                <div className="bg-card border border-border rounded-2xl shadow-lg p-10 sm:p-12">
-                    <div className="flex flex-col items-center mb-8">
-                        <ODDILogo className="w-5 h-5 mb-4" />
-                        <h1 className="text-2xl font-bold text-text-primary">ODDI Training Portal</h1>
-                        <p className="text-text-secondary mt-1">Enter your details to begin the certification.</p>
+        <div className="min-h-screen flex items-center justify-center bg-background p-lg animate-fade-in">
+            <div className="w-full" style={{maxWidth: '448px'}}>
+                <div className="card shadow-2xl p-2xl">
+                    <div className="text-center mb-2xl">
+                        <ODDILogo className="w-12 h-12 mb-lg mx-auto text-primary" />
+                        <h1 className="font-bold text-primary mb-sm">ODDI Training Portal</h1>
+                        <p className="text-secondary">Enter your details to begin the certification.</p>
                     </div>
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-lg">
                         <div>
-                            <label htmlFor="fullname" className={labelStyles}>Full Name</label>
-                            <input id="fullname" type="text" value={fullname} onChange={e => setFullname(e.target.value)} required className="form-input" placeholder="e.g., Jane Doe" />
+                            <label htmlFor="fullname" className="form-label">Full Name</label>
+                            <input 
+                                id="fullname" 
+                                type="text" 
+                                value={fullname} 
+                                onChange={e => setFullname(e.target.value)} 
+                                required 
+                                className="form-input" 
+                                placeholder="e.g., Jane Doe" 
+                            />
                         </div>
                         <div>
-                            <label htmlFor="org-type" className={labelStyles}>Organization Type</label>
-                            <select id="org-type" value={organizationType} onChange={e => setOrganizationType(e.target.value)} required className="form-input">
+                            <label htmlFor="org-type" className="form-label">Organization Type</label>
+                            <select 
+                                id="org-type" 
+                                value={organizationType} 
+                                onChange={e => setOrganizationType(e.target.value)} 
+                                required 
+                                className="form-input"
+                            >
                                 <option value="" disabled>Select your sector</option>
                                 <option value="small-business">Small Business</option>
                                 <option value="municipality">Municipality</option>
@@ -62,14 +74,30 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                             </select>
                         </div>
                         <div>
-                            <label htmlFor="org-name" className={labelStyles}>Organization Name</label>
-                            <input id="org-name" type="text" value={organizationName} onChange={e => setOrganizationName(e.target.value)} required className="form-input" placeholder="e.g., City of Toronto" />
+                            <label htmlFor="org-name" className="form-label">Organization Name</label>
+                            <input 
+                                id="org-name" 
+                                type="text" 
+                                value={organizationName} 
+                                onChange={e => setOrganizationName(e.target.value)} 
+                                required 
+                                className="form-input" 
+                                placeholder="e.g., City of Toronto" 
+                            />
                         </div>
                         <div>
-                            <label htmlFor="email" className={labelStyles}>Email Address</label>
-                            <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} required className="form-input" placeholder="e.g., jane.doe@example.com" />
+                            <label htmlFor="email" className="form-label">Email Address</label>
+                            <input 
+                                id="email" 
+                                type="email" 
+                                value={email} 
+                                onChange={e => setEmail(e.target.value)} 
+                                required 
+                                className="form-input" 
+                                placeholder="e.g., jane.doe@example.com" 
+                            />
                         </div>
-                        <button type="submit" className="w-full btn-primary py-3 px-4 text-base">
+                        <button type="submit" className="btn btn-primary btn-large mt-base">
                             Start Training
                         </button>
                     </form>

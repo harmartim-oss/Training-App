@@ -33,45 +33,48 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
 
     const getStatus = (moduleProgress: { completed: boolean }) => {
         return moduleProgress.completed 
-            ? { text: 'Completed', icon: CheckCircleIcon, className: 'text-green-500' }
-            : { text: 'Not Started', icon: CircleIcon, className: 'text-gray-400' };
+            ? { text: 'Completed', icon: CheckCircleIcon, className: 'text-primary' }
+            : { text: 'Not Started', icon: CircleIcon, className: 'text-tertiary' };
     };
 
     return (
-        <section className="animate-fade-in">
-            <h1 className="text-3xl font-bold text-text-primary mb-6">Training Dashboard</h1>
+        <section className="animate-fade-in container py-xl">
+            <h1 className="font-bold text-primary mb-xl">Training Dashboard</h1>
             
-            <div className="bg-card border border-border rounded-xl p-6 mb-8 shadow-sm">
-                <h3 className="text-xl font-semibold mb-4 text-text-primary">Overall Progress</h3>
-                <div className="w-full bg-slate-200 rounded-full h-4 mb-2">
-                    <div className="bg-primary h-4 rounded-full transition-all duration-500" style={{ width: `${overallProgress}%` }}></div>
+            <div className="card shadow-lg p-xl mb-xl">
+                <h3 className="font-semibold text-primary mb-lg">Overall Progress</h3>
+                <div className="w-full bg-neutral-200 rounded-full h-4 mb-base overflow-hidden">
+                    <div 
+                        className="bg-primary h-4 rounded-full transition-all duration-500" 
+                        style={{ width: `${overallProgress}%` }}
+                    ></div>
                 </div>
-                <div className="flex justify-between text-sm text-text-secondary">
+                <div className="flex justify-between text-small text-secondary">
                     <span>{Math.round(overallProgress)}% Complete</span>
                     <span>{completedCount} of {totalModules} modules completed</span>
                 </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-text-primary mb-4">Modules</h2>
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-                {modules.map(module => {
+            <h2 className="font-semibold text-primary mb-lg">Training Modules</h2>
+            <div className="grid grid-cols-2 gap-lg mb-xl">
+                {modules.map((module, index) => {
                     const moduleProgress = progress[module.id as keyof Omit<Progress, 'assessment'>];
                     const status = getStatus(moduleProgress);
                     const IconComponent = module.icon;
                     const StatusIconComponent = status.icon;
                     return (
-                        <div key={module.id} className="card-interactive bg-card border border-border rounded-xl p-6 flex flex-col">
-                            <div className="flex items-start justify-between mb-4">
-                                <div className="bg-primary/10 p-3 rounded-lg">
-                                    <IconComponent className="w-6 h-6 text-primary" />
+                        <div key={module.id} className={`card card-interactive flex flex-col p-xl animate-fade-in animate-delay-${(index + 1) * 100}`}>
+                            <div className="flex items-start justify-between mb-lg">
+                                <div className="bg-primary text-inverse p-base rounded-lg">
+                                    <IconComponent className="w-6 h-6" />
                                 </div>
-                                <div className="flex items-center gap-2 text-sm text-text-secondary">
+                                <div className="flex items-center gap-sm text-small">
                                     <StatusIconComponent className={`w-4 h-4 ${status.className}`} />
-                                    <span>{status.text}</span>
+                                    <span className={status.className}>{status.text}</span>
                                 </div>
                             </div>
-                            <h3 className="font-semibold text-lg text-text-primary mb-2 flex-grow">{module.title}</h3>
-                            <button onClick={() => onNavigate(module.id)} className="w-full mt-4 btn-primary py-2.5 px-4 text-sm">
+                            <h3 className="font-semibold text-primary mb-base flex-grow">{module.title}</h3>
+                            <button onClick={() => onNavigate(module.id)} className="btn btn-primary">
                                 {moduleProgress.completed ? 'Review Module' : 'Start Module'}
                             </button>
                         </div>

@@ -57,70 +57,73 @@ interface LandingPageProps {
 }
 
 const Section: React.FC<{id: string, children: React.ReactNode, className?: string}> = ({id, children, className}) => (
-    <section id={id} className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 ${className}`}>
+    <section id={id} className={`section container ${className || ''}`}>
         {children}
     </section>
 );
 
 const SectionTitle: React.FC<{title: string, subtitle: string}> = ({title, subtitle}) => (
-    <div className="text-center mb-14">
-        <h2 className="text-3xl font-extrabold tracking-tight text-text-primary sm:text-4xl">{title}</h2>
-        <p className="mt-4 max-w-3xl mx-auto text-lg text-text-secondary">{subtitle}</p>
+    <div className="text-center my-xl">
+        <h2 className="font-extrabold text-primary mb-base">{title}</h2>
+        <p className="text-large text-secondary mx-auto" style={{maxWidth: '768px'}}>{subtitle}</p>
     </div>
 );
 
 
 const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
   return (
-    <div className="min-h-screen text-text-primary flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       <Header onNavigateToTraining={onNavigateToTraining} />
       <main className="flex-grow animate-fade-in">
         
         {/* Hero Section */}
-        <Section id="home" className="text-center !pt-28 !pb-36">
-          <div className="flex flex-col items-center gap-6">
-            <h1 className="text-4xl font-extrabold tracking-tight text-text-primary sm:text-5xl md:text-6xl">
-              Become an <span className="text-primary">Ontario Certified</span><br /> Cyber Resilience Professional
-            </h1>
-            <p className="max-w-3xl mx-auto text-lg text-text-secondary md:text-xl">
-              Master the essential skills in privacy law, cybersecurity, AI governance, and data management to protect Ontario's digital landscape.
-            </p>
-            <div className="mt-6">
-              <button
-                onClick={onNavigateToTraining}
-                className="btn-primary py-3.5 px-8 text-base"
-              >
-                Start Your OCRP Certification
-              </button>
+        <div className="section-hero">
+          <div className="container text-center py-2xl">
+            <div className="flex flex-col items-center gap-xl animate-scale-in">
+              <h1 className="font-extrabold text-primary mb-base">
+                Become an <span className="text-primary">Ontario Certified</span><br /> 
+                <span className="text-secondary">Cyber Resilience Professional</span>
+              </h1>
+              <p className="text-large text-secondary mx-auto" style={{maxWidth: '640px'}}>
+                Master the essential skills in privacy law, cybersecurity, AI governance, and data management to protect Ontario's digital landscape.
+              </p>
+              <div className="my-base">
+                <button
+                  onClick={onNavigateToTraining}
+                  className="btn btn-primary btn-large animate-delay-200"
+                >
+                  Start Your OCRP Certification
+                </button>
+              </div>
             </div>
           </div>
-        </Section>
+        </div>
 
         {/* Features Section */}
         <Section id="why-ocrp">
             <SectionTitle title="Why Earn Your OCRP Designation?" subtitle="Gain a competitive edge with a certification that signifies expertise and trustworthiness in digital defence."/>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {features.map((feature) => (
-                    <div key={feature.title} className="card-interactive bg-card border border-border p-8 rounded-2xl text-left">
-                        <div className="flex-shrink-0 bg-primary/10 w-12 h-12 flex items-center justify-center rounded-xl mb-6">
+            <div className="grid grid-cols-3 gap-lg">
+                {features.map((feature, index) => (
+                    <div key={feature.title} className={`card card-feature card-interactive animate-fade-in animate-delay-${(index + 1) * 100}`}>
+                        <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-primary text-inverse mb-lg mx-auto">
                            {feature.icon}
                         </div>
-                        <h3 className="text-xl font-bold text-text-primary">{feature.title}</h3>
-                        <p className="text-text-secondary mt-2 flex-grow">{feature.description}</p>
+                        <h3 className="font-semibold text-primary mb-base">{feature.title}</h3>
+                        <p className="text-secondary">{feature.description}</p>
                     </div>
                 ))}
             </div>
         </Section>
 
         {/* Audience Section */}
-        <Section id="audience" className="bg-slate-50">
+        <Section id="audience" className="section-alternate">
             <SectionTitle title="Designed for Ontario's Core Sectors" subtitle="This program is tailored to address the unique challenges faced by key organizations across the province."/>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {audience.map((aud) => (
-                    <div key={aud.title} className="card-interactive bg-card border border-border p-8 rounded-2xl flex flex-col items-start text-left">
-                        <div className="flex-shrink-0 bg-primary/10 w-12 h-12 flex items-center justify-center rounded-full mb-6">{aud.icon}</div>
-                        <h3 className="text-xl font-bold text-text-primary">{aud.title}</h3>
-                        <p className="text-text-secondary mt-2">{aud.description}</p>
+            <div className="grid grid-cols-3 gap-lg">
+                {audience.map((aud, index) => (
+                    <div key={aud.title} className={`card card-feature card-interactive animate-slide-in-left animate-delay-${(index + 1) * 100}`}>
+                        <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary text-inverse mb-lg mx-auto">{aud.icon}</div>
+                        <h3 className="font-semibold text-primary mb-base">{aud.title}</h3>
+                        <p className="text-secondary">{aud.description}</p>
                     </div>
                 ))}
             </div>
@@ -129,13 +132,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         {/* Modules Section */}
         <Section id="curriculum">
             <SectionTitle title="A Curriculum Built for Ontario's Needs" subtitle="Our four-module program provides the complete skillset for cyber resilience."/>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-2 gap-lg">
                 {modules.map((module, index) => (
-                    <div key={module.title} className="card-interactive bg-card border border-border p-8 rounded-2xl flex items-start gap-6">
-                        <div className="text-3xl font-bold text-primary/30 mt-1">0{index+1}</div>
-                        <div>
-                            <h3 className="text-xl font-bold text-text-primary">{module.title}</h3>
-                            <p className="text-text-secondary mt-1">{module.description}</p>
+                    <div key={module.title} className={`card card-interactive flex items-start gap-lg p-xl animate-slide-in-right animate-delay-${(index + 1) * 100}`}>
+                        <div className="text-caption font-extrabold text-primary bg-primary-lighter rounded-full w-12 h-12 flex items-center justify-center">0{index+1}</div>
+                        <div className="flex-1">
+                            <h3 className="font-semibold text-primary mb-base">{module.title}</h3>
+                            <p className="text-secondary">{module.description}</p>
                         </div>
                     </div>
                 ))}
@@ -143,16 +146,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         </Section>
         
         {/* Testimonials Section */}
-        <Section id="testimonials" className="bg-slate-50">
+        <Section id="testimonials" className="section-alternate">
             <SectionTitle title="Trusted by Professionals Across Ontario" subtitle="See what certified professionals are saying about the OCRP program." />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {testimonials.map((testimonial) => (
-                    <div key={testimonial.name} className="bg-card border border-border p-8 rounded-2xl flex flex-col h-full">
-                        <QuoteIcon className="w-5 h-5 text-primary/40 mb-5" />
-                        <p className="text-text-secondary flex-grow">"{testimonial.quote}"</p>
-                        <div className="mt-6 border-t border-border pt-6">
-                            <p className="font-bold text-text-primary">{testimonial.name}</p>
-                            <p className="text-sm text-text-secondary">{testimonial.title}</p>
+            <div className="grid grid-cols-3 gap-lg">
+                {testimonials.map((testimonial, index) => (
+                    <div key={testimonial.name} className={`card card-testimonial flex flex-col h-full animate-fade-in animate-delay-${(index + 1) * 100}`}>
+                        <QuoteIcon className="w-8 h-8 text-primary mb-lg" />
+                        <p className="text-secondary flex-grow mb-lg">"{testimonial.quote}"</p>
+                        <div className="border-t pt-lg">
+                            <p className="font-semibold text-primary mb-sm">{testimonial.name}</p>
+                            <p className="text-small text-tertiary">{testimonial.title}</p>
                         </div>
                     </div>
                 ))}
@@ -162,14 +165,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         {/* FAQ Section */}
         <Section id="faq">
           <SectionTitle title="Frequently Asked Questions" subtitle="Have questions? We've got answers. Here are some of the most common inquiries about the OCRP program."/>
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="container-narrow">
             {faqs.map((faq, index) => (
-              <details key={index} className="faq-item bg-card border border-border rounded-lg overflow-hidden">
-                <summary className="faq-question p-5 cursor-pointer flex justify-between items-center">
-                  <span className="font-semibold text-text-primary">{faq.q}</span>
-                  <ChevronDownIcon className="chevron-icon w-5 h-5 text-text-secondary transition-transform duration-300" />
+              <details key={index} className={`faq-item animate-fade-in animate-delay-${(index + 1) * 100}`}>
+                <summary className="faq-question">
+                  <span className="font-semibold">{faq.q}</span>
+                  <ChevronDownIcon className="chevron-icon w-5 h-5" />
                 </summary>
-                <div className="faq-answer px-5 text-text-secondary">
+                <div className="faq-answer">
                   <p>{faq.a}</p>
                 </div>
               </details>
@@ -178,36 +181,34 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         </Section>
 
         {/* Final CTA */}
-        <Section id="start" className="bg-primary/5">
-            <div className="text-center">
-                <h2 className="text-3xl font-extrabold tracking-tight text-text-primary sm:text-4xl">Ready to Become a Leader in Digital Defence?</h2>
-                <p className="mt-4 max-w-2xl mx-auto text-lg text-text-secondary">Start your journey today and earn the OCRP designation that will set you apart.</p>
-                <div className="mt-8">
-                  <button
-                    onClick={onNavigateToTraining}
-                    className="btn-primary py-3.5 px-8 text-base"
-                  >
-                    Enroll in the OCRP Program
-                  </button>
-                </div>
+        <Section id="start" className="section-hero">
+            <div className="text-center py-xl">
+                <h2 className="font-extrabold text-primary mb-base">Ready to Become a Leader in Digital Defence?</h2>
+                <p className="text-large text-secondary mx-auto mb-xl" style={{maxWidth: '640px'}}>Start your journey today and earn the OCRP designation that will set you apart.</p>
+                <button
+                  onClick={onNavigateToTraining}
+                  className="btn btn-primary btn-large animate-scale-in"
+                >
+                  Enroll in the OCRP Program
+                </button>
             </div>
         </Section>
 
       </main>
 
-      <footer className="w-full bg-slate-100 border-t border-border">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-8">
+      <footer className="bg-background-secondary border-t">
+        <div className="container py-xl flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-lg">
            <div>
-            <div className="flex items-center gap-3 justify-center sm:justify-start">
-              <ODDILogo className="w-6 h-6" />
-              <p className="font-semibold text-text-primary">Ontario Digital Defence Institute</p>
+            <div className="flex items-center gap-base justify-center sm:justify-start mb-sm">
+              <ODDILogo className="w-8 h-8 text-primary" />
+              <p className="font-semibold text-primary">Ontario Digital Defence Institute</p>
             </div>
-            <p className="text-text-secondary/80 mt-2 text-sm">&copy; {new Date().getFullYear()} ODDI. All Rights Reserved.</p>
+            <p className="text-small text-tertiary">&copy; {new Date().getFullYear()} ODDI. All Rights Reserved.</p>
            </div>
-            <div className="flex items-center gap-6 mt-4 sm:mt-0">
-              <a href="#why-ocrp" className="text-sm font-medium text-text-secondary hover:text-primary">Why OCRP?</a>
-              <a href="#curriculum" className="text-sm font-medium text-text-secondary hover:text-primary">Curriculum</a>
-              <a href="#faq" className="text-sm font-medium text-text-secondary hover:text-primary">FAQ</a>
+            <div className="flex items-center gap-lg">
+              <a href="#why-ocrp" className="nav-link">Why OCRP?</a>
+              <a href="#curriculum" className="nav-link">Curriculum</a>
+              <a href="#faq" className="nav-link">FAQ</a>
             </div>
         </div>
       </footer>
