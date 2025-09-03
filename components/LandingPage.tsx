@@ -5,21 +5,21 @@
 
 import React from 'react';
 import Header from './Header';
-import { ODDILogo, CertificateIcon, CurriculumIcon, OntarioIcon, ChevronDownIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon, QuoteIcon } from './icons';
+import { ODDILogo, CertificateIcon, CurriculumIcon, OntarioIcon, ChevronDownIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon } from './icons';
 
 const features = [
   {
-    icon: <CertificateIcon className="w-5 h-5 text-primary" />,
+    icon: <CertificateIcon className="w-8 h-8 text-primary" />,
     title: 'Official OCRP Designation',
     description: 'Earn the exclusive Ontario Certified Cyber Resilience Professional (OCRP) designation, a mark of excellence recognized across the province.',
   },
   {
-    icon: <CurriculumIcon className="w-5 h-5 text-primary" />,
+    icon: <CurriculumIcon className="w-8 h-8 text-primary" />,
     title: 'Expert-Led Curriculum',
     description: 'Gain practical, hands-on knowledge from a curriculum designed by industry veterans, covering the most critical and current threats.',
   },
   {
-    icon: <OntarioIcon className="w-5 h-5 text-primary" />,
+    icon: <OntarioIcon className="w-8 h-8 text-primary" />,
     title: 'Built for Ontario',
     description: 'Master the specific legal and regulatory landscape of Ontario, including PIPEDA, FIPPA, and the new provincial AI directives.',
   },
@@ -33,16 +33,12 @@ const modules = [
 ];
 
 const audience = [
-    { icon: <MunicipalityIcon className="w-5 h-5 text-primary" />, title: 'Municipalities', description: "Equip your public sector teams with the knowledge to protect citizen data and comply with FIPPA." },
-    { icon: <BusinessIcon className="w-5 h-5 text-primary" />, title: 'Small Businesses', description: "Safeguard your customer information and business operations from costly cyber threats under PIPEDA." },
-    { icon: <NonProfitIcon className="w-5 h-5 text-primary" />, title: 'Non-Profits', description: "Protect your donor and member data, maintain trust, and secure your mission-critical operations." },
+    { icon: <MunicipalityIcon className="w-8 h-8 text-primary" />, title: 'Municipalities', description: "Equip your public sector teams with the knowledge to protect citizen data and comply with FIPPA." },
+    { icon: <BusinessIcon className="w-8 h-8 text-primary" />, title: 'Small Businesses', description: "Safeguard your customer information and business operations from costly cyber threats under PIPEDA." },
+    { icon: <NonProfitIcon className="w-8 h-8 text-primary" />, title: 'Non-Profits', description: "Protect your donor and member data, maintain trust, and secure your mission-critical operations." },
 ];
 
-const testimonials = [
-    { quote: "This was the most relevant cybersecurity training I've ever taken. The focus on Ontario's laws was exactly what my municipal department needed.", name: "D. Reynolds", title: "IT Manager, City of North Bay" },
-    { quote: "As a small business owner, I was overwhelmed by cybersecurity. The OCRP program gave me a clear, actionable plan to protect my company and our customers.", name: "S. Chen", title: "Owner, Chen Accounting" },
-    { quote: "The OCRP certification has been a huge asset for our non-profit. It demonstrates our commitment to data security to our donors and partners.", name: "M. El-Masry", title: "Executive Director, Community Action Group" },
-];
+
 
 
 const faqs = [
@@ -145,23 +141,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             </div>
         </Section>
         
-        {/* Testimonials Section */}
-        <Section id="testimonials" className="section-alternate">
-            <SectionTitle title="Trusted by Professionals Across Ontario" subtitle="See what certified professionals are saying about the OCRP program." />
-            <div className="grid grid-cols-3 gap-lg">
-                {testimonials.map((testimonial, index) => (
-                    <div key={testimonial.name} className={`card card-testimonial flex flex-col h-full animate-fade-in animate-delay-${(index + 1) * 100}`}>
-                        <QuoteIcon className="w-8 h-8 text-primary mb-lg" />
-                        <p className="text-secondary flex-grow mb-lg">"{testimonial.quote}"</p>
-                        <div className="border-t pt-lg">
-                            <p className="font-semibold text-primary mb-sm">{testimonial.name}</p>
-                            <p className="text-small text-tertiary">{testimonial.title}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </Section>
-
         {/* FAQ Section */}
         <Section id="faq">
           <SectionTitle title="Frequently Asked Questions" subtitle="Have questions? We've got answers. Here are some of the most common inquiries about the OCRP program."/>
