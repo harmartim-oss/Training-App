@@ -13,6 +13,17 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        rollupOptions: {
+          external: [],
+          output: {
+            manualChunks: {
+              vendor: ['react', 'react-dom'],
+              genai: ['@google/genai']
+            }
+          }
+        }
       }
     };
 });
