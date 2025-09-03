@@ -5,7 +5,7 @@
 
 import React from 'react';
 import Header from './Header';
-import { ODDILogo, CertificateIcon, CurriculumIcon, OntarioIcon, ChevronDownIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon } from './icons';
+import { ODDILogo, CertificateIcon, CurriculumIcon, OntarioIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon, CybersecurityIcon, NetworkIcon, ThreatIntelIcon, QRCodeIcon } from './icons';
 
 const features = [
   {
@@ -26,10 +26,34 @@ const features = [
 ];
 
 const modules = [
-    { title: "Ontario's Privacy & Legal Framework", description: "Navigate PIPEDA, FIPPA, and new data breach notification laws." },
-    { title: 'Cybersecurity Defence & Incident Response', description: "Implement risk assessments and manage active security threats." },
-    { title: 'AI Governance & Responsible Use', description: "Apply Ontario's directive for the ethical deployment of AI systems." },
-    { title: 'Secure Data & Records Management', description: "Master data classification, retention policies, and cross-border compliance." },
+    { 
+        icon: <OntarioIcon className="w-8 h-8 text-primary" />,
+        title: "Ontario's Privacy & Legal Framework", 
+        description: "Master PIPEDA, FIPPA, and emerging data breach notification laws. Navigate complex cross-border data requirements and understand your legal obligations when handling sensitive information.",
+        duration: "4-5 hours",
+        level: "Fundamental"
+    },
+    { 
+        icon: <CybersecurityIcon className="w-8 h-8 text-primary" />,
+        title: 'Cybersecurity Defence & Incident Response', 
+        description: "Build comprehensive risk assessment frameworks and develop rapid response protocols for active security threats. Learn to implement multi-layered defense strategies and recovery procedures.",
+        duration: "5-6 hours", 
+        level: "Intermediate"
+    },
+    { 
+        icon: <NetworkIcon className="w-8 h-8 text-primary" />,
+        title: 'AI Governance & Responsible Use', 
+        description: "Apply Ontario's groundbreaking AI directive to create ethical AI deployment frameworks. Understand algorithmic accountability and bias mitigation in public and private sectors.",
+        duration: "3-4 hours",
+        level: "Advanced"
+    },
+    { 
+        icon: <QRCodeIcon className="w-8 h-8 text-primary" />,
+        title: 'Secure Data & Records Management', 
+        description: "Implement enterprise-grade data classification systems, retention policies, and cross-border compliance strategies. Master secure data lifecycle management and regulatory reporting.",
+        duration: "4-5 hours",
+        level: "Intermediate"
+    },
 ];
 
 const audience = [
@@ -41,12 +65,6 @@ const audience = [
 
 
 
-const faqs = [
-    { q: "Who is this certification for?", a: "This certification is designed for professionals in Ontario's municipalities, small businesses, and non-profit sectors who handle sensitive data and are responsible for digital security and compliance." },
-    { q: "Is there a prerequisite for this course?", a: "No, there are no formal prerequisites. The program is designed to be accessible to individuals with a range of technical backgrounds, focusing on practical application and legal understanding." },
-    { q: "How long does the certification take to complete?", a: "The training is self-paced. On average, participants complete all modules and the final assessment within 15-20 hours of study." },
-    { q: "Is the OCRP designation recognized across Canada?", a: "While the curriculum has a specific focus on Ontario's legal landscape (like FIPPA), the cybersecurity and data management principles are based on national and international standards, making the skills highly transferable." },
-];
 
 interface LandingPageProps {
     onNavigateToTraining: () => void;
@@ -67,26 +85,30 @@ const SectionTitle: React.FC<{title: string, subtitle: string}> = ({title, subti
 
 
 const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
+  // Mobile browser detection
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className={`min-h-screen flex flex-col bg-background ${isMobile ? 'mobile-layout' : 'desktop-layout'}`}>
       <Header onNavigateToTraining={onNavigateToTraining} />
       <main className="flex-grow animate-fade-in">
         
         {/* Hero Section */}
-        <div className="section-hero">
-          <div className="container text-center py-2xl">
+        <div className="hero-section">
+          <div className="hero-background"></div>
+          <div className="container text-center py-2xl relative z-10">
             <div className="flex flex-col items-center gap-xl animate-scale-in">
-              <h1 className="font-extrabold text-primary mb-base">
+              <h1 className="hero-title">
                 Become an <span className="text-primary">Ontario Certified</span><br /> 
-                <span className="text-secondary">Cyber Resilience Professional</span>
+                <span className="hero-subtitle">Cyber Resilience Professional</span>
               </h1>
-              <p className="text-large text-secondary mx-auto" style={{maxWidth: '640px'}}>
+              <p className="hero-description">
                 Master the essential skills in privacy law, cybersecurity, AI governance, and data management to protect Ontario's digital landscape.
               </p>
-              <div className="my-base">
+              <div className="hero-cta">
                 <button
                   onClick={onNavigateToTraining}
-                  className="btn btn-primary btn-large animate-delay-200"
+                  className="btn btn-primary btn-large btn-hero animate-delay-200"
                 >
                   Start Your OCRP Certification
                 </button>
@@ -127,38 +149,27 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         
         {/* Modules Section */}
         <Section id="curriculum">
-            <SectionTitle title="A Curriculum Built for Ontario's Needs" subtitle="Our four-module program provides the complete skillset for cyber resilience."/>
-            <div className="grid grid-cols-2 gap-lg">
+            <SectionTitle title="A Curriculum Built for Ontario's Needs" subtitle="Four comprehensive modules designed by industry experts to provide complete cyber resilience skillset."/>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-xl">
                 {modules.map((module, index) => (
-                    <div key={module.title} className={`card card-interactive flex items-start gap-lg p-xl animate-slide-in-right animate-delay-${(index + 1) * 100}`}>
-                        <div className="text-caption font-extrabold text-primary bg-primary-lighter rounded-full w-12 h-12 flex items-center justify-center">0{index+1}</div>
-                        <div className="flex-1">
-                            <h3 className="font-semibold text-primary mb-base">{module.title}</h3>
-                            <p className="text-secondary">{module.description}</p>
+                    <div key={module.title} className={`module-card animate-slide-in-right animate-delay-${(index + 1) * 100}`}>
+                        <div className="module-card-header">
+                            <div className="module-number">0{index+1}</div>
+                            <div className="module-icon">{module.icon}</div>
+                            <div className="module-meta">
+                                <span className="module-duration">{module.duration}</span>
+                                <span className={`module-level module-level-${module.level.toLowerCase()}`}>{module.level}</span>
+                            </div>
+                        </div>
+                        <div className="module-card-body">
+                            <h3 className="module-title">{module.title}</h3>
+                            <p className="module-description">{module.description}</p>
                         </div>
                     </div>
                 ))}
             </div>
         </Section>
         
-        {/* FAQ Section */}
-        <Section id="faq">
-          <SectionTitle title="Frequently Asked Questions" subtitle="Have questions? We've got answers. Here are some of the most common inquiries about the OCRP program."/>
-          <div className="container-narrow">
-            {faqs.map((faq, index) => (
-              <details key={index} className={`faq-item animate-fade-in animate-delay-${(index + 1) * 100}`}>
-                <summary className="faq-question">
-                  <span className="font-semibold">{faq.q}</span>
-                  <ChevronDownIcon className="chevron-icon w-5 h-5" />
-                </summary>
-                <div className="faq-answer">
-                  <p>{faq.a}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-        </Section>
-
         {/* Final CTA */}
         <Section id="start" className="section-hero">
             <div className="text-center py-xl">
@@ -187,7 +198,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             <div className="flex items-center gap-lg">
               <a href="#why-ocrp" className="nav-link">Why OCRP?</a>
               <a href="#curriculum" className="nav-link">Curriculum</a>
-              <a href="#faq" className="nav-link">FAQ</a>
+              <a href="#audience" className="nav-link">Who It's For</a>
             </div>
         </div>
       </footer>
