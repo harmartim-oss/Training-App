@@ -93,23 +93,23 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                         </div>
 
                         {!quizResult && (
-                           <button onClick={checkModuleQuiz} disabled={Object.keys(quizAnswers).length !== Object.keys(questions).length} className="mt-6 btn-primary py-2 px-6 text-sm disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">Check Answers</button>
+                           <button onClick={checkModuleQuiz} disabled={Object.keys(quizAnswers).length !== Object.keys(questions).length} className="btn btn-primary mt-lg">Check Answers</button>
                         )}
                         
                         {quizResult && (
-                            <div className={`mt-6 p-4 rounded-lg ${quizResult.score === 100 ? 'bg-green-100 border-green-300' : 'bg-red-100 border-red-300'} border`}>
-                                <h4 className="font-semibold mb-2 text-text-primary">Results: You scored {quizResult.score}%</h4>
-                                <p className="text-sm text-text-secondary">Review the correct answers highlighted in green.</p>
+                            <div className={`mt-lg p-lg rounded-lg ${quizResult.score === 100 ? 'status-success' : 'status-error'}`}>
+                                <h4 className="font-semibold mb-sm">Results: You scored {quizResult.score}%</h4>
+                                <p className="text-small">Review the correct answers highlighted above.</p>
                             </div>
                         )}
                     </div>
 
-                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-border pt-6">
-                        <button onClick={() => onNavigate('dashboard')} className="w-full sm:w-auto bg-slate-100 text-text-secondary font-semibold py-2 px-6 rounded-lg hover:bg-slate-200 transition-colors">
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-base border-t pt-lg">
+                        <button onClick={() => onNavigate('dashboard')} className="btn btn-secondary">
                             Back to Dashboard
                         </button>
-                        <button onClick={() => onComplete(quizResult?.score ?? 0)} disabled={!quizResult} className="w-full sm:w-auto bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-500 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors">
-                            Complete Module <i className="fas fa-arrow-right ml-2"></i>
+                        <button onClick={() => onComplete(quizResult?.score ?? 0)} disabled={!quizResult} className="btn btn-primary">
+                            Complete Module
                         </button>
                     </div>
                 </div>
