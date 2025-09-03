@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigateToTraining }) => {
   const navLinks = [
     { href: '#why-ocrp', label: 'Why OCRP?' },
     { href: '#curriculum', label: 'Curriculum' },
-    { href: '#faq', label: 'FAQ' },
+    { href: '#audience', label: 'Who It\'s For' },
   ];
   return (
     <header className="bg-surface/95 backdrop-blur-lg sticky top-0 z-50 no-print border-b shadow-sm">
