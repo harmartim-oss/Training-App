@@ -56,8 +56,20 @@ const StudyAssistant: React.FC = () => {
     ]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const chatInstance = useRef(getTutorChat()).current;
+    const [isAvailable, setIsAvailable] = useState(true);
+    const chatInstance = useRef<any>(null);
     const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+    // Initialize chat instance with error handling
+    useEffect(() => {
+        try {
+            chatInstance.current = getTutorChat();
+        } catch (error) {
+            console.warn("AI Study Assistant unavailable:", error);
+            setIsAvailable(false);
+            setMessages([{ role: 'model', text: "AI Study Assistant is currently unavailable. Please continue with your training modules." }]);
+        }
+    }, []);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,7 +77,7 @@ const StudyAssistant: React.FC = () => {
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!input.trim() || isLoading) return;
+        if (!input.trim() || isLoading || !isAvailable) return;
 
         const userMessage: Message = { role: 'user', text: input };
         setMessages(prev => [...prev, userMessage]);
@@ -73,7 +85,10 @@ const StudyAssistant: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const stream = await sendMessage(chatInstance, input);
+            if (!chatInstance.current) {
+                throw new Error("Chat service not available");
+            }
+            const stream = await sendMessage(chatInstance.current, input);
             let modelResponse = '';
             setMessages(prev => [...prev, { role: 'model', text: '...' }]); 
 
@@ -89,7 +104,7 @@ const StudyAssistant: React.FC = () => {
             console.error(error);
             setMessages(prev => {
                 const newMessages = [...prev];
-                newMessages[newMessages.length-1].text = "Sorry, I encountered an error. Please try again.";
+                newMessages[newMessages.length-1].text = "Sorry, the AI assistant is currently unavailable. Please continue with your training.";
                 return newMessages;
             });
         } finally {
@@ -131,7 +146,7 @@ const StudyAssistant: React.FC = () => {
                             disabled={isLoading}
                             aria-label="Your message"
                         />
-                        <button type="submit" disabled={isLoading || !input.trim()} aria-label="Send message">
+                        <button type="submit" disabled={isLoading || !input.trim() || !isAvailable} aria-label="Send message">
                            <SendIcon className="w-6 h-6"/>
                         </button>
                     </form>
