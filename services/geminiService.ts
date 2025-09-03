@@ -5,9 +5,19 @@
 
 import { GoogleGenAI, Chat } from "@google/genai";
 
+let ai: GoogleGenAI | null = null;
 let chat: Chat | null = null;
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
+function getAI(): GoogleGenAI {
+    if (!ai) {
+        const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY;
+        if (!apiKey) {
+            throw new Error("No API key available. Please set GEMINI_API_KEY environment variable.");
+        }
+        ai = new GoogleGenAI({ apiKey });
+    }
+    return ai;
+}
 
 const systemInstruction = `You are an expert cybersecurity instructor and helpful study assistant for the Ontario Digital Defence Institute (ODDI). Your role is to help students understand the training material for the Ontario Certified Cyber Resilience Professional (OCRP) program.
 
@@ -26,12 +36,18 @@ When students ask questions:
 
 export function getTutorChat(): Chat {
     if (!chat) {
-        chat = ai.chats.create({
-            model: 'gemini-2.5-flash',
-            config: {
-                systemInstruction: systemInstruction,
-            },
-        });
+        try {
+            const aiInstance = getAI();
+            chat = aiInstance.chats.create({
+                model: 'gemini-2.5-flash',
+                config: {
+                    systemInstruction: systemInstruction,
+                },
+            });
+        } catch (error) {
+            console.warn("Gemini AI service unavailable:", error);
+            throw error;
+        }
     }
     return chat;
 }
