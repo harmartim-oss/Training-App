@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, CheckCircleIcon, XCircleIcon, AssessmentIcon } from '../icons';
+import { ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, CheckCircleIcon, XCircleIcon, AssessmentIcon, ClockIcon, TrophyIcon } from '../icons';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -61,12 +61,14 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                 text: 'Completed', 
                 icon: <CheckCircleIcon className="w-5 h-5 text-success" />,
                 badge: 'completed',
-                score: moduleProgress.score 
+                score: moduleProgress.score,
+                className: 'status-indicator completed'
             }
             : { 
                 text: 'Not Started', 
                 icon: <XCircleIcon className="w-5 h-5 text-text-secondary/50" />,
-                badge: 'not-started' 
+                badge: 'not-started',
+                className: 'status-indicator not-started'
             };
     };
 
@@ -154,11 +156,9 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                                     <div className="module-icon-container">
                                         {module.icon}
                                     </div>
-                                    <div className="flex items-center gap-2 text-sm font-mono">
+                                    <div className={status.className}>
                                         {status.icon}
-                                        <span className={status.badge === 'completed' ? 'text-success font-semibold' : 'text-text-secondary'}>
-                                            {status.text}
-                                        </span>
+                                        <span>{status.text}</span>
                                     </div>
                                 </div>
                                 
@@ -169,8 +169,17 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                                     <p className="text-text-secondary mb-4 leading-relaxed">
                                         {module.description}
                                     </p>
-                                    <div className="text-sm text-text-muted">
-                                        <span className="font-semibold">Estimated time:</span> {module.estimatedTime}
+                                    <div className="flex items-center gap-4 text-sm text-text-muted">
+                                        <div className="flex items-center gap-1">
+                                            <ClockIcon className="w-4 h-4" />
+                                            <span className="font-semibold">Time:</span> {module.estimatedTime}
+                                        </div>
+                                        {status.badge === 'completed' && (
+                                            <div className="flex items-center gap-1 text-success">
+                                                <TrophyIcon className="w-4 h-4" />
+                                                <span className="font-semibold">Score:</span> {status.score}%
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 

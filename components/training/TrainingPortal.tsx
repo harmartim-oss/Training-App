@@ -116,10 +116,11 @@ const StudyAssistant: React.FC = () => {
         <>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="assistant-fab no-print"
+                className={`floating-action-button no-print ${!isAvailable ? 'opacity-75' : ''} ${!isOpen ? 'pulse-animation' : ''}`}
                 aria-label="Toggle AI Study Assistant"
+                title="AI Study Assistant"
             >
-                {isOpen ? <CloseIcon className="w-8 h-8"/> : <ChatIcon className="w-8 h-8" />}
+                {isOpen ? <CloseIcon className="w-6 h-6"/> : <ChatIcon className="w-6 h-6" />}
             </button>
             <div className={`assistant-modal no-print ${isOpen ? 'open' : ''}`}>
                 <header className="assistant-header">
