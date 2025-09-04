@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState } from 'react';
+import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
+import QuizComponent from '../common/QuizComponent';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -10,11 +12,9 @@ interface ModuleProps {
 }
 
 const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
-    const [quizAnswers, setQuizAnswers] = useState<{ [key: string]: string }>({});
-    const [quizResult, setQuizResult] = useState<{ score: number, feedback: any } | null>(null);
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
     
-    const questions = {
+    const questions: QuizQuestions = {
         q1: { 
             question: "Under PIPEDA, when must an organization identify the purposes for collecting personal information?", 
             answer: 'b', 
@@ -37,35 +37,7 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
         },
     };
 
-    const handleQuizChange = (qId: string, value: string) => {
-        setQuizAnswers(prev => ({ ...prev, [qId]: value }));
-    };
-
-    const checkModuleQuiz = () => {
-        let score = 0;
-        const feedback: { [key: string]: { correct: boolean } } = {};
-        Object.keys(questions).forEach(qId => {
-            const isCorrect = quizAnswers[qId] === questions[qId as keyof typeof questions].answer;
-            feedback[qId] = { correct: isCorrect };
-            if (isCorrect) score += 50;
-        });
-        setQuizResult({ score, feedback });
-    };
-
-    const getOptionClass = (qId: string, optionKey: string) => {
-        if (quizAnswers[qId] === optionKey && !quizResult) {
-            return 'selected';
-        }
-        if (quizResult) {
-            const question = questions[qId as keyof typeof questions];
-            const isAnswer = question.answer === optionKey;
-            const isSelected = quizAnswers[qId] === optionKey;
-
-            if(isAnswer) return 'correct';
-            if(isSelected && !isAnswer) return 'incorrect';
-        }
-        return '';
-    }
+    const quiz = useQuiz(questions);
 
     const contentSections = [
         {
@@ -185,85 +157,17 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                     Test your understanding of the privacy laws and frameworks covered in this module.
                                 </p>
                                 
-                                <div className="space-y-8">
-                                    {Object.entries(questions).map(([qId, qData], index) => (
-                                        <div key={qId} className="quiz-question">
-                                            <p className="font-semibold mb-4 text-text-primary text-lg">
-                                                Question {index + 1}: {qData.question}
-                                            </p>
-                                            <div className="space-y-3">
-                                                {Object.entries(qData.options).map(([key, value]) => (
-                                                    <label 
-                                                        key={key}
-                                                        htmlFor={`${qId}-${key}`} 
-                                                        className={`quiz-option flex items-center p-4 cursor-pointer ${getOptionClass(qId, key)}`}
-                                                    >
-                                                        <input 
-                                                            type="radio" 
-                                                            id={`${qId}-${key}`} 
-                                                            name={qId} 
-                                                            value={key} 
-                                                            onChange={() => handleQuizChange(qId, key)} 
-                                                            checked={quizAnswers[qId] === key} 
-                                                            className="hidden" 
-                                                            disabled={!!quizResult} 
-                                                        />
-                                                        <span className="text-text-primary">{value}</span>
-                                                    </label>
-                                                ))}
-                                            </div>
-                                            {quizResult && (
-                                                <div className="mt-4 p-3 bg-surface-elevated rounded-lg">
-                                                    <p className="text-sm text-text-secondary">
-                                                        <strong>Explanation:</strong> {qData.explanation}
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    ))}
-                                </div>
-
-                                {!quizResult && (
-                                    <div className="text-center mt-8">
-                                        <button 
-                                            onClick={checkModuleQuiz} 
-                                            disabled={Object.keys(quizAnswers).length !== Object.keys(questions).length} 
-                                            className="btn-primary py-3 px-8 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-                                        >
-                                            Check Answers
-                                        </button>
-                                    </div>
-                                )}
-                                
-                                {quizResult && (
-                                    <div className={`quiz-result ${quizResult.score < 80 ? 'failed' : ''}`}>
-                                        <div className="flex items-center justify-between mb-4">
-                                            <h4 className="text-xl font-bold text-text-primary">
-                                                Quiz Results
-                                            </h4>
-                                            <div className={`text-2xl font-bold ${quizResult.score >= 80 ? 'text-success' : 'text-warning'}`}>
-                                                {quizResult.score}%
-                                            </div>
-                                        </div>
-                                        <p className="text-text-secondary mb-4">
-                                            {quizResult.score >= 80 
-                                                ? "Excellent work! You've demonstrated a strong understanding of privacy laws and frameworks."
-                                                : "Good effort! Review the explanations above and consider retaking the quiz to improve your score."
-                                            }
-                                        </p>
-                                        {quizResult.score < 80 && (
-                                            <button 
-                                                onClick={() => {
-                                                    setQuizResult(null);
-                                                    setQuizAnswers({});
-                                                }}
-                                                className="btn-secondary py-2 px-6 mr-4"
-                                            >
-                                                Retake Quiz
-                                            </button>
-                                        )}
-                                    </div>
-                                )}
+                                <QuizComponent
+                                    questions={questions}
+                                    answers={quiz.answers}
+                                    result={quiz.result}
+                                    onAnswerChange={quiz.handleAnswerChange}
+                                    onCheckAnswers={quiz.checkAnswers}
+                                    onRetake={quiz.resetQuiz}
+                                    getOptionClass={quiz.getOptionClass}
+                                    canSubmit={quiz.canSubmit}
+                                    showExplanations={true}
+                                />
 
                                 <div className="text-center mt-6">
                                     <button 
@@ -290,8 +194,8 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 Module 1 of 4 • Privacy Laws & Frameworks
                             </div>
                             <button 
-                                onClick={() => onComplete(quizResult?.score ?? 0)} 
-                                disabled={!quizResult || quizResult.score < 80} 
+                                onClick={() => onComplete(quiz.result?.score ?? 0)} 
+                                disabled={!quiz.result || (quiz.result.score < 80)} 
                                 className="w-full sm:w-auto btn-primary font-semibold py-3 px-6 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 Complete Module →
