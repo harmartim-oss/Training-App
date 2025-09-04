@@ -16,6 +16,10 @@ export default defineConfig(({ mode }) => {
           '@': path.resolve(__dirname, '.'),
         }
       },
+      // Ensure external dependencies are not treated as external in bundling
+      optimizeDeps: {
+        include: ['react', 'react-dom', '@google/genai']
+      },
       build: {
         outDir: 'dist',
         assetsDir: 'assets',
