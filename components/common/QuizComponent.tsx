@@ -52,12 +52,21 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
                     id={`${questionId}-${optionKey}`}
                     name={questionId}
                     value={optionKey}
-                    onChange={() => onAnswerChange(questionId, optionKey)}
+                    onChange={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onAnswerChange(questionId, optionKey);
+                    }}
                     checked={answers[questionId] === optionKey}
                     className="hidden"
                     disabled={!!result}
                   />
-                  <span className="text-text-primary font-mono">{optionValue}</span>
+                  <span className="text-text-primary font-mono" onClick={(e) => {
+                    e.preventDefault();
+                    if (!result) {
+                      onAnswerChange(questionId, optionKey);
+                    }
+                  }}>{optionValue}</span>
                 </label>
               ))}
             </div>
@@ -74,13 +83,20 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
       </div>
 
       {!result && (
-        <button
-          onClick={onCheckAnswers}
-          disabled={!canSubmit}
-          className="mt-6 btn-primary py-2 px-6 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Check Answers
-        </button>
+        <div className="mt-6">
+          <button
+            onClick={onCheckAnswers}
+            disabled={!canSubmit}
+            className="btn-primary py-2 px-6 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Check Answers
+          </button>
+          {process.env.NODE_ENV === 'development' && (
+            <div className="mt-2 text-xs text-text-muted">
+              Debug: {Object.keys(answers).length}/{Object.keys(questions).length} answers
+            </div>
+          )}
+        </div>
       )}
 
       {result && (
