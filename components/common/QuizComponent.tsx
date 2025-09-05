@@ -46,27 +46,27 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
                   key={`${questionId}-${optionKey}`}
                   htmlFor={`${questionId}-${optionKey}`}
                   className={`quiz-option flex items-center p-4 cursor-pointer ${getOptionClass(questionId, optionKey)}`}
+                  onClick={() => {
+                    if (!result) {
+                      onAnswerChange(questionId, optionKey);
+                    }
+                  }}
                 >
                   <input
                     type="radio"
                     id={`${questionId}-${optionKey}`}
                     name={questionId}
                     value={optionKey}
-                    onChange={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      onAnswerChange(questionId, optionKey);
+                    onChange={() => {
+                      if (!result) {
+                        onAnswerChange(questionId, optionKey);
+                      }
                     }}
                     checked={answers[questionId] === optionKey}
                     className="hidden"
                     disabled={!!result}
                   />
-                  <span className="text-text-primary font-mono" onClick={(e) => {
-                    e.preventDefault();
-                    if (!result) {
-                      onAnswerChange(questionId, optionKey);
-                    }
-                  }}>{optionValue}</span>
+                  <span className="text-text-primary font-mono">{optionValue}</span>
                 </label>
               ))}
             </div>
