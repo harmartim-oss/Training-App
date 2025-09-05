@@ -21,19 +21,19 @@ const features = [
   {
     icon: <ModuleIcon2 className="w-8 h-8 text-primary" />,
     title: 'Built for Ontario',
-    description: 'Master the specific legal and regulatory landscape of Ontario, including PIPEDA, FIPPA, and the new provincial AI directives.',
+    description: 'Master the specific legal and regulatory landscape of Ontario, including PIPEDA, MFIPPA, and the new provincial AI directives.',
   },
 ];
 
 const modules = [
-    { title: "Ontario's Privacy & Legal Framework", description: "Navigate PIPEDA, FIPPA, and new data breach notification laws." },
+    { title: "Ontario's Privacy & Legal Framework", description: "Navigate PIPEDA, MFIPPA, and new data breach notification laws." },
     { title: 'Cybersecurity Defence & Incident Response', description: "Implement risk assessments and manage active security threats." },
     { title: 'AI Governance & Responsible Use', description: "Apply Ontario's directive for the ethical deployment of AI systems." },
     { title: 'Secure Data & Records Management', description: "Master data classification, retention policies, and cross-border compliance." },
 ];
 
 const audience = [
-    { icon: <MunicipalityIcon className="w-8 h-8 text-primary" />, title: 'Municipalities', description: "Equip your public sector teams with the knowledge to protect citizen data and comply with FIPPA." },
+    { icon: <MunicipalityIcon className="w-8 h-8 text-primary" />, title: 'Municipalities', description: "Equip your public sector teams with the knowledge to protect citizen data and comply with MFIPPA." },
     { icon: <BusinessIcon className="w-8 h-8 text-primary" />, title: 'Small Businesses', description: "Safeguard your customer information and business operations from costly cyber threats under PIPEDA." },
     { icon: <NonProfitIcon className="w-8 h-8 text-primary" />, title: 'Non-Profits', description: "Protect your donor and member data, maintain trust, and secure your mission-critical operations." },
 ];
@@ -49,7 +49,7 @@ const faqs = [
     { q: "Who is this certification for?", a: "This certification is designed for professionals in Ontario's municipalities, small businesses, and non-profit sectors who handle sensitive data and are responsible for digital security and compliance." },
     { q: "Is there a prerequisite for this course?", a: "No, there are no formal prerequisites. The program is designed to be accessible to individuals with a range of technical backgrounds, focusing on practical application and legal understanding." },
     { q: "How long does the certification take to complete?", a: "The training is self-paced. On average, participants complete all modules and the final assessment within 15-20 hours of study." },
-    { q: "Is the OCRP designation recognized across Canada?", a: "While the curriculum has a specific focus on Ontario's legal landscape (like FIPPA), the cybersecurity and data management principles are based on national and international standards, making the skills highly transferable." },
+    { q: "Is the OCRP designation recognized across Canada?", a: "While the curriculum has a specific focus on Ontario's legal landscape (like MFIPPA), the cybersecurity and data management principles are based on national and international standards, making the skills highly transferable." },
 ];
 
 interface LandingPageProps {

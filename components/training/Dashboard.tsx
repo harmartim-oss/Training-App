@@ -24,7 +24,7 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
         { 
             id: 'module1', 
             title: 'Privacy Laws & Frameworks', 
-            description: 'Navigate PIPEDA, FIPPA, and new data breach notification laws',
+            description: 'Navigate PIPEDA, MFIPPA, and new data breach notification laws',
             icon: <ModuleIcon1 className="w-8 h-8 text-primary" />,
             estimatedTime: '2-3 hours'
         },
