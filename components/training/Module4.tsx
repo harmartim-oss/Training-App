@@ -14,14 +14,14 @@ interface ModuleProps {
 const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const questions: QuizQuestions = {
         q1: { 
-            question: "Under FIPPA, where must Ontario municipalities generally store personal information?", 
+            question: "Under MFIPPA, where must Ontario municipalities generally store personal information?", 
             answer: 'b', 
             options: { 
                 a: "Anywhere in North America", 
-                b: "Within Canada", 
+                b: "Within Canada, unless adequate safeguards are in place", 
                 c: "Within Ontario only" 
             },
-            explanation: "FIPPA requires personal information collected by Ontario institutions to be stored and accessed only in Canada, with limited exceptions."
+            explanation: "MFIPPA requires personal information collected by Ontario municipalities to be stored and accessed only in Canada, with limited exceptions where adequate safeguards exist."
         },
         q2: { 
             question: "What is the typical retention period for employee files after termination in Ontario?", 
