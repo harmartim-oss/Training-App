@@ -14,7 +14,7 @@ interface ModuleProps {
 const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
 
-    const questions: QuizQuestions = {
+    const allQuestions: QuizQuestions = {
         q1: { 
             question: "Which principle requires that AI use follows a 'problem-first' rather than 'technology-first' approach?", 
             answer: 'b', 
@@ -55,9 +55,53 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
             },
             explanation: "Human oversight requires meaningful human control, especially for high-risk decisions, while allowing appropriate automation for low-risk scenarios."
         },
+        q5: {
+            question: "Which of the following is a key component of an Algorithmic Impact Assessment (AIA)?",
+            answer: 'a',
+            options: {
+                a: "Evaluation of potential bias and fairness issues",
+                b: "Performance benchmarking against competitors",
+                c: "Cost-benefit analysis only",
+                d: "User satisfaction surveys"
+            },
+            explanation: "AIAs must thoroughly evaluate potential bias and fairness issues to ensure equitable outcomes for all affected individuals."
+        },
+        q6: {
+            question: "Under Ontario's AI directive, what level of transparency is required for high-risk AI systems?",
+            answer: 'c',
+            options: {
+                a: "No transparency required",
+                b: "Basic disclosure of AI use",
+                c: "Detailed explanations of AI decision-making processes",
+                d: "Only technical documentation"
+            },
+            explanation: "High-risk AI systems require detailed transparency, including clear explanations of how decisions are made to ensure accountability."
+        },
+        q7: {
+            question: "What is the primary purpose of ongoing monitoring in AI governance?",
+            answer: 'b',
+            options: {
+                a: "To improve system performance only",
+                b: "To detect and mitigate emerging risks and biases",
+                c: "To reduce operational costs",
+                d: "To collect user feedback"
+            },
+            explanation: "Ongoing monitoring is essential for detecting emerging risks, biases, and unintended consequences that may develop over time."
+        },
+        q8: {
+            question: "Which principle emphasizes that AI systems should be designed to minimize harm and maximize benefits?",
+            answer: 'a',
+            options: {
+                a: "AI is used to benefit the people of Ontario",
+                b: "AI use is transparent",
+                c: "AI use is justified and proportionate",
+                d: "AI is used to support people"
+            },
+            explanation: "This principle specifically focuses on ensuring AI systems are designed and deployed to maximize benefits while minimizing potential harms to citizens."
+        }
     };
 
-    const quiz = useQuiz(questions);
+    const quiz = useQuiz(allQuestions, 5);
 
     const contentSections = [
         {
@@ -362,7 +406,7 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 <p className="mb-6 text-text-secondary">Test your understanding of AI governance principles and Ontario's responsible AI directive.</p>
                                 
                                 <QuizComponent
-                                    questions={questions}
+                                    questions={quiz.selectedQuestions}
                                     answers={quiz.answers}
                                     result={quiz.result}
                                     onAnswerChange={quiz.handleAnswerChange}

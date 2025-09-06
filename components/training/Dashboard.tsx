@@ -183,6 +183,26 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                                     </div>
                                 </div>
                                 
+                                {/* Module Progress Bar */}
+                                <div className="mb-4">
+                                    <div className="flex justify-between text-sm text-text-secondary mb-2">
+                                        <span>Progress</span>
+                                        <span>{moduleProgress.completed ? '100%' : moduleProgress.progress}%</span>
+                                    </div>
+                                    <div className="w-full bg-border rounded-full h-2">
+                                        <div 
+                                            className={`h-2 rounded-full transition-all duration-500 ease-out ${
+                                                moduleProgress.completed 
+                                                    ? 'bg-gradient-to-r from-success to-primary' 
+                                                    : 'bg-gradient-to-r from-primary to-accent'
+                                            }`}
+                                            style={{ 
+                                                width: `${moduleProgress.completed ? 100 : moduleProgress.progress}%` 
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                                
                                 <button 
                                     onClick={() => onNavigate(module.id)} 
                                     disabled={isLocked}
