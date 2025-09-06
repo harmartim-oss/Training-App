@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "generate-pdfs": "node scripts/generate-pdfs.js"
   },
   "dependencies": {
     "@google/genai": "^1.16.0",
@@ -17,8 +18,11 @@
   "devDependencies": {
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.16",
+    "fs-extra": "^11.1.1",
     "gh-pages": "^6.1.1",
+    "markdown-it": "^13.0.1",
     "postcss": "^8.4.32",
+    "puppeteer": "^22.0.0",
     "tailwindcss": "^3.4.0",
     "terser": "^5.44.0",
     "typescript": "~5.8.2",
