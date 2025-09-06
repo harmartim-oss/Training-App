@@ -10,10 +10,14 @@
  *   npm install markdown-it puppeteer fs-extra
  */
 
-const fs = require('fs-extra');
-const path = require('path');
-const MarkdownIt = require('markdown-it');
-const puppeteer = require('puppeteer');
+import fs from 'fs-extra';
+import path from 'path';
+import MarkdownIt from 'markdown-it';
+import puppeteer from 'puppeteer';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const md = new MarkdownIt({ html: true });
 const resourcesDir = path.join(__dirname, '..', 'public', 'resources');
