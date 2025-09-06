@@ -25,12 +25,17 @@ export default defineConfig(({ mode }) => {
         assetsDir: 'assets',
         sourcemap: false,
         minify: 'terser',
+        // Improve chunk handling for better caching
         rollupOptions: {
           output: {
             manualChunks: {
               vendor: ['react', 'react-dom'],
               utils: ['@google/genai']
-            }
+            },
+            // Add hash to filenames for better caching
+            assetFileNames: 'assets/[name]-[hash][extname]',
+            chunkFileNames: 'assets/[name]-[hash].js',
+            entryFileNames: 'assets/[name]-[hash].js'
           }
         },
         terserOptions: {
