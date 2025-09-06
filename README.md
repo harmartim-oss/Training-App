@@ -12,9 +12,10 @@ View your app in AI Studio: https://ai.studio/apps/drive/16S-RiCAskAmYTdzOJsJSC6
 
 **Prerequisites:**  Node.js
 
-
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. (Optional) Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+   - Copy `.env.example` to `.env.local` and add your API key
+   - If not provided, the AI Study Assistant will be disabled but the app will work normally
 3. Run the app:
    `npm run dev`
