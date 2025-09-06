@@ -64,10 +64,14 @@ const StudyAssistant: React.FC = () => {
     useEffect(() => {
         try {
             chatInstance.current = getTutorChat();
+            setMessages([{ role: 'model', text: "Hello! I'm your AI study assistant. How can I help you with the course material today?" }]);
         } catch (error) {
             console.warn("AI Study Assistant unavailable:", error);
             setIsAvailable(false);
-            setMessages([{ role: 'model', text: "AI Study Assistant is currently unavailable. Please continue with your training modules." }]);
+            setMessages([{ 
+                role: 'model', 
+                text: "AI Study Assistant is currently unavailable. To enable this feature, please configure your Gemini API key in the environment settings. You can continue with your training modules in the meantime." 
+            }]);
         }
     }, []);
 
