@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 import React from 'react';
-import { QuizQuestions, QuizResult } from '../../hooks/useQuiz';
+import { QuizQuestions, QuizQuestion, QuizResult } from '../../hooks/useQuiz';
 
 interface QuizComponentProps {
   questions: QuizQuestions;
@@ -35,7 +35,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
       </h3>
       
       <div className="space-y-6">
-        {Object.entries(questions).map(([questionId, question]) => (
+        {Object.entries(questions).map(([questionId, question]: [string, QuizQuestion]) => (
           <div key={questionId}>
             <p className="font-medium mb-3 text-text-primary">
               {question.question}
