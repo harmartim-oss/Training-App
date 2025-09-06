@@ -36,9 +36,17 @@ const ResourcesPanel: React.FC = () => {
     const handleDownload = (filename: string, type: string) => {
         const extension = type === 'pdf' ? 'pdf' : 'md';
         const link = document.createElement('a');
-        link.href = `/resources/${filename}.${extension}`;
+        // Use relative path that works with base path configuration
+        const basePath = import.meta.env.BASE_URL || '/';
+        link.href = `${basePath}resources/${filename}.${extension}`;
         link.download = `${filename}.${extension}`;
         link.target = '_blank';
+        
+        // Add error handling for missing resources
+        link.onerror = () => {
+            alert(`Resource ${filename}.${extension} is not available. Please contact support.`);
+        };
+        
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

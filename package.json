@@ -27,5 +27,11 @@
     "terser": "^5.44.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
 }
