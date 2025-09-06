@@ -14,7 +14,7 @@ interface ModuleProps {
 const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
 
-    const questions: QuizQuestions = {
+    const allQuestions: QuizQuestions = {
         q1: { 
             question: "Which risk assessment methodology focuses on qualitative analysis using probability and impact matrices?", 
             answer: 'b', 
@@ -39,9 +39,53 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
             options: { a: "Multiple layers of security controls", b: "Single strong perimeter defense", c: "Focus only on endpoint protection" },
             explanation: "Defense in depth uses multiple layers of security controls to provide redundant protection against threats."
         },
+        q5: {
+            question: "Which cryptographic principle states that the security of a system should not depend on the secrecy of the algorithm?",
+            answer: 'b',
+            options: { 
+                a: "Perfect forward secrecy", 
+                b: "Kerckhoffs's principle", 
+                c: "Diffusion principle",
+                d: "Non-repudiation"
+            },
+            explanation: "Kerckhoffs's principle states that cryptographic security should rely on the secrecy of the key, not the algorithm itself."
+        },
+        q6: {
+            question: "What is the primary purpose of vulnerability scanning in a cybersecurity program?",
+            answer: 'c',
+            options: {
+                a: "To exploit discovered weaknesses",
+                b: "To replace penetration testing entirely",
+                c: "To identify and prioritize security weaknesses",
+                d: "To monitor network traffic"
+            },
+            explanation: "Vulnerability scanning systematically identifies and prioritizes security weaknesses across systems and applications."
+        },
+        q7: {
+            question: "Which type of security awareness training is most effective for reducing phishing susceptibility?",
+            answer: 'a',
+            options: {
+                a: "Regular simulated phishing exercises with immediate feedback",
+                b: "Annual mandatory training videos",
+                c: "Email reminders about phishing threats",
+                d: "Poster campaigns about cybersecurity"
+            },
+            explanation: "Simulated phishing exercises with immediate feedback provide hands-on learning and measurable improvement in user behavior."
+        },
+        q8: {
+            question: "In the NIST Cybersecurity Framework, which function focuses on maintaining resilience and restoring services?",
+            answer: 'd',
+            options: {
+                a: "Identify",
+                b: "Protect", 
+                c: "Detect",
+                d: "Recover"
+            },
+            explanation: "The Recover function focuses on maintaining resilience and restoring any capabilities or services that were impaired due to a cybersecurity event."
+        }
     };
 
-    const quiz = useQuiz(questions);
+    const quiz = useQuiz(allQuestions, 5);
 
     const contentSections = [
         {
@@ -392,7 +436,7 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 <p className="mb-6 text-text-secondary">Test your understanding of cybersecurity fundamentals and risk management principles.</p>
                                 
                                 <QuizComponent
-                                    questions={questions}
+                                    questions={quiz.selectedQuestions}
                                     answers={quiz.answers}
                                     result={quiz.result}
                                     onAnswerChange={quiz.handleAnswerChange}

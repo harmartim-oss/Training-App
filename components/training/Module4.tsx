@@ -14,7 +14,7 @@ interface ModuleProps {
 const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
 
-    const questions: QuizQuestions = {
+    const allQuestions: QuizQuestions = {
         q1: { 
             question: "Under MFIPPA, where must Ontario municipalities generally store personal information?", 
             answer: 'b', 
@@ -55,9 +55,53 @@ const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
             },
             explanation: "Cloud storage implementations must consider data residency requirements, appropriate security controls, and vendor compliance with applicable privacy and security standards."
         },
+        q5: {
+            question: "What is the maximum retention period for most municipal records under Ontario's guidelines?",
+            answer: 'c',
+            options: {
+                a: "10 years",
+                b: "25 years", 
+                c: "Permanent retention for records of historical significance",
+                d: "50 years maximum"
+            },
+            explanation: "Some municipal records, particularly those of historical significance, may require permanent retention under Ontario's records management guidelines."
+        },
+        q6: {
+            question: "Which data classification level typically requires the highest security controls?",
+            answer: 'a',
+            options: {
+                a: "Confidential/Sensitive",
+                b: "Internal Use",
+                c: "Public",
+                d: "Restricted"
+            },
+            explanation: "Confidential or sensitive data classification requires the highest level of security controls including encryption, access controls, and audit logging."
+        },
+        q7: {
+            question: "What is the primary consideration when disposing of confidential records?",
+            answer: 'b',
+            options: {
+                a: "Cost efficiency",
+                b: "Secure destruction to prevent unauthorized recovery",
+                c: "Speed of disposal process",
+                d: "Environmental impact only"
+            },
+            explanation: "Confidential records must be securely destroyed using methods that prevent unauthorized recovery of the information."
+        },
+        q8: {
+            question: "Under data governance frameworks, who is typically responsible for classifying data?",
+            answer: 'c',
+            options: {
+                a: "IT department only",
+                b: "External consultants",
+                c: "Data owners in collaboration with IT and compliance teams",
+                d: "Only senior management"
+            },
+            explanation: "Data owners, who understand the business context and sensitivity, should classify data in collaboration with IT and compliance teams."
+        }
     };
 
-    const quiz = useQuiz(questions);
+    const quiz = useQuiz(allQuestions, 5);
 
     const contentSections = [
         {
@@ -342,7 +386,7 @@ const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 <p className="mb-6 text-text-secondary">Test your understanding of data management principles and compliance requirements.</p>
                                 
                                 <QuizComponent
-                                    questions={questions}
+                                    questions={quiz.selectedQuestions}
                                     answers={quiz.answers}
                                     result={quiz.result}
                                     onAnswerChange={quiz.handleAnswerChange}

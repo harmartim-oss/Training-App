@@ -286,10 +286,10 @@ details[open] .chevron-icon {
 }
 
 .assistant-modal {
-  @apply fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full h-full sm:w-[440px] sm:h-[70vh] sm:max-h-[700px] flex flex-col transition-transform duration-300 ease-in-out rounded-t-lg sm:rounded-lg;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 8px 32px var(--shadow-medium);
+  @apply fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-50 w-full h-full sm:w-[480px] sm:h-[75vh] sm:max-h-[800px] flex flex-col transition-transform duration-300 ease-in-out rounded-t-xl sm:rounded-xl;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-elevated) 100%);
+  border: 2px solid var(--primary);
+  box-shadow: 0 16px 48px var(--shadow-medium);
   transform: translateY(100%);
 }
 
@@ -308,7 +308,8 @@ details[open] .chevron-icon {
 
 .assistant-header {
   @apply flex justify-between items-center p-4 border-b flex-shrink-0 font-mono;
-  border-color: var(--border);
+  border-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface-elevated) 100%);
 }
 
 .assistant-header h3 { 
@@ -317,7 +318,7 @@ details[open] .chevron-icon {
 }
 
 .assistant-header button { 
-  @apply transition-colors;
+  @apply transition-colors hover:scale-110 duration-200;
   color: var(--text-secondary);
 }
 
@@ -325,29 +326,72 @@ details[open] .chevron-icon {
   color: var(--primary);
 }
 
+.assistant-quick-actions {
+  @apply p-4 border-b;
+  border-color: var(--border);
+  background: var(--surface-elevated);
+}
+
 .assistant-messages { 
   @apply flex-1 p-4 space-y-4 overflow-y-auto; 
 }
 
 .message-bubble { 
-  @apply max-w-[85%] p-3 text-base rounded-lg; 
+  @apply max-w-[85%] p-3 text-base rounded-xl leading-relaxed; 
+  line-height: 1.6;
+  word-wrap: break-word;
 }
 
 .message-user { 
   @apply text-white ml-auto;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
 }
 
 .message-model { 
   @apply mr-auto border;
-  background-color: var(--surface-elevated);
+  background: linear-gradient(135deg, var(--surface-elevated) 0%, var(--surface) 100%);
   color: var(--text-primary);
   border-color: var(--border);
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.typing-indicator {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes typing {
+  0%, 80%, 100% { 
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .assistant-input-area { 
   @apply p-4 border-t flex-shrink-0;
   border-color: var(--border);
+  background: var(--surface-elevated);
 }
 
 .assistant-input-form { 
@@ -612,25 +656,67 @@ details[open] .chevron-icon {
 }
 
 .learning-objectives {
-  background: var(--surface-elevated);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 1.5rem;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface-elevated) 100%);
+  border: 2px solid var(--primary);
+  border-radius: 16px;
+  padding: 2rem;
   margin: 2rem 0;
+  box-shadow: 0 8px 24px var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.learning-objectives::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 50%, var(--primary) 100%);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+.learning-objectives h3 {
+  position: relative;
+  z-index: 1;
+}
+
+.learning-objectives ul {
+  position: relative;
+  z-index: 1;
 }
 
 .learning-objectives ul li {
   position: relative;
-  padding-left: 1.5rem;
-  margin-bottom: 0.75rem;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+.learning-objectives ul li:hover {
+  transform: translateX(8px);
+  color: var(--text-primary);
 }
 
 .learning-objectives ul li::before {
-  content: '✓';
+  content: '🎯';
   position: absolute;
   left: 0;
-  color: var(--success);
-  font-weight: bold;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.learning-objectives ul li:hover::before {
+  transform: scale(1.2);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .content-section {
@@ -643,60 +729,160 @@ details[open] .chevron-icon {
 
 .quiz-container {
   background: linear-gradient(135deg, var(--background) 0%, var(--surface-elevated) 100%);
-  border: 2px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  padding: 2.5rem;
   margin: 2rem 0;
+  box-shadow: 0 12px 32px var(--shadow-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 50%, var(--success) 100%);
+  background-size: 200% 100%;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+.quiz-container h3 {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.quiz-container > p {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
 }
 
 .quiz-question {
   background: var(--surface);
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px var(--shadow-light);
+  transition: all 0.3s ease;
+}
+
+.quiz-question:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--shadow-light);
+}
+
+.quiz-question p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
   margin-bottom: 1.5rem;
-  border-left: 4px solid var(--accent);
+  line-height: 1.6;
 }
 
 .quiz-option {
   background: var(--surface);
   border: 2px solid var(--border);
-  border-radius: 8px;
-  margin: 0.5rem 0;
-  transition: all 0.3s ease;
+  border-radius: 12px;
+  margin: 0.75rem 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
+}
+
+.quiz-option::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.quiz-option:hover::before {
+  left: 100%;
 }
 
 .quiz-option:hover {
   border-color: var(--primary);
-  transform: translateX(4px);
+  transform: translateX(8px);
+  box-shadow: 0 4px 16px var(--shadow-light);
+}
+
+.quiz-option span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .quiz-option.selected {
   border-color: var(--primary);
-  background: var(--primary-light);
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface) 100%);
+  transform: translateX(8px);
+  box-shadow: 0 6px 20px var(--shadow-light);
 }
 
 .quiz-option.correct {
   border-color: var(--success);
-  background: rgba(40, 167, 69, 0.1);
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, var(--surface) 100%);
+  animation: correctPulse 0.6s ease-out;
 }
 
 .quiz-option.incorrect {
   border-color: var(--danger);
-  background: rgba(220, 53, 69, 0.1);
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.15) 0%, var(--surface) 100%);
+  animation: incorrectShake 0.6s ease-out;
+}
+
+@keyframes correctPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes incorrectShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
 }
 
 .quiz-result {
-  background: var(--surface);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
-  border-left: 4px solid var(--success);
+  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-elevated) 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+  border: 2px solid var(--success);
+  box-shadow: 0 8px 24px var(--shadow-light);
+  animation: slideIn 0.6s ease-out;
 }
 
 .quiz-result.failed {
-  border-left-color: var(--warning);
+  border-color: var(--warning);
+}
+
+.quiz-result h4 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.quiz-result p {
+  text-align: center;
+  font-size: 1.1rem;
 }
 
 .module-navigation {

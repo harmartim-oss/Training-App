@@ -49,35 +49,68 @@ interface Message {
   text: string;
 }
 
-const StudyAssistant: React.FC = () => {
+const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress }> = ({ currentModule, userProgress }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [messages, setMessages] = useState<Message[]>([
-        { role: 'model', text: "Hello! I'm your AI study assistant. How can I help you with the course material today?" }
-    ]);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isAvailable, setIsAvailable] = useState(true);
     const chatInstance = useRef<any>(null);
     const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
+    // Get contextual welcome message based on current module and progress
+    const getWelcomeMessage = () => {
+        const completedModules = userProgress ? Object.values(userProgress).filter(m => 'completed' in m && m.completed).length : 0;
+        const contextualInfo = currentModule ? ` You're currently working on ${currentModule}.` : '';
+        
+        if (completedModules === 0) {
+            return `Hello! 👋 I'm your AI study assistant for the Ontario Certified Cyber Resilience Professional (OCRP) program.${contextualInfo} I'm here to help you understand the training material, clarify concepts, and guide you through your learning journey. Feel free to ask me anything about privacy laws, cybersecurity fundamentals, AI governance, or data management!`;
+        } else {
+            return `Welcome back! 🚀 I see you've completed ${completedModules} module${completedModules > 1 ? 's' : ''} - great progress!${contextualInfo} How can I help you with your OCRP certification today?`;
+        }
+    };
+
     // Initialize chat instance with error handling
     useEffect(() => {
         try {
             chatInstance.current = getTutorChat();
-            setMessages([{ role: 'model', text: "Hello! I'm your AI study assistant. How can I help you with the course material today?" }]);
+            setMessages([{ role: 'model', text: getWelcomeMessage() }]);
         } catch (error) {
             console.warn("AI Study Assistant unavailable:", error);
             setIsAvailable(false);
             setMessages([{ 
                 role: 'model', 
-                text: "AI Study Assistant is currently unavailable. To enable this feature, please configure your Gemini API key in the environment settings. You can continue with your training modules in the meantime." 
+                text: "🤖 AI Study Assistant is currently unavailable. To enable this feature, please configure your Gemini API key in the environment settings. You can continue with your training modules in the meantime. For immediate help, review the learning objectives and explanations provided in each module." 
             }]);
         }
-    }, []);
+    }, [currentModule, userProgress]);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
+
+    // Quick action buttons for common questions
+    const quickActions = [
+        { text: "Explain key concepts from this module", icon: "📚" },
+        { text: "Help me prepare for the quiz", icon: "🎯" },
+        { text: "What are the main learning objectives?", icon: "✅" },
+        { text: "Give me study tips", icon: "💡" }
+    ];
+
+    const handleQuickAction = (actionText: string) => {
+        if (!isAvailable || isLoading) return;
+        
+        // Add context about current module if available
+        const contextualPrompt = currentModule 
+            ? `${actionText} for ${currentModule.replace('module', 'Module ')}`
+            : actionText;
+            
+        setInput(contextualPrompt);
+        setTimeout(() => {
+            const form = document.querySelector('.assistant-input-form') as HTMLFormElement;
+            form?.requestSubmit();
+        }, 100);
+    };
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -85,6 +118,7 @@ const StudyAssistant: React.FC = () => {
 
         const userMessage: Message = { role: 'user', text: input };
         setMessages(prev => [...prev, userMessage]);
+        const currentInput = input;
         setInput('');
         setIsLoading(true);
 
@@ -92,9 +126,16 @@ const StudyAssistant: React.FC = () => {
             if (!chatInstance.current) {
                 throw new Error("Chat service not available");
             }
-            const stream = await sendMessage(chatInstance.current, input);
+            
+            // Add context about current module and progress to the prompt
+            let contextualPrompt = currentInput;
+            if (currentModule) {
+                contextualPrompt += ` (Current context: working on ${currentModule.replace('module', 'Module ')})`;
+            }
+            
+            const stream = await sendMessage(chatInstance.current, contextualPrompt);
             let modelResponse = '';
-            setMessages(prev => [...prev, { role: 'model', text: '...' }]); 
+            setMessages(prev => [...prev, { role: 'model', text: '🤔 Thinking...' }]); 
 
             for await (const chunk of stream) {
                 modelResponse += chunk.text;
@@ -108,7 +149,7 @@ const StudyAssistant: React.FC = () => {
             console.error(error);
             setMessages(prev => {
                 const newMessages = [...prev];
-                newMessages[newMessages.length-1].text = "Sorry, the AI assistant is currently unavailable. Please continue with your training.";
+                newMessages[newMessages.length-1].text = "😔 Sorry, the AI assistant is currently unavailable. Please continue with your training and refer to the explanations provided in each module.";
                 return newMessages;
             });
         } finally {
@@ -128,17 +169,47 @@ const StudyAssistant: React.FC = () => {
             </button>
             <div className={`assistant-modal no-print ${isOpen ? 'open' : ''}`}>
                 <header className="assistant-header">
-                    <h3>AI Study Assistant</h3>
+                    <h3>🤖 AI Study Assistant</h3>
                     <button onClick={() => setIsOpen(false)} aria-label="Close chat">
                         <CloseIcon className="w-6 h-6"/>
                     </button>
                 </header>
+                
+                {/* Quick Actions */}
+                {isAvailable && messages.length <= 2 && (
+                    <div className="assistant-quick-actions">
+                        <p className="text-sm text-text-secondary mb-3">Quick actions:</p>
+                        <div className="grid grid-cols-2 gap-2">
+                            {quickActions.map((action, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => handleQuickAction(action.text)}
+                                    className="text-left p-2 text-xs bg-surface hover:bg-surface-elevated border border-border rounded-lg transition-colors"
+                                    disabled={isLoading}
+                                >
+                                    <span className="block">{action.icon} {action.text}</span>
+                                </button>
+                            ))}
+                        </div>
+                        <hr className="my-4 border-border" />
+                    </div>
+                )}
+                
                 <div className="assistant-messages">
                     {messages.map((msg, index) => (
                         <div key={index} className={`message-bubble ${msg.role === 'user' ? 'message-user' : 'message-model'}`}>
                             {msg.text}
                         </div>
                     ))}
+                    {isLoading && (
+                        <div className="message-bubble message-model typing-indicator">
+                            <div className="typing-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    )}
                     <div ref={messagesEndRef} />
                 </div>
                 <div className="assistant-input-area">
@@ -147,8 +218,8 @@ const StudyAssistant: React.FC = () => {
                             type="text"
                             value={input}
                             onChange={e => setInput(e.target.value)}
-                            placeholder="Ask a question..."
-                            disabled={isLoading}
+                            placeholder={isAvailable ? "Ask me anything about the course material..." : "AI Assistant unavailable"}
+                            disabled={isLoading || !isAvailable}
                             aria-label="Your message"
                         />
                         <button type="submit" disabled={isLoading || !input.trim() || !isAvailable} aria-label="Send message">
@@ -263,7 +334,7 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
             <main className="flex-1 p-6 sm:p-8 lg:p-12 overflow-y-auto">
                 {renderSection()}
             </main>
-            <StudyAssistant />
+            <StudyAssistant currentModule={activeSection} userProgress={userProgress} />
         </div>
     );
 };

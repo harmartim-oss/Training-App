@@ -15,7 +15,7 @@ interface ModuleProps {
 const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
     
-    const questions: QuizQuestions = {
+    const allQuestions: QuizQuestions = {
         q1: { 
             question: "Under PIPEDA, when must an organization identify the purposes for collecting personal information?", 
             answer: 'b', 
@@ -56,9 +56,53 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
             },
             explanation: "Bill 194 requires initial breach notification to the Privacy Commissioner within 24 hours for significant breaches."
         },
+        q5: {
+            question: "Which of the following is NOT one of PIPEDA's 10 Fair Information Principles?",
+            answer: 'c',
+            options: {
+                a: "Accountability",
+                b: "Limiting Collection", 
+                c: "Data Monetization",
+                d: "Individual Access"
+            },
+            explanation: "Data Monetization is not one of PIPEDA's principles. The 10 principles focus on privacy protection, not commercial use of data."
+        },
+        q6: {
+            question: "Under MFIPPA, personal information can be disclosed without consent in which circumstance?",
+            answer: 'a',
+            options: {
+                a: "For law enforcement purposes when authorized",
+                b: "To any government department for administrative efficiency", 
+                c: "To private companies for service delivery",
+                d: "For research purposes without restrictions"
+            },
+            explanation: "MFIPPA allows disclosure without consent in specific circumstances, including law enforcement when properly authorized under the Act."
+        },
+        q7: {
+            question: "What is the maximum penalty for PIPEDA violations under recent amendments?",
+            answer: 'b',
+            options: {
+                a: "$50,000 for individuals, $500,000 for organizations",
+                b: "$100,000 for individuals, $10 million for organizations",
+                c: "$25,000 for individuals, $1 million for organizations",
+                d: "No monetary penalties, only compliance orders"
+            },
+            explanation: "Recent amendments to PIPEDA significantly increased penalties to $100,000 for individuals and up to $10 million for organizations."
+        },
+        q8: {
+            question: "Which principle requires organizations to retain personal information only as long as necessary?",
+            answer: 'c',
+            options: {
+                a: "Accuracy",
+                b: "Safeguards",
+                c: "Limiting Use, Disclosure, and Retention",
+                d: "Openness"
+            },
+            explanation: "The 'Limiting Use, Disclosure, and Retention' principle requires that personal information be retained only as long as necessary for the identified purposes."
+        }
     };
 
-    const quiz = useQuiz(questions);
+    const quiz = useQuiz(allQuestions, 5);
 
     const contentSections = [
         {
@@ -335,7 +379,7 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 </p>
                                 
                                 <QuizComponent
-                                    questions={questions}
+                                    questions={quiz.selectedQuestions}
                                     answers={quiz.answers}
                                     result={quiz.result}
                                     onAnswerChange={quiz.handleAnswerChange}
