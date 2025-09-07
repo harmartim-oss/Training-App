@@ -66,58 +66,126 @@ export const AI_PROVIDERS: AIProvider[] = [
     }
 ];
 
-// Educational Assistant responses for OCRP topics
+// Enhanced Educational Assistant responses for OCRP topics with detailed, specific information
 const EDUCATIONAL_RESPONSES: Record<string, string[]> = {
     'pipeda': [
-        "PIPEDA (Personal Information Protection and Electronic Documents Act) is Canada's federal privacy law. It establishes 10 Fair Information Principles that organizations must follow when collecting, using, and disclosing personal information.",
-        "The key principles include: obtaining consent, limiting collection, ensuring accuracy, safeguarding information, and providing access to individuals.",
-        "PIPEDA applies to private sector organizations and covers commercial activities across Canada."
+        "📚 **PIPEDA Overview**: The Personal Information Protection and Electronic Documents Act (PIPEDA) is Canada's federal privacy law that governs how private sector organizations collect, use, and disclose personal information during commercial activities.\n\n🎯 **The 10 Fair Information Principles**: \n1. **Accountability** - Organizations are responsible for personal information under their control\n2. **Identifying Purposes** - Purposes must be identified before or at time of collection\n3. **Consent** - Knowledge and consent required for collection, use, disclosure\n4. **Limiting Collection** - Only collect what's necessary for identified purposes\n5. **Limiting Use, Disclosure & Retention** - Use only for intended purposes, retain only as long as necessary\n6. **Accuracy** - Keep information accurate, complete, and up-to-date\n7. **Safeguards** - Protect with security appropriate to sensitivity\n8. **Openness** - Make policies and practices readily available\n9. **Individual Access** - Provide access to personal information upon request\n10. **Challenging Compliance** - Address complaints and challenges to compliance",
+        
+        "💡 **PIPEDA Key Requirements**: Under PIPEDA, organizations must identify purposes for collecting personal information **before or at the time of collection** to ensure transparency. Consent must be meaningful - individuals must understand what they're agreeing to. Organizations can only collect, use, and disclose personal information for purposes that a reasonable person would consider appropriate in the circumstances.",
+        
+        "⚖️ **PIPEDA Penalties**: Recent amendments under Bill C-27 significantly increase penalties. Maximum fines are now $100,000 for individuals and $10 million for organizations. The Privacy Commissioner also has enhanced investigation powers and can make compliance orders that are enforceable in Federal Court."
     ],
+    
     'mfippa': [
-        "MFIPPA (Municipal Freedom of Information and Protection of Privacy Act) is Ontario's law governing municipalities and local agencies.",
-        "It provides individuals with rights to access information and protects personal privacy in municipal government.",
-        "Key requirements include privacy impact assessments, breach notification, and data minimization principles."
+        "🏛️ **MFIPPA Comprehensive Framework**: The Municipal Freedom of Information and Protection of Privacy Act (MFIPPA) governs how Ontario municipalities handle personal information and provide access to records, balancing transparency with privacy protection.\n\n📋 **Core MFIPPA Requirements**: \n• **Collection (s.28)**: Must collect directly from individuals unless specific exceptions apply\n• **Use & Disclosure (ss.29-32)**: Use only for original purpose or consistent uses\n• **Cross-border restrictions (s.30.1)**: Personal information must be stored and accessed only in Canada\n• **Individual Rights**: Access, correction, and complaint rights",
+        
+        "🔒 **MFIPPA Data Storage Rules**: Section 30.1 requires that personal information under municipal control must be **stored and accessed only within Canada**. Limited exceptions include: disclosure authorized under sections 29 or 31, written consent from individual, information available to general public, or Commissioner authorization. This is critical for cloud services - you must verify data residency with providers.",
+        
+        "📊 **Privacy Impact Assessments under MFIPPA**: PIAs are mandatory for new programs involving personal information collection. The process includes: threshold assessment, data mapping, risk assessment, mitigation strategies, and monitoring plans. Key triggers include new technology implementations, data sharing agreements, and cross-border transfers."
     ],
+    
+    'differences': [
+        "🔍 **Key PIPEDA vs MFIPPA Differences**:\n\n**Scope**: \n• PIPEDA: Private sector, commercial activities, federal jurisdiction\n• MFIPPA: Municipal governments, local agencies, Ontario jurisdiction\n\n**Data Storage**: \n• PIPEDA: No specific geographic restrictions (though foreign laws may apply)\n• MFIPPA: Strict Canadian storage requirement (s.30.1)\n\n**Enforcement**: \n• PIPEDA: Privacy Commissioner investigations, Federal Court enforcement\n• MFIPPA: Information and Privacy Commissioner of Ontario, binding orders\n\n**Consent**: \n• PIPEDA: Explicit consent requirements for collection, use, disclosure\n• MFIPPA: Different rules - often statutory authority rather than consent-based"
+    ],
+    
     'cybersecurity': [
-        "Cybersecurity fundamentals include the CIA triad: Confidentiality, Integrity, and Availability.",
-        "Key frameworks include NIST Cybersecurity Framework, which provides guidelines for identifying, protecting, detecting, responding to, and recovering from cyber threats.",
-        "Risk assessment methodologies like OCTAVE and FAIR help organizations quantify and manage cyber risks."
+        "🛡️ **Cybersecurity Fundamentals**: The foundation is the **CIA Triad**: Confidentiality (protecting information from unauthorized access), Integrity (ensuring information accuracy), and Availability (ensuring authorized access when needed).\n\n🎯 **NIST Cybersecurity Framework**: The five core functions are:\n1. **Identify** - Asset management, governance, risk assessment\n2. **Protect** - Access controls, awareness training, data security\n3. **Detect** - Anomaly detection, continuous monitoring\n4. **Respond** - Response planning, communications, analysis\n5. **Recover** - Recovery planning, improvements, communications",
+        
+        "📊 **Risk Assessment Methodologies**: \n• **OCTAVE** (Operationally Critical Threat, Asset, and Vulnerability Evaluation): Organization-driven, focuses on operational risks\n• **FAIR** (Factor Analysis of Information Risk): Quantitative approach using probability and impact\n• **NIST SP 800-30**: Federal standard for conducting risk assessments\n• **ISO 27005**: International standard for information security risk management",
+        
+        "🚨 **Incident Response Planning**: Effective incident response requires: preparation (policies, procedures, training), identification (detection and analysis), containment (short-term and long-term), eradication (remove threats), recovery (restore systems), and lessons learned (post-incident analysis and improvements)."
     ],
+    
     'ai governance': [
-        "Ontario's AI governance directive focuses on responsible AI implementation in government.",
-        "Key principles include transparency, accountability, fairness, and human oversight.",
-        "Algorithmic Impact Assessments help evaluate potential risks and biases in AI systems."
+        "🤖 **Ontario AI Governance Directive**: Ontario's approach to responsible AI focuses on ensuring AI systems are used ethically and effectively in government. The five key principles are:\n1. **AI use is justified and proportionate** - Problem-first, not technology-first approach\n2. **AI is used to benefit the people of Ontario** - Public interest focus\n3. **AI use is transparent** - Clear about when and how AI is used\n4. **AI use incorporates privacy and security by design** - Built-in protections\n5. **AI use includes human oversight** - Meaningful human involvement in decisions",
+        
+        "⚖️ **Algorithmic Impact Assessments (AIAs)**: Required for high-impact AI systems, AIAs evaluate potential risks including bias, privacy impacts, and unintended consequences. The assessment covers: system purpose and functionality, data sources and quality, potential impacts on individuals and groups, mitigation measures, and ongoing monitoring requirements.",
+        
+        "🎯 **AI Ethics in Practice**: Implementing responsible AI requires addressing bias (ensuring fair outcomes across different groups), explainability (ability to understand AI decisions), accountability (clear responsibility for AI outcomes), and human oversight (ensuring humans remain in control of important decisions)."
     ],
+    
     'data management': [
-        "Secure data management involves proper classification, retention policies, and cross-border compliance.",
-        "Data classification helps determine appropriate security controls based on sensitivity levels.",
-        "Records retention ensures compliance with legal requirements while minimizing data storage risks."
+        "📁 **Data Classification Framework**: Effective data management starts with classification based on sensitivity:\n• **Public**: No harm if disclosed (websites, marketing materials)\n• **Internal**: Minimal harm if disclosed (policies, procedures)\n• **Confidential**: Moderate harm if disclosed (employee records, contracts)\n• **Restricted**: Significant harm if disclosed (financial data, personal information)\n\nEach level requires appropriate security controls - access restrictions, encryption, handling procedures.",
+        
+        "📅 **Records Retention Policies**: Must balance legal requirements, operational needs, and storage costs. Key elements include: retention schedules based on record type, legal holds for litigation, secure disposal procedures, and regular reviews. For municipalities, retention schedules must comply with provincial requirements and Municipal Act provisions.",
+        
+        "🌐 **Cross-Border Data Compliance**: When transferring data internationally, consider: destination country privacy laws, adequacy decisions (EU), data processing agreements with clear privacy terms, additional safeguards for sensitive data, and ongoing monitoring of compliance. For MFIPPA-covered organizations, remember the strict Canadian storage requirement."
     ],
+    
+    'bill194': [
+        "📜 **Bill 194 - Enhanced Privacy Protection**: Bill 194 introduces significant updates to Ontario's privacy landscape with:\n\n**Enhanced Breach Notification**: \n• Mandatory 24-hour notification to Privacy Commissioner for significant breaches\n• Expanded definition of privacy breaches\n• Detailed reporting requirements including impact assessments\n\n**Strengthened Individual Rights**: \n• Enhanced data portability rights\n• Expanded access and correction rights\n• Stronger consent requirements\n\n**Increased Enforcement**: \n• Penalties up to $10M or 2% of global revenue\n• Enhanced investigation powers for Commissioner\n• Public reporting of compliance orders"
+    ],
+    
+    'quiz': [
+        "📝 **Quiz Preparation Tips**: \n• Review the 10 PIPEDA principles and their practical applications\n• Understand MFIPPA's collection, use, and disclosure rules\n• Know the difference between PIPEDA and MFIPPA scope and requirements\n• Practice identifying when PIAs are required\n• Remember cross-border data storage restrictions under MFIPPA\n• Focus on practical scenarios - how would you apply these laws in real situations?",
+        
+        "🎯 **Key Concepts to Master**: \n1. When organizations must identify purposes for collection (before/at time of collection)\n2. MFIPPA's Canadian storage requirement (Section 30.1)\n3. The relationship between consent and statutory authority\n4. Privacy breach notification requirements\n5. Individual rights under both PIPEDA and MFIPPA\n6. When Privacy Impact Assessments are mandatory"
+    ],
+    
     'default': [
-        "I'm here to help with your OCRP certification studies! I can assist with topics like PIPEDA, MFIPPA, cybersecurity fundamentals, AI governance, and data management.",
-        "Try asking me about specific topics like 'What is PIPEDA?' or 'Explain NIST framework'.",
-        "For detailed technical questions, please refer to your module materials and resources."
+        "👋 **Welcome to your OCRP Study Assistant!** I'm here to provide detailed, specific guidance on Ontario's privacy and cybersecurity landscape. I can help with:\n\n📚 **Core Topics**: \n• PIPEDA's 10 Fair Information Principles\n• MFIPPA requirements for municipalities\n• Cybersecurity frameworks (NIST, ISO 27001)\n• AI governance and algorithmic impact assessments\n• Data management and cross-border compliance\n• Bill 194 privacy enhancements\n\n💡 **Ask me specific questions** like:\n• 'Explain the differences between PIPEDA and MFIPPA'\n• 'When are Privacy Impact Assessments required?'\n• 'What are the NIST cybersecurity framework functions?'\n• 'How does Ontario's AI governance directive work?'",
+        
+        "🎯 **Study Tips**: For the best learning experience, try asking follow-up questions! I can explain concepts in different ways, provide practical examples, and help you understand how these laws apply in real-world scenarios. Each topic builds on others - privacy law foundations support cybersecurity practices, which inform AI governance approaches."
     ]
 };
 
-// Simple keyword matching for educational responses
+// Enhanced keyword matching for educational responses
 function findRelevantTopic(message: string): string {
     const lowerMessage = message.toLowerCase();
     
-    if (lowerMessage.includes('pipeda') || lowerMessage.includes('personal information protection')) {
+    // PIPEDA related queries
+    if (lowerMessage.includes('pipeda') || lowerMessage.includes('personal information protection') || 
+        lowerMessage.includes('fair information principles') || lowerMessage.includes('federal privacy law') ||
+        lowerMessage.includes('private sector') || lowerMessage.includes('commercial activities')) {
         return 'pipeda';
     }
-    if (lowerMessage.includes('mfippa') || lowerMessage.includes('municipal freedom')) {
+    
+    // MFIPPA related queries
+    if (lowerMessage.includes('mfippa') || lowerMessage.includes('municipal freedom') || 
+        lowerMessage.includes('municipal privacy') || lowerMessage.includes('ontario municipalities') ||
+        lowerMessage.includes('section 30.1') || lowerMessage.includes('canadian storage')) {
         return 'mfippa';
     }
-    if (lowerMessage.includes('cybersecurity') || lowerMessage.includes('cyber security') || lowerMessage.includes('nist') || lowerMessage.includes('risk assessment')) {
+    
+    // Comparison queries
+    if ((lowerMessage.includes('difference') || lowerMessage.includes('compare') || lowerMessage.includes('vs')) &&
+        (lowerMessage.includes('pipeda') || lowerMessage.includes('mfippa'))) {
+        return 'differences';
+    }
+    
+    // Cybersecurity related queries
+    if (lowerMessage.includes('cybersecurity') || lowerMessage.includes('cyber security') || 
+        lowerMessage.includes('nist') || lowerMessage.includes('risk assessment') ||
+        lowerMessage.includes('cia triad') || lowerMessage.includes('incident response') ||
+        lowerMessage.includes('octave') || lowerMessage.includes('fair methodology')) {
         return 'cybersecurity';
     }
-    if (lowerMessage.includes('ai governance') || lowerMessage.includes('artificial intelligence') || lowerMessage.includes('algorithmic impact')) {
+    
+    // AI Governance related queries
+    if (lowerMessage.includes('ai governance') || lowerMessage.includes('artificial intelligence') || 
+        lowerMessage.includes('algorithmic impact') || lowerMessage.includes('ontario ai directive') ||
+        lowerMessage.includes('responsible ai') || lowerMessage.includes('ai ethics')) {
         return 'ai governance';
     }
-    if (lowerMessage.includes('data management') || lowerMessage.includes('data classification') || lowerMessage.includes('retention')) {
+    
+    // Data Management related queries
+    if (lowerMessage.includes('data management') || lowerMessage.includes('data classification') || 
+        lowerMessage.includes('retention') || lowerMessage.includes('cross-border') ||
+        lowerMessage.includes('records management') || lowerMessage.includes('data storage')) {
         return 'data management';
+    }
+    
+    // Bill 194 related queries
+    if (lowerMessage.includes('bill 194') || lowerMessage.includes('bill c-27') ||
+        lowerMessage.includes('privacy enhancement') || lowerMessage.includes('breach notification')) {
+        return 'bill194';
+    }
+    
+    // Quiz preparation queries
+    if (lowerMessage.includes('quiz') || lowerMessage.includes('test') || lowerMessage.includes('exam') ||
+        lowerMessage.includes('prepare') || lowerMessage.includes('study tips') ||
+        lowerMessage.includes('assessment') || lowerMessage.includes('knowledge check')) {
+        return 'quiz';
     }
     
     return 'default';
