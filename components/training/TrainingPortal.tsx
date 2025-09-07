@@ -4,6 +4,7 @@
 */
 import React, { useState, useEffect, useRef } from 'react';
 import Login from './Login';
+import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import Nav from './Nav';
 import Module1 from './Module1';
@@ -12,16 +13,20 @@ import Module3 from './Module3';
 import Module4 from './Module4';
 import Assessment from './Assessment';
 import Certificate from './Certificate';
-import { getTutorChat, sendMessage } from '../../services/geminiService';
+import StudyGuide from './StudyGuide';
+import PracticeExam from './PracticeExam';
+import { createAIAssistant, EducationalAssistant } from '../../services/aiAssistantService';
 import { ChatIcon, CloseIcon, SendIcon } from '../icons';
+import { User, LoginUser } from '../../types';
 
 
-interface User {
-    fullname: string;
-    organizationType: string;
-    organizationName: string;
-    email: string;
-    loginDate: string;
+interface TrainingPortalProps {
+    onNavigateToLanding: () => void;
+}
+
+interface Message {
+  role: 'user' | 'model';
+  text: string;
 }
 
 interface Progress {
@@ -40,22 +45,13 @@ const initialProgress: Progress = {
     assessment: { completed: false, score: 0, passed: false }
 };
 
-interface TrainingPortalProps {
-    onNavigateToLanding: () => void;
-}
-
-interface Message {
-  role: 'user' | 'model';
-  text: string;
-}
-
-const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress }> = ({ currentModule, userProgress }) => {
+const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress; userTier?: string }> = ({ currentModule, userProgress, userTier = 'basic' }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isAvailable, setIsAvailable] = useState(true);
-    const chatInstance = useRef<any>(null);
+    const aiAssistant = useRef<EducationalAssistant | null>(null);
     const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
     // Get contextual welcome message based on current module and progress
@@ -70,20 +66,21 @@ const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress
         }
     };
 
-    // Initialize chat instance with error handling
+    // Initialize AI assistant
     useEffect(() => {
         try {
-            chatInstance.current = getTutorChat();
+            aiAssistant.current = createAIAssistant(userTier);
             setMessages([{ role: 'model', text: getWelcomeMessage() }]);
+            setIsAvailable(true);
         } catch (error) {
             console.warn("AI Study Assistant unavailable:", error);
             setIsAvailable(false);
             setMessages([{ 
                 role: 'model', 
-                text: "🤖 AI Study Assistant is currently unavailable. To enable this feature, please configure your Gemini API key in the environment settings. You can continue with your training modules in the meantime. For immediate help, review the learning objectives and explanations provided in each module." 
+                text: "🤖 AI Study Assistant is temporarily unavailable. You can continue with your training modules in the meantime. For immediate help, review the learning objectives and explanations provided in each module." 
             }]);
         }
-    }, [currentModule, userProgress]);
+    }, [currentModule, userProgress, userTier]);
 
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -114,7 +111,7 @@ const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!input.trim() || isLoading || !isAvailable) return;
+        if (!input.trim() || isLoading || !isAvailable || !aiAssistant.current) return;
 
         const userMessage: Message = { role: 'user', text: input };
         setMessages(prev => [...prev, userMessage]);
@@ -123,33 +120,26 @@ const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress
         setIsLoading(true);
 
         try {
-            if (!chatInstance.current) {
-                throw new Error("Chat service not available");
-            }
-            
             // Add context about current module and progress to the prompt
             let contextualPrompt = currentInput;
             if (currentModule) {
                 contextualPrompt += ` (Current context: working on ${currentModule.replace('module', 'Module ')})`;
             }
             
-            const stream = await sendMessage(chatInstance.current, contextualPrompt);
-            let modelResponse = '';
             setMessages(prev => [...prev, { role: 'model', text: '🤔 Thinking...' }]); 
-
-            for await (const chunk of stream) {
-                modelResponse += chunk.text;
-                setMessages(prev => {
-                    const newMessages = [...prev];
-                    newMessages[newMessages.length - 1].text = modelResponse;
-                    return newMessages;
-                });
-            }
+            
+            const response = await aiAssistant.current.generateResponse(contextualPrompt);
+            
+            setMessages(prev => {
+                const newMessages = [...prev];
+                newMessages[newMessages.length - 1].text = response;
+                return newMessages;
+            });
         } catch (error) {
             console.error(error);
             setMessages(prev => {
                 const newMessages = [...prev];
-                newMessages[newMessages.length-1].text = "😔 Sorry, the AI assistant is currently unavailable. Please continue with your training and refer to the explanations provided in each module.";
+                newMessages[newMessages.length-1].text = "😔 Sorry, I'm having trouble generating a response right now. Please try asking your question in a different way, or refer to the explanations provided in each module.";
                 return newMessages;
             });
         } finally {
@@ -237,6 +227,7 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [userProgress, setUserProgress] = useState<Progress>(initialProgress);
     const [activeSection, setActiveSection] = useState('login');
+    const [authView, setAuthView] = useState<'login' | 'signup'>('login');
 
     useEffect(() => {
         const savedUser = localStorage.getItem('cyberTrainingUser');
@@ -261,10 +252,24 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
         }
     }, [currentUser, userProgress]);
 
-    const handleLogin = (user: User) => {
-        setCurrentUser(user);
+    const handleLogin = (user: LoginUser) => {
+        // Convert LoginUser to User with default subscription tier
+        const fullUser: User = {
+            ...user,
+            subscriptionTier: 'basic',
+            registrationDate: new Date().toISOString(),
+            isEnterprise: false
+        };
+        setCurrentUser(fullUser);
         setUserProgress(initialProgress); // Reset progress on new login
         setActiveSection('dashboard');
+    };
+
+    const handleSignUp = (user: User) => {
+        setCurrentUser(user);
+        setUserProgress(initialProgress);
+        setActiveSection('dashboard');
+        setAuthView('login'); // Reset for next time
     };
 
     const handleLogout = () => {
@@ -300,7 +305,7 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
     const renderSection = () => {
         switch (activeSection) {
             case 'dashboard':
-                return <Dashboard progress={userProgress} onNavigate={setActiveSection} />;
+                return <Dashboard progress={userProgress} onNavigate={setActiveSection} currentUser={currentUser} />;
             case 'module1':
                 return <Module1 onComplete={(score) => handleCompleteModule('module1', score)} onNavigate={setActiveSection} />;
             case 'module2':
@@ -313,13 +318,23 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                  return <Assessment onSubmit={handleSubmitAssessment} progress={userProgress} onNavigate={setActiveSection}/>;
             case 'certificate':
                  return <Certificate user={currentUser!} progress={userProgress} />;
+            case 'study-guide':
+                 return <StudyGuide userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
+            case 'practice-exam':
+                 return <PracticeExam userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
             default:
-                return <Login onLogin={handleLogin} />;
+                if (authView === 'signup') {
+                    return <SignUp onSignUp={handleSignUp} onBackToLogin={() => setAuthView('login')} />;
+                }
+                return <Login onLogin={handleLogin} onSignUp={() => setAuthView('signup')} />;
         }
     }
 
     if (!currentUser) {
-        return <Login onLogin={handleLogin} />;
+        if (authView === 'signup') {
+            return <SignUp onSignUp={handleSignUp} onBackToLogin={() => setAuthView('login')} />;
+        }
+        return <Login onLogin={handleLogin} onSignUp={() => setAuthView('signup')} />;
     }
     
     return (
@@ -334,7 +349,7 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
             <main className="flex-1 p-6 sm:p-8 lg:p-12 overflow-y-auto">
                 {renderSection()}
             </main>
-            <StudyAssistant currentModule={activeSection} userProgress={userProgress} />
+            <StudyAssistant currentModule={activeSection} userProgress={userProgress} userTier={currentUser?.subscriptionTier} />
         </div>
     );
 };

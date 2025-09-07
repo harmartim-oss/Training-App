@@ -16,9 +16,10 @@ interface Progress {
 interface DashboardProps {
     progress: Progress;
     onNavigate: (section: string) => void;
+    currentUser?: any; // User info including subscription tier
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
+const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser }) => {
     
     const modules = [
         { 
@@ -320,6 +321,68 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                             </div>
                         );
                     })}
+                </div>
+            </div>
+
+            {/* Study Materials Section */}
+            <div className="mb-8">
+                <h3 className="text-2xl font-bold font-mono text-text-primary mb-6 uppercase tracking-wider">
+                    Study Materials
+                </h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                    {/* Study Guide Card */}
+                    <div className="module-card-enhanced p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="module-icon-container">
+                                <span className="text-2xl">📚</span>
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-semibold text-text-primary">Study Guides</h4>
+                                <p className="text-sm text-text-secondary">Comprehensive study materials and quick reference cards</p>
+                            </div>
+                        </div>
+                        <p className="text-text-secondary mb-4 text-sm">
+                            Download PDF guides and interactive materials to enhance your learning experience.
+                        </p>
+                        <button 
+                            onClick={() => onNavigate('study-guide')} 
+                            className="btn-primary w-full py-2 px-4"
+                        >
+                            Access Study Guides
+                        </button>
+                        {currentUser?.subscriptionTier === 'basic' && (
+                            <div className="mt-2 text-xs text-text-muted text-center">
+                                🔒 Premium feature - upgrade to access
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Practice Exam Card */}
+                    <div className="module-card-enhanced p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="module-icon-container">
+                                <span className="text-2xl">🎯</span>
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-semibold text-text-primary">Practice Exams</h4>
+                                <p className="text-sm text-text-secondary">Test your knowledge with realistic practice examinations</p>
+                            </div>
+                        </div>
+                        <p className="text-text-secondary mb-4 text-sm">
+                            Practice with module-specific quizzes and comprehensive final exam simulations.
+                        </p>
+                        <button 
+                            onClick={() => onNavigate('practice-exam')} 
+                            className="btn-primary w-full py-2 px-4"
+                        >
+                            Take Practice Exams
+                        </button>
+                        {currentUser?.subscriptionTier === 'basic' && (
+                            <div className="mt-2 text-xs text-text-muted text-center">
+                                🔒 Premium feature - upgrade to access
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
 
