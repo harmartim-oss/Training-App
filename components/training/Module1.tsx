@@ -322,19 +322,64 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
 
                     {/* Learning Objectives */}
                     <div className="p-6 sm:p-8">
-                        <div className="learning-objectives">
-                            <h3 className="font-semibold text-primary mb-4 text-xl font-mono uppercase">
+                        {/* Content Outline and Reading Time */}
+                        {currentSection === 'content' && (
+                            <div className="content-outline">
+                                <h3>📚 Module Content Overview</h3>
+                                <div className="reading-time">
+                                    <span className="reading-time-icon">⏱️</span>
+                                    <span>Estimated reading time: 15-20 minutes</span>
+                                </div>
+                                <ul>
+                                    <li><a href="#pipeda-overview">PIPEDA Overview & 10 Fair Information Principles</a></li>
+                                    <li><a href="#mfippa-framework">MFIPPA Comprehensive Framework</a></li>
+                                    <li><a href="#privacy-impact">Privacy Impact Assessments (PIAs)</a></li>
+                                    <li><a href="#data-governance">Data Governance and Safeguards</a></li>
+                                    <li><a href="#cross-border">Cross-Border Data Management</a></li>
+                                    <li><a href="#breach-response">Breach Response and Notification</a></li>
+                                    <li><a href="#bill-194">Bill 194 New Requirements</a></li>
+                                </ul>
+                            </div>
+                        )}
+
+                        <div className="learning-objectives-enhanced">
+                            <h3>
+                                <span>🎯</span>
                                 Learning Objectives
                             </h3>
-                            <ul className="text-text-secondary space-y-2">
-                                <li>Understand PIPEDA's 10 Fair Information Principles and their application</li>
-                                <li>Master MFIPPA requirements for municipal organizations including collection, use, and disclosure rules</li>
-                                <li>Learn to conduct comprehensive Privacy Impact Assessments (PIAs)</li>
-                                <li>Implement data governance frameworks and safeguards</li>
-                                <li>Navigate cross-border data management requirements</li>
-                                <li>Develop breach response and notification procedures</li>
-                                <li>Apply new Bill 194 privacy impact assessment requirements</li>
-                                <li>Create practical compliance frameworks for municipal operations</li>
+                            <ul>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Understand PIPEDA's 10 Fair Information Principles and their application</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Master MFIPPA requirements for municipal organizations including collection, use, and disclosure rules</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Learn to conduct comprehensive Privacy Impact Assessments (PIAs)</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Implement data governance frameworks and safeguards</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Navigate cross-border data management requirements</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Develop breach response and notification procedures</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Apply new Bill 194 privacy impact assessment requirements</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Create practical compliance frameworks for municipal operations</span>
+                                </li>
                             </ul>
                         </div>
 
@@ -342,17 +387,112 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                             /* Content Section */
                             <div className="space-y-6">
                                 {contentSections.map((section, index) => (
-                                    <div key={index} className="content-section">
-                                        <h3 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
+                                    <div key={index} className="content-section" id={
+                                        section.title === "PIPEDA Overview" ? "pipeda-overview" :
+                                        section.title === "MFIPPA for Municipalities - Comprehensive Framework" ? "mfippa-framework" :
+                                        section.title === "Privacy Impact Assessments (PIAs) - Essential Practice" ? "privacy-impact" :
+                                        section.title === "Data Governance and Safeguards" ? "data-governance" :
+                                        section.title === "Cross-Border Data Management" ? "cross-border" :
+                                        section.title === "Breach Response and Notification" ? "breach-response" :
+                                        section.title === "Bill 194 - New Requirements" ? "bill-194" : ""
+                                    }>
+                                        <h2 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
                                             {section.title}
-                                        </h3>
-                                        <div className="space-y-3 text-text-secondary leading-relaxed">
-                                            {section.content.map((paragraph, pIndex) => (
-                                                <p key={pIndex}>{paragraph}</p>
-                                            ))}
+                                        </h2>
+                                        <div className="space-y-4 text-text-secondary leading-relaxed">
+                                            {section.content.map((paragraph, pIndex) => {
+                                                // Enhanced content formatting
+                                                if (paragraph === "") return <br key={pIndex} />;
+                                                
+                                                // Special formatting for important callouts
+                                                if (paragraph.includes("**Core Principles") || paragraph.includes("**When PIAs") || paragraph.includes("**Enhanced Breach")) {
+                                                    return (
+                                                        <div key={pIndex} className="learning-callout info">
+                                                            <div className="learning-callout-title">
+                                                                <span className="learning-callout-icon">💡</span>
+                                                                {paragraph.replace(/\*\*/g, '')}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                                
+                                                // Format bullet points as enhanced lists
+                                                if (paragraph.startsWith("• ")) {
+                                                    return (
+                                                        <div key={pIndex} className="ml-6 flex items-start gap-3 py-1">
+                                                            <span className="text-primary font-bold mt-1">▸</span>
+                                                            <span>{paragraph.substring(2)}</span>
+                                                        </div>
+                                                    );
+                                                }
+                                                
+                                                return <p key={pIndex} className="text-base leading-relaxed">{paragraph}</p>;
+                                            })}
                                         </div>
+                                        
+                                        {/* Add scenario boxes for specific sections */}
+                                        {section.title === "Privacy Impact Assessments (PIAs) - Essential Practice" && (
+                                            <div className="scenario-box">
+                                                <div className="scenario-title">📋 Practical Scenario: Municipal Wi-Fi Implementation</div>
+                                                <div className="scenario-content">
+                                                    Your municipality wants to provide free public Wi-Fi in downtown areas. Citizens will need to register with their email addresses and accept terms of service. The system will log connection times and locations for network management.
+                                                </div>
+                                                <div className="scenario-question">
+                                                    💭 Reflection: What PIA considerations would be required for this initiative? Think about data collection, retention, and citizen privacy rights.
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                        {section.title === "MFIPPA for Municipalities - Comprehensive Framework" && (
+                                            <div className="learning-callout tip">
+                                                <div className="learning-callout-title">
+                                                    <span className="learning-callout-icon">💡</span>
+                                                    Quick Reference Tip
+                                                </div>
+                                                <p>Remember the acronym "CLUE" for MFIPPA compliance: <strong>C</strong>ollect only what's necessary, <strong>L</strong>imit use to stated purposes, <strong>U</strong>nderstand disclosure rules, <strong>E</strong>nsure proper safeguards.</p>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
+                                
+                                {/* Key Takeaways Section */}
+                                <div className="key-takeaways">
+                                    <h3>Key Takeaways</h3>
+                                    <ul>
+                                        <li>PIPEDA's 10 principles form the foundation of Canadian privacy law</li>
+                                        <li>MFIPPA requires municipalities to balance transparency with privacy protection</li>
+                                        <li>Privacy Impact Assessments are mandatory for new data collection initiatives</li>
+                                        <li>Cross-border data restrictions require careful vendor management</li>
+                                        <li>Bill 194 introduces stronger enforcement and penalty provisions</li>
+                                        <li>Effective data governance requires both technical and administrative safeguards</li>
+                                    </ul>
+                                </div>
+                                
+                                {/* Interactive Checklist */}
+                                <div className="interactive-checklist">
+                                    <h4>🗃️ Implementation Checklist</h4>
+                                    <p className="text-sm text-text-muted mb-4">Check off items as you implement them in your organization:</p>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="checklist-1" />
+                                        <label htmlFor="checklist-1" className="checklist-text">Review and update privacy policies to reflect PIPEDA principles</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="checklist-2" />
+                                        <label htmlFor="checklist-2" className="checklist-text">Conduct PIA for any new technology implementations</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="checklist-3" />
+                                        <label htmlFor="checklist-3" className="checklist-text">Establish data breach response procedures</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="checklist-4" />
+                                        <label htmlFor="checklist-4" className="checklist-text">Review all vendor agreements for cross-border data compliance</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="checklist-5" />
+                                        <label htmlFor="checklist-5" className="checklist-text">Prepare for Bill 194 implementation timeline</label>
+                                    </div>
+                                </div>
                                 
                                 {/* Resources Panel */}
                                 <div className="mt-8">
@@ -364,7 +504,7 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                         onClick={() => setCurrentSection('quiz')}
                                         className="btn-primary py-3 px-8 text-lg font-semibold"
                                     >
-                                        Proceed to Knowledge Check
+                                        Proceed to Knowledge Check →
                                     </button>
                                 </div>
                             </div>

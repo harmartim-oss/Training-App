@@ -93,6 +93,18 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                     Welcome to your Ontario Certified Cyber Resilience Professional journey. 
                     Complete all modules to earn your certification.
                 </p>
+                
+                {/* Motivational Message */}
+                <div className="mt-6 p-4 bg-gradient-to-r from-primary-light to-surface-elevated border border-border-light rounded-lg">
+                    <p className="text-text-primary font-medium">
+                        {completedCount === 0 ? 
+                            "🚀 Ready to start your cybersecurity certification journey? Begin with Module 1 to master privacy fundamentals!" :
+                            completedCount === totalModules ?
+                            "🎉 Congratulations! You've completed all modules. Take the final assessment to earn your certification!" :
+                            `💪 Great progress! You've completed ${completedCount} out of ${totalModules} modules. Keep going!`
+                        }
+                    </p>
+                </div>
             </div>
             
             {/* Overall Progress Section */}
@@ -105,6 +117,14 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                     <div className="mt-4 lg:mt-0 text-right">
                         <div className="text-3xl font-bold text-primary">{Math.round(overallProgress)}%</div>
                         <div className="text-sm text-text-secondary">{completedCount} of {totalModules} modules</div>
+                        {overallProgress > 0 && (
+                            <div className="text-xs text-text-muted mt-1">
+                                {overallProgress < 25 ? "🌱 Getting Started" :
+                                 overallProgress < 50 ? "📈 Building Knowledge" :
+                                 overallProgress < 75 ? "💪 Making Progress" :
+                                 overallProgress < 100 ? "🏃‍♂️ Almost There" : "🎯 Ready for Assessment"}
+                            </div>
+                        )}
                     </div>
                 </div>
                 
@@ -119,6 +139,22 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                     <span>Started</span>
                     <span>In Progress</span>
                     <span>Completed</span>
+                </div>
+                
+                {/* Learning Path Visualization */}
+                <div className="mt-6 p-4 bg-surface-elevated rounded-lg">
+                    <h4 className="text-sm font-semibold text-text-secondary mb-3 uppercase tracking-wide">Learning Path</h4>
+                    <div className="flex flex-wrap gap-2">
+                        {['Privacy Laws', 'Cybersecurity', 'AI Governance', 'Data Management', 'Assessment'].map((topic, index) => (
+                            <div key={topic} className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                index < completedCount ? 'bg-success text-white' :
+                                index === completedCount ? 'bg-primary text-white' :
+                                'bg-surface border border-border text-text-muted'
+                            }`}>
+                                {index < completedCount ? '✓' : index === completedCount ? '🔄' : '○'} {topic}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
@@ -169,18 +205,80 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate }) => {
                                     <p className="text-text-secondary mb-4 leading-relaxed">
                                         {module.description}
                                     </p>
-                                    <div className="flex items-center gap-4 text-sm text-text-muted">
+                                    
+                                    {/* Enhanced module info with visual indicators */}
+                                    <div className="flex flex-wrap items-center gap-4 text-sm text-text-muted">
                                         <div className="flex items-center gap-1">
                                             <ClockIcon className="w-4 h-4" />
                                             <span className="font-semibold">Time:</span> {module.estimatedTime}
                                         </div>
+                                        
+                                        {/* Difficulty indicator */}
+                                        <div className="flex items-center gap-1">
+                                            <span className="font-semibold">Level:</span>
+                                            <div className="flex gap-1">
+                                                {Array.from({ length: 3 }, (_, i) => (
+                                                    <div key={i} className={`w-2 h-2 rounded-full ${
+                                                        i < (index === 0 ? 1 : index === 1 ? 2 : 3) 
+                                                            ? 'bg-primary' 
+                                                            : 'bg-border'
+                                                    }`} />
+                                                ))}
+                                            </div>
+                                        </div>
+                                        
                                         {status.badge === 'completed' && (
                                             <div className="flex items-center gap-1 text-success">
                                                 <TrophyIcon className="w-4 h-4" />
                                                 <span className="font-semibold">Score:</span> {status.score}%
                                             </div>
                                         )}
+                                        
+                                        {/* Prerequisites indicator */}
+                                        {isLocked && (
+                                            <div className="flex items-center gap-1 text-warning">
+                                                <span className="text-xs">🔒</span>
+                                                <span className="font-semibold text-xs">Complete previous module</span>
+                                            </div>
+                                        )}
                                     </div>
+                                    
+                                    {/* Learning outcomes preview */}
+                                    {!isLocked && status.badge !== 'completed' && (
+                                        <div className="mt-4 p-3 bg-surface-elevated rounded-lg border border-border-light">
+                                            <p className="text-xs font-semibold text-text-secondary mb-2 uppercase tracking-wide">You'll Learn:</p>
+                                            <ul className="text-sm text-text-secondary space-y-1">
+                                                {index === 0 && (
+                                                    <>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>PIPEDA's 10 Fair Information Principles</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>MFIPPA compliance requirements</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Privacy Impact Assessment processes</li>
+                                                    </>
+                                                )}
+                                                {index === 1 && (
+                                                    <>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Cybersecurity frameworks and controls</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Incident response procedures</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Risk assessment methodologies</li>
+                                                    </>
+                                                )}
+                                                {index === 2 && (
+                                                    <>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Ontario's AI governance directive</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Ethical AI implementation</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Algorithmic Impact Assessments</li>
+                                                    </>
+                                                )}
+                                                {index === 3 && (
+                                                    <>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Data classification systems</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Records retention policies</li>
+                                                        <li className="flex items-center gap-2"><span className="text-primary">▸</span>Cross-border data compliance</li>
+                                                    </>
+                                                )}
+                                            </ul>
+                                        </div>
+                                    )}
                                 </div>
                                 
                                 {/* Module Progress Bar */}
