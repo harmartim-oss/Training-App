@@ -5,7 +5,8 @@
 
 import React from 'react';
 import Header from './Header';
-import { ODDILogo, CertificateIcon, ChevronDownIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon, QuoteIcon, ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4 } from './icons';
+import { ODDILogo, CertificateIcon, ChevronDownIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon, ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4 } from './icons';
+import { useMobileDetection } from '../hooks/useMobileDetection';
 
 const features = [
   {
@@ -38,11 +39,7 @@ const audience = [
     { icon: <NonProfitIcon className="w-8 h-8 text-primary" />, title: 'Non-Profits', description: "Protect your donor and member data, maintain trust, and secure your mission-critical operations." },
 ];
 
-const testimonials = [
-    { quote: "This was the most relevant cybersecurity training I've ever taken. The focus on Ontario's laws was exactly what my municipal department needed.", name: "D. Reynolds", title: "IT Manager, City of North Bay" },
-    { quote: "As a small business owner, I was overwhelmed by cybersecurity. The OCRP program gave me a clear, actionable plan to protect my company and our customers.", name: "S. Chen", title: "Owner, Chen Accounting" },
-    { quote: "The OCRP certification has been a huge asset for our non-profit. It demonstrates our commitment to data security to our donors and partners.", name: "M. El-Masry", title: "Executive Director, Community Action Group" },
-];
+
 
 
 const faqs = [
@@ -71,6 +68,8 @@ const SectionTitle: React.FC<{title: string, subtitle: string}> = ({title, subti
 
 
 const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
+  const { isMobile, isTablet } = useMobileDetection();
+  
   return (
     <div className="min-h-screen text-text-primary flex flex-col bg-background">
       <Header onNavigateToTraining={onNavigateToTraining} />
@@ -79,16 +78,27 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
         {/* Hero Section */}
         <Section id="home" className="text-center !pt-28 !pb-36">
           <div className="flex flex-col items-center gap-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-mono font-bold tracking-tighter text-text-primary">
+            {/* Enhanced Institute Branding */}
+            <div className="flex flex-col items-center mb-8">
+              <ODDILogo className={`${isMobile ? 'w-12 h-12' : isTablet ? 'w-16 h-16' : 'w-20 h-20'} text-primary mb-4`} />
+              <div className="text-center">
+                <h2 className={`${isMobile ? 'text-lg' : isTablet ? 'text-xl' : 'text-2xl md:text-3xl'} font-bold font-mono text-primary tracking-wider uppercase mb-2`}>
+                  Ontario Digital Defence Institute
+                </h2>
+                <div className={`${isMobile ? 'w-16' : 'w-24'} h-1 bg-primary mx-auto`}></div>
+              </div>
+            </div>
+            
+            <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl sm:text-5xl md:text-6xl'} font-mono font-bold tracking-tighter text-text-primary`}>
               ONTARIO CERTIFIED <br /> <span className="text-primary">CYBER RESILIENCE</span> PROFESSIONAL
             </h1>
-            <p className="max-w-3xl mx-auto text-lg md:text-xl text-text-secondary">
+            <p className={`${isMobile ? 'max-w-sm text-base' : 'max-w-3xl text-lg md:text-xl'} mx-auto text-text-secondary`}>
               Master essential skills in privacy law, cybersecurity, AI governance, and data management to defend Ontario's digital landscape.
             </p>
             <div className="mt-6">
               <button
                 onClick={onNavigateToTraining}
-                className="btn-primary py-3.5 px-8 text-base"
+                className={`btn-primary ${isMobile ? 'py-3 px-6 text-sm' : 'py-3.5 px-8 text-base'}`}
               >
                 Start Certification
               </button>
@@ -142,22 +152,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             </div>
         </Section>
         
-        {/* Testimonials Section */}
-        <Section id="testimonials" className="bg-surface/50">
-            <SectionTitle title="Trusted by Professionals Across Ontario" subtitle="See what certified professionals are saying about the OCRP program." />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {testimonials.map((testimonial) => (
-                    <div key={testimonial.name} className="bg-surface border border-border p-8 flex flex-col h-full">
-                        <QuoteIcon className="w-8 h-8 text-primary/30 mb-5" />
-                        <p className="text-text-secondary flex-grow">"{testimonial.quote}"</p>
-                        <div className="mt-6 border-t border-border pt-6 font-mono">
-                            <p className="font-bold text-text-primary">{testimonial.name}</p>
-                            <p className="text-sm text-text-secondary">{testimonial.title}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </Section>
+
 
         {/* FAQ Section */}
         <Section id="faq">
