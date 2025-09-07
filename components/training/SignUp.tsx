@@ -4,11 +4,17 @@
  */
 
 import React, { useState } from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { ODDILogo, GoogleIcon, FacebookIcon, LinkedInIcon, InstagramIcon } from '../icons';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import { User, SubscriptionTier } from '../../types';
 import { PRICING_TIERS } from '../../config/pricing';
 import PricingCard from '../common/PricingCard';
+import StripePayment from '../payment/StripePayment';
+
+// Initialize Stripe with a placeholder key - replace with your actual publishable key
+const stripePromise = loadStripe('pk_test_placeholder_key_replace_with_actual_key');
 
 interface SignUpProps {
     onSignUp: (user: User) => void;
@@ -16,7 +22,7 @@ interface SignUpProps {
 }
 
 const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
-    const [currentStep, setCurrentStep] = useState<'pricing' | 'details' | 'confirmation'>('pricing');
+    const [currentStep, setCurrentStep] = useState<'pricing' | 'details' | 'payment' | 'confirmation'>('pricing');
     const [selectedTier, setSelectedTier] = useState<SubscriptionTier>('basic');
     
     // Form state
@@ -46,6 +52,14 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
         if (currentStep === 'pricing') {
             setCurrentStep('details');
         } else if (currentStep === 'details') {
+            // For paid plans, go to payment step
+            const selectedTierData = PRICING_TIERS.find(tier => tier.id === selectedTier);
+            if (selectedTierData && selectedTierData.price > 0) {
+                setCurrentStep('payment');
+            } else {
+                setCurrentStep('confirmation');
+            }
+        } else if (currentStep === 'payment') {
             setCurrentStep('confirmation');
         }
     };
@@ -53,8 +67,16 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
     const handlePrevStep = () => {
         if (currentStep === 'details') {
             setCurrentStep('pricing');
-        } else if (currentStep === 'confirmation') {
+        } else if (currentStep === 'payment') {
             setCurrentStep('details');
+        } else if (currentStep === 'confirmation') {
+            // For paid plans, go back to payment step
+            const selectedTierData = PRICING_TIERS.find(tier => tier.id === selectedTier);
+            if (selectedTierData && selectedTierData.price > 0) {
+                setCurrentStep('payment');
+            } else {
+                setCurrentStep('details');
+            }
         }
     };
 
@@ -112,22 +134,36 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
                     {/* Step Indicator */}
                     <div className="flex justify-center mb-8">
                         <div className="flex items-center space-x-4">
-                            {['pricing', 'details', 'confirmation'].map((step, index) => (
-                                <div key={step} className="flex items-center">
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                                        currentStep === step ? 'bg-primary text-white' :
-                                        ['pricing', 'details', 'confirmation'].indexOf(currentStep) > index ? 'bg-primary/20 text-primary' :
-                                        'bg-border text-text-muted'
-                                    }`}>
-                                        {index + 1}
+                            {['pricing', 'details', 'payment', 'confirmation'].map((step, index) => {
+                                const isPaid = selectedTierData && selectedTierData.price > 0;
+                                const shouldShowStep = step !== 'payment' || isPaid;
+                                
+                                if (!shouldShowStep) return null;
+                                
+                                const stepNumber = step === 'payment' ? 3 : step === 'confirmation' ? (isPaid ? 4 : 3) : index + 1;
+                                const isActive = currentStep === step;
+                                const allSteps = isPaid ? ['pricing', 'details', 'payment', 'confirmation'] : ['pricing', 'details', 'confirmation'];
+                                const currentIndex = allSteps.indexOf(currentStep);
+                                const stepIndex = allSteps.indexOf(step);
+                                const isCompleted = currentIndex > stepIndex;
+                                
+                                return (
+                                    <div key={step} className="flex items-center">
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                                            isActive ? 'bg-primary text-white' :
+                                            isCompleted ? 'bg-primary/20 text-primary' :
+                                            'bg-border text-text-muted'
+                                        }`}>
+                                            {stepNumber}
+                                        </div>
+                                        {stepIndex < allSteps.length - 1 && (
+                                            <div className={`w-8 h-0.5 ml-2 ${
+                                                isCompleted ? 'bg-primary' : 'bg-border'
+                                            }`}></div>
+                                        )}
                                     </div>
-                                    {index < 2 && (
-                                        <div className={`w-8 h-0.5 ml-2 ${
-                                            ['pricing', 'details', 'confirmation'].indexOf(currentStep) > index ? 'bg-primary' : 'bg-border'
-                                        }`}></div>
-                                    )}
-                                </div>
-                            ))}
+                                );
+                            }).filter(Boolean)}
                         </div>
                     </div>
 
@@ -445,6 +481,18 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
                                 </button>
                             </div>
                         </form>
+                    )}
+
+                    {/* Payment Step */}
+                    {currentStep === 'payment' && selectedTierData && (
+                        <Elements stripe={stripePromise}>
+                            <StripePayment
+                                selectedTier={selectedTierData}
+                                customerEmail={formData.email}
+                                onPaymentSuccess={handleNextStep}
+                                onBack={handlePrevStep}
+                            />
+                        </Elements>
                     )}
 
                     {/* Confirmation Step */}
