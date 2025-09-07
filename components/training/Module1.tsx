@@ -99,10 +99,65 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                 d: "Openness"
             },
             explanation: "The 'Limiting Use, Disclosure, and Retention' principle requires that personal information be retained only as long as necessary for the identified purposes."
+        },
+        q9: {
+            question: "Under PHIPA, what is the 'circle of care' concept?",
+            answer: 'b',
+            options: {
+                a: "A privacy protection mechanism for all personal information",
+                b: "Health information sharing within healthcare teams for treatment purposes",
+                c: "A security framework for protecting health records",
+                d: "A consent model for research purposes"
+            },
+            explanation: "The 'circle of care' under PHIPA allows health information custodians to share personal health information within healthcare teams for treatment purposes without explicit consent."
+        },
+        q10: {
+            question: "Which legislation applies to Ontario government ministries and Crown agencies?",
+            answer: 'a',
+            options: {
+                a: "FIPPA (Freedom of Information and Protection of Privacy Act)",
+                b: "MFIPPA (Municipal Freedom of Information and Protection of Privacy Act)",
+                c: "PHIPA (Personal Health Information Protection Act)",
+                d: "PIPEDA (Personal Information Protection and Electronic Documents Act)"
+            },
+            explanation: "FIPPA applies to Ontario government ministries, Crown agencies, hospitals, school boards, and universities, while MFIPPA covers municipalities."
+        },
+        q11: {
+            question: "When do federal privacy laws typically take precedence over provincial laws?",
+            answer: 'd',
+            options: {
+                a: "Only for government institutions",
+                b: "Only for healthcare organizations",
+                c: "Never - provincial laws always apply in Ontario",
+                d: "For interprovincial/international activities and federally regulated sectors"
+            },
+            explanation: "Federal privacy laws like PIPEDA apply to interprovincial/international commerce and federally regulated sectors (banks, telecommunications, airlines, etc.)."
+        },
+        q12: {
+            question: "What is the standard response timeline for FOI requests under both FIPPA and MFIPPA?",
+            answer: 'b',
+            options: {
+                a: "15 days from receipt",
+                b: "30 days from receipt", 
+                c: "60 days from receipt",
+                d: "90 days from receipt"
+            },
+            explanation: "Both FIPPA and MFIPPA require institutions to respond to FOI requests within 30 days of receipt, though extensions may be possible in certain circumstances."
+        },
+        q13: {
+            question: "Under PHIPA, when is express consent required for disclosure of health information?",
+            answer: 'c',
+            options: {
+                a: "For all disclosures without exception",
+                b: "Only for research purposes",
+                c: "For purposes outside the circle of care",
+                d: "Only for disclosures to non-health professionals"
+            },
+            explanation: "PHIPA allows implied consent within the circle of care for treatment purposes, but requires express consent for purposes outside the circle of care."
         }
     };
 
-    const quiz = useQuiz(allQuestions, 5);
+    const quiz = useQuiz(allQuestions, 8);
 
     const contentSections = [
         {
@@ -111,6 +166,161 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                 "The Personal Information Protection and Electronic Documents Act (PIPEDA) is Canada's federal privacy legislation governing how private sector organizations collect, use, and disclose personal information in commercial activities.",
                 "PIPEDA is founded on 10 Fair Information Principles that form the ground rules for handling personal data:",
                 "• Accountability • Identifying Purposes • Consent • Limiting Collection • Limiting Use, Disclosure, and Retention • Accuracy • Safeguards • Openness • Individual Access • Challenging Compliance"
+            ]
+        },
+        {
+            title: "PHIPA - Personal Health Information Protection Act",
+            content: [
+                "The Personal Health Information Protection Act (PHIPA) is Ontario's health privacy legislation that governs the collection, use, and disclosure of personal health information by health information custodians.",
+                "",
+                "**Scope and Application:**",
+                "• Applies to health information custodians (hospitals, clinics, pharmacies, health professionals)",
+                "• Covers personal health information in any form (electronic, paper, oral)",
+                "• Regulates both public and private healthcare providers in Ontario",
+                "• Includes health service providers, researchers, and support organizations",
+                "",
+                "**Key PHIPA Principles:**",
+                "• **Circle of Care**: Health information sharing within healthcare teams for treatment",
+                "• **Knowledgeable Consent**: Patients must understand what they're consenting to",
+                "• **Minimal Disclosure**: Only necessary information should be shared",
+                "• **Purpose Limitation**: Use information only for intended healthcare purposes",
+                "",
+                "**Collection, Use, and Disclosure Rules:**",
+                "• Health information custodians may collect, use, and disclose personal health information for:",
+                "  - Providing healthcare to the individual",
+                "  - Payment for healthcare services",
+                "  - Healthcare operations and quality improvement",
+                "  - Plan administration by health insurers",
+                "• Express consent required for purposes outside the circle of care",
+                "• Implied consent allowed within circle of care for treatment purposes",
+                "",
+                "**Individual Rights under PHIPA:**",
+                "• Right to access personal health information",
+                "• Right to request correction of inaccurate information", 
+                "• Right to request restrictions on use and disclosure",
+                "• Right to file complaints with the Information and Privacy Commissioner",
+                "• Right to withdraw consent (with some limitations)",
+                "",
+                "**PHIPA vs PIPEDA - Key Differences:**",
+                "• PHIPA applies specifically to health information in Ontario",
+                "• PIPEDA applies to private sector generally across Canada",
+                "• PHIPA has specialized provisions for healthcare settings",
+                "• Different consent models (circle of care vs general consent requirements)"
+            ]
+        },
+        {
+            title: "FIPPA - Freedom of Information and Protection of Privacy Act",
+            content: [
+                "The Freedom of Information and Protection of Privacy Act (FIPPA) is Ontario's provincial privacy legislation governing ministries, Crown agencies, and other provincial institutions.",
+                "",
+                "**Scope and Application:**",
+                "• Applies to provincial government ministries and departments",
+                "• Covers Crown agencies, boards, commissions, and corporations",
+                "• Includes hospitals, school boards, and universities",
+                "• Excludes municipalities (covered under MFIPPA) and private sector",
+                "",
+                "**Dual Purpose Framework:**",
+                "FIPPA serves two main functions:",
+                "• **Access to Information**: Public right to government records",
+                "• **Privacy Protection**: Controls over personal information handling",
+                "",
+                "**Privacy Protection Provisions:**",
+                "• **Collection Limitations (s.38)**: Personal information must be collected directly from individuals unless exceptions apply",
+                "• **Use Restrictions (s.39)**: Use only for original purpose or consistent uses",
+                "• **Disclosure Controls (s.40-42)**: Limited circumstances for disclosure without consent",
+                "• **Accuracy Requirements (s.45)**: Maintain accurate, complete, and up-to-date records",
+                "",
+                "**Access to Information Provisions:**",
+                "• General right of access to government records",
+                "• Subject to specific exemptions (cabinet confidences, law enforcement, etc.)",
+                "• 30-day response timeline for access requests",
+                "• Independent review by Information and Privacy Commissioner",
+                "",
+                "**Key Differences from MFIPPA:**",
+                "• FIPPA covers provincial institutions, MFIPPA covers municipal",
+                "• Similar privacy protection principles but different institutional scope",
+                "• Both include access to information and privacy protection components",
+                "• Different exemption categories reflecting provincial vs municipal contexts"
+            ]
+        },
+        {
+            title: "Federal vs Provincial Privacy Law Jurisdiction",
+            content: [
+                "Understanding when federal vs provincial privacy laws apply is crucial for compliance in Ontario's complex privacy landscape.",
+                "",
+                "**Federal Privacy Laws Apply When:**",
+                "• **PIPEDA**: Private sector organizations engaged in commercial activities",
+                "• **Privacy Act**: Federal government institutions and departments",
+                "• **Interprovincial/international activities**: Cross-border data flows and commerce",
+                "• **Federal sector organizations**: Banks, telecommunications, airlines, railways",
+                "• **Federal employees**: Personal information of federal government workers",
+                "",
+                "**Provincial Privacy Laws Apply When:**",
+                "• **FIPPA**: Ontario government ministries, agencies, hospitals, universities",
+                "• **MFIPPA**: Ontario municipalities, local agencies, and boards",
+                "• **PHIPA**: Health information custodians in Ontario healthcare system",
+                "• **Intra-provincial activities**: Within Ontario boundaries and jurisdiction",
+                "",
+                "**Overlapping Jurisdiction Scenarios:**",
+                "• Healthcare organizations may be subject to both PHIPA and federal laws",
+                "• Universities subject to FIPPA but research may involve federal funding requirements",
+                "• Municipal utilities with interprovincial operations",
+                "• Technology companies with government contracts",
+                "",
+                "**Practical Compliance Tips:**",
+                "• Identify all applicable legislation based on organizational scope",
+                "• Apply the most restrictive requirements when laws overlap",
+                "• Document legal basis for privacy practices under each applicable law",
+                "• Regular legal review for organizations with complex jurisdictional issues",
+                "• Maintain separate compliance frameworks when necessary"
+            ]
+        },
+        {
+            title: "Freedom of Information (FOI) Request Processes",
+            content: [
+                "Understanding how to make and respond to FOI requests under different legislation is essential for both requesters and organizations.",
+                "",
+                "**FOI Requests under FIPPA (Provincial):**",
+                "• **Who can request**: Any person (no requirement to be Ontario resident)",
+                "• **How to request**: Written request to institution's Freedom of Information Coordinator",
+                "• **Response timeline**: 30 days from receipt of request",
+                "• **Fees**: Application fee ($5) plus processing fees may apply",
+                "• **Appeals**: Information and Privacy Commissioner of Ontario",
+                "",
+                "**FOI Requests under MFIPPA (Municipal):**",
+                "• **Who can request**: Any person, regardless of residence",
+                "• **How to request**: Submit to municipal clerk or designated coordinator",
+                "• **Response timeline**: 30 days from receipt",
+                "• **Fees**: Similar fee structure to FIPPA",
+                "• **Appeals**: Information and Privacy Commissioner of Ontario",
+                "",
+                "**FOI Requests under Federal Access to Information Act:**",
+                "• **Who can request**: Canadian citizens, permanent residents, or anyone present in Canada",
+                "• **How to request**: Written request to institution's ATIP office",
+                "• **Response timeline**: 30 days from receipt",
+                "• **Fees**: $5 application fee plus processing fees",
+                "• **Appeals**: Information Commissioner of Canada",
+                "",
+                "**Personal Information Requests (Different Process):**",
+                "• Requests for own personal information are usually free",
+                "• Faster processing timelines",
+                "• Different exemption categories apply",
+                "• Privacy protection rather than access to information focus",
+                "",
+                "**Best Practices for Making FOI Requests:**",
+                "• Be specific about records sought to reduce processing time",
+                "• Indicate preferred format (electronic, paper)",
+                "• Consider privacy implications if requesting others' information",
+                "• Understand exemption categories that may apply",
+                "• Use informal requests first when appropriate",
+                "",
+                "**Common Exemptions Across All Legislation:**",
+                "• Personal privacy of third parties",
+                "• Cabinet confidences or council deliberations",
+                "• Law enforcement investigations",
+                "• Economic interests of government",
+                "• Solicitor-client privilege",
+                "• Safety and security of individuals or facilities"
             ]
         },
         {
@@ -316,7 +526,7 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                             Module 1: Privacy Laws & Frameworks
                         </h1>
                         <p className="text-lg opacity-90 relative z-10">
-                            Understanding PIPEDA, MFIPPA, and the new Bill 194
+                            Understanding PIPEDA, MFIPPA, PHIPA, FIPPA, and privacy law jurisdiction
                         </p>
                     </div>
 
@@ -328,10 +538,14 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 <h3>📚 Module Content Overview</h3>
                                 <div className="reading-time">
                                     <span className="reading-time-icon">⏱️</span>
-                                    <span>Estimated reading time: 15-20 minutes</span>
+                                    <span>Estimated reading time: 25-30 minutes</span>
                                 </div>
                                 <ul>
                                     <li><a href="#pipeda-overview">PIPEDA Overview & 10 Fair Information Principles</a></li>
+                                    <li><a href="#phipa-framework">PHIPA - Personal Health Information Protection Act</a></li>
+                                    <li><a href="#fippa-framework">FIPPA - Freedom of Information and Protection of Privacy Act</a></li>
+                                    <li><a href="#jurisdiction-guide">Federal vs Provincial Privacy Law Jurisdiction</a></li>
+                                    <li><a href="#foi-processes">Freedom of Information (FOI) Request Processes</a></li>
                                     <li><a href="#mfippa-framework">MFIPPA Comprehensive Framework</a></li>
                                     <li><a href="#privacy-impact">Privacy Impact Assessments (PIAs)</a></li>
                                     <li><a href="#data-governance">Data Governance and Safeguards</a></li>
@@ -354,7 +568,23 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 </li>
                                 <li>
                                     <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Master MFIPPA requirements for municipal organizations including collection, use, and disclosure rules</span>
+                                    <span className="objective-text">Master PHIPA requirements for health information protection and circle of care</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Navigate FIPPA provisions for provincial institutions and access rights</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Determine jurisdictional application of federal vs provincial privacy laws</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Execute FOI requests under FIPPA, MFIPPA, and federal legislation</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Apply MFIPPA requirements for municipal organizations including collection, use, and disclosure rules</span>
                                 </li>
                                 <li>
                                     <span className="objective-icon">🎯</span>
@@ -378,7 +608,7 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 </li>
                                 <li>
                                     <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Create practical compliance frameworks for municipal operations</span>
+                                    <span className="objective-text">Create practical compliance frameworks for organizational operations</span>
                                 </li>
                             </ul>
                         </div>
@@ -389,6 +619,10 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                 {contentSections.map((section, index) => (
                                     <div key={index} className="content-section" id={
                                         section.title === "PIPEDA Overview" ? "pipeda-overview" :
+                                        section.title === "PHIPA - Personal Health Information Protection Act" ? "phipa-framework" :
+                                        section.title === "FIPPA - Freedom of Information and Protection of Privacy Act" ? "fippa-framework" :
+                                        section.title === "Federal vs Provincial Privacy Law Jurisdiction" ? "jurisdiction-guide" :
+                                        section.title === "Freedom of Information (FOI) Request Processes" ? "foi-processes" :
                                         section.title === "MFIPPA for Municipalities - Comprehensive Framework" ? "mfippa-framework" :
                                         section.title === "Privacy Impact Assessments (PIAs) - Essential Practice" ? "privacy-impact" :
                                         section.title === "Data Governance and Safeguards" ? "data-governance" :

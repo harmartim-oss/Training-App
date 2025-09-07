@@ -88,6 +88,30 @@ const EDUCATIONAL_RESPONSES: Record<string, string[]> = {
         "🔍 **Key PIPEDA vs MFIPPA Differences** *(Module 1)*:\n\n**Scope**: \n• PIPEDA: Private sector, commercial activities, federal jurisdiction\n• MFIPPA: Municipal governments, local agencies, Ontario jurisdiction\n\n**Data Storage**: \n• PIPEDA: No specific geographic restrictions (though foreign laws may apply)\n• MFIPPA: Strict Canadian storage requirement (s.30.1)\n\n**Enforcement**: \n• PIPEDA: Privacy Commissioner investigations, Federal Court enforcement\n• MFIPPA: Information and Privacy Commissioner of Ontario, binding orders\n\n**Consent**: \n• PIPEDA: Explicit consent requirements for collection, use, disclosure\n• MFIPPA: Different rules - often statutory authority rather than consent-based\n\n📖 *Reference: Module 1 provides detailed comparison tables and practical examples*"
     ],
     
+    'phipa': [
+        "🏥 **PHIPA - Personal Health Information Protection Act** *(Module 1: Privacy Laws & Frameworks)*: Ontario's health privacy legislation governing health information custodians (hospitals, clinics, health professionals) in their collection, use, and disclosure of personal health information.\n\n🔄 **Circle of Care Concept**: PHIPA allows health information sharing within healthcare teams for treatment purposes without explicit consent. This includes physicians, nurses, pharmacists, and other health professionals involved in an individual's care.\n\n📋 **Key PHIPA Principles**: \n• **Knowledgeable Consent**: Patients must understand what they're consenting to\n• **Minimal Disclosure**: Only necessary information should be shared\n• **Purpose Limitation**: Use information only for intended healthcare purposes\n• **Individual Rights**: Access, correction, complaint rights specific to health information\n\n📖 *Reference: Module 1 - PHIPA section provides comprehensive coverage of health information protection*",
+        
+        "⚕️ **PHIPA vs Other Privacy Laws** *(Module 1)*: PHIPA is Ontario-specific health privacy legislation that works alongside federal and provincial privacy laws:\n• **Scope**: Health information custodians in Ontario\n• **Special Provisions**: Circle of care, specialized consent models\n• **Express Consent Required**: For purposes outside circle of care\n• **Implied Consent Allowed**: Within circle of care for treatment\n\n📖 *Reference: See Module 1 jurisdiction section for understanding when PHIPA applies vs other privacy laws*"
+    ],
+    
+    'fippa': [
+        "🏛️ **FIPPA - Freedom of Information and Protection of Privacy Act** *(Module 1: Privacy Laws & Frameworks)*: Ontario's provincial privacy legislation governing ministries, Crown agencies, hospitals, school boards, and universities.\n\n🎯 **Dual Purpose Framework**: \n• **Access to Information**: Public right to government records\n• **Privacy Protection**: Controls over personal information handling by provincial institutions\n\n📋 **Key FIPPA Provisions**: \n• **Collection Limitations (s.38)**: Personal information must be collected directly from individuals unless exceptions apply\n• **Use Restrictions (s.39)**: Use only for original purpose or consistent uses\n• **Disclosure Controls (s.40-42)**: Limited circumstances for disclosure without consent\n• **30-day Response Timeline**: For access to information requests\n\n📖 *Reference: Module 1 - FIPPA section provides detailed implementation guidance*",
+        
+        "⚖️ **FIPPA vs MFIPPA Comparison** *(Module 1)*: Both Ontario privacy laws with similar principles but different institutional scope:\n• **FIPPA**: Provincial institutions (ministries, Crown agencies, hospitals, universities)\n• **MFIPPA**: Municipal institutions (cities, towns, local agencies)\n• **Similar Privacy Protection**: Both follow comparable collection, use, disclosure principles\n• **Access Rights**: Both provide public access to government records with exemptions\n\n📖 *Reference: Module 1 jurisdiction guide explains when each law applies*"
+    ],
+    
+    'foi': [
+        "📋 **Freedom of Information (FOI) Request Processes** *(Module 1: Privacy Laws & Frameworks)*: Understanding how to make and respond to FOI requests under different legislation is essential for transparency and accountability.\n\n🎯 **FOI Under FIPPA (Provincial)**: \n• **Who can request**: Any person (no Ontario residency requirement)\n• **Response timeline**: 30 days from receipt\n• **Fees**: $5 application fee plus processing fees\n• **Appeals**: Information and Privacy Commissioner of Ontario\n\n🏙️ **FOI Under MFIPPA (Municipal)**: \n• **Who can request**: Any person, regardless of residence\n• **Submit to**: Municipal clerk or designated coordinator\n• **Response timeline**: 30 days from receipt\n• **Appeals**: Information and Privacy Commissioner of Ontario\n\n📖 *Reference: Module 1 - FOI Request Processes section provides step-by-step guidance*",
+        
+        "💡 **FOI Best Practices** *(Module 1)*: \n• **Be Specific**: Clearly describe the records you're seeking to reduce processing time\n• **Consider Format**: Indicate preference for electronic vs paper copies\n• **Understand Exemptions**: Common exemptions include personal privacy, law enforcement, cabinet confidences\n• **Use Informal Requests First**: Often faster for straightforward information\n• **Personal Information Requests**: Usually free when requesting your own information\n\n📖 *Reference: See Module 1 FOI section for exemption categories and request templates*"
+    ],
+    
+    'jurisdiction': [
+        "⚖️ **Federal vs Provincial Privacy Law Jurisdiction** *(Module 1: Privacy Laws & Frameworks)*: Understanding when federal vs provincial privacy laws apply is crucial for compliance in Ontario's complex privacy landscape.\n\n🇨🇦 **Federal Privacy Laws Apply**: \n• **PIPEDA**: Private sector commercial activities, interprovincial/international commerce\n• **Privacy Act**: Federal government institutions\n• **Federal Sectors**: Banks, telecommunications, airlines, railways\n\n🏢 **Provincial Privacy Laws Apply**: \n• **FIPPA**: Ontario government ministries, agencies, hospitals, universities\n• **MFIPPA**: Ontario municipalities and local agencies\n• **PHIPA**: Health information custodians in Ontario\n\n📖 *Reference: Module 1 jurisdiction guide provides decision trees for determining applicable laws*",
+        
+        "🔄 **Overlapping Jurisdiction Scenarios** *(Module 1)*: Organizations may be subject to multiple privacy laws:\n• **Healthcare**: PHIPA + federal requirements for interprovincial activities\n• **Universities**: FIPPA + federal research funding requirements\n• **Technology Companies**: PIPEDA + provincial laws for government contracts\n• **Compliance Strategy**: Apply most restrictive requirements when laws overlap\n\n📖 *Reference: Module 1 includes practical compliance frameworks for complex jurisdictional situations*"
+    ],
+    
     'cybersecurity': [
         "🛡️ **Cybersecurity Fundamentals** *(Module 2: Cybersecurity & Incident Response)*: The foundation is the **CIA Triad**: Confidentiality (protecting information from unauthorized access), Integrity (ensuring information accuracy), and Availability (ensuring authorized access when needed).\n\n🎯 **NIST Cybersecurity Framework**: The five core functions are:\n1. **Identify** - Asset management, governance, risk assessment\n2. **Protect** - Access controls, awareness training, data security\n3. **Detect** - Anomaly detection, continuous monitoring\n4. **Respond** - Response planning, communications, analysis\n5. **Recover** - Recovery planning, improvements, communications\n\n📖 *Reference: Module 2 provides detailed implementation guidance for each NIST function*",
         
@@ -123,13 +147,13 @@ const EDUCATIONAL_RESPONSES: Record<string, string[]> = {
     ],
     
     'default': [
-        "👋 **Welcome to your OCRP Study Assistant!** I'm here to provide detailed, specific guidance on Ontario's privacy and cybersecurity landscape. I can help with:\n\n📚 **Core Topics**: \n• PIPEDA's 10 Fair Information Principles *(Module 1)*\n• MFIPPA requirements for municipalities *(Module 1)*\n• Cybersecurity frameworks (NIST, ISO 27001) *(Module 2)*\n• AI governance and algorithmic impact assessments *(Module 3)*\n• Data management and cross-border compliance *(Module 4)*\n• Bill 194 privacy enhancements *(Module 1)*\n\n💡 **Ask me specific questions** like:\n• 'Explain the differences between PIPEDA and MFIPPA'\n• 'When are Privacy Impact Assessments required?'\n• 'What are the NIST cybersecurity framework functions?'\n• 'How does Ontario's AI governance directive work?'\n\n📖 **All responses include module references** so you know exactly where to find more information!",
+        "👋 **Welcome to your OCRP Study Assistant!** I'm here to provide detailed, specific guidance on Ontario's privacy and cybersecurity landscape. I can help with:\n\n📚 **Core Topics**: \n• PIPEDA's 10 Fair Information Principles *(Module 1)*\n• PHIPA requirements for health information protection *(Module 1)*\n• FIPPA provisions for provincial institutions *(Module 1)*\n• Federal vs provincial privacy law jurisdiction *(Module 1)*\n• FOI request processes under various legislation *(Module 1)*\n• MFIPPA requirements for municipalities *(Module 1)*\n• Cybersecurity frameworks (NIST, ISO 27001) *(Module 2)*\n• AI governance and algorithmic impact assessments *(Module 3)*\n• Data management and cross-border compliance *(Module 4)*\n• Bill 194 privacy enhancements *(Module 1)*\n\n💡 **Ask me specific questions** like:\n• 'Explain the differences between PIPEDA, MFIPPA, PHIPA, and FIPPA'\n• 'When do federal vs provincial privacy laws apply?'\n• 'How do I make an FOI request under FIPPA or MFIPPA?'\n• 'What is the circle of care under PHIPA?'\n• 'When are Privacy Impact Assessments required?'\n• 'What are the NIST cybersecurity framework functions?'\n• 'How does Ontario's AI governance directive work?'\n\n📖 **All responses include module references** so you know exactly where to find more information!",
         
         "🎯 **Study Tips**: For the best learning experience, try asking follow-up questions! I can explain concepts in different ways, provide practical examples, and help you understand how these laws apply in real-world scenarios. Each topic builds on others - privacy law foundations (Module 1) support cybersecurity practices (Module 2), which inform AI governance approaches (Module 3) and data management strategies (Module 4).\n\n📖 **Always check the referenced modules** for complete details, examples, and practice exercises!"
     ],
     
     'module1': [
-        "📚 **Module 1: Privacy Laws & Frameworks** focuses on Ontario's privacy landscape:\n\n**Key Learning Areas:**\n• PIPEDA's 10 Fair Information Principles\n• MFIPPA requirements for municipalities\n• Privacy Impact Assessment (PIA) processes\n• Cross-border data management (Section 30.1)\n• Bill 194 privacy enhancements\n• Breach response and notification\n\n**Main Sections:**\n• PIPEDA Overview\n• MFIPPA Comprehensive Framework\n• Privacy Impact Assessments\n• Cross-Border Data Management\n• Breach Response and Notification\n• Bill 194 - New Requirements\n\n📖 *This module provides the foundation for all other modules*"
+        "📚 **Module 1: Privacy Laws & Frameworks** focuses on Ontario's comprehensive privacy landscape:\n\n**Key Learning Areas:**\n• PIPEDA's 10 Fair Information Principles\n• PHIPA requirements for health information protection\n• FIPPA provisions for provincial institutions\n• Federal vs provincial privacy law jurisdiction\n• Freedom of Information (FOI) request processes\n• MFIPPA requirements for municipalities\n• Privacy Impact Assessment (PIA) processes\n• Cross-border data management (Section 30.1)\n• Bill 194 privacy enhancements\n• Breach response and notification\n\n**Main Sections:**\n• PIPEDA Overview\n• PHIPA - Personal Health Information Protection Act\n• FIPPA - Freedom of Information and Protection of Privacy Act\n• Federal vs Provincial Privacy Law Jurisdiction\n• Freedom of Information (FOI) Request Processes\n• MFIPPA Comprehensive Framework\n• Privacy Impact Assessments\n• Cross-Border Data Management\n• Breach Response and Notification\n• Bill 194 - New Requirements\n\n📖 *This expanded module provides comprehensive foundation for all privacy compliance*"
     ],
     
     'module2': [
@@ -154,6 +178,33 @@ function findRelevantTopic(message: string): string {
         lowerMessage.includes('fair information principles') || lowerMessage.includes('federal privacy law') ||
         lowerMessage.includes('private sector') || lowerMessage.includes('commercial activities')) {
         return 'pipeda';
+    }
+    
+    // PHIPA related queries
+    if (lowerMessage.includes('phipa') || lowerMessage.includes('personal health information') || 
+        lowerMessage.includes('health privacy') || lowerMessage.includes('circle of care') ||
+        lowerMessage.includes('health information custodian') || lowerMessage.includes('health records')) {
+        return 'phipa';
+    }
+    
+    // FIPPA related queries
+    if (lowerMessage.includes('fippa') || lowerMessage.includes('freedom of information and protection') ||
+        lowerMessage.includes('provincial privacy') || lowerMessage.includes('ontario government') ||
+        lowerMessage.includes('crown agencies') || lowerMessage.includes('provincial institutions')) {
+        return 'fippa';
+    }
+    
+    // FOI/Access to Information queries
+    if (lowerMessage.includes('foi') || lowerMessage.includes('freedom of information') ||
+        lowerMessage.includes('access to information') || lowerMessage.includes('foi request') ||
+        lowerMessage.includes('information request') || lowerMessage.includes('government records')) {
+        return 'foi';
+    }
+    
+    // Jurisdiction and legal framework queries
+    if ((lowerMessage.includes('federal') || lowerMessage.includes('provincial')) && 
+        (lowerMessage.includes('jurisdiction') || lowerMessage.includes('apply') || lowerMessage.includes('when'))) {
+        return 'jurisdiction';
     }
     
     // MFIPPA related queries
