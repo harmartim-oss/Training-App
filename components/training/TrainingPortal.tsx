@@ -344,6 +344,7 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                 onNavigate={setActiveSection} 
                 currentUser={currentUser}
                 onLogout={handleLogout}
+                onNavigateToLanding={onNavigateToLanding}
                 progress={userProgress}
             />
             <main className="flex-1 p-6 sm:p-8 lg:p-12 overflow-y-auto">

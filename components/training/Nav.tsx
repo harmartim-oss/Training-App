@@ -22,10 +22,11 @@ interface NavProps {
     onNavigate: (section: string) => void;
     currentUser: User;
     onLogout: () => void;
+    onNavigateToLanding?: () => void;
     progress?: Progress;
 }
 
-const Nav: React.FC<NavProps> = ({ activeSection, onNavigate, currentUser, onLogout, progress }) => {
+const Nav: React.FC<NavProps> = ({ activeSection, onNavigate, currentUser, onLogout, onNavigateToLanding, progress }) => {
     
     const getModuleStatus = (moduleId: string) => {
         if (!progress || moduleId === 'dashboard' || moduleId === 'certificate') return 'available';
@@ -95,9 +96,25 @@ const Nav: React.FC<NavProps> = ({ activeSection, onNavigate, currentUser, onLog
                 <div className="flex items-center gap-3 mb-4">
                     <ODDILogo className="w-8 h-8 text-primary flex-shrink-0" />
                     <div className="hidden lg:block">
-                        <h1 className="font-bold text-sm text-text-primary">ODDI Portal</h1>
-                        <p className="text-xs text-text-secondary">Training Dashboard</p>
+                        <button
+                            onClick={onNavigateToLanding}
+                            className="text-left hover:text-primary transition-colors"
+                            title="Back to Landing Page"
+                        >
+                            <h1 className="font-bold text-sm text-text-primary hover:text-primary">ODDI Portal</h1>
+                            <p className="text-xs text-text-secondary">Training Dashboard</p>
+                        </button>
                     </div>
+                    {/* Mobile back button */}
+                    {onNavigateToLanding && (
+                        <button
+                            onClick={onNavigateToLanding}
+                            className="lg:hidden text-text-secondary hover:text-primary transition-colors p-1"
+                            title="Back to Landing Page"
+                        >
+                            ←
+                        </button>
+                    )}
                 </div>
                 <div className="hidden lg:block bg-surface-elevated rounded-lg p-3">
                     <p className="text-xs font-semibold text-text-secondary mb-1">Welcome back,</p>
