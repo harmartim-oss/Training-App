@@ -312,16 +312,59 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                         <h1 className="text-3xl font-bold font-mono mb-2 uppercase">Module 3: AI Usage and Governance</h1>
                         <p className="mb-6">Navigating Ontario's Responsible Use of AI Directive</p>
                         
-                        <div className="learning-objectives">
-                            <h3 className="font-semibold mb-2 text-lg font-mono uppercase">Learning Objectives</h3>
+                        {/* Content Outline and Reading Time */}
+                        {currentSection === 'content' && (
+                            <div className="content-outline">
+                                <h3>📚 Module Content Overview</h3>
+                                <div className="reading-time">
+                                    <span className="reading-time-icon">⏱️</span>
+                                    <span>Estimated reading time: 12-18 minutes</span>
+                                </div>
+                                <ul>
+                                    <li><a href="#ai-directive">Ontario's Responsible Use of AI Directive</a></li>
+                                    <li><a href="#six-principles">Six Principles of Responsible AI Use</a></li>
+                                    <li><a href="#governance-framework">AI Governance and Accountability Framework</a></li>
+                                    <li><a href="#impact-assessment">Algorithmic Impact Assessment (AIA) Process</a></li>
+                                    <li><a href="#risk-management">AI Risk Management and Mitigation</a></li>
+                                    <li><a href="#transparency">Transparency and Explainability Requirements</a></li>
+                                </ul>
+                            </div>
+                        )}
+                        
+                        <div className="learning-objectives-enhanced">
+                            <h3>
+                                <span>🎯</span>
+                                Learning Objectives
+                            </h3>
                             <ul>
-                                <li>Understand Ontario's Responsible Use of AI Directive and its scope</li>
-                                <li>Apply the six principles of responsible AI use in practice</li>
-                                <li>Implement comprehensive AI risk management frameworks</li>
-                                <li>Conduct effective Algorithmic Impact Assessments (AIA)</li>
-                                <li>Establish robust AI governance and accountability structures</li>
-                                <li>Ensure compliance with ethical AI deployment standards</li>
-                                <li>Create transparent and explainable AI systems</li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Understand Ontario's Responsible Use of AI Directive and its scope</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Apply the six principles of responsible AI use in practice</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Implement comprehensive AI risk management frameworks</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Conduct effective Algorithmic Impact Assessments (AIA)</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Establish robust AI governance and accountability structures</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Ensure compliance with ethical AI deployment standards</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Create transparent and explainable AI systems</span>
+                                </li>
                             </ul>
                         </div>
 
@@ -329,15 +372,126 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                             /* Content Section */
                             <div className="space-y-6">
                                 {contentSections.map((section, index) => (
-                                    <div key={index} className="content-section">
-                                        <h3 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
+                                    <div key={index} className="content-section" id={
+                                        section.title === "Ontario's Responsible Use of AI Directive" ? "ai-directive" :
+                                        section.title === "Six Principles of Responsible AI Use" ? "six-principles" :
+                                        section.title === "AI Governance and Accountability Framework" ? "governance-framework" :
+                                        section.title === "Algorithmic Impact Assessment (AIA) Process" ? "impact-assessment" :
+                                        section.title === "AI Risk Management and Mitigation" ? "risk-management" :
+                                        section.title === "Transparency and Explainability Requirements" ? "transparency" : ""
+                                    }>
+                                        <h2 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
                                             {section.title}
-                                        </h3>
-                                        <div className="space-y-3 text-text-secondary leading-relaxed">
-                                            {section.content.map((paragraph, pIndex) => (
-                                                <p key={pIndex}>{paragraph}</p>
-                                            ))}
+                                        </h2>
+                                        <div className="space-y-4 text-text-secondary leading-relaxed">
+                                            {section.content.map((paragraph, pIndex) => {
+                                                // Enhanced content formatting
+                                                if (paragraph === "") return <br key={pIndex} />;
+                                                
+                                                // Special formatting for important callouts
+                                                if (paragraph.includes("**Scope and Application") || paragraph.includes("**Key Requirements") || paragraph.includes("**Implementation Timeline")) {
+                                                    return (
+                                                        <div key={pIndex} className="learning-callout info">
+                                                            <div className="learning-callout-title">
+                                                                <span className="learning-callout-icon">💡</span>
+                                                                {paragraph.replace(/\*\*/g, '')}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                                
+                                                // Format bullet points as enhanced lists
+                                                if (paragraph.startsWith("• ")) {
+                                                    return (
+                                                        <div key={pIndex} className="ml-6 flex items-start gap-3 py-1">
+                                                            <span className="text-primary font-bold mt-1">▸</span>
+                                                            <span>{paragraph.substring(2)}</span>
+                                                        </div>
+                                                    );
+                                                }
+                                                
+                                                return <p key={pIndex} className="text-base leading-relaxed">{paragraph}</p>;
+                                            })}
                                         </div>
+                                        
+                                        {/* Add scenario boxes for specific sections */}
+                                        {section.title === "Six Principles of Responsible AI Use" && (
+                                            <div className="scenario-box">
+                                                <div className="scenario-title">📋 Practical Scenario: AI-Powered Service Delivery</div>
+                                                <div className="scenario-content">
+                                                    Your ministry is considering implementing an AI chatbot to handle citizen inquiries about government services. The system would use natural language processing to understand questions and provide automated responses, with escalation to human agents for complex issues.
+                                                </div>
+                                                <div className="scenario-question">
+                                                    💭 Reflection: How would you apply the six principles to ensure this AI system is implemented responsibly? Consider transparency, accountability, and citizen benefit.
+                                                </div>
+                                            </div>
+                                        )}
+                                        
+                                        {section.title === "Ontario's Responsible Use of AI Directive" && (
+                                            <div className="learning-callout tip">
+                                                <div className="learning-callout-title">
+                                                    <span className="learning-callout-icon">💡</span>
+                                                    Key Compliance Tip
+                                                </div>
+                                                <p>Remember the "Three Ts" for AI directive compliance: <strong>T</strong>ransparency in operations, <strong>T</strong>esting for bias and accuracy, and <strong>T</strong>raining for staff competency.</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                                
+                                {/* Key Takeaways Section */}
+                                <div className="key-takeaways">
+                                    <h3>Key Takeaways</h3>
+                                    <ul>
+                                        <li>Ontario's AI directive requires comprehensive governance across all government uses of AI</li>
+                                        <li>Six principles provide a framework for ethical AI implementation</li>
+                                        <li>Algorithmic Impact Assessments are mandatory for high-risk AI systems</li>
+                                        <li>Transparency and explainability are essential for public trust</li>
+                                        <li>Risk management must be ongoing throughout the AI lifecycle</li>
+                                        <li>Human oversight and accountability mechanisms are required</li>
+                                    </ul>
+                                </div>
+                                
+                                {/* Interactive Checklist */}
+                                <div className="interactive-checklist">
+                                    <h4>🗃️ AI Governance Implementation Checklist</h4>
+                                    <p className="text-sm text-text-muted mb-4">Check off items as you implement them in your AI governance framework:</p>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="ai-checklist-1" />
+                                        <label htmlFor="ai-checklist-1" className="checklist-text">Establish AI governance committee and decision-making processes</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="ai-checklist-2" />
+                                        <label htmlFor="ai-checklist-2" className="checklist-text">Conduct Algorithmic Impact Assessment for new AI systems</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="ai-checklist-3" />
+                                        <label htmlFor="ai-checklist-3" className="checklist-text">Implement bias testing and monitoring procedures</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="ai-checklist-4" />
+                                        <label htmlFor="ai-checklist-4" className="checklist-text">Create public transparency reporting mechanisms</label>
+                                    </div>
+                                    <div className="checklist-item">
+                                        <input type="checkbox" className="checklist-checkbox" id="ai-checklist-5" />
+                                        <label htmlFor="ai-checklist-5" className="checklist-text">Develop staff training programs on responsible AI use</label>
+                                    </div>
+                                </div>
+                                
+                                {/* Resources Panel */}
+                                <div className="mt-8">
+                                    <ResourcesPanel />
+                                </div>
+                                
+                                <div className="text-center py-8">
+                                    <button 
+                                        onClick={() => setCurrentSection('quiz')}
+                                        className="btn-primary py-3 px-8 text-lg font-semibold"
+                                    >
+                                        Proceed to Knowledge Check →
+                                    </button>
+                                </div>
+                            </div>
                                     </div>
                                 ))}
                                 
