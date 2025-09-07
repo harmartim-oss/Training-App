@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, CheckCircleIcon, XCircleIcon, AssessmentIcon, ClockIcon, TrophyIcon } from '../icons';
+import { ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, CheckCircleIcon, XCircleIcon, AssessmentIcon, ClockIcon, TrophyIcon, UserIcon, SettingsIcon, CreditCardIcon, LogoutIcon } from '../icons';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -382,6 +382,98 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                                 🔒 Premium feature - upgrade to access
                             </div>
                         )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Account Management Section */}
+            <div className="mb-8">
+                <h3 className="text-2xl font-bold font-mono text-text-primary mb-6 uppercase tracking-wider">
+                    Account Management
+                </h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                    {/* Account Details Card */}
+                    <div className="module-card-enhanced p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="module-icon-container">
+                                <UserIcon className="w-6 h-6 text-primary" />
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-semibold text-text-primary">Account Details</h4>
+                                <p className="text-sm text-text-secondary">View and edit your profile information</p>
+                            </div>
+                        </div>
+                        <p className="text-text-secondary mb-4 text-sm">
+                            Update your personal information, organization details, and contact preferences.
+                        </p>
+                        <button 
+                            onClick={() => onNavigate('account-details')} 
+                            className="btn-secondary w-full py-2 px-4"
+                        >
+                            Manage Profile
+                        </button>
+                    </div>
+
+                    {/* Subscription Management Card */}
+                    <div className="module-card-enhanced p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="module-icon-container">
+                                <CreditCardIcon className="w-6 h-6 text-primary" />
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-semibold text-text-primary">Subscription</h4>
+                                <p className="text-sm text-text-secondary">Manage your training plan and billing</p>
+                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <p className="text-text-secondary text-sm mb-2">
+                                Current Plan: <span className="font-semibold text-text-primary capitalize">{currentUser?.subscriptionTier}</span>
+                            </p>
+                            {currentUser?.subscriptionTier === 'basic' && (
+                                <p className="text-sm text-warning">
+                                    🔓 Upgrade for full access to study materials and practice exams
+                                </p>
+                            )}
+                        </div>
+                        <button 
+                            onClick={() => onNavigate('subscription')} 
+                            className={`w-full py-2 px-4 ${
+                                currentUser?.subscriptionTier === 'basic' 
+                                    ? 'btn-primary' 
+                                    : 'btn-secondary'
+                            }`}
+                        >
+                            {currentUser?.subscriptionTier === 'basic' ? 'Upgrade Plan' : 'Manage Subscription'}
+                        </button>
+                    </div>
+
+                    {/* Quick Actions Card */}
+                    <div className="module-card-enhanced p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="module-icon-container">
+                                <SettingsIcon className="w-6 h-6 text-primary" />
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-semibold text-text-primary">Quick Actions</h4>
+                                <p className="text-sm text-text-secondary">Account settings and preferences</p>
+                            </div>
+                        </div>
+                        <div className="space-y-3">
+                            <button 
+                                onClick={() => onNavigate('account-details')} 
+                                className="btn-ghost w-full py-2 px-4 text-left flex items-center gap-2 text-sm"
+                            >
+                                <UserIcon className="w-4 h-4" />
+                                Edit Profile
+                            </button>
+                            <div className="border-t border-border my-2"></div>
+                            <p className="text-xs text-text-muted">
+                                Welcome, {currentUser?.fullname}
+                            </p>
+                            <p className="text-xs text-text-muted">
+                                Member since {currentUser?.registrationDate ? new Date(currentUser.registrationDate).toLocaleDateString() : 'N/A'}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
