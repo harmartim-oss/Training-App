@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
 import QuizComponent from '../common/QuizComponent';
+import DownloadableResources from '../common/DownloadableResources';
 import ResourcesPanel from '../resources/ResourcesPanel';
 
 interface ModuleProps {
@@ -13,7 +14,228 @@ interface ModuleProps {
 }
 
 const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
-    const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
+    const [currentSection, setCurrentSection] = useState<'content' | 'quiz' | 'resources'>('content');
+    
+    const sampleResources = [
+        {
+            id: 'pipeda-checklist',
+            title: 'PIPEDA Compliance Checklist',
+            description: 'A comprehensive checklist to ensure your organization meets all PIPEDA requirements for personal information handling.',
+            type: 'checklist' as const,
+            size: '2 pages',
+            previewContent: `PIPEDA COMPLIANCE CHECKLIST
+
+□ PURPOSE IDENTIFICATION
+  □ Purposes identified before or at time of collection
+  □ Purposes documented in privacy policy
+  □ Staff trained on collection purposes
+  □ Purposes limited to those identified
+
+□ CONSENT MANAGEMENT
+  □ Appropriate consent obtained (express/implied)
+  □ Consent withdrawal process established
+  □ Consent records maintained
+  □ Consent refreshed when purposes change
+
+□ LIMITING COLLECTION
+  □ Only necessary information collected
+  □ Collection methods documented
+  □ Fair and lawful collection practices
+  □ Source of information identified
+
+□ LIMITING USE AND DISCLOSURE
+  □ Use limited to identified purposes
+  □ Disclosure limited to identified purposes
+  □ Third-party agreements in place
+  □ Staff access controls implemented
+
+□ ACCURACY
+  □ Information accuracy procedures
+  □ Correction process established
+  □ Regular data quality reviews
+  □ Individual correction rights communicated
+
+□ SAFEGUARDS
+  □ Security safeguards implemented
+  □ Staff training on safeguards
+  □ Regular security assessments
+  □ Incident response procedures
+
+□ OPENNESS
+  □ Privacy policy published
+  □ Contact information provided
+  □ Information practices explained
+  □ Policy regularly updated
+
+□ INDIVIDUAL ACCESS
+  □ Access request process established
+  □ Response timeframes defined
+  □ Fee structure documented
+  □ Appeal process communicated
+
+□ CHALLENGING COMPLIANCE
+  □ Complaint process established
+  □ Investigation procedures defined
+  □ Resolution tracking system
+  □ Privacy officer designated`
+        },
+        {
+            id: 'mfippa-template',
+            title: 'MFIPPA Privacy Impact Assessment Template',
+            description: 'Ready-to-use template for conducting Privacy Impact Assessments under MFIPPA requirements.',
+            type: 'template' as const,
+            size: '8 pages',
+            previewContent: `PRIVACY IMPACT ASSESSMENT TEMPLATE (MFIPPA)
+
+SECTION 1: PROJECT OVERVIEW
+Project Name: ________________________
+Department: ___________________________
+Project Manager: ______________________
+Date: _________________________________
+
+1.1 Project Description
+Describe the project, system, or initiative requiring this PIA:
+________________________________________________
+
+1.2 Project Objectives
+What are the main goals of this project?
+________________________________________________
+
+SECTION 2: PERSONAL INFORMATION ANALYSIS
+2.1 Type of Personal Information
+□ Names and contact information
+□ Financial information
+□ Health information
+□ Employment information
+□ Other: ______________________________
+
+2.2 Collection Details
+How will personal information be collected?
+□ Online forms  □ Paper forms  □ Phone  □ Email
+□ Third parties  □ Other: _______________
+
+2.3 Use and Disclosure
+How will the information be used?
+________________________________________________
+
+Will information be shared? If yes, with whom?
+________________________________________________
+
+SECTION 3: PRIVACY RISKS
+3.1 Risk Assessment
+Identify potential privacy risks:
+High Risk: ____________________________
+Medium Risk: __________________________
+Low Risk: _____________________________
+
+3.2 Risk Mitigation
+For each identified risk, describe mitigation measures:
+________________________________________________
+
+SECTION 4: SAFEGUARDS
+4.1 Technical Safeguards
+□ Encryption  □ Access controls  □ Audit logs
+□ Secure transmission  □ Other: ___________
+
+4.2 Administrative Safeguards
+□ Staff training  □ Privacy policies
+□ Regular audits  □ Other: ______________
+
+SECTION 5: COMPLIANCE REQUIREMENTS
+5.1 Legal Authority
+What legal authority permits this collection?
+________________________________________________
+
+5.2 Retention Schedule
+How long will information be retained?
+________________________________________________
+
+5.3 Disposal Method
+How will information be securely disposed of?
+________________________________________________
+
+SECTION 6: SIGN-OFF
+Privacy Officer: _______________________
+Date: ________________________________
+Department Head: ______________________
+Date: ________________________________`
+        },
+        {
+            id: 'breach-response-guide',
+            title: 'Privacy Breach Response Guide',
+            description: 'Step-by-step guide for responding to privacy breaches under Ontario privacy legislation.',
+            type: 'guide' as const,
+            size: '12 pages',
+            previewContent: `PRIVACY BREACH RESPONSE GUIDE
+
+IMMEDIATE RESPONSE (0-24 hours)
+
+Step 1: CONTAIN THE BREACH
+□ Stop the unauthorized access/disclosure
+□ Secure the affected systems/data
+□ Preserve evidence
+□ Document initial findings
+
+Step 2: ASSESS THE SCOPE
+□ What information was involved?
+□ How many individuals affected?
+□ Who had unauthorized access?
+□ When did the breach occur?
+
+Step 3: INITIAL NOTIFICATIONS
+□ Notify supervisor/management
+□ Contact Privacy Officer
+□ Consider law enforcement (if criminal)
+□ Initial report to Commissioner (Bill 194)
+
+SHORT-TERM RESPONSE (1-7 days)
+
+Step 4: DETAILED INVESTIGATION
+□ Interview relevant staff
+□ Review system logs
+□ Determine root cause
+□ Document timeline of events
+
+Step 5: RISK ASSESSMENT
+□ Assess risk of harm to individuals
+□ Consider identity theft potential
+□ Evaluate reputational impact
+□ Document risk factors
+
+Step 6: NOTIFICATION DECISIONS
+□ Notify affected individuals (if required)
+□ Media notification (if warranted)
+□ Update Commissioner report
+□ Stakeholder communications
+
+LONG-TERM RESPONSE (1-4 weeks)
+
+Step 7: REMEDIATION
+□ Implement corrective measures
+□ Provide credit monitoring (if needed)
+□ Update policies/procedures
+□ Additional staff training
+
+Step 8: MONITORING
+□ Monitor for further incidents
+□ Track effectiveness of measures
+□ Follow up with affected individuals
+□ Regular status updates
+
+Step 9: DOCUMENTATION
+□ Complete incident report
+□ Lessons learned document
+□ Policy updates required
+□ Final Commissioner report
+
+PREVENTION MEASURES
+□ Regular security assessments
+□ Staff privacy training
+□ Incident response drills
+□ Policy review and updates
+□ Technology safeguards audit`
+        }
+    ];
     
     const allQuestions: QuizQuestions = {
         q1: { 
@@ -26,17 +248,88 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
             },
             explanation: "PIPEDA requires organizations to identify purposes before or at the time of collection to ensure transparency."
         },
-        q2: { 
-            question: "Under MFIPPA, what is the primary rule for storing municipal personal information?", 
-            answer: 'b', 
-            options: { 
-                a: "Can be stored anywhere for efficiency", 
-                b: "Must be stored and accessed only in Canada", 
-                c: "Storage location doesn't matter with encryption" 
-            },
-            explanation: "MFIPPA Section 30.1 requires that personal information be stored and accessed only within Canada, with very limited exceptions."
+        q2: {
+            type: 'scenario',
+            question: "Your municipal office is implementing a new citizen portal that will collect names, addresses, phone numbers, and email addresses for service requests. The IT vendor suggests using a US-based cloud service that offers better performance and lower costs. What should be your approach to this situation?",
+            answer: 'scenario',
+            options: {},
+            scenarioAnswer: `Given MFIPPA Section 30.1 requirements, here's the recommended approach:
+
+1. **Default Position**: Decline the US-based cloud service as MFIPPA requires personal information to be stored and accessed only in Canada.
+
+2. **Alternative Solutions**:
+   - Request Canadian-based hosting options from the vendor
+   - Explore Canadian cloud providers (AWS Canada, Microsoft Azure Canada, etc.)
+   - Consider hybrid solutions with Canadian data residency
+
+3. **If US Service is Essential**:
+   - Obtain written consent from individuals (difficult for municipal services)
+   - Seek Commissioner authorization (lengthy process)
+   - Ensure robust contractual safeguards and data processing agreements
+   - Implement additional security measures
+
+4. **Documentation**: Maintain detailed records of the decision-making process and any risk assessments conducted.
+
+The safest approach is to insist on Canadian data residency to ensure full MFIPPA compliance.`,
+            explanation: "This scenario highlights the practical challenges of balancing operational efficiency with privacy law compliance under MFIPPA."
         },
-        q3: { 
+        q3: {
+            type: 'text-input',
+            question: "Explain the key differences between PIPEDA and MFIPPA in terms of scope and application. Provide at least three specific differences.",
+            answer: 'text-input',
+            options: {},
+            sampleAnswer: `Key differences between PIPEDA and MFIPPA:
+
+1. **Scope of Application**:
+   - PIPEDA: Applies to private sector organizations in federal jurisdiction and provinces without substantially similar legislation
+   - MFIPPA: Applies specifically to Ontario municipalities and local government bodies
+
+2. **Type of Information Covered**:
+   - PIPEDA: Focuses on personal information collected during commercial activities
+   - MFIPPA: Covers both personal information and general government records/information
+
+3. **Access Rights**:
+   - PIPEDA: Provides access rights to personal information held by organizations
+   - MFIPPA: Provides broader access to information rights including general government records, not just personal information
+
+4. **Cross-Border Restrictions**:
+   - PIPEDA: No specific geographic restrictions on data storage
+   - MFIPPA: Section 30.1 explicitly restricts storage and access of personal information outside Canada
+
+5. **Enforcement**:
+   - PIPEDA: Enforced by the Privacy Commissioner of Canada
+   - MFIPPA: Enforced by the Information and Privacy Commissioner of Ontario`,
+            explanation: "Understanding these differences is crucial for organizations that may be subject to both acts or municipal employees working with personal information."
+        },
+        q4: {
+            type: 'image-based',
+            question: "Based on the privacy breach notification flowchart shown, what is the first step an organization should take when a potential breach is discovered?",
+            answer: 'a',
+            imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center", // Placeholder - would be actual flowchart
+            options: {
+                a: "Contain the breach and assess the scope",
+                b: "Notify the Privacy Commissioner immediately",
+                c: "Inform all affected individuals",
+                d: "Document the incident in detail"
+            },
+            explanation: "The immediate priority is containment to prevent further unauthorized access, followed by scope assessment to understand the extent of the breach."
+        },
+        q5: {
+            type: 'drag-drop',
+            question: "Drag each privacy protection measure to the appropriate category under MFIPPA compliance:",
+            answer: 'drag-drop',
+            options: {},
+            dragItems: [
+                { id: 'item1', content: 'Regular staff training', correctZone: 'Zone A' },
+                { id: 'item2', content: 'Data encryption', correctZone: 'Zone B' },
+                { id: 'item3', content: 'Access controls', correctZone: 'Zone B' },
+                { id: 'item4', content: 'Privacy policies', correctZone: 'Zone A' },
+                { id: 'item5', content: 'Secure disposal', correctZone: 'Zone C' },
+                { id: 'item6', content: 'Retention schedules', correctZone: 'Zone C' }
+            ],
+            explanation: "Zone A: Administrative Safeguards, Zone B: Technical Safeguards, Zone C: Physical Safeguards. All three categories are essential for comprehensive privacy protection."
+        },
+        q6: { 
             question: "When is a Privacy Impact Assessment (PIA) required under MFIPPA?", 
             answer: 'c', 
             options: { 
@@ -45,115 +338,6 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                 c: "For any new or changed collection, use, or disclosure of personal information" 
             },
             explanation: "PIAs are required whenever there are new or changed practices involving personal information to assess and mitigate privacy risks."
-        },
-        q4: { 
-            question: "What is the timeline for initial breach notification under Bill 194?", 
-            answer: 'b', 
-            options: { 
-                a: "72 hours", 
-                b: "24 hours", 
-                c: "30 days" 
-            },
-            explanation: "Bill 194 requires initial breach notification to the Privacy Commissioner within 24 hours for significant breaches."
-        },
-        q5: {
-            question: "Which of the following is NOT one of PIPEDA's 10 Fair Information Principles?",
-            answer: 'c',
-            options: {
-                a: "Accountability",
-                b: "Limiting Collection", 
-                c: "Data Monetization",
-                d: "Individual Access"
-            },
-            explanation: "Data Monetization is not one of PIPEDA's principles. The 10 principles focus on privacy protection, not commercial use of data."
-        },
-        q6: {
-            question: "Under MFIPPA, personal information can be disclosed without consent in which circumstance?",
-            answer: 'a',
-            options: {
-                a: "For law enforcement purposes when authorized",
-                b: "To any government department for administrative efficiency", 
-                c: "To private companies for service delivery",
-                d: "For research purposes without restrictions"
-            },
-            explanation: "MFIPPA allows disclosure without consent in specific circumstances, including law enforcement when properly authorized under the Act."
-        },
-        q7: {
-            question: "What is the maximum penalty for PIPEDA violations under recent amendments?",
-            answer: 'b',
-            options: {
-                a: "$50,000 for individuals, $500,000 for organizations",
-                b: "$100,000 for individuals, $10 million for organizations",
-                c: "$25,000 for individuals, $1 million for organizations",
-                d: "No monetary penalties, only compliance orders"
-            },
-            explanation: "Recent amendments to PIPEDA significantly increased penalties to $100,000 for individuals and up to $10 million for organizations."
-        },
-        q8: {
-            question: "Which principle requires organizations to retain personal information only as long as necessary?",
-            answer: 'c',
-            options: {
-                a: "Accuracy",
-                b: "Safeguards",
-                c: "Limiting Use, Disclosure, and Retention",
-                d: "Openness"
-            },
-            explanation: "The 'Limiting Use, Disclosure, and Retention' principle requires that personal information be retained only as long as necessary for the identified purposes."
-        },
-        q9: {
-            question: "Under PHIPA, what is the 'circle of care' concept?",
-            answer: 'b',
-            options: {
-                a: "A privacy protection mechanism for all personal information",
-                b: "Health information sharing within healthcare teams for treatment purposes",
-                c: "A security framework for protecting health records",
-                d: "A consent model for research purposes"
-            },
-            explanation: "The 'circle of care' under PHIPA allows health information custodians to share personal health information within healthcare teams for treatment purposes without explicit consent."
-        },
-        q10: {
-            question: "Which legislation applies to Ontario government ministries and Crown agencies?",
-            answer: 'a',
-            options: {
-                a: "FIPPA (Freedom of Information and Protection of Privacy Act)",
-                b: "MFIPPA (Municipal Freedom of Information and Protection of Privacy Act)",
-                c: "PHIPA (Personal Health Information Protection Act)",
-                d: "PIPEDA (Personal Information Protection and Electronic Documents Act)"
-            },
-            explanation: "FIPPA applies to Ontario government ministries, Crown agencies, hospitals, school boards, and universities, while MFIPPA covers municipalities."
-        },
-        q11: {
-            question: "When do federal privacy laws typically take precedence over provincial laws?",
-            answer: 'd',
-            options: {
-                a: "Only for government institutions",
-                b: "Only for healthcare organizations",
-                c: "Never - provincial laws always apply in Ontario",
-                d: "For interprovincial/international activities and federally regulated sectors"
-            },
-            explanation: "Federal privacy laws like PIPEDA apply to interprovincial/international commerce and federally regulated sectors (banks, telecommunications, airlines, etc.)."
-        },
-        q12: {
-            question: "What is the standard response timeline for FOI requests under both FIPPA and MFIPPA?",
-            answer: 'b',
-            options: {
-                a: "15 days from receipt",
-                b: "30 days from receipt", 
-                c: "60 days from receipt",
-                d: "90 days from receipt"
-            },
-            explanation: "Both FIPPA and MFIPPA require institutions to respond to FOI requests within 30 days of receipt, though extensions may be possible in certain circumstances."
-        },
-        q13: {
-            question: "Under PHIPA, when is express consent required for disclosure of health information?",
-            answer: 'c',
-            options: {
-                a: "For all disclosures without exception",
-                b: "Only for research purposes",
-                c: "For purposes outside the circle of care",
-                d: "Only for disclosures to non-health professionals"
-            },
-            explanation: "PHIPA allows implied consent within the circle of care for treatment purposes, but requires express consent for purposes outside the circle of care."
         }
     };
 
@@ -510,12 +694,17 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                     <div className={`progress-step ${currentSection === 'content' ? 'current' : 'completed'}`}>
                         1
                     </div>
-                    <div className={`progress-connector ${currentSection === 'quiz' ? 'completed' : ''}`}></div>
-                    <div className={`progress-step ${currentSection === 'quiz' ? 'current' : 'pending'}`}>
+                    <div className={`progress-connector ${(currentSection === 'quiz' || currentSection === 'resources') ? 'completed' : ''}`}></div>
+                    <div className={`progress-step ${currentSection === 'quiz' ? 'current' : (currentSection === 'resources' ? 'completed' : 'pending')}`}>
                         2
                     </div>
+                    <div className={`progress-connector ${currentSection === 'resources' ? 'completed' : ''}`}></div>
+                    <div className={`progress-step ${currentSection === 'resources' ? 'current' : 'pending'}`}>
+                        3
+                    </div>
                     <div className="ml-4 text-sm text-text-secondary">
-                        {currentSection === 'content' ? 'Learning Content' : 'Knowledge Check'}
+                        {currentSection === 'content' ? 'Learning Content' : 
+                         currentSection === 'quiz' ? 'Interactive Assessment' : 'Resources & Downloads'}
                     </div>
                 </div>
 
@@ -733,23 +922,29 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                     <ResourcesPanel />
                                 </div>
                                 
-                                <div className="text-center py-8">
+                                <div className="text-center py-8 flex gap-4 justify-center">
                                     <button 
                                         onClick={() => setCurrentSection('quiz')}
-                                        className="btn-primary py-3 px-8 text-lg font-semibold"
+                                        className="btn-primary py-3 px-6 text-lg font-semibold"
                                     >
-                                        Proceed to Knowledge Check →
+                                        Interactive Assessment →
+                                    </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('resources')}
+                                        className="btn-secondary py-3 px-6 text-lg font-semibold"
+                                    >
+                                        📚 Resources & Downloads
                                     </button>
                                 </div>
                             </div>
-                        ) : (
+                        ) : currentSection === 'quiz' ? (
                             /* Quiz Section */
                             <div className="quiz-container">
                                 <h3 className="text-2xl font-semibold mb-6 text-text-primary font-mono uppercase">
-                                    Knowledge Check
+                                    🎓 Interactive Assessment
                                 </h3>
                                 <p className="text-text-secondary mb-6">
-                                    Test your understanding of the privacy laws and frameworks covered in this module.
+                                    Test your understanding with various types of interactive exercises including scenarios, multiple choice, and hands-on activities.
                                 </p>
                                 
                                 <QuizComponent
@@ -764,12 +959,48 @@ const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                     showExplanations={true}
                                 />
 
-                                <div className="text-center mt-6">
+                                <div className="text-center mt-6 flex gap-4 justify-center">
                                     <button 
                                         onClick={() => setCurrentSection('content')}
-                                        className="btn-secondary py-2 px-6 mr-4"
+                                        className="btn-secondary py-2 px-6"
                                     >
                                         ← Back to Content
+                                    </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('resources')}
+                                        className="btn-secondary py-2 px-6"
+                                    >
+                                        📚 View Resources
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            /* Resources Section */
+                            <div className="resources-container">
+                                <h3 className="text-2xl font-semibold mb-6 text-text-primary font-mono uppercase">
+                                    📚 Resources & Downloads
+                                </h3>
+                                <p className="text-text-secondary mb-6">
+                                    Download practical templates, checklists, and guides to help implement privacy law compliance in your organization.
+                                </p>
+                                
+                                <DownloadableResources 
+                                    resources={sampleResources}
+                                    moduleTitle="Module 1 Resources"
+                                />
+
+                                <div className="text-center mt-6 flex gap-4 justify-center">
+                                    <button 
+                                        onClick={() => setCurrentSection('content')}
+                                        className="btn-secondary py-2 px-6"
+                                    >
+                                        ← Back to Content
+                                    </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('quiz')}
+                                        className="btn-secondary py-2 px-6"
+                                    >
+                                        🎓 Take Assessment
                                     </button>
                                 </div>
                             </div>

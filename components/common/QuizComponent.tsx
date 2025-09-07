@@ -4,6 +4,10 @@
  */
 import React from 'react';
 import { QuizQuestions, QuizQuestion, QuizResult } from '../../hooks/useQuiz';
+import ScenarioQuestion from './ScenarioQuestion';
+import TextInputQuestion from './TextInputQuestion';
+import ImageQuestion from './ImageQuestion';
+import DragDropQuestion from './DragDropQuestion';
 
 interface QuizComponentProps {
   questions: QuizQuestions;
@@ -39,56 +43,118 @@ const QuizComponent: React.FC<QuizComponentProps> = ({
         </p>
         
         <div className="space-y-8">
-          {Object.entries(questions).map(([questionId, question]: [string, QuizQuestion], index) => (
-            <div key={questionId} className="quiz-question">
-              <div className="flex items-start mb-4">
-                <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">
-                  {index + 1}
-                </div>
-                <p className="font-medium text-text-primary flex-1">
-                  {question.question}
-                </p>
-              </div>
-              <div className="space-y-3 ml-11">
-                {Object.entries(question.options).map(([optionKey, optionValue]) => (
-                  <label
-                    key={`${questionId}-${optionKey}`}
-                    htmlFor={`${questionId}-${optionKey}`}
-                    className={`quiz-option flex items-center cursor-pointer ${getOptionClass(questionId, optionKey)}`}
-                    onClick={() => {
-                      if (!result) {
-                        onAnswerChange(questionId, optionKey);
-                      }
-                    }}
-                  >
-                    <input
-                      type="radio"
-                      id={`${questionId}-${optionKey}`}
-                      name={questionId}
-                      value={optionKey}
-                      onChange={() => {
-                        if (!result) {
-                          onAnswerChange(questionId, optionKey);
-                        }
-                      }}
-                      checked={answers[questionId] === optionKey}
-                      className="hidden"
-                      disabled={!!result}
-                    />
-                    <span className="text-text-primary font-medium">{optionValue}</span>
-                  </label>
-                ))}
-              </div>
+          {Object.entries(questions).map(([questionId, question]: [string, QuizQuestion], index) => {
+            const questionType = question.type || 'multiple-choice';
+            
+            // Render different question types
+            switch (questionType) {
+              case 'scenario':
+                return (
+                  <ScenarioQuestion
+                    key={questionId}
+                    question={question}
+                    questionId={questionId}
+                    questionNumber={index + 1}
+                    onAnswerChange={onAnswerChange}
+                    showResult={!!result}
+                    userAnswer={answers[questionId]}
+                  />
+                );
               
-              {showExplanations && result && question.explanation && (
-                <div className="mt-6 ml-11 p-4 bg-surface-elevated rounded-lg border border-border">
-                  <p className="text-sm text-text-secondary">
-                    <strong className="text-primary">💡 Explanation:</strong> {question.explanation}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
+              case 'text-input':
+                return (
+                  <TextInputQuestion
+                    key={questionId}
+                    question={question}
+                    questionId={questionId}
+                    questionNumber={index + 1}
+                    onAnswerChange={onAnswerChange}
+                    showResult={!!result}
+                    userAnswer={answers[questionId]}
+                  />
+                );
+              
+              case 'image-based':
+                return (
+                  <ImageQuestion
+                    key={questionId}
+                    question={question}
+                    questionId={questionId}
+                    questionNumber={index + 1}
+                    onAnswerChange={onAnswerChange}
+                    showResult={!!result}
+                    userAnswer={answers[questionId]}
+                    getOptionClass={getOptionClass}
+                  />
+                );
+              
+              case 'drag-drop':
+                return (
+                  <DragDropQuestion
+                    key={questionId}
+                    question={question}
+                    questionId={questionId}
+                    questionNumber={index + 1}
+                    onAnswerChange={onAnswerChange}
+                    showResult={!!result}
+                    userAnswer={answers[questionId]}
+                  />
+                );
+              
+              default:
+                // Multiple choice (original implementation)
+                return (
+                  <div key={questionId} className="quiz-question">
+                    <div className="flex items-start mb-4">
+                      <div className="bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3 flex-shrink-0">
+                        {index + 1}
+                      </div>
+                      <p className="font-medium text-text-primary flex-1">
+                        {question.question}
+                      </p>
+                    </div>
+                    <div className="space-y-3 ml-11">
+                      {Object.entries(question.options).map(([optionKey, optionValue]) => (
+                        <label
+                          key={`${questionId}-${optionKey}`}
+                          htmlFor={`${questionId}-${optionKey}`}
+                          className={`quiz-option flex items-center cursor-pointer ${getOptionClass(questionId, optionKey)}`}
+                          onClick={() => {
+                            if (!result) {
+                              onAnswerChange(questionId, optionKey);
+                            }
+                          }}
+                        >
+                          <input
+                            type="radio"
+                            id={`${questionId}-${optionKey}`}
+                            name={questionId}
+                            value={optionKey}
+                            onChange={() => {
+                              if (!result) {
+                                onAnswerChange(questionId, optionKey);
+                              }
+                            }}
+                            checked={answers[questionId] === optionKey}
+                            className="hidden"
+                            disabled={!!result}
+                          />
+                          <span className="text-text-primary font-medium">{optionValue}</span>
+                        </label>
+                      ))}
+                    </div>
+                    
+                    {showExplanations && result && question.explanation && (
+                      <div className="mt-6 ml-11 p-4 bg-surface-elevated rounded-lg border border-border">
+                        <p className="text-sm text-text-secondary">
+                          <strong className="text-primary">💡 Explanation:</strong> {question.explanation}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+            }
+          })}
         </div>
 
         {!result && (

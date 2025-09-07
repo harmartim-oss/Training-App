@@ -9,6 +9,12 @@ export interface QuizQuestion {
   answer: string;
   options: { [key: string]: string };
   explanation?: string;
+  type?: 'multiple-choice' | 'scenario' | 'text-input' | 'image-based' | 'drag-drop' | 'matching';
+  scenarioAnswer?: string; // For scenario-based questions with click-to-reveal
+  sampleAnswer?: string; // For text input questions to compare against
+  imageUrl?: string; // For image-based questions
+  dragItems?: Array<{ id: string; content: string; correctZone: string }>; // For drag-drop
+  matchPairs?: Array<{ left: string; right: string }>; // For matching exercises
 }
 
 export interface QuizQuestions {
