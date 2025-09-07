@@ -15,9 +15,11 @@ import Assessment from './Assessment';
 import Certificate from './Certificate';
 import StudyGuide from './StudyGuide';
 import PracticeExam from './PracticeExam';
+import AccountDetails from './AccountDetails';
+import SubscriptionManagement from './SubscriptionManagement';
 import { createAIAssistant, EducationalAssistant } from '../../services/aiAssistantService';
 import { ChatIcon, CloseIcon, SendIcon } from '../icons';
-import { User, LoginUser } from '../../types';
+import { User, LoginUser, SubscriptionTier } from '../../types';
 
 
 interface TrainingPortalProps {
@@ -279,6 +281,19 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
         localStorage.removeItem('cyberTrainingProgress');
         onNavigateToLanding();
     };
+
+    const handleUpdateUser = (updatedUser: User) => {
+        setCurrentUser(updatedUser);
+        localStorage.setItem('cyberTrainingUser', JSON.stringify(updatedUser));
+    };
+
+    const handleUpgradeSubscription = (tier: SubscriptionTier) => {
+        if (currentUser) {
+            const updatedUser = { ...currentUser, subscriptionTier: tier };
+            setCurrentUser(updatedUser);
+            localStorage.setItem('cyberTrainingUser', JSON.stringify(updatedUser));
+        }
+    };
     
     const handleCompleteModule = (module: keyof Omit<Progress, 'assessment'>, score: number) => {
         setUserProgress(prev => ({
@@ -322,6 +337,10 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                  return <StudyGuide userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
             case 'practice-exam':
                  return <PracticeExam userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
+            case 'account-details':
+                 return <AccountDetails user={currentUser!} onNavigate={setActiveSection} onUpdateUser={handleUpdateUser} />;
+            case 'subscription':
+                 return <SubscriptionManagement user={currentUser!} onNavigate={setActiveSection} onUpgradeSubscription={handleUpgradeSubscription} />;
             default:
                 if (authView === 'signup') {
                     return <SignUp onSignUp={handleSignUp} onBackToLogin={() => setAuthView('login')} />;
