@@ -356,12 +356,13 @@ details[open] .chevron-icon {
 }
 
 .assistant-header button { 
-  @apply transition-colors hover:scale-110 duration-200;
+  @apply transition-all hover:scale-110 duration-200 p-2 rounded-lg;
   color: var(--text-secondary);
 }
 
 .assistant-header button:hover { 
   color: var(--primary);
+  background-color: rgba(var(--primary-rgb), 0.1);
 }
 
 .assistant-quick-actions {
@@ -453,16 +454,22 @@ details[open] .chevron-icon {
 }
 
 .assistant-input-form button {
-  @apply w-12 h-12 flex items-center justify-center flex-shrink-0 transition-colors rounded-lg text-white;
+  @apply w-12 h-12 flex items-center justify-center flex-shrink-0 transition-all duration-200 rounded-lg text-white;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  box-shadow: 0 2px 8px rgba(var(--primary-rgb), 0.3);
+  margin-left: 8px; /* Ensure clear separation from input */
 }
 
 .assistant-input-form button:hover { 
   background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary) 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.4);
 }
 
 .assistant-input-form button:disabled { 
   @apply cursor-not-allowed opacity-50;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Utility classes */
