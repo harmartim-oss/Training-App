@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",
-    "generate-pdfs": "node scripts/generate-pdfs.js"
+    "generate-pdfs": "node scripts/generate-pdfs.js",
+    "verify-deployment": "node scripts/verify-deployment.js"
   },
   "dependencies": {
     "@google/genai": "^1.16.0",
