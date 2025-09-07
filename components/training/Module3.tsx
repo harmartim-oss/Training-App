@@ -492,67 +492,6 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                     </button>
                                 </div>
                             </div>
-                                    </div>
-                                ))}
-                                
-                                <div className="bg-surface-elevated border border-border-light p-6 rounded-lg">
-                                    <h4 className="text-xl font-semibold mb-4 text-text-primary font-mono">Resources & Downloads</h4>
-                                    <p className="mb-4 text-text-secondary">Access practical tools and templates for implementing responsible AI governance.</p>
-                                    
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div className="space-y-4">
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">AI Risk Assessment Templates</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Comprehensive frameworks for evaluating AI system risks</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">Algorithmic Impact Assessment Guide</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Step-by-step guide for conducting AIA evaluations</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">AI Governance Checklist</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Essential governance structures and accountability measures</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">Transparency and Communication Templates</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Public-facing documentation and communication guides</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <p className="mt-4 text-sm text-text-secondary">
-                                        <strong>Note:</strong> These resources are aligned with Ontario's AI directive and should be customized 
-                                        to your organization's specific context and risk tolerance.
-                                    </p>
-                                </div>
-
-                                <div className="text-center">
-                                    <button 
-                                        onClick={() => setCurrentSection('quiz')}
-                                        className="btn-primary font-semibold py-3 px-8"
-                                    >
-                                        Proceed to Knowledge Check
-                                    </button>
-                                </div>
-                            </div>
                         ) : (
                             /* Quiz Section */
                             <div className="quiz-container">
