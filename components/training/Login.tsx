@@ -111,8 +111,33 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                         </div>
                     </div>
 
-                    {/* Enhanced Form */}
+                    {/* Return User Notice */}
+                    <div className="text-center mb-6">
+                        <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+                            <p className="text-sm text-text-primary font-medium mb-2">
+                                🎓 Returning User?
+                            </p>
+                            <p className="text-xs text-text-secondary">
+                                If you've already registered and selected a plan, you can access your training dashboard directly.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Enhanced Form for Returning Users */}
                     <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <label htmlFor="email" className={labelStyles}>Email Address</label>
+                            <input 
+                                id="email" 
+                                type="email" 
+                                value={email} 
+                                onChange={e => setEmail(e.target.value)} 
+                                required 
+                                className="form-input" 
+                                placeholder="e.g., jane.doe@example.com"
+                                autoComplete="email"
+                            />
+                        </div>
                         <div>
                             <label htmlFor="fullname" className={labelStyles}>Full Name</label>
                             <input 
@@ -156,21 +181,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                                 autoComplete="organization"
                             />
                         </div>
-                        <div>
-                            <label htmlFor="email" className={labelStyles}>Email Address</label>
-                            <input 
-                                id="email" 
-                                type="email" 
-                                value={email} 
-                                onChange={e => setEmail(e.target.value)} 
-                                required 
-                                className="form-input" 
-                                placeholder="e.g., jane.doe@example.com"
-                                autoComplete="email"
-                            />
-                        </div>
                         <button type="submit" className="w-full btn-primary py-3 px-4 text-base mt-8 font-semibold">
-                            Start Training →
+                            Access Training Dashboard →
                         </button>
                     </form>
                     
@@ -181,17 +193,25 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                         </p>
                     </div>
                     
-                    {/* Sign Up Link */}
+                    {/* New User Sign Up - Primary Action */}
                     <div className="mt-6 text-center">
-                        <p className="text-sm text-text-secondary">
-                            Need an account?{' '}
+                        <div className="p-6 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg">
+                            <h3 className="text-lg font-bold font-mono text-primary mb-2 uppercase tracking-wider">
+                                New to OCRP Training?
+                            </h3>
+                            <p className="text-sm text-text-secondary mb-4">
+                                Start your certification journey by selecting a training plan that fits your needs.
+                            </p>
                             <button
                                 type="button"
                                 onClick={onSignUp}
-                                className="text-primary hover:underline font-semibold"
+                                className="w-full btn-primary py-3 px-4 text-base font-semibold"
                             >
-                                Sign up for premium features
+                                Get Started - Choose Your Plan →
                             </button>
+                        </div>
+                        <p className="text-xs text-text-muted mt-3">
+                            Free and paid options available • No credit card required to start
                         </p>
                     </div>
                 </div>
