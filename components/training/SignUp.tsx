@@ -134,6 +134,111 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
                     {/* Pricing Step */}
                     {currentStep === 'pricing' && (
                         <div>
+                            {/* Institute Information Blurb */}
+                            <div className="mb-8 bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-6">
+                                <div className="text-center mb-6">
+                                    <h3 className="text-xl font-bold font-mono text-primary mb-3 uppercase tracking-wider">
+                                        About Ontario Digital Defence Institute
+                                    </h3>
+                                    <div className="w-12 h-0.5 bg-primary mx-auto mb-4"></div>
+                                </div>
+                                
+                                <div className="max-w-4xl mx-auto text-text-primary space-y-4">
+                                    <p className="text-center text-lg font-medium text-primary mb-4">
+                                        Leading Ontario's digital security and privacy education
+                                    </p>
+                                    <p>
+                                        The Ontario Digital Defence Institute (ODDI) is a premier training organization dedicated to strengthening 
+                                        cybersecurity capabilities across Ontario's public and private sectors. We specialize in delivering 
+                                        practical, regulation-compliant training that addresses the unique challenges facing Canadian organizations.
+                                    </p>
+                                    <p>
+                                        Our Ontario Certified Cyber Resilience Professional (OCRP) program is specifically designed for Ontario's 
+                                        legal and regulatory environment, covering PIPEDA, MFIPPA, provincial AI directives, and emerging 
+                                        cybersecurity requirements. With expert-developed curriculum and hands-on learning approaches, we prepare 
+                                        professionals to defend their organizations against evolving digital threats.
+                                    </p>
+                                    <div className="grid md:grid-cols-3 gap-4 mt-6 text-sm">
+                                        <div className="text-center p-3 bg-surface rounded-lg border border-border">
+                                            <div className="font-bold text-primary">500+</div>
+                                            <div>Professionals Certified</div>
+                                        </div>
+                                        <div className="text-center p-3 bg-surface rounded-lg border border-border">
+                                            <div className="font-bold text-primary">95%</div>
+                                            <div>Pass Rate</div>
+                                        </div>
+                                        <div className="text-center p-3 bg-surface rounded-lg border border-border">
+                                            <div className="font-bold text-primary">Ontario</div>
+                                            <div>Regulation Focus</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Certificate Information */}
+                            <div className="mb-8 bg-gradient-to-r from-accent/5 to-accent/10 border border-accent/20 rounded-lg p-6">
+                                <div className="text-center mb-6">
+                                    <h3 className="text-xl font-bold font-mono text-accent mb-3 uppercase tracking-wider">
+                                        🏆 Your OCRP Certification
+                                    </h3>
+                                    <div className="w-12 h-0.5 bg-accent mx-auto mb-4"></div>
+                                </div>
+                                
+                                <div className="max-w-4xl mx-auto">
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <h4 className="font-bold text-text-primary mb-3">What You'll Earn</h4>
+                                            <ul className="space-y-2 text-sm text-text-secondary">
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">✓</span>
+                                                    <span>Official OCRP designation certificate</span>
+                                                </li>
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">✓</span>
+                                                    <span>Digital badge for LinkedIn and email signatures</span>
+                                                </li>
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">✓</span>
+                                                    <span>Module completion certificates (Premium plans)</span>
+                                                </li>
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">✓</span>
+                                                    <span>Continuing education credits</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-text-primary mb-3">Certification Requirements</h4>
+                                            <ul className="space-y-2 text-sm text-text-secondary">
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">📚</span>
+                                                    <span>Complete all 4 training modules</span>
+                                                </li>
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">🎯</span>
+                                                    <span>Pass final assessment (80% minimum)</span>
+                                                </li>
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">⏱️</span>
+                                                    <span>10-15 hours of self-paced study</span>
+                                                </li>
+                                                <li className="flex items-start gap-2">
+                                                    <span className="text-accent mt-1">🔄</span>
+                                                    <span>Valid indefinitely with updates provided</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="mt-6 p-4 bg-surface border border-border rounded-lg">
+                                        <p className="text-sm text-text-primary text-center">
+                                            <span className="font-semibold">Why Choose OCRP?</span> This certification demonstrates your 
+                                            expertise in Ontario-specific cyber resilience practices, making you a valuable asset to employers 
+                                            and clients who need compliance with provincial privacy laws and cybersecurity regulations.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="grid md:grid-cols-3 gap-6 mb-8">
                                 {PRICING_TIERS.map((tier) => (
                                     <PricingCard
