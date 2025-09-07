@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { PricingTier } from '../../types';
+import { useMobileDetection } from '../../hooks/useMobileDetection';
 
 interface PricingCardProps {
     tier: PricingTier;
@@ -14,9 +15,15 @@ interface PricingCardProps {
 }
 
 const PricingCard: React.FC<PricingCardProps> = ({ tier, selected, onSelect, className = '' }) => {
+    const { isMobile, isTablet } = useMobileDetection();
+    
+    const cardPadding = isMobile ? 'p-4' : 'p-6';
+    const titleSize = isMobile ? 'text-lg' : 'text-xl';
+    const priceSize = isMobile ? 'text-2xl' : 'text-3xl';
+    
     return (
         <div 
-            className={`relative bg-surface border-2 p-6 rounded-lg cursor-pointer transition-all duration-300 hover:shadow-lg ${
+            className={`relative bg-surface border-2 ${cardPadding} rounded-lg cursor-pointer transition-all duration-300 hover:shadow-lg ${
                 selected 
                     ? 'border-primary bg-primary/5 shadow-md' 
                     : 'border-border hover:border-primary/50'
@@ -32,15 +39,15 @@ const PricingCard: React.FC<PricingCardProps> = ({ tier, selected, onSelect, cla
             )}
             
             <div className="text-center mb-6">
-                <h3 className="text-xl font-bold font-mono text-text-primary mb-2 uppercase tracking-wider">
+                <h3 className={`${titleSize} font-bold font-mono text-text-primary mb-2 uppercase tracking-wider`}>
                     {tier.name}
                 </h3>
                 <div className="mb-4">
                     {tier.price === 0 ? (
-                        <div className="text-3xl font-bold text-primary">FREE</div>
+                        <div className={`${priceSize} font-bold text-primary`}>FREE</div>
                     ) : (
                         <div className="flex items-baseline justify-center">
-                            <span className="text-3xl font-bold text-primary">${tier.price}</span>
+                            <span className={`${priceSize} font-bold text-primary`}>${tier.price}</span>
                             <span className="text-text-secondary ml-2">/{tier.billing}</span>
                         </div>
                     )}

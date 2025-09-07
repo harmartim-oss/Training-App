@@ -77,6 +77,32 @@ export const PRICING_TIERS: PricingTier[] = [
     }
 ];
 
+// Bundle options for additional savings
+export const BUNDLE_OPTIONS = [
+    {
+        id: 'individual-annual',
+        name: 'Individual Annual Bundle',
+        description: 'Save 20% with annual billing',
+        originalPrice: 179,
+        bundlePrice: 149,
+        savings: 30,
+        currency: 'CAD',
+        tierIds: ['individual'],
+        features: ['12 months access', '20% savings', 'All Individual Professional features']
+    },
+    {
+        id: 'enterprise-multi-year',
+        name: 'Enterprise 2-Year Bundle',
+        description: 'Best value for long-term training needs',
+        originalPrice: 1798,
+        bundlePrice: 1499,
+        savings: 299,
+        currency: 'CAD',
+        tierIds: ['enterprise'],
+        features: ['24 months access', 'Maximum savings', 'All Enterprise features', 'Extended support']
+    }
+];
+
 export const getFeaturesByTier = (tier: string) => {
     const tierConfig = PRICING_TIERS.find(t => t.id === tier);
     return tierConfig || PRICING_TIERS[0];

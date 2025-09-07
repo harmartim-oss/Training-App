@@ -17,7 +17,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
     const [organizationType, setOrganizationType] = useState('');
     const [organizationName, setOrganizationName] = useState('');
     const [email, setEmail] = useState('');
-    const { isMobile, isTablet } = useMobileDetection();
+    const { isMobile, isTablet, browser } = useMobileDetection();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -197,22 +197,34 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                     <div className="mt-6 text-center">
                         <div className="p-6 bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg">
                             <h3 className="text-lg font-bold font-mono text-primary mb-2 uppercase tracking-wider">
-                                New to OCRP Training?
+                                First Time Here?
                             </h3>
                             <p className="text-sm text-text-secondary mb-4">
-                                Start your certification journey by selecting a training plan that fits your needs.
+                                All users must complete signup to select their subscription plan before accessing training materials.
                             </p>
                             <button
                                 type="button"
                                 onClick={onSignUp}
                                 className="w-full btn-primary py-3 px-4 text-base font-semibold"
                             >
-                                Get Started - Choose Your Plan →
+                                Complete Signup - Choose Your Plan →
                             </button>
                         </div>
                         <p className="text-xs text-text-muted mt-3">
                             Free and paid options available • No credit card required to start
                         </p>
+                    </div>
+                    
+                    {/* Browser Detection Info */}
+                    <div className="mt-4 p-3 bg-surface border border-border rounded text-center">
+                        <p className="text-xs text-text-muted">
+                            Accessing from: {browser.name} {browser.version && `v${browser.version.split('.')[0]}`} on {isMobile ? 'Mobile' : isTablet ? 'Tablet' : 'Desktop'}
+                        </p>
+                        {!browser.isChrome && !browser.isFirefox && !browser.isSafari && !browser.isEdge && (
+                            <p className="text-xs text-warning mt-1">
+                                For best experience, use Chrome, Firefox, Safari, or Edge
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

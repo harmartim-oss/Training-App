@@ -226,12 +226,19 @@ const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress
 const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) => {
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [userProgress, setUserProgress] = useState<Progress>(initialProgress);
-    const [activeSection, setActiveSection] = useState('login');
-    const [authView, setAuthView] = useState<'login' | 'signup'>('login');
+    const [activeSection, setActiveSection] = useState('signup'); // Start with signup
+    const [authView, setAuthView] = useState<'login' | 'signup'>('signup'); // Start with signup
+    const [hasRegisteredUsers, setHasRegisteredUsers] = useState(false);
 
     useEffect(() => {
         const savedUser = localStorage.getItem('cyberTrainingUser');
         const savedProgress = localStorage.getItem('cyberTrainingProgress');
+        const registeredUsers = localStorage.getItem('cyberTrainingRegisteredUsers');
+        
+        // Check if there are any registered users in the system
+        if (registeredUsers) {
+            setHasRegisteredUsers(true);
+        }
         
         if (savedUser) {
             const user: User = JSON.parse(savedUser);
@@ -241,7 +248,14 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                 setUserProgress(JSON.parse(savedProgress));
             }
         } else {
-            setActiveSection('login');
+            // If no registered users exist, force signup; otherwise allow login
+            if (registeredUsers) {
+                setActiveSection('login');
+                setAuthView('login');
+            } else {
+                setActiveSection('signup');
+                setAuthView('signup');
+            }
         }
     }, []);
 
@@ -253,12 +267,26 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
     }, [currentUser, userProgress]);
 
     const handleLogin = (user: LoginUser) => {
-        // Convert LoginUser to User with default subscription tier
+        // Check if this user has previously registered
+        const registeredUsers = JSON.parse(localStorage.getItem('cyberTrainingRegisteredUsers') || '[]');
+        const existingUser = registeredUsers.find((u: User) => u.email === user.email);
+        
+        if (!existingUser) {
+            // Force user to signup first
+            alert('Please complete the signup process first to select your subscription plan.');
+            setAuthView('signup');
+            setActiveSection('signup');
+            return;
+        }
+        
+        // Convert LoginUser to User with subscription tier from registration
         const fullUser: User = {
             ...user,
-            subscriptionTier: 'basic',
-            registrationDate: new Date().toISOString(),
-            isEnterprise: false
+            subscriptionTier: existingUser.subscriptionTier,
+            registrationDate: existingUser.registrationDate,
+            isEnterprise: existingUser.isEnterprise,
+            phone: existingUser.phone,
+            position: existingUser.position
         };
         setCurrentUser(fullUser);
         setUserProgress(initialProgress); // Reset progress on new login
@@ -266,6 +294,13 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
     };
 
     const handleSignUp = (user: User) => {
+        // Store the user in registered users list
+        const registeredUsers = JSON.parse(localStorage.getItem('cyberTrainingRegisteredUsers') || '[]');
+        const updatedUsers = registeredUsers.filter((u: User) => u.email !== user.email);
+        updatedUsers.push(user);
+        localStorage.setItem('cyberTrainingRegisteredUsers', JSON.stringify(updatedUsers));
+        setHasRegisteredUsers(true);
+        
         setCurrentUser(user);
         setUserProgress(initialProgress);
         setActiveSection('dashboard');
@@ -277,7 +312,9 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
         setUserProgress(initialProgress);
         localStorage.removeItem('cyberTrainingUser');
         localStorage.removeItem('cyberTrainingProgress');
-        onNavigateToLanding();
+        // Don't remove registered users - they should persist
+        setActiveSection(hasRegisteredUsers ? 'login' : 'signup');
+        setAuthView(hasRegisteredUsers ? 'login' : 'signup');
     };
     
     const handleCompleteModule = (module: keyof Omit<Progress, 'assessment'>, score: number) => {

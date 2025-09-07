@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { ODDILogo, GoogleIcon, FacebookIcon, LinkedInIcon, InstagramIcon } from '../icons';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import { User, SubscriptionTier } from '../../types';
-import { PRICING_TIERS } from '../../config/pricing';
+import { PRICING_TIERS, BUNDLE_OPTIONS } from '../../config/pricing';
 import PricingCard from '../common/PricingCard';
 
 interface SignUpProps {
@@ -32,7 +32,7 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
         agreeToMarketing: false
     });
     
-    const { isMobile, isTablet } = useMobileDetection();
+    const { isMobile, isTablet, browser } = useMobileDetection();
 
     const handleTierSelect = (tierId: string) => {
         setSelectedTier(tierId as SubscriptionTier);
@@ -248,6 +248,47 @@ const SignUp: React.FC<SignUpProps> = ({ onSignUp, onBackToLogin }) => {
                                         onSelect={handleTierSelect}
                                     />
                                 ))}
+                            </div>
+
+                            {/* Bundle Options */}
+                            <div className="mb-8 bg-gradient-to-r from-success/5 to-success/10 border border-success/20 rounded-lg p-6">
+                                <div className="text-center mb-6">
+                                    <h3 className="text-xl font-bold font-mono text-success mb-3 uppercase tracking-wider">
+                                        💰 Bundle Options - Save More
+                                    </h3>
+                                    <div className="w-12 h-0.5 bg-success mx-auto mb-4"></div>
+                                    <p className="text-text-secondary">Choose longer-term plans for additional savings</p>
+                                </div>
+                                
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    {BUNDLE_OPTIONS.map((bundle) => (
+                                        <div key={bundle.id} className="bg-surface border border-border rounded-lg p-4 hover:shadow-md transition-all">
+                                            <h4 className="font-bold text-text-primary mb-2">{bundle.name}</h4>
+                                            <p className="text-sm text-text-secondary mb-3">{bundle.description}</p>
+                                            <div className="flex items-baseline gap-2 mb-3">
+                                                <span className="text-2xl font-bold text-success">${bundle.bundlePrice}</span>
+                                                <span className="text-text-secondary">{bundle.currency}</span>
+                                                <span className="text-sm text-text-muted line-through">${bundle.originalPrice}</span>
+                                            </div>
+                                            <div className="text-sm text-success font-semibold mb-3">
+                                                Save ${bundle.savings} {bundle.currency}!
+                                            </div>
+                                            <ul className="text-sm text-text-secondary space-y-1">
+                                                {bundle.features.map((feature, index) => (
+                                                    <li key={index} className="flex items-start gap-2">
+                                                        <span className="text-success mt-1">✓</span>
+                                                        <span>{feature}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="text-center mt-4">
+                                    <p className="text-xs text-text-muted">
+                                        Bundle pricing is available for applicable subscription tiers during checkout
+                                    </p>
+                                </div>
                             </div>
                             
                             <div className="flex justify-between items-center">
