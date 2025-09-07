@@ -4,6 +4,7 @@
 */
 import React, { useState, useEffect, useRef } from 'react';
 import Login from './Login';
+import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import Nav from './Nav';
 import Module1 from './Module1';
@@ -14,14 +15,16 @@ import Assessment from './Assessment';
 import Certificate from './Certificate';
 import { getTutorChat, sendMessage } from '../../services/geminiService';
 import { ChatIcon, CloseIcon, SendIcon } from '../icons';
+import { User, LoginUser } from '../../types';
 
 
-interface User {
-    fullname: string;
-    organizationType: string;
-    organizationName: string;
-    email: string;
-    loginDate: string;
+interface TrainingPortalProps {
+    onNavigateToLanding: () => void;
+}
+
+interface Message {
+  role: 'user' | 'model';
+  text: string;
 }
 
 interface Progress {
@@ -39,15 +42,6 @@ const initialProgress: Progress = {
     module4: { completed: false, score: 0, progress: 0 },
     assessment: { completed: false, score: 0, passed: false }
 };
-
-interface TrainingPortalProps {
-    onNavigateToLanding: () => void;
-}
-
-interface Message {
-  role: 'user' | 'model';
-  text: string;
-}
 
 const StudyAssistant: React.FC<{ currentModule?: string; userProgress?: Progress }> = ({ currentModule, userProgress }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -237,6 +231,7 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [userProgress, setUserProgress] = useState<Progress>(initialProgress);
     const [activeSection, setActiveSection] = useState('login');
+    const [authView, setAuthView] = useState<'login' | 'signup'>('login');
 
     useEffect(() => {
         const savedUser = localStorage.getItem('cyberTrainingUser');
@@ -261,10 +256,24 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
         }
     }, [currentUser, userProgress]);
 
-    const handleLogin = (user: User) => {
-        setCurrentUser(user);
+    const handleLogin = (user: LoginUser) => {
+        // Convert LoginUser to User with default subscription tier
+        const fullUser: User = {
+            ...user,
+            subscriptionTier: 'basic',
+            registrationDate: new Date().toISOString(),
+            isEnterprise: false
+        };
+        setCurrentUser(fullUser);
         setUserProgress(initialProgress); // Reset progress on new login
         setActiveSection('dashboard');
+    };
+
+    const handleSignUp = (user: User) => {
+        setCurrentUser(user);
+        setUserProgress(initialProgress);
+        setActiveSection('dashboard');
+        setAuthView('login'); // Reset for next time
     };
 
     const handleLogout = () => {
@@ -314,12 +323,18 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
             case 'certificate':
                  return <Certificate user={currentUser!} progress={userProgress} />;
             default:
-                return <Login onLogin={handleLogin} />;
+                if (authView === 'signup') {
+                    return <SignUp onSignUp={handleSignUp} onBackToLogin={() => setAuthView('login')} />;
+                }
+                return <Login onLogin={handleLogin} onSignUp={() => setAuthView('signup')} />;
         }
     }
 
     if (!currentUser) {
-        return <Login onLogin={handleLogin} />;
+        if (authView === 'signup') {
+            return <SignUp onSignUp={handleSignUp} onBackToLogin={() => setAuthView('login')} />;
+        }
+        return <Login onLogin={handleLogin} onSignUp={() => setAuthView('signup')} />;
     }
     
     return (

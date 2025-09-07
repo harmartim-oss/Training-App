@@ -5,20 +5,14 @@
 import React, { useState } from 'react';
 import { ODDILogo, GoogleIcon, FacebookIcon, LinkedInIcon, InstagramIcon } from '../icons';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
-
-interface User {
-    fullname: string;
-    organizationType: string;
-    organizationName: string;
-    email: string;
-    loginDate: string;
-}
+import { LoginUser } from '../../types';
 
 interface LoginProps {
-    onLogin: (user: User) => void;
+    onLogin: (user: LoginUser) => void;
+    onSignUp: () => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
     const [fullname, setFullname] = useState('');
     const [organizationType, setOrganizationType] = useState('');
     const [organizationName, setOrganizationName] = useState('');
@@ -27,7 +21,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const user: User = {
+        const user: LoginUser = {
             fullname,
             organizationType,
             organizationName,
@@ -184,6 +178,20 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded text-center">
                         <p className="text-xs text-text-secondary">
                             🔒 Your information is secure and will only be used for certification purposes.
+                        </p>
+                    </div>
+                    
+                    {/* Sign Up Link */}
+                    <div className="mt-6 text-center">
+                        <p className="text-sm text-text-secondary">
+                            Need an account?{' '}
+                            <button
+                                type="button"
+                                onClick={onSignUp}
+                                className="text-primary hover:underline font-semibold"
+                            >
+                                Sign up for premium features
+                            </button>
                         </p>
                     </div>
                 </div>
