@@ -1699,6 +1699,539 @@ details[open] .chevron-icon {
   margin: var(--space-lg) 0;
 }
 
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+}
+
+.checklist-checkbox {
+  accent-color: var(--primary);
+  transform: scale(1.2);
+}
+
+.checklist-text {
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.checklist-text:hover {
+  color: var(--primary);
+}
+
+/* Visual Learning Components */
+.visual-learning-component {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: var(--space-xl);
+  margin: var(--space-xl) 0;
+  box-shadow: var(--shadow-light);
+}
+
+.visual-learning-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Process Flow */
+.process-flow-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  position: relative;
+}
+
+.step-indicator {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.step-indicator.pending {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.step-indicator.current {
+  background: var(--primary);
+  border: 2px solid var(--primary);
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.step-indicator.completed {
+  background: var(--success);
+  border: 2px solid var(--success);
+  color: white;
+}
+
+.step-content {
+  flex: 1;
+  padding-top: var(--space-xs);
+}
+
+.step-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.step-description {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.step-connector {
+  position: absolute;
+  left: 1.4rem;
+  top: 3rem;
+  width: 2px;
+  height: 2rem;
+  background: var(--border);
+}
+
+/* Comparison Table */
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.comparison-table-content {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+}
+
+.comparison-table-content th,
+.comparison-table-content td {
+  padding: var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.comparison-table-content th {
+  background: var(--surface-elevated);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.row-header {
+  background: var(--primary) !important;
+  color: white !important;
+  font-weight: 700;
+}
+
+.column-header {
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.row-label {
+  font-weight: 600;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+}
+
+.cell-content {
+  color: var(--text-secondary);
+}
+
+.highlighted-row {
+  background: var(--warning-light);
+}
+
+/* Infographic */
+.infographic-container {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.infographic-container.grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.infographic-container.flow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.infographic-container.circular {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 400px;
+}
+
+.infographic-section {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: var(--space-lg);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.infographic-section:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.infographic-section.primary {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.infographic-section.success {
+  border-color: var(--success);
+  background: var(--success-light);
+}
+
+.infographic-section.warning {
+  border-color: var(--warning);
+  background: var(--warning-light);
+}
+
+.infographic-section.error {
+  border-color: var(--error);
+  background: var(--error-light);
+}
+
+.section-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+}
+
+.section-icon svg {
+  width: 3rem;
+  height: 3rem;
+  color: var(--primary);
+}
+
+.section-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-content {
+  color: var(--text-secondary);
+}
+
+.content-item {
+  margin-bottom: var(--space-xs);
+  line-height: 1.4;
+}
+
+.flow-arrow {
+  font-size: 2rem;
+  color: var(--primary);
+  margin: 0 var(--space-md);
+}
+
+/* Interactive Scenario */
+.scenario-container {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.scenario-description,
+.scenario-considerations,
+.scenario-solution,
+.learning-points {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: var(--space-lg);
+}
+
+.scenario-description h5,
+.scenario-considerations h5,
+.scenario-solution h5,
+.learning-points h5 {
+  margin-bottom: var(--space-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.solution-toggle {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  margin-bottom: var(--space-md);
+}
+
+.solution-toggle:hover {
+  background: var(--primary-dark);
+}
+
+.solution-content {
+  background: var(--success-light);
+  border: 1px solid var(--success);
+  border-radius: 6px;
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+/* Progress Visualizer */
+.progress-container {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.progress-bar {
+  flex: 1;
+  height: 12px;
+  background: var(--border-light);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.progress-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: 1;
+  min-width: 120px;
+}
+
+.step-circle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.progress-step-item.completed .step-circle {
+  background: var(--success);
+  border-color: var(--success);
+  color: white;
+}
+
+.progress-step-item.current .step-circle {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  text-align: center;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.progress-step-item.completed .step-label,
+.progress-step-item.current .step-label {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.progress-description {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Concept Map */
+.concept-map-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.central-concept {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-align: center;
+  z-index: 10;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  padding: var(--space-sm);
+}
+
+.concept-connections {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.connection-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 2px;
+}
+
+.connection-line {
+  width: 100px;
+  height: 2px;
+  background: var(--border);
+  margin-left: 60px;
+}
+
+.connected-concept {
+  position: absolute;
+  right: 0;
+  top: -40px;
+  width: 160px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: var(--space-sm);
+  text-align: center;
+  box-shadow: var(--shadow-light);
+}
+
+.concept-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  font-size: 0.875rem;
+}
+
+.relationship {
+  font-size: 0.75rem;
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: var(--space-xs);
+}
+
+.concept-description {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* Responsive Design for Visual Components */
+@media (max-width: 768px) {
+  .infographic-container.flow {
+    flex-direction: column;
+  }
+  
+  .flow-arrow {
+    transform: rotate(90deg);
+    margin: var(--space-md) 0;
+  }
+  
+  .progress-steps {
+    flex-direction: column;
+  }
+  
+  .progress-step-item {
+    min-width: auto;
+  }
+  
+  .concept-map-container {
+    height: 300px;
+  }
+  
+  .connected-concept {
+    width: 120px;
+    font-size: 0.75rem;
+  }
+  
+  .central-concept {
+    width: 80px;
+    height: 80px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Animation for interactive elements */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0);
+  }
+}
+
 .interactive-checklist h4 {
   margin-bottom: var(--space-md);
   color: var(--text-primary);

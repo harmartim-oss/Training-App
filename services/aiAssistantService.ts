@@ -141,15 +141,27 @@ const EDUCATIONAL_RESPONSES: Record<string, string[]> = {
     ],
     
     'quiz': [
-        "📝 **Quiz Preparation Tips** *(All Modules)*: \n• Review the 10 PIPEDA principles and their practical applications (Module 1)\n• Understand MFIPPA's collection, use, and disclosure rules (Module 1)\n• Know the difference between PIPEDA and MFIPPA scope and requirements (Module 1)\n• Practice identifying when PIAs are required (Module 1)\n• Remember cross-border data storage restrictions under MFIPPA (Module 1)\n• Master NIST cybersecurity framework functions (Module 2)\n• Understand Ontario's AI governance principles (Module 3)\n• Know data classification and retention requirements (Module 4)\n• Focus on practical scenarios - how would you apply these laws in real situations?\n\n📖 *Reference: Each module includes knowledge check quizzes to practice*",
+        "📝 **Comprehensive Quiz Preparation Strategy** *(All Modules)*: \n\n**Foundation Knowledge (Module 1):**\n• Master the 10 PIPEDA principles and their real-world applications\n• Understand MFIPPA's collection, use, and disclosure rules with municipal examples\n• Know the precise differences between PIPEDA, MFIPPA, PHIPA, and FIPPA scope\n• Practice identifying when PIAs are required with various scenarios\n• Remember cross-border data storage restrictions under MFIPPA Section 30.1\n\n**Security Fundamentals (Module 2):**\n• Master NIST cybersecurity framework's five functions with practical examples\n• Understand risk assessment methodologies (OCTAVE, FAIR, NIST SP 800-30)\n• Know incident response phases and evidence handling procedures\n• Practice vulnerability management and patch prioritization\n\n**AI Governance (Module 3):**\n• Understand Ontario's six AI governance principles with implementation examples\n• Know when and how to conduct Algorithmic Impact Assessments\n• Practice identifying AI bias and implementing fairness measures\n\n**Data Management (Module 4):**\n• Know data classification levels and appropriate security controls\n• Understand retention requirements and secure disposal procedures\n• Master cross-border data transfer compliance requirements\n\n📖 *Each module includes interactive knowledge checks to practice these concepts*",
         
-        "🎯 **Key Concepts to Master**: \n1. When organizations must identify purposes for collection (before/at time of collection - Module 1)\n2. MFIPPA's Canadian storage requirement (Section 30.1 - Module 1)\n3. The relationship between consent and statutory authority (Module 1)\n4. Privacy breach notification requirements (Module 1)\n5. Individual rights under both PIPEDA and MFIPPA (Module 1)\n6. When Privacy Impact Assessments are mandatory (Module 1)\n7. NIST Cybersecurity Framework five functions (Module 2)\n8. Ontario's six AI governance principles (Module 3)\n9. Data classification levels and security controls (Module 4)\n\n📖 *Reference: Review the learning objectives section in each module*"
+        "🎯 **Scenario-Based Learning Tips**: \n\n**Practice with Real Situations:**\n• Municipal Wi-Fi implementation (MFIPPA compliance)\n• Healthcare data sharing (PHIPA circle of care)\n• AI chatbot deployment (Algorithmic Impact Assessment)\n• Cloud service selection (cross-border data requirements)\n• Privacy breach response (notification procedures)\n• FOI request handling (exemption considerations)\n\n**Key Success Strategies:**\n1. **Connect Concepts**: See how privacy law foundations support cybersecurity practices\n2. **Apply Practically**: Use real-world scenarios to test understanding\n3. **Think Critically**: Consider multiple perspectives in complex situations\n4. **Stay Current**: Reference recent Privacy Commissioner decisions\n5. **Practice Regularly**: Use spaced repetition for better retention\n\n📈 **Assessment Approach**: Focus on practical application rather than memorization. Think about 'what would you do' in given scenarios.",
+        
+        "🔍 **Advanced Preparation Techniques**: \n\n**Memory Techniques:**\n• **PIPEDA Acronym**: 'All Citizens Can Learn Using Simple Access Open Challenges' (Accountability, Consent, Collection, etc.)\n• **MFIPPA Compliance**: Remember 'CLUE' - Collect only necessary, Limit use, Understand disclosure rules, Ensure safeguards\n• **NIST Framework**: 'I Protect Data Rapidly Recovering' (Identify, Protect, Detect, Respond, Recover)\n\n**Case Study Method:**\n• Analyze real Privacy Commissioner decisions\n• Review cybersecurity incident case studies\n• Examine AI governance implementation examples\n• Study data breach notification scenarios\n\n**Interactive Practice:**\n• Role-play FOI request scenarios\n• Conduct mock privacy impact assessments\n• Practice incident response decision-making\n• Simulate AI risk assessment processes\n\n💡 **Pro Tip**: Create your own scenarios based on your organization's context - this builds both understanding and practical application skills."
     ],
     
-    'default': [
-        "👋 **Welcome to your OCRP Study Assistant!** I'm here to provide detailed, specific guidance on Ontario's privacy and cybersecurity landscape. I can help with:\n\n📚 **Core Topics**: \n• PIPEDA's 10 Fair Information Principles *(Module 1)*\n• PHIPA requirements for health information protection *(Module 1)*\n• FIPPA provisions for provincial institutions *(Module 1)*\n• Federal vs provincial privacy law jurisdiction *(Module 1)*\n• FOI request processes under various legislation *(Module 1)*\n• MFIPPA requirements for municipalities *(Module 1)*\n• Cybersecurity frameworks (NIST, ISO 27001) *(Module 2)*\n• AI governance and algorithmic impact assessments *(Module 3)*\n• Data management and cross-border compliance *(Module 4)*\n• Bill 194 privacy enhancements *(Module 1)*\n\n💡 **Ask me specific questions** like:\n• 'Explain the differences between PIPEDA, MFIPPA, PHIPA, and FIPPA'\n• 'When do federal vs provincial privacy laws apply?'\n• 'How do I make an FOI request under FIPPA or MFIPPA?'\n• 'What is the circle of care under PHIPA?'\n• 'When are Privacy Impact Assessments required?'\n• 'What are the NIST cybersecurity framework functions?'\n• 'How does Ontario's AI governance directive work?'\n\n📖 **All responses include module references** so you know exactly where to find more information!",
+    'scenario_analysis': [
+        "🏛️ **Municipal Scenario Analysis**: \n\n**Case Study: Smart City Initiative**\nA municipality wants to implement smart traffic lights that collect vehicle flow data and integrate with emergency services. Consider these privacy implications:\n\n**MFIPPA Analysis:**\n• Is the data 'personal information' under MFIPPA?\n• What collection authority exists for traffic management?\n• How does Section 30.1 affect cloud-based analytics?\n• What PIA requirements apply?\n\n**Solution Framework:**\n1. **Data Minimization**: Collect only aggregate flow data, not individual vehicle tracking\n2. **Purpose Limitation**: Use only for traffic optimization and emergency response\n3. **Storage Compliance**: Ensure Canadian data residency for any personal information\n4. **Transparency**: Publish clear notices about data collection and use\n\n📖 *This demonstrates practical application of Module 1 concepts*",
         
-        "🎯 **Study Tips**: For the best learning experience, try asking follow-up questions! I can explain concepts in different ways, provide practical examples, and help you understand how these laws apply in real-world scenarios. Each topic builds on others - privacy law foundations (Module 1) support cybersecurity practices (Module 2), which inform AI governance approaches (Module 3) and data management strategies (Module 4).\n\n📖 **Always check the referenced modules** for complete details, examples, and practice exercises!"
+        "🏥 **Healthcare Scenario Analysis**: \n\n**Case Study: Telemedicine Platform**\nA hospital wants to implement a telemedicine platform for remote consultations. PHIPA considerations:\n\n**Circle of Care Analysis:**\n• Who is included in the patient's care team?\n• How does virtual care affect traditional consent models?\n• What technical safeguards are required?\n• How do you handle cross-provincial consultations?\n\n**Implementation Strategy:**\n1. **Consent Framework**: Clear explanation of virtual care processes\n2. **Technical Controls**: End-to-end encryption, secure authentication\n3. **Access Management**: Role-based permissions for care team members\n4. **Audit Requirements**: Comprehensive logging of access and disclosures\n\n📈 **Integration Consideration**: How does this connect to cybersecurity controls from Module 2?",
+        
+        "🤖 **AI Implementation Scenario**: \n\n**Case Study: Automated Benefits Processing**\nA government agency wants to use AI for processing social assistance applications. AI governance analysis:\n\n**Ontario Directive Application:**\n• Is AI use justified and proportionate for this purpose?\n• How does it benefit the people of Ontario?\n• What transparency measures are needed?\n• How do you ensure human oversight?\n\n**Risk Assessment Process:**\n1. **Algorithmic Impact Assessment**: Evaluate bias, fairness, accuracy\n2. **Stakeholder Consultation**: Include affected communities in design\n3. **Ongoing Monitoring**: Regular bias testing and performance review\n4. **Appeal Mechanisms**: Clear process for challenging AI decisions\n\n💡 **Key Question**: How do you balance efficiency gains with fairness and accountability requirements?"
+    ],
+    
+    'implementation_guide': [
+        "🔧 **Step-by-Step Implementation Guidance**: \n\n**Privacy Program Development:**\n\n**Phase 1: Foundation (Months 1-3)**\n• Conduct comprehensive privacy audit using PIPEDA/MFIPPA frameworks\n• Identify all personal information flows and data repositories\n• Review and update privacy policies and procedures\n• Establish privacy governance structure with designated officers\n\n**Phase 2: Enhancement (Months 4-6)**\n• Implement Privacy Impact Assessment processes\n• Develop breach response and notification procedures\n• Create staff training programs on privacy requirements\n• Establish vendor management and data processing agreements\n\n**Phase 3: Optimization (Months 7-12)**\n• Implement continuous monitoring and audit procedures\n• Develop privacy by design frameworks for new initiatives\n• Create public transparency and accountability measures\n• Establish regular review and update cycles\n\n📊 **Success Metrics**: Track PIA completion rates, breach response times, staff training completion, and compliance audit results.",
+        
+        "🛡️ **Cybersecurity Implementation Roadmap**: \n\n**Risk-Based Security Program:**\n\n**Immediate Actions (0-30 days)**\n• Conduct baseline vulnerability assessment\n• Implement critical security patches\n• Enable multi-factor authentication for administrative accounts\n• Establish incident response team and communication procedures\n\n**Short-term Goals (30-90 days)**\n• Deploy comprehensive endpoint protection\n• Implement network segmentation and monitoring\n• Conduct security awareness training for all staff\n• Develop and test backup and recovery procedures\n\n**Long-term Strategy (90+ days)**\n• Implement NIST Cybersecurity Framework across all functions\n• Establish continuous vulnerability management program\n• Develop threat intelligence and monitoring capabilities\n• Create security metrics and reporting dashboards\n\n🎯 **Integration Point**: Ensure cybersecurity controls support privacy protection requirements from Module 1.",
+        
+        "⚖️ **AI Governance Implementation**: \n\n**Responsible AI Framework Development:**\n\n**Governance Structure**\n• Establish AI Ethics Committee with diverse representation\n• Create AI risk assessment and approval processes\n• Develop AI procurement and vendor management standards\n• Implement ongoing monitoring and audit procedures\n\n**Technical Implementation**\n• Integrate fairness testing into AI development lifecycle\n• Implement explainability and transparency measures\n• Create human oversight and intervention mechanisms\n• Establish data quality and bias monitoring systems\n\n**Organizational Culture**\n• Train staff on responsible AI principles and practices\n• Create clear escalation and decision-making processes\n• Establish public consultation and feedback mechanisms\n• Develop communication strategies for AI transparency\n\n🔄 **Continuous Improvement**: Regular review of AI systems against Ontario's six governance principles."
     ],
     
     'module1': [
@@ -166,12 +178,43 @@ const EDUCATIONAL_RESPONSES: Record<string, string[]> = {
     
     'module4': [
         "📁 **Module 4: Secure Data & Records Management** covers information lifecycle:\n\n**Key Learning Areas:**\n• Data classification schemas (Public, Internal, Confidential, Restricted)\n• Records retention policies and schedules\n• Secure disposal procedures\n• Cross-border data transfer compliance\n• Data governance frameworks\n• Information architecture\n\n**Management Areas:**\n• Classification and labeling\n• Access controls and permissions\n• Retention and disposal\n• Transfer and sharing agreements\n• Compliance monitoring\n• Audit and reporting\n\n📖 *Applies all concepts from Modules 1-3 to practical data management*"
+    ],
+    
+    'default': [
+        "👋 **Welcome to your Enhanced OCRP Study Assistant!** I'm here to provide personalized, detailed guidance on Ontario's privacy and cybersecurity landscape. I can help with:\n\n📚 **Core Topics**: \n• PIPEDA's 10 Fair Information Principles with real-world applications *(Module 1)*\n• PHIPA requirements including circle of care scenarios *(Module 1)*\n• FIPPA provisions with practical FOI examples *(Module 1)*\n• Federal vs provincial privacy law jurisdiction decisions *(Module 1)*\n• MFIPPA requirements with municipal case studies *(Module 1)*\n• Cybersecurity frameworks with implementation guidance *(Module 2)*\n• AI governance with algorithmic impact assessments *(Module 3)*\n• Data management with cross-border compliance *(Module 4)*\n• Bill 194 privacy enhancements and timelines *(Module 1)*\n\n💡 **Interactive Features**:\n• Scenario-based learning with real case studies\n• Step-by-step implementation guides\n• Personalized study recommendations\n• Progress-aware responses\n• Multi-level explanations (beginner to advanced)\n\n🎯 **Smart Assistance**: I adapt my responses based on your learning progress, previous questions, and complexity preferences. Ask me anything from basic concepts to advanced implementation strategies!\n\n📖 **All responses include module references and practical next steps**",
+        
+        "🚀 **Advanced Learning Experience**: I provide contextual, conversation-aware responses that build on our previous discussions. My capabilities include:\n\n**Personalized Learning:**\n• Adaptive explanations based on your experience level\n• Progress-aware encouragement and recommendations\n• Context-aware responses that reference previous topics\n• Learning objective alignment with your current module\n\n**Practical Application:**\n• Real-world scenario analysis and case studies\n• Step-by-step implementation guidance\n• Risk assessment and decision-making frameworks\n• Integration strategies across all four modules\n\n**Interactive Support:**\n• Follow-up question suggestions\n• Cross-module concept connections\n• Practical exercise recommendations\n• Resource and tool recommendations\n\n💡 **Study Strategy**: Each topic builds on others - privacy law foundations (Module 1) support cybersecurity practices (Module 2), which inform AI governance approaches (Module 3) and data management strategies (Module 4). I'll help you see these connections!\n\n📈 **Continuous Improvement**: The more we interact, the better I can tailor responses to your learning style and needs."
     ]
 };
 
-// Enhanced keyword matching for educational responses
+// Enhanced keyword matching for educational responses with better context understanding
 function findRelevantTopic(message: string): string {
     const lowerMessage = message.toLowerCase();
+    
+    // Multi-word phrase detection for better accuracy
+    const phraseMap: Record<string, string> = {
+        'personal information protection and electronic documents': 'pipeda',
+        'fair information principles': 'pipeda',
+        'municipal freedom of information': 'mfippa',
+        'personal health information protection': 'phipa',
+        'freedom of information and protection': 'fippa',
+        'algorithmic impact assessment': 'ai governance',
+        'ontario ai directive': 'ai governance',
+        'cross border data': 'data management',
+        'vulnerability assessment': 'cybersecurity',
+        'incident response': 'cybersecurity',
+        'risk assessment': 'cybersecurity',
+        'privacy impact assessment': 'module1',
+        'data classification': 'data management',
+        'records retention': 'data management'
+    };
+    
+    // Check for exact phrase matches first
+    for (const [phrase, topic] of Object.entries(phraseMap)) {
+        if (lowerMessage.includes(phrase)) {
+            return topic;
+        }
+    }
     
     // PIPEDA related queries
     if (lowerMessage.includes('pipeda') || lowerMessage.includes('personal information protection') || 
@@ -224,21 +267,25 @@ function findRelevantTopic(message: string): string {
     if (lowerMessage.includes('cybersecurity') || lowerMessage.includes('cyber security') || 
         lowerMessage.includes('nist') || lowerMessage.includes('risk assessment') ||
         lowerMessage.includes('cia triad') || lowerMessage.includes('incident response') ||
-        lowerMessage.includes('octave') || lowerMessage.includes('fair methodology')) {
+        lowerMessage.includes('octave') || lowerMessage.includes('fair methodology') ||
+        lowerMessage.includes('vulnerability') || lowerMessage.includes('penetration test') ||
+        lowerMessage.includes('system hardening') || lowerMessage.includes('security controls')) {
         return 'cybersecurity';
     }
     
     // AI Governance related queries
     if (lowerMessage.includes('ai governance') || lowerMessage.includes('artificial intelligence') || 
         lowerMessage.includes('algorithmic impact') || lowerMessage.includes('ontario ai directive') ||
-        lowerMessage.includes('responsible ai') || lowerMessage.includes('ai ethics')) {
+        lowerMessage.includes('responsible ai') || lowerMessage.includes('ai ethics') ||
+        lowerMessage.includes('machine learning') || lowerMessage.includes('automation ethics')) {
         return 'ai governance';
     }
     
     // Data Management related queries
     if (lowerMessage.includes('data management') || lowerMessage.includes('data classification') || 
         lowerMessage.includes('retention') || lowerMessage.includes('cross-border') ||
-        lowerMessage.includes('records management') || lowerMessage.includes('data storage')) {
+        lowerMessage.includes('records management') || lowerMessage.includes('data storage') ||
+        lowerMessage.includes('data governance') || lowerMessage.includes('information lifecycle')) {
         return 'data management';
     }
     
@@ -279,45 +326,252 @@ function findRelevantTopic(message: string): string {
     return 'default';
 }
 
-// Educational Assistant Implementation
+// Enhanced Educational Assistant Implementation
 export class EducationalAssistant {
     private selectedProvider: string = 'educational-assistant';
+    private conversationHistory: Array<{message: string, response: string, timestamp: Date}> = [];
+    private userProgress: any = {};
+    private learningPreferences: any = {};
     
     constructor(provider: string = 'educational-assistant') {
         this.selectedProvider = provider;
     }
     
     async generateResponse(message: string, context?: any): Promise<string> {
+        // Enhanced context understanding
+        const enhancedContext = this.buildEnhancedContext(message, context);
+        let response: string;
+        
         switch (this.selectedProvider) {
             case 'educational-assistant':
-                return this.getEducationalResponse(message);
+                response = this.getAdvancedEducationalResponse(message, enhancedContext);
+                break;
             case 'ollama':
-                return this.getOllamaResponse(message);
+                response = await this.getOllamaResponse(message);
+                break;
             case 'huggingface':
-                return this.getHuggingFaceResponse(message);
+                response = await this.getHuggingFaceResponse(message);
+                break;
             default:
-                return this.getEducationalResponse(message);
+                response = this.getAdvancedEducationalResponse(message, enhancedContext);
         }
+        
+        // Store conversation history for context
+        this.conversationHistory.push({
+            message,
+            response,
+            timestamp: new Date()
+        });
+        
+        // Keep only last 10 conversations for context
+        if (this.conversationHistory.length > 10) {
+            this.conversationHistory = this.conversationHistory.slice(-10);
+        }
+        
+        return response;
     }
     
-    private getEducationalResponse(message: string): string {
-        const topic = findRelevantTopic(message);
-        const responses = EDUCATIONAL_RESPONSES[topic];
+    private buildEnhancedContext(message: string, context?: any) {
+        return {
+            currentModule: context?.currentModule,
+            userProgress: context?.userProgress || this.userProgress,
+            conversationHistory: this.conversationHistory.slice(-3), // Last 3 exchanges
+            messageIntent: this.analyzeMessageIntent(message),
+            learningObjectives: this.getCurrentLearningObjectives(context?.currentModule),
+            userLevel: this.assessUserLevel(message, context),
+            ...context
+        };
+    }
+    
+    private analyzeMessageIntent(message: string): string {
+        const lowerMessage = message.toLowerCase();
         
-        // Return a random response from the topic, but prefer more comprehensive ones
-        if (responses.length === 1) {
-            return responses[0];
+        if (lowerMessage.includes('explain') || lowerMessage.includes('what is') || lowerMessage.includes('how does')) {
+            return 'explanation';
+        }
+        if (lowerMessage.includes('example') || lowerMessage.includes('scenario') || lowerMessage.includes('case study')) {
+            return 'practical_application';
+        }
+        if (lowerMessage.includes('help') || lowerMessage.includes('stuck') || lowerMessage.includes('confused')) {
+            return 'assistance';
+        }
+        if (lowerMessage.includes('quiz') || lowerMessage.includes('test') || lowerMessage.includes('prepare')) {
+            return 'assessment_prep';
+        }
+        if (lowerMessage.includes('compare') || lowerMessage.includes('difference') || lowerMessage.includes('vs')) {
+            return 'comparison';
+        }
+        if (lowerMessage.includes('steps') || lowerMessage.includes('how to') || lowerMessage.includes('process')) {
+            return 'procedural';
         }
         
-        // For topics with multiple responses, prefer the first (most comprehensive) response
-        // but occasionally return others for variety
+        return 'general_inquiry';
+    }
+    
+    private getCurrentLearningObjectives(currentModule?: string): string[] {
+        const objectives: Record<string, string[]> = {
+            'module1': [
+                'Understanding PIPEDA principles',
+                'Navigating MFIPPA requirements', 
+                'Mastering FOI processes',
+                'Implementing privacy impact assessments'
+            ],
+            'module2': [
+                'Applying risk assessment methodologies',
+                'Implementing system hardening',
+                'Developing incident response capabilities',
+                'Understanding cryptographic controls'
+            ],
+            'module3': [
+                'Implementing AI governance principles',
+                'Conducting algorithmic impact assessments',
+                'Ensuring responsible AI deployment',
+                'Managing AI risks and bias'
+            ],
+            'module4': [
+                'Implementing data classification',
+                'Managing records retention',
+                'Ensuring cross-border compliance',
+                'Developing data governance frameworks'
+            ]
+        };
+        
+        return objectives[currentModule || 'module1'] || [];
+    }
+    
+    private assessUserLevel(message: string, context?: any): 'beginner' | 'intermediate' | 'advanced' {
+        // Analyze complexity of questions and previous interactions
+        const complexTerms = ['algorithmic impact', 'cross-border compliance', 'cryptographic', 'governance framework'];
+        const hasComplexTerms = complexTerms.some(term => message.toLowerCase().includes(term));
+        
+        if (hasComplexTerms || (context?.userProgress?.completedModules || 0) > 2) {
+            return 'advanced';
+        }
+        if ((context?.userProgress?.completedModules || 0) > 0) {
+            return 'intermediate';
+        }
+        return 'beginner';
+    }
+    
+    private getAdvancedEducationalResponse(message: string, context: any): string {
+        const topic = findRelevantTopic(message);
+        const intent = context.messageIntent;
+        const userLevel = context.userLevel;
+        const responses = EDUCATIONAL_RESPONSES[topic];
+        
+        // Get base response
+        let baseResponse = this.selectContextualResponse(responses, intent, userLevel);
+        
+        // Enhance based on conversation context
+        if (context.conversationHistory.length > 0) {
+            baseResponse = this.addConversationalContext(baseResponse, context.conversationHistory);
+        }
+        
+        // Add personalized learning suggestions
+        baseResponse += this.generatePersonalizedSuggestions(topic, context);
+        
+        // Add progress encouragement if appropriate
+        if (context.userProgress?.completedModules > 0) {
+            baseResponse += this.addProgressEncouragement(context.userProgress);
+        }
+        
+        return baseResponse;
+    }
+    
+    private selectContextualResponse(responses: string[], intent: string, userLevel: string): string {
+        if (!responses || responses.length === 0) {
+            return EDUCATIONAL_RESPONSES['default'][0];
+        }
+        
+        // For explanations, prefer detailed responses
+        if (intent === 'explanation' && responses.length > 1) {
+            return responses[0]; // Most comprehensive
+        }
+        
+        // For beginners, prefer simpler explanations
+        if (userLevel === 'beginner' && responses.length > 2) {
+            return responses[responses.length - 1]; // Usually simpler
+        }
+        
+        // For practical applications, look for examples
+        if (intent === 'practical_application') {
+            const practicalResponse = responses.find(r => 
+                r.includes('example') || r.includes('scenario') || r.includes('practice')
+            );
+            if (practicalResponse) return practicalResponse;
+        }
+        
+        // Default selection logic
         const randomValue = Math.random();
         if (randomValue < 0.7) {
-            return responses[0]; // 70% chance for the main comprehensive response
+            return responses[0];
         } else {
             const randomIndex = Math.floor(Math.random() * responses.length);
             return responses[randomIndex];
         }
+    }
+    
+    private addConversationalContext(response: string, history: any[]): string {
+        if (history.length === 0) return response;
+        
+        const lastExchange = history[history.length - 1];
+        if (lastExchange && lastExchange.message.toLowerCase().includes('more') || 
+            lastExchange.message.toLowerCase().includes('tell me more')) {
+            return response + "\n\n💡 **Building on our previous discussion**: This connects to what we covered earlier about " + 
+                   this.extractKeyTopic(lastExchange.response) + ". ";
+        }
+        
+        return response;
+    }
+    
+    private extractKeyTopic(previousResponse: string): string {
+        // Extract main topic from previous response
+        if (previousResponse.includes('PIPEDA')) return 'PIPEDA principles';
+        if (previousResponse.includes('MFIPPA')) return 'municipal privacy requirements';
+        if (previousResponse.includes('AI governance')) return 'AI governance frameworks';
+        if (previousResponse.includes('cybersecurity')) return 'cybersecurity fundamentals';
+        return 'the fundamentals we discussed';
+    }
+    
+    private generatePersonalizedSuggestions(topic: string, context: any): string {
+        const suggestions: Record<string, string[]> = {
+            'pipeda': [
+                "\n\n🚀 **Next Steps**: Try exploring how PIPEDA principles apply to your specific sector",
+                "\n\n🔍 **Deep Dive**: Consider reviewing actual Privacy Commissioner decisions for real-world applications",
+                "\n\n📝 **Practice**: Work through the PIPEDA compliance checklist with a hypothetical scenario"
+            ],
+            'mfippa': [
+                "\n\n🏛️ **Municipal Focus**: Review your municipality's current privacy policies against MFIPPA requirements",
+                "\n\n🌐 **Cross-Border**: Pay special attention to Section 30.1 requirements for your cloud services",
+                "\n\n📋 **Practical Application**: Consider conducting a PIA for a recent municipal initiative"
+            ],
+            'cybersecurity': [
+                "\n\n🛡️ **Hands-On**: Try implementing a basic vulnerability assessment in your environment",
+                "\n\n📊 **Risk Focus**: Practice using different risk assessment methodologies for comparison",
+                "\n\n🚨 **Incident Prep**: Review and test your organization's incident response procedures"
+            ],
+            'ai governance': [
+                "\n\n🤖 **Assessment Practice**: Try conducting an AIA for a hypothetical AI implementation",
+                "\n\n⚖️ **Ethics Focus**: Consider how each of Ontario's six principles applies to your use cases",
+                "\n\n📈 **Monitoring**: Develop a framework for ongoing AI system monitoring"
+            ]
+        };
+        
+        const topicSuggestions = suggestions[topic] || suggestions['pipeda'];
+        const randomSuggestion = topicSuggestions[Math.floor(Math.random() * topicSuggestions.length)];
+        
+        return randomSuggestion;
+    }
+    
+    private addProgressEncouragement(userProgress: any): string {
+        const completedCount = userProgress.completedModules || 0;
+        const encouragements = [
+            `\n\n🌟 **Great Progress**: You've completed ${completedCount} module${completedCount !== 1 ? 's' : ''}! Keep building on this foundation.`,
+            `\n\n🎯 **Learning Journey**: Your completion of ${completedCount} module${completedCount !== 1 ? 's' : ''} shows strong commitment to mastering OCRP concepts.`,
+            `\n\n📈 **Skill Building**: With ${completedCount} module${completedCount !== 1 ? 's' : ''} under your belt, you're developing comprehensive cyber resilience expertise.`
+        ];
+        
+        return encouragements[Math.floor(Math.random() * encouragements.length)];
     }
     
     private async getOllamaResponse(message: string): Promise<string> {
