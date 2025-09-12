@@ -138,11 +138,25 @@ const StripePayment: React.FC<StripePaymentProps> = ({
                         </div>
                     )}
 
-                    {/* Development Notice */}
-                    <div className="bg-warning/10 border border-warning/20 text-warning p-3 rounded-lg text-sm">
-                        <strong>Development Mode:</strong> This is a placeholder payment form. 
-                        Use test card number 4242 4242 4242 4242 with any future expiry date and CVC.
-                        No actual payment will be processed.
+                    {/* Enhanced Development Notice */}
+                    <div className="bg-gradient-to-r from-warning/10 to-warning/5 border border-warning/30 rounded-lg p-4">
+                        <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-warning/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="text-warning text-lg">⚠️</span>
+                            </div>
+                            <div className="text-sm">
+                                <div className="font-semibold text-warning mb-1">Development Mode</div>
+                                <p className="text-text-secondary leading-relaxed mb-2">
+                                    This is a placeholder payment form for demonstration purposes. Use the test card number below with any future expiry date and CVC.
+                                </p>
+                                <div className="bg-warning/20 text-warning px-3 py-2 rounded font-mono text-xs">
+                                    Card: 4242 4242 4242 4242 | Exp: 12/34 | CVC: 123
+                                </div>
+                                <p className="text-xs text-text-muted mt-2">
+                                    ✅ No actual payment will be processed
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="flex justify-between items-center pt-4">

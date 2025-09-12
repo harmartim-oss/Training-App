@@ -15,10 +15,12 @@ export const PRICING_TIERS: PricingTier[] = [
         billing: 'monthly',
         features: [
             'Access to all 4 training modules',
-            'Basic AI study assistant',
+            'Basic AI study assistant (10 queries/month)',
             'Module quizzes and assessments',
             'Digital certificate upon completion',
-            'Community support forum'
+            'Community support forum',
+            'Mobile-optimized learning platform',
+            'Progress tracking dashboard'
         ],
         studyGuideAccess: false,
         practiceExamAccess: false,
@@ -35,12 +37,15 @@ export const PRICING_TIERS: PricingTier[] = [
         billing: 'annual',
         features: [
             'Everything in Basic Access',
-            'Downloadable comprehensive study guide',
+            'Downloadable comprehensive study guide (PDF)',
             'Practice final examination (3 attempts)',
             'Advanced AI study assistant with unlimited queries',
-            'Email support',
+            'Priority email support (48-hour response)',
             'Module completion certificates',
-            'LinkedIn certification badge'
+            'LinkedIn certification badge',
+            'Advanced progress tracking & analytics',
+            'Premium incident response playbook',
+            'Professional assessment templates'
         ],
         studyGuideAccess: true,
         practiceExamAccess: true,

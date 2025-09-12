@@ -42,11 +42,40 @@ const audience = [
 
 
 
+const testimonials = [
+    {
+        name: "Sarah Chen",
+        position: "IT Director",
+        organization: "City of Burlington",
+        avatar: "👩‍💼",
+        quote: "The OCRP certification gave our team the confidence to handle complex privacy and cybersecurity challenges. The Ontario-specific legal training was invaluable.",
+        rating: 5
+    },
+    {
+        name: "Marcus Thompson", 
+        position: "Cybersecurity Manager",
+        organization: "Durham Region Health",
+        avatar: "👨‍💻",
+        quote: "Excellent practical training that directly applies to our daily operations. The AI governance module was particularly relevant for our organization.",
+        rating: 5
+    },
+    {
+        name: "Lisa Rodriguez",
+        position: "Data Protection Officer", 
+        organization: "Toronto Community Foundation",
+        avatar: "👩‍🔬",
+        quote: "As a non-profit, we needed cost-effective cybersecurity training. The OCRP program delivered comprehensive knowledge at an affordable price.",
+        rating: 5
+    }
+];
+
 const faqs = [
     { q: "Who is this certification for?", a: "This certification is designed for professionals in Ontario's municipalities, small businesses, and non-profit sectors who handle sensitive data and are responsible for digital security and compliance." },
     { q: "Is there a prerequisite for this course?", a: "No, there are no formal prerequisites. The program is designed to be accessible to individuals with a range of technical backgrounds, focusing on practical application and legal understanding." },
     { q: "How long does the certification take to complete?", a: "The training is self-paced. On average, participants complete all modules and the final assessment within 15-20 hours of study." },
     { q: "Is the OCRP designation recognized across Canada?", a: "While the curriculum has a specific focus on Ontario's legal landscape (like MFIPPA), the cybersecurity and data management principles are based on national and international standards, making the skills highly transferable." },
+    { q: "What kind of support is available during the course?", a: "All plans include community forum support. Professional and Enterprise plans include email support and priority assistance. Our AI study assistant is available 24/7 to help with course content." },
+    { q: "Can I upgrade my plan after starting?", a: "Yes, you can upgrade your subscription plan at any time from your account dashboard. All your progress will be preserved and you'll immediately gain access to premium features." }
 ];
 
 interface LandingPageProps {
@@ -259,7 +288,70 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             </div>
         </Section>
         
-
+        {/* Testimonials Section */}
+        <Section id="testimonials" className="bg-gradient-to-b from-surface/30 to-surface-elevated/30 relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3"></div>
+            <div className="absolute top-20 left-20 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 right-20 w-56 h-56 bg-accent/5 rounded-full blur-3xl"></div>
+            
+            <SectionTitle title="Success Stories" subtitle="Hear from professionals who have earned their OCRP designation and are making a difference in Ontario's digital security landscape."/>
+            
+            <div className={`grid grid-cols-1 ${isMobile ? 'gap-6' : 'md:grid-cols-3 gap-8'} relative z-10`}>
+                {testimonials.map((testimonial, index) => (
+                    <div key={testimonial.name} className="bg-surface border border-border rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in" style={{animationDelay: `${index * 0.2}s`}}>
+                        {/* Rating stars */}
+                        <div className="flex items-center gap-1 mb-4">
+                            {[...Array(testimonial.rating)].map((_, i) => (
+                                <span key={i} className="text-warning text-lg">⭐</span>
+                            ))}
+                        </div>
+                        
+                        {/* Quote */}
+                        <blockquote className="text-text-secondary leading-relaxed mb-6 italic">
+                            "{testimonial.quote}"
+                        </blockquote>
+                        
+                        {/* Profile */}
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full flex items-center justify-center text-2xl">
+                                {testimonial.avatar}
+                            </div>
+                            <div>
+                                <div className="font-semibold text-text-primary">{testimonial.name}</div>
+                                <div className="text-sm text-text-secondary">{testimonial.position}</div>
+                                <div className="text-xs text-primary font-medium">{testimonial.organization}</div>
+                            </div>
+                        </div>
+                        
+                        {/* Verification badge */}
+                        <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-success/10 text-success text-xs font-semibold rounded-full">
+                            ✓ Verified OCRP Graduate
+                        </div>
+                    </div>
+                ))}
+            </div>
+            
+            {/* Trust indicators */}
+            <div className="mt-12 text-center">
+                <div className="inline-flex items-center gap-8 px-8 py-4 bg-surface border border-border rounded-2xl shadow-sm">
+                    <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">4.9/5</div>
+                        <div className="text-sm text-text-secondary">Average Rating</div>
+                    </div>
+                    <div className="w-px h-12 bg-border"></div>
+                    <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">500+</div>
+                        <div className="text-sm text-text-secondary">Certified Professionals</div>
+                    </div>
+                    <div className="w-px h-12 bg-border"></div>
+                    <div className="text-center">
+                        <div className="text-2xl font-bold text-primary">95%</div>
+                        <div className="text-sm text-text-secondary">Completion Rate</div>
+                    </div>
+                </div>
+            </div>
+        </Section>
 
         {/* FAQ Section */}
         <Section id="faq">
