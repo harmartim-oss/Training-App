@@ -4,6 +4,7 @@
 */
 import React, { useState } from 'react';
 import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
+import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasses } from '../../hooks/useMobileDetection';
 import QuizComponent from '../common/QuizComponent';
 import DownloadableResources from '../common/DownloadableResources';
 import ResourcesPanel from '../resources/ResourcesPanel';
@@ -24,6 +25,10 @@ interface ModuleProps {
 
 const Module1: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz' | 'resources'>('content');
+    const detection = useMobileDetection();
+    
+    const mobileClasses = getMobileOptimizedClasses(detection);
+    const layoutClasses = getOptimizedLayoutClasses(detection);
     
     const sampleResources = [
         {
@@ -687,8 +692,8 @@ The safest approach is to insist on Canadian data residency to ensure full MFIPP
     ];
 
     return (
-        <section className="animate-fade-in">
-            <div className="max-w-6xl mx-auto">
+        <section className={`animate-fade-in ${layoutClasses}`}>
+            <div className={`max-w-6xl mx-auto ${mobileClasses}`}>
                 {/* Breadcrumb Navigation */}
                 <div className="breadcrumb mb-6">
                     <button onClick={() => onNavigate('dashboard')} className="hover:text-primary transition-colors">
