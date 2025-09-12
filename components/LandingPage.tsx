@@ -75,130 +75,164 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
       <Header onNavigateToTraining={onNavigateToTraining} />
       <main className="flex-grow animate-fade-in">
         
-        {/* Enhanced Hero Section with Gradient Background */}
-        <Section id="home" className="text-center !pt-28 !pb-36 relative overflow-hidden">
-          {/* Animated Background Elements */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-transparent"></div>
-          <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        {/* Enhanced Hero Section with Improved Visual Design */}
+        <Section id="home" className="text-center !pt-28 !pb-40 relative overflow-hidden">
+          {/* Enhanced Animated Background Elements */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-accent/6 to-transparent"></div>
+            <div className="absolute top-20 left-10 w-40 h-40 bg-primary/15 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute top-32 right-20 w-32 h-32 bg-accent/12 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-20 right-10 w-48 h-48 bg-gradient-to-br from-accent/10 to-primary/8 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+            <div className="absolute bottom-32 left-16 w-36 h-36 bg-success/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2.5s'}}></div>
+          </div>
           
-          <div className="flex flex-col items-center gap-6 relative z-10">
-            {/* Enhanced Institute Branding with Animation */}
+          <div className="flex flex-col items-center gap-8 relative z-10">
+            {/* Enhanced Institute Branding with Improved Animation */}
             <div className="flex flex-col items-center mb-8 animate-scale-in">
               <div className="relative">
-                <ODDILogo className={`${isMobile ? 'w-16 h-16' : isTablet ? 'w-20 h-20' : 'w-24 h-24'} text-primary mb-4 drop-shadow-lg`} />
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
+                <ODDILogo className={`${isMobile ? 'w-20 h-20' : isTablet ? 'w-24 h-24' : 'w-28 h-28'} text-primary mb-6 drop-shadow-xl transition-all duration-500 hover:scale-105`} />
+                <div className="absolute inset-0 bg-primary/25 rounded-full blur-xl animate-pulse"></div>
+                {/* Orbital rings for enhanced visual appeal */}
+                <div className="absolute inset-0 border-2 border-primary/20 rounded-full animate-spin" style={{animationDuration: '20s'}}></div>
+                <div className="absolute inset-2 border border-accent/20 rounded-full animate-spin" style={{animationDuration: '15s', animationDirection: 'reverse'}}></div>
               </div>
               <div className="text-center">
-                <h2 className={`${isMobile ? 'text-lg' : isTablet ? 'text-xl' : 'text-2xl md:text-3xl'} font-bold font-mono text-primary tracking-wider uppercase mb-2 animate-slide-in`}>
+                <h2 className={`${isMobile ? 'text-xl' : isTablet ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold font-mono text-primary tracking-wider uppercase mb-3 animate-slide-in`}>
                   Ontario Digital Defence Institute
                 </h2>
-                <div className={`${isMobile ? 'w-20' : 'w-32'} h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full`}></div>
+                <div className={`${isMobile ? 'w-24' : 'w-40'} h-1 bg-gradient-to-r from-primary via-accent to-primary mx-auto rounded-full animate-pulse`}></div>
               </div>
             </div>
             
-            {/* Enhanced Main Title with Gradient Text */}
-            <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl sm:text-5xl md:text-6xl'} font-mono font-bold tracking-tighter text-text-primary animate-fade-in`}>
+            {/* Enhanced Main Title with Better Typography */}
+            <h1 className={`${isMobile ? 'text-3xl' : 'text-5xl sm:text-6xl md:text-7xl'} font-mono font-bold tracking-tighter text-text-primary animate-fade-in leading-tight`}>
               ONTARIO CERTIFIED <br /> 
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-pulse">
                 CYBER RESILIENCE
               </span> 
-              <br />PROFESSIONAL
+              <br />
+              <span className="text-primary">PROFESSIONAL</span>
             </h1>
             
-            {/* Enhanced Description */}
-            <p className={`${isMobile ? 'max-w-sm text-base' : 'max-w-3xl text-lg md:text-xl'} mx-auto text-text-secondary leading-relaxed animate-fade-in`} style={{animationDelay: '0.2s'}}>
-              Master essential skills in privacy law, cybersecurity, AI governance, and data management to defend Ontario's digital landscape.
-            </p>
+            {/* Enhanced Description with Better Visual Hierarchy */}
+            <div className="max-w-4xl mx-auto animate-fade-in" style={{animationDelay: '0.2s'}}>
+              <p className={`${isMobile ? 'text-lg' : 'text-xl md:text-2xl'} text-text-secondary leading-relaxed mb-4`}>
+                Master essential skills in privacy law, cybersecurity, AI governance, and data management to defend Ontario's digital landscape.
+              </p>
+              <p className={`${isMobile ? 'text-base' : 'text-lg'} text-text-muted max-w-2xl mx-auto`}>
+                Join the next generation of cyber resilience professionals protecting Ontario's digital infrastructure.
+              </p>
+            </div>
             
-            {/* Enhanced CTA with Visual Elements */}
-            <div className="mt-8 flex flex-col items-center gap-4 animate-fade-in" style={{animationDelay: '0.4s'}}>
+            {/* Enhanced CTA Section with Better Visual Design */}
+            <div className="mt-10 flex flex-col items-center gap-6 animate-fade-in" style={{animationDelay: '0.4s'}}>
               <button
                 onClick={onNavigateToTraining}
-                className={`btn-primary ${isMobile ? 'py-4 px-8 text-base' : 'py-4 px-10 text-lg'} font-semibold shadow-2xl`}
+                className={`group relative overflow-hidden ${isMobile ? 'py-5 px-10 text-lg' : 'py-6 px-12 text-xl'} font-semibold text-white bg-gradient-to-r from-primary to-accent rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-3xl`}
               >
-                🚀 Start Certification
+                <span className="relative z-10 flex items-center gap-3">
+                  🚀 Start Your Journey
+                  <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
               
-              {/* Trust Indicators */}
-              <div className="flex items-center gap-4 text-sm text-text-muted mt-2">
-                <span className="flex items-center gap-1">
-                  ⭐ 4.9/5 Rating
+              {/* Enhanced Value Propositions */}
+              <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-text-muted mt-4">
+                <span className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
+                  ✅ Self-Paced Learning
                 </span>
-                <span className="flex items-center gap-1">
-                  👥 500+ Certified
+                <span className="flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full">
+                  🎯 Ontario-Focused Content
                 </span>
-                <span className="flex items-center gap-1">
-                  🏆 Industry Recognized
+                <span className="flex items-center gap-2 px-4 py-2 bg-success/10 rounded-full">
+                  🏆 Professional Certification
                 </span>
               </div>
             </div>
           </div>
         </Section>
 
-        {/* Enhanced Features Section */}
+        {/* Enhanced Features Section with Improved Layout */}
         <Section id="why-ocrp" className="relative">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/2 to-transparent"></div>
+            {/* Enhanced Background Pattern */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/3 to-transparent"></div>
+              <div className="absolute top-1/4 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl"></div>
+            </div>
             
             <SectionTitle title="Why Earn Your OCRP Designation?" subtitle="Gain a competitive edge with a certification that signifies expertise and trustworthiness in digital defence."/>
-            <div className={`grid grid-cols-1 ${isMobile ? 'gap-6' : 'md:grid-cols-3 gap-8'} relative z-10`}>
+            <div className={`grid grid-cols-1 ${isMobile ? 'gap-8' : 'md:grid-cols-3 gap-10'} relative z-10`}>
                 {features.map((feature, index) => (
-                    <div key={feature.title} className="card-interactive bg-surface border border-border p-8 text-left animate-fade-in" style={{animationDelay: `${index * 0.2}s`}}>
-                        <div className="flex-shrink-0 mb-6 relative">
-                           <div className="p-3 bg-gradient-to-br from-primary/10 to-accent/10 rounded-xl inline-block">
-                             {feature.icon}
-                           </div>
-                           {/* Floating badge for enhanced visual appeal */}
-                           <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center">
-                             <span className="text-white text-xs font-bold">{index + 1}</span>
-                           </div>
-                        </div>
-                        <h3 className="text-xl font-bold font-mono text-text-primary uppercase mb-3">{feature.title}</h3>
-                        <p className="text-text-secondary leading-relaxed">{feature.description}</p>
+                    <div key={feature.title} className="group relative bg-surface border border-border rounded-3xl p-8 text-left animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: `${index * 0.2}s`}}>
+                        {/* Enhanced gradient background on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         
-                        {/* Enhanced visual element */}
-                        <div className="mt-4 flex items-center text-primary font-semibold text-sm">
-                          <span>Learn More</span>
-                          <svg className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
+                        <div className="relative z-10">
+                          <div className="flex-shrink-0 mb-6 relative">
+                             <div className="p-4 bg-gradient-to-br from-primary/15 to-accent/15 rounded-2xl inline-block transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
+                               {feature.icon}
+                             </div>
+                             {/* Enhanced floating badge */}
+                             <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-accent to-primary rounded-full flex items-center justify-center shadow-lg">
+                               <span className="text-white text-sm font-bold">{index + 1}</span>
+                             </div>
+                          </div>
+                          <h3 className="text-xl font-bold font-mono text-text-primary uppercase mb-4 group-hover:text-primary transition-colors">{feature.title}</h3>
+                          <p className="text-text-secondary leading-relaxed mb-6">{feature.description}</p>
+                          
+                          {/* Enhanced visual element with animation */}
+                          <div className="flex items-center text-primary font-semibold text-sm group-hover:text-accent transition-colors">
+                            <span>Discover Benefits</span>
+                            <svg className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </div>
                         </div>
                     </div>
                 ))}
             </div>
         </Section>
 
-        {/* Enhanced Audience Section */}
-        <Section id="audience" className="bg-gradient-to-r from-surface/50 to-surface-elevated/50 relative overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-60 h-60 bg-accent/5 rounded-full blur-3xl"></div>
+        {/* Enhanced Audience Section with Improved Visual Design */}
+        <Section id="audience" className="bg-gradient-to-r from-surface/70 to-surface-elevated/70 relative overflow-hidden">
+            {/* Enhanced decorative elements */}
+            <div className="absolute top-0 left-0 w-60 h-60 bg-primary/8 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent/8 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/3 right-1/4 w-40 h-40 bg-success/5 rounded-full blur-2xl"></div>
             
             <SectionTitle title="Designed for Ontario's Core Sectors" subtitle="This program is tailored to address the unique challenges faced by key organizations across the province."/>
-            <div className={`grid grid-cols-1 ${isMobile ? 'gap-6' : 'md:grid-cols-3 gap-8'} relative z-10`}>
+            <div className={`grid grid-cols-1 ${isMobile ? 'gap-8' : 'md:grid-cols-3 gap-10'} relative z-10`}>
                 {audience.map((aud, index) => (
-                    <div key={aud.title} className="card-interactive bg-surface border border-border p-8 flex flex-col items-start text-left group animate-fade-in" style={{animationDelay: `${index * 0.15}s`}}>
-                        <div className="flex-shrink-0 mb-6 relative">
-                          <div className="p-4 bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl transition-all duration-300 group-hover:scale-110">
-                            {aud.icon}
-                          </div>
-                          {/* Sector indicator */}
-                          <div className="absolute -bottom-2 -right-2 px-2 py-1 bg-gradient-to-r from-primary to-accent text-white text-xs font-bold rounded-full">
-                            SECTOR
-                          </div>
-                        </div>
-                        <h3 className="text-xl font-bold font-mono text-text-primary uppercase mb-3 group-hover:text-primary transition-colors">{aud.title}</h3>
-                        <p className="text-text-secondary leading-relaxed flex-grow">{aud.description}</p>
+                    <div key={aud.title} className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col items-start text-left animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: `${index * 0.15}s`}}>
+                        {/* Enhanced hover background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         
-                        {/* Enhanced engagement indicator */}
-                        <div className="mt-6 w-full">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-primary font-semibold">Perfect Match</span>
-                            <span className="text-accent">95%</span>
+                        <div className="relative z-10 w-full">
+                          <div className="flex-shrink-0 mb-6 relative">
+                            <div className="p-5 bg-gradient-to-br from-primary/15 to-accent/15 rounded-3xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 inline-block">
+                              {aud.icon}
+                            </div>
+                            {/* Enhanced sector indicator */}
+                            <div className="absolute -bottom-3 -right-3 px-3 py-1 bg-gradient-to-r from-primary to-accent text-white text-xs font-bold rounded-full shadow-lg">
+                              TARGET
+                            </div>
                           </div>
-                          <div className="w-full bg-border-light rounded-full h-2 mt-2">
-                            <div className="bg-gradient-to-r from-primary to-accent h-2 rounded-full" style={{width: '95%'}}></div>
+                          <h3 className="text-xl font-bold font-mono text-text-primary uppercase mb-4 group-hover:text-primary transition-colors">{aud.title}</h3>
+                          <p className="text-text-secondary leading-relaxed flex-grow mb-6">{aud.description}</p>
+                          
+                          {/* Enhanced engagement indicator */}
+                          <div className="w-full">
+                            <div className="flex items-center justify-between text-sm mb-2">
+                              <span className="text-primary font-semibold">Tailored for You</span>
+                              <span className="text-accent text-lg">✨</span>
+                            </div>
+                            <div className="w-full bg-border-light rounded-full h-3 overflow-hidden">
+                              <div className="bg-gradient-to-r from-primary to-accent h-3 rounded-full transition-all duration-700 group-hover:animate-pulse" style={{width: '100%'}}></div>
+                            </div>
                           </div>
                         </div>
                     </div>
@@ -206,44 +240,57 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             </div>
         </Section>
         
-        {/* Enhanced Modules Section */}
+        {/* Enhanced Modules Section with Improved Design */}
         <Section id="curriculum" className="relative">
-            {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/3 via-transparent to-accent/3"></div>
+            {/* Enhanced background gradient */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/4 via-transparent to-accent/4"></div>
+              <div className="absolute top-20 right-20 w-80 h-80 bg-primary/8 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-20 left-20 w-60 h-60 bg-accent/8 rounded-full blur-3xl"></div>
+            </div>
             
             <SectionTitle title="A Curriculum Built For The Future" subtitle="Our four-module program provides the complete skillset for cyber resilience."/>
-            <div className={`grid grid-cols-1 ${isMobile ? 'gap-6' : 'md:grid-cols-2 gap-8'} relative z-10`}>
+            <div className={`grid grid-cols-1 ${isMobile ? 'gap-8' : 'md:grid-cols-2 gap-10'} relative z-10`}>
                 {modules.map((module, index) => (
-                    <div key={module.title} className="card-interactive bg-surface border border-border p-8 flex items-start gap-6 group animate-fade-in" style={{animationDelay: `${index * 0.1}s`}}>
-                        {/* Enhanced module number with gradient */}
-                        <div className="relative">
-                          <div className="text-5xl font-bold font-mono bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent mt-1 transition-all duration-300 group-hover:scale-110">
-                            0{index+1}
-                          </div>
-                          {/* Progress indicator */}
-                          <div className="absolute -bottom-2 left-0 right-0 h-1 bg-border-light rounded-full overflow-hidden">
-                            <div className="h-full bg-gradient-to-r from-primary to-accent rounded-full animate-pulse" style={{width: '30%'}}></div>
+                    <div key={module.title} className="group relative bg-surface border border-border rounded-3xl p-8 flex items-start gap-6 animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: `${index * 0.1}s`}}>
+                        {/* Enhanced hover background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/3 to-accent/3 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        {/* Enhanced module number with better design */}
+                        <div className="relative flex-shrink-0">
+                          <div className="relative">
+                            <div className="text-6xl font-bold font-mono bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent transition-all duration-300 group-hover:scale-110">
+                              0{index+1}
+                            </div>
+                            {/* Enhanced progress indicator */}
+                            <div className="absolute -bottom-3 left-0 right-0 h-2 bg-border-light rounded-full overflow-hidden">
+                              <div className="h-full bg-gradient-to-r from-primary to-accent rounded-full animate-pulse transition-all duration-500 group-hover:animate-none" style={{width: '40%'}}></div>
+                            </div>
+                            {/* Decorative ring */}
+                            <div className="absolute inset-0 border-2 border-primary/20 rounded-full animate-spin opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{animationDuration: '10s'}}></div>
                           </div>
                         </div>
                         
-                        <div className="flex-1">
-                            <h3 className="text-xl font-bold font-mono text-text-primary mb-3 group-hover:text-primary transition-colors">{module.title}</h3>
-                            <p className="text-text-secondary leading-relaxed mb-4">{module.description}</p>
+                        <div className="flex-1 relative z-10">
+                            <h3 className="text-xl font-bold font-mono text-text-primary mb-4 group-hover:text-primary transition-colors">{module.title}</h3>
+                            <p className="text-text-secondary leading-relaxed mb-6">{module.description}</p>
                             
-                            {/* Enhanced module features */}
-                            <div className="flex flex-wrap gap-2 mb-4">
-                              <span className="px-3 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full">Interactive</span>
-                              <span className="px-3 py-1 bg-accent/10 text-accent text-xs font-semibold rounded-full">Hands-on</span>
-                              <span className="px-3 py-1 bg-success/10 text-success text-xs font-semibold rounded-full">Practical</span>
+                            {/* Enhanced module features with better design */}
+                            <div className="flex flex-wrap gap-3 mb-6">
+                              <span className="px-4 py-2 bg-primary/15 text-primary text-sm font-semibold rounded-full border border-primary/20 transition-all duration-300 hover:scale-105">Interactive</span>
+                              <span className="px-4 py-2 bg-accent/15 text-accent text-sm font-semibold rounded-full border border-accent/20 transition-all duration-300 hover:scale-105">Hands-on</span>
+                              <span className="px-4 py-2 bg-success/15 text-success text-sm font-semibold rounded-full border border-success/20 transition-all duration-300 hover:scale-105">Practical</span>
                             </div>
                             
-                            {/* Duration and difficulty */}
-                            <div className="flex items-center gap-4 text-sm text-text-muted">
-                              <span className="flex items-center gap-1">
-                                ⏱️ 3-4 hours
+                            {/* Enhanced duration and difficulty with icons */}
+                            <div className="flex items-center gap-6 text-sm text-text-muted">
+                              <span className="flex items-center gap-2 px-3 py-1 bg-border-light rounded-full">
+                                <span className="w-2 h-2 bg-primary rounded-full"></span>
+                                3-4 hours
                               </span>
-                              <span className="flex items-center gap-1">
-                                📊 Intermediate
+                              <span className="flex items-center gap-2 px-3 py-1 bg-border-light rounded-full">
+                                <span className="w-2 h-2 bg-accent rounded-full"></span>
+                                Intermediate
                               </span>
                             </div>
                         </div>
@@ -251,10 +298,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
                 ))}
             </div>
             
-            {/* Additional visual element */}
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full">
-                <span className="text-primary font-semibold">🎯 Complete all modules to unlock your certification</span>
+            {/* Enhanced completion visual element */}
+            <div className="mt-16 text-center relative">
+              <div className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary/15 to-accent/15 rounded-2xl border border-primary/20 shadow-lg">
+                <span className="text-2xl">🎯</span>
+                <span className="text-primary font-semibold text-lg">Complete all modules to unlock your certification</span>
+                <span className="text-2xl">🏆</span>
               </div>
             </div>
         </Section>
@@ -279,56 +328,69 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
           </div>
         </Section>
 
-        {/* Enhanced Final CTA */}
-        <Section id="start" className="bg-gradient-to-r from-surface/50 to-surface-elevated/50 relative overflow-hidden">
-            {/* Animated background elements */}
-            <div className="absolute top-10 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 right-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        {/* Enhanced Final CTA with Improved Design */}
+        <Section id="start" className="bg-gradient-to-r from-surface/70 to-surface-elevated/70 relative overflow-hidden">
+            {/* Enhanced animated background elements */}
+            <div className="absolute top-10 left-10 w-40 h-40 bg-primary/12 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute top-20 right-20 w-32 h-32 bg-accent/10 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1s'}}></div>
+            <div className="absolute bottom-10 right-10 w-48 h-48 bg-accent/12 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1.5s'}}></div>
+            <div className="absolute bottom-20 left-20 w-36 h-36 bg-primary/8 rounded-full blur-2xl animate-pulse" style={{animationDelay: '2s'}}></div>
             
             <div className="text-center relative z-10">
-                <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl'} font-bold font-mono text-text-primary mb-6`}>
-                  Ready to Become a Leader in Digital Defence?
+                <h2 className={`${isMobile ? 'text-3xl' : 'text-4xl sm:text-5xl'} font-bold font-mono text-text-primary mb-8 leading-tight`}>
+                  Ready to Become a Leader in 
+                  <br />
+                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Digital Defence?</span>
                 </h2>
-                <p className={`${isMobile ? 'max-w-lg' : 'max-w-2xl'} mx-auto text-lg text-text-secondary leading-relaxed mb-8`}>
+                <p className={`${isMobile ? 'max-w-lg' : 'max-w-3xl'} mx-auto text-xl text-text-secondary leading-relaxed mb-12`}>
                   Start your journey today and earn the OCRP designation that will set you apart in the cybersecurity landscape.
                 </p>
                 
                 {/* Enhanced CTA with multiple options */}
-                <div className="flex flex-col items-center gap-6">
+                <div className="flex flex-col items-center gap-8">
                   <button
                     onClick={onNavigateToTraining}
-                    className={`btn-primary ${isMobile ? 'py-4 px-8 text-base' : 'py-4 px-10 text-lg'} font-semibold shadow-2xl`}
+                    className={`group relative overflow-hidden ${isMobile ? 'py-5 px-10 text-lg' : 'py-6 px-14 text-xl'} font-semibold text-white bg-gradient-to-r from-primary to-accent rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-3xl`}
                   >
-                    🎓 Enroll Now - Start Free
+                    <span className="relative z-10 flex items-center gap-3">
+                      🎓 Begin Your Certification Journey
+                      <svg className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-accent to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </button>
                   
-                  {/* Value proposition */}
-                  <div className="flex flex-wrap justify-center gap-6 text-sm text-text-muted">
-                    <span className="flex items-center gap-2">
+                  {/* Enhanced Key Features */}
+                  <div className="flex flex-wrap justify-center gap-8 text-sm text-text-muted">
+                    <span className="flex items-center gap-2 px-4 py-2 bg-success/10 rounded-full border border-success/20">
                       ✅ No Credit Card Required
                     </span>
-                    <span className="flex items-center gap-2">
+                    <span className="flex items-center gap-2 px-4 py-2 bg-info/10 rounded-full border border-info/20">
                       ⚡ Instant Access
                     </span>
-                    <span className="flex items-center gap-2">
-                      🏆 Industry Recognized
+                    <span className="flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full border border-primary/20">
+                      🏆 Professional Recognition
                     </span>
                   </div>
                   
-                  {/* Social proof */}
-                  <div className="mt-6 p-6 bg-gradient-to-r from-primary/5 to-accent/5 rounded-2xl border border-primary/20">
-                    <div className="flex flex-wrap justify-center items-center gap-8 text-sm">
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-primary">500+</div>
-                        <div className="text-text-muted">Professionals Certified</div>
+                  {/* Enhanced Features Showcase */}
+                  <div className="p-8 bg-gradient-to-r from-primary/8 to-accent/8 rounded-3xl border border-primary/20 shadow-xl">
+                    <div className="flex flex-wrap justify-center items-center gap-12 text-sm">
+                      <div className="text-center group cursor-pointer">
+                        <div className="text-3xl font-bold text-primary mb-2 transition-all duration-300 group-hover:scale-110">4</div>
+                        <div className="text-text-muted font-medium">Core Modules</div>
+                        <div className="text-xs text-text-muted/70 mt-1">Interactive Learning</div>
                       </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-accent">95%</div>
-                        <div className="text-text-muted">Pass Rate</div>
+                      <div className="text-center group cursor-pointer">
+                        <div className="text-3xl font-bold text-accent mb-2 transition-all duration-300 group-hover:scale-110">15-20h</div>
+                        <div className="text-text-muted font-medium">Study Time</div>
+                        <div className="text-xs text-text-muted/70 mt-1">Self-Paced</div>
                       </div>
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-success">4.9★</div>
-                        <div className="text-text-muted">Average Rating</div>
+                      <div className="text-center group cursor-pointer">
+                        <div className="text-3xl font-bold text-success mb-2 transition-all duration-300 group-hover:scale-110">OCRP</div>
+                        <div className="text-text-muted font-medium">Certification</div>
+                        <div className="text-xs text-text-muted/70 mt-1">Ontario Recognized</div>
                       </div>
                     </div>
                   </div>
