@@ -7,6 +7,15 @@ import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
 import QuizComponent from '../common/QuizComponent';
 import DownloadableResources from '../common/DownloadableResources';
 import ResourcesPanel from '../resources/ResourcesPanel';
+import { 
+    ProcessFlow, 
+    ComparisonTable, 
+    InfoGraphic, 
+    InteractiveScenario, 
+    ProgressVisualizer,
+    ConceptMap 
+} from '../common/VisualLearningElements';
+import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon } from '../icons';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -745,11 +754,22 @@ The safest approach is to insist on Canadian data residency to ensure full MFIPP
                             </div>
                         )}
 
+                        {/* Learning Objectives */}
                         <div className="learning-objectives-enhanced">
                             <h3>
                                 <span>🎯</span>
                                 Learning Objectives
                             </h3>
+                            
+                            {/* Progress Visualizer */}
+                            <ProgressVisualizer
+                                title="Module 1 Learning Path"
+                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                                totalSteps={3}
+                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                                description="Follow this structured path to master Ontario's privacy law framework"
+                            />
+                            
                             <ul>
                                 <li>
                                     <span className="objective-icon">🎯</span>
@@ -853,27 +873,178 @@ The safest approach is to insist on Canadian data residency to ensure full MFIPP
                                             })}
                                         </div>
                                         
-                                        {/* Add scenario boxes for specific sections */}
+                                        {section.title === "PIPEDA Overview" && (
+                                            <>
+                                                <InfoGraphic
+                                                    title="PIPEDA's 10 Fair Information Principles"
+                                                    layout="grid"
+                                                    sections={[
+                                                        {
+                                                            icon: <ConceptIcon className="w-8 h-8" />,
+                                                            title: "Accountability",
+                                                            content: ["Organizations are responsible for personal information under their control"],
+                                                            color: "primary"
+                                                        },
+                                                        {
+                                                            icon: <ConceptIcon className="w-8 h-8" />,
+                                                            title: "Identifying Purposes",
+                                                            content: ["Purposes must be identified before or at time of collection"],
+                                                            color: "success"
+                                                        },
+                                                        {
+                                                            icon: <ConceptIcon className="w-8 h-8" />,
+                                                            title: "Consent",
+                                                            content: ["Knowledge and consent required for collection, use, disclosure"],
+                                                            color: "warning"
+                                                        },
+                                                        {
+                                                            icon: <ConceptIcon className="w-8 h-8" />,
+                                                            title: "Limiting Collection",
+                                                            content: ["Only collect what's necessary for identified purposes"],
+                                                            color: "primary"
+                                                        }
+                                                    ]}
+                                                />
+                                                
+                                                <ComparisonTable
+                                                    title="Privacy Law Jurisdiction Comparison"
+                                                    columns={["PIPEDA", "MFIPPA", "PHIPA", "FIPPA"]}
+                                                    rows={[
+                                                        {
+                                                            label: "Scope",
+                                                            values: ["Private sector", "Municipal sector", "Health sector", "Provincial government"]
+                                                        },
+                                                        {
+                                                            label: "Geographic Storage",
+                                                            values: ["No specific restriction", "Canada only (s.30.1)", "Generally within Ontario", "Generally within Canada"],
+                                                            highlight: true
+                                                        },
+                                                        {
+                                                            label: "Consent Model",
+                                                            values: ["Express/Implied", "Statutory authority", "Circle of care", "Statutory authority"]
+                                                        },
+                                                        {
+                                                            label: "Enforcement",
+                                                            values: ["Privacy Commissioner of Canada", "IPC Ontario", "IPC Ontario", "IPC Ontario"]
+                                                        }
+                                                    ]}
+                                                />
+                                            </>
+                                        )}
+                                        
+                                        {section.title === "Cross-Border Data Management" && (
+                                            <ConceptMap
+                                                title="Cross-Border Data Compliance Framework"
+                                                centralConcept="Cross-Border Data Management"
+                                                connections={[
+                                                    {
+                                                        concept: "Legal Requirements",
+                                                        relationship: "mandates",
+                                                        description: "MFIPPA s.30.1, PIPEDA, sector-specific laws"
+                                                    },
+                                                    {
+                                                        concept: "Vendor Management",
+                                                        relationship: "implements",
+                                                        description: "Due diligence, contracts, monitoring"
+                                                    },
+                                                    {
+                                                        concept: "Technical Safeguards",
+                                                        relationship: "protects",
+                                                        description: "Encryption, access controls, audit logs"
+                                                    },
+                                                    {
+                                                        concept: "Risk Assessment",
+                                                        relationship: "evaluates",
+                                                        description: "Privacy impact, security risks, compliance gaps"
+                                                    },
+                                                    {
+                                                        concept: "Ongoing Monitoring",
+                                                        relationship: "ensures",
+                                                        description: "Compliance verification, incident response"
+                                                    }
+                                                ]}
+                                            />
+                                        )}
+                                        
+                                        {/* Add progress indicator for complex sections */}
                                         {section.title === "Privacy Impact Assessments (PIAs) - Essential Practice" && (
-                                            <div className="scenario-box">
-                                                <div className="scenario-title">📋 Practical Scenario: Municipal Wi-Fi Implementation</div>
-                                                <div className="scenario-content">
-                                                    Your municipality wants to provide free public Wi-Fi in downtown areas. Citizens will need to register with their email addresses and accept terms of service. The system will log connection times and locations for network management.
+                                            <>
+                                                <div className="scenario-box">
+                                                    <div className="scenario-title">📋 Practical Scenario: Municipal Wi-Fi Implementation</div>
+                                                    <div className="scenario-content">
+                                                        Your municipality wants to provide free public Wi-Fi in downtown areas. Citizens will need to register with their email addresses and accept terms of service. The system will log connection times and locations for network management.
+                                                    </div>
+                                                    <div className="scenario-question">
+                                                        💭 Reflection: What PIA considerations would be required for this initiative? Think about data collection, retention, and citizen privacy rights.
+                                                    </div>
                                                 </div>
-                                                <div className="scenario-question">
-                                                    💭 Reflection: What PIA considerations would be required for this initiative? Think about data collection, retention, and citizen privacy rights.
-                                                </div>
-                                            </div>
+                                                
+                                                <ProcessFlow
+                                                    title="PIA Implementation Process"
+                                                    steps={[
+                                                        {
+                                                            title: "Threshold Assessment",
+                                                            description: "Determine if full PIA is needed based on privacy risk factors",
+                                                            icon: <ImplementationIcon className="w-6 h-6 text-white" />,
+                                                            status: "completed"
+                                                        },
+                                                        {
+                                                            title: "Data Mapping",
+                                                            description: "Identify all personal information flows and data repositories",
+                                                            icon: <ImplementationIcon className="w-6 h-6 text-white" />,
+                                                            status: "completed"
+                                                        },
+                                                        {
+                                                            title: "Risk Assessment",
+                                                            description: "Evaluate privacy risks and potential impacts on individuals",
+                                                            icon: <ImplementationIcon className="w-6 h-6 text-white" />,
+                                                            status: "current"
+                                                        },
+                                                        {
+                                                            title: "Mitigation Strategies",
+                                                            description: "Develop controls and safeguards to reduce identified risks",
+                                                            icon: <ImplementationIcon className="w-6 h-6 text-white" />,
+                                                            status: "pending"
+                                                        },
+                                                        {
+                                                            title: "Monitoring Plan",
+                                                            description: "Establish ongoing compliance verification and review procedures",
+                                                            icon: <ImplementationIcon className="w-6 h-6 text-white" />,
+                                                            status: "pending"
+                                                        }
+                                                    ]}
+                                                />
+                                            </>
                                         )}
                                         
                                         {section.title === "MFIPPA for Municipalities - Comprehensive Framework" && (
-                                            <div className="learning-callout tip">
-                                                <div className="learning-callout-title">
-                                                    <span className="learning-callout-icon">💡</span>
-                                                    Quick Reference Tip
+                                            <>
+                                                <div className="learning-callout tip">
+                                                    <div className="learning-callout-title">
+                                                        <span className="learning-callout-icon">💡</span>
+                                                        Quick Reference Tip
+                                                    </div>
+                                                    <p>Remember the acronym "CLUE" for MFIPPA compliance: <strong>C</strong>ollect only what's necessary, <strong>L</strong>imit use to stated purposes, <strong>U</strong>nderstand disclosure rules, <strong>E</strong>nsure proper safeguards.</p>
                                                 </div>
-                                                <p>Remember the acronym "CLUE" for MFIPPA compliance: <strong>C</strong>ollect only what's necessary, <strong>L</strong>imit use to stated purposes, <strong>U</strong>nderstand disclosure rules, <strong>E</strong>nsure proper safeguards.</p>
-                                            </div>
+                                                
+                                                <InteractiveScenario
+                                                    title="Municipal Cloud Services Scenario"
+                                                    scenario="Your municipality wants to implement a cloud-based citizen portal for online service requests. Citizens will submit personal information including names, addresses, and service details. The preferred vendor offers cost-effective hosting through US-based servers."
+                                                    considerations={[
+                                                        "Does MFIPPA Section 30.1 apply to this collection?",
+                                                        "What are the cross-border data storage implications?",
+                                                        "What consent requirements exist for citizen portal use?",
+                                                        "How can you ensure adequate privacy protection?"
+                                                    ]}
+                                                    solution="1. Require Canadian data residency from vendors; 2. Implement robust data processing agreements; 3. Conduct thorough PIA before implementation; 4. Establish clear privacy notices for portal users; 5. Implement technical safeguards including encryption and access controls."
+                                                    learningPoints={[
+                                                        "MFIPPA Section 30.1 requires Canadian storage for municipal personal information",
+                                                        "Vendor selection must prioritize privacy compliance over cost savings",
+                                                        "PIAs are mandatory for new personal information collection initiatives",
+                                                        "Clear privacy notices enhance transparency and citizen trust"
+                                                    ]}
+                                                />
+                                            </>
                                         )}
                                     </div>
                                 ))}
