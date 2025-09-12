@@ -4,6 +4,7 @@
 */
 import React, { useState } from 'react';
 import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
+import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasses } from '../../hooks/useMobileDetection';
 import QuizComponent from '../common/QuizComponent';
 
 interface ModuleProps {
@@ -13,6 +14,10 @@ interface ModuleProps {
 
 const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
+    const detection = useMobileDetection();
+    
+    const mobileClasses = getMobileOptimizedClasses(detection);
+    const layoutClasses = getOptimizedLayoutClasses(detection);
 
     const allQuestions: QuizQuestions = {
         q1: { 
@@ -262,8 +267,8 @@ const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
     ];
 
     return (
-        <section className="animate-fade-in">
-            <div className="max-w-6xl mx-auto">
+        <section className={`animate-fade-in ${layoutClasses}`}>
+            <div className={`max-w-6xl mx-auto ${mobileClasses}`}>
                 {/* Breadcrumb Navigation */}
                 <div className="breadcrumb mb-6">
                     <button onClick={() => onNavigate('dashboard')} className="hover:text-primary transition-colors">
