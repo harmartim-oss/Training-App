@@ -5,6 +5,7 @@
 
 import React from 'react';
 import Header from './Header';
+import LegalDocumentViewer from './common/LegalDocumentViewer';
 import { ODDILogo, CertificateIcon, ChevronDownIcon, MunicipalityIcon, BusinessIcon, NonProfitIcon, ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4 } from './icons';
 import { useMobileDetection } from '../hooks/useMobileDetection';
 
@@ -69,6 +70,7 @@ const SectionTitle: React.FC<{title: string, subtitle: string}> = ({title, subti
 
 const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
   const { isMobile, isTablet, preferredLayout, touchCapable } = useMobileDetection();
+  const [showLegalDoc, setShowLegalDoc] = React.useState<'terms' | 'privacy' | null>(null);
   
   return (
     <div className={`min-h-screen text-text-primary flex flex-col bg-background ${touchCapable ? 'touch-enabled' : ''}`}>
@@ -400,21 +402,55 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
       </main>
 
       <footer className="w-full bg-surface/50 border-t border-border">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-center sm:text-left gap-8">
-           <div>
-            <div className="flex items-center gap-3 justify-center sm:justify-start">
-              <ODDILogo className="w-6 h-6 text-primary" />
-              <p className="font-semibold font-mono text-text-primary">Ontario Digital Defence Institute</p>
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start text-center sm:text-left gap-8">
+            <div>
+              <div className="flex items-center gap-3 justify-center sm:justify-start">
+                <ODDILogo className="w-6 h-6 text-primary" />
+                <p className="font-semibold font-mono text-text-primary">Ontario Digital Defence Institute</p>
+              </div>
+              <p className="text-text-secondary/80 mt-2 text-sm">&copy; {new Date().getFullYear()} ODDI. All Rights Reserved.</p>
             </div>
-            <p className="text-text-secondary/80 mt-2 text-sm">&copy; {new Date().getFullYear()} ODDI. All Rights Reserved.</p>
-           </div>
-            <div className="flex items-center gap-6 mt-4 sm:mt-0">
-              <a href="#why-ocrp" className="text-sm font-medium text-text-secondary hover:text-primary">Why OCRP</a>
-              <a href="#curriculum" className="text-sm font-medium text-text-secondary hover:text-primary">Curriculum</a>
-              <a href="#faq" className="text-sm font-medium text-text-secondary hover:text-primary">FAQ</a>
+            
+            <div className="flex flex-col sm:flex-row gap-8 mt-4 sm:mt-0">
+              <div className="flex flex-col gap-2">
+                <h4 className="text-sm font-semibold text-text-primary mb-2">Navigation</h4>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <a href="#why-ocrp" className="text-sm font-medium text-text-secondary hover:text-primary">Why OCRP</a>
+                  <a href="#curriculum" className="text-sm font-medium text-text-secondary hover:text-primary">Curriculum</a>
+                  <a href="#faq" className="text-sm font-medium text-text-secondary hover:text-primary">FAQ</a>
+                </div>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <h4 className="text-sm font-semibold text-text-primary mb-2">Legal</h4>
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <button 
+                    onClick={() => setShowLegalDoc('terms')}
+                    className="text-sm font-medium text-text-secondary hover:text-primary cursor-pointer"
+                  >
+                    Terms of Use
+                  </button>
+                  <button 
+                    onClick={() => setShowLegalDoc('privacy')}
+                    className="text-sm font-medium text-text-secondary hover:text-primary cursor-pointer"
+                  >
+                    Privacy Policy
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
       </footer>
+      
+      {/* Legal Document Viewer */}
+      {showLegalDoc && (
+        <LegalDocumentViewer 
+          document={showLegalDoc}
+          onClose={() => setShowLegalDoc(null)}
+        />
+      )}
     </div>
   );
 };
