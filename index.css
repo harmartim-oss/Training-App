@@ -2524,6 +2524,195 @@ details[open] .chevron-icon {
     gap: var(--space-sm);
   }
 
+  /* Safe area support for iPhone X and newer */
+  .safe-area-padding {
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Portrait mobile specific optimizations */
+  .portrait-mobile {
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  /* Landscape mobile specific optimizations */
+  .landscape-mobile .navigation {
+    height: 100vh;
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .landscape-mobile .navigation.open {
+    transform: translateX(0);
+  }
+
+  /* Touch target optimization */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mobile navigation bottom bar */
+  .mobile-nav-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 8px 0;
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+    z-index: 1000;
+  }
+
+  .mobile-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 4px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .mobile-nav-item.active {
+    color: var(--primary);
+  }
+
+  .mobile-nav-item .icon {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
+  }
+
+  .mobile-nav-item .label {
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  /* Mobile module cards */
+  .module-card-mobile {
+    padding: var(--space-md);
+    margin: var(--space-sm) 0;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px var(--shadow-light);
+  }
+
+  .module-card-mobile:active {
+    transform: scale(0.98);
+    background: var(--surface-elevated);
+  }
+
+  /* Mobile progress indicators */
+  .progress-mobile {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: var(--space-sm) 0;
+  }
+
+  .progress-mobile .fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* Mobile content organization */
+  .content-mobile {
+    padding: var(--space-md);
+    line-height: 1.6;
+  }
+
+  .content-mobile h3 {
+    font-size: 1.25rem;
+    margin: var(--space-lg) 0 var(--space-md) 0;
+    color: var(--text-primary);
+  }
+
+  .content-mobile p {
+    margin-bottom: var(--space-md);
+    color: var(--text-secondary);
+  }
+
+  .content-mobile ul {
+    margin: var(--space-md) 0;
+    padding-left: var(--space-lg);
+  }
+
+  .content-mobile li {
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Mobile modal optimizations */
+  .modal-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surface);
+    z-index: 1000;
+    padding: var(--space-md);
+    padding-top: calc(var(--space-md) + env(safe-area-inset-top));
+    padding-bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
+    overflow-y: auto;
+  }
+
+  .modal-mobile .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-mobile .close-button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    padding: var(--space-xs);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-mobile .close-button:hover {
+    background: var(--surface-elevated);
+    color: var(--text-primary);
+  }
+}
+
 /* Enhanced Certificate Styles */
 .professional-certificate {
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
@@ -2647,7 +2836,6 @@ details[open] .chevron-icon {
     font-size: 0.7rem;
     padding: 0.2rem 0.5rem;
   }
-}
 }
 
 /* Tablet optimizations */
