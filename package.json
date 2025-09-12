@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "deploy": "npm run build && gh-pages -d dist",
     "generate-pdfs": "node scripts/generate-pdfs.js",
+    "generate-mock-pdfs": "node scripts/generate-mock-pdfs.js",
     "verify-deployment": "node scripts/verify-deployment.js"
   },
   "dependencies": {
