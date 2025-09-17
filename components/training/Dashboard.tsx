@@ -2,8 +2,13 @@
  * @license
  * SPDX-License-Identifier: Apache-2.0
 */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, CheckCircleIcon, XCircleIcon, AssessmentIcon, ClockIcon, TrophyIcon, UserIcon, SettingsIcon, CreditCardIcon, LogoutIcon } from '../icons';
+import { useSpacedRepetition } from '../../hooks/useSpacedRepetition';
+import { useGamification } from '../../hooks/useGamification';
+import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning';
+import SpacedRepetitionReview from '../common/SpacedRepetitionReview';
+import LearningAnalytics from '../common/LearningAnalytics';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -20,6 +25,25 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser }) => {
+    const [showReviewSession, setShowReviewSession] = useState(false);
+    const [showAnalytics, setShowAnalytics] = useState(false);
+    const [showAchievements, setShowAchievements] = useState(false);
+    
+    const userId = currentUser?.email || 'demo-user';
+    const { getDueCount, updateDueItems } = useSpacedRepetition();
+    const gamification = useGamification(userId);
+    const { profile, recommendations } = useAdaptiveLearning(userId);
+
+    useEffect(() => {
+        updateDueItems();
+    }, []);
+
+    useEffect(() => {
+        // Show achievement notification if there are new achievements
+        if (gamification.newAchievements.length > 0) {
+            setShowAchievements(true);
+        }
+    }, [gamification.newAchievements]);
     
     const modules = [
         { 
@@ -84,19 +108,152 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
     };
 
     return (
-        <section className="animate-fade-in max-w-7xl mx-auto">
-            {/* Header Section */}
-            <div className="mb-12">
-                <h1 className="text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4 uppercase tracking-wider">
-                    Training Dashboard
-                </h1>
-                <p className="text-lg text-text-secondary max-w-2xl">
-                    Welcome to your Ontario Certified Cyber Resilience Professional journey. 
-                    Complete all modules to earn your certification.
-                </p>
-                
-                {/* Motivational Message */}
-                <div className="mt-6 p-4 bg-gradient-to-r from-primary-light to-surface-elevated border border-border-light rounded-lg">
+        <>
+            {showReviewSession && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="max-w-4xl w-full max-h-screen overflow-y-auto">
+                        <SpacedRepetitionReview 
+                            onClose={() => setShowReviewSession(false)}
+                            maxReviews={10}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {showAnalytics && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="max-w-6xl w-full max-h-screen overflow-y-auto">
+                        <div className="bg-surface rounded-lg p-6">
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="text-xl font-bold text-text-primary">Learning Analytics</h2>
+                                <button 
+                                    onClick={() => setShowAnalytics(false)}
+                                    className="text-text-secondary hover:text-text-primary"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                            <LearningAnalytics userId={userId} currentUser={currentUser} />
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Level Up Animation */}
+            {gamification.levelUpAnimation && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-surface rounded-lg p-8 text-center animate-bounce">
+                        <div className="text-6xl mb-4">🎉</div>
+                        <h2 className="text-2xl font-bold text-primary mb-2">Level Up!</h2>
+                        <p className="text-text-secondary">You've reached Level {gamification.level}!</p>
+                    </div>
+                </div>
+            )}
+
+            {/* Achievement Notifications */}
+            {gamification.newAchievements.length > 0 && showAchievements && (
+                <div className="fixed top-4 right-4 z-50 space-y-2">
+                    {gamification.newAchievements.map((achievement) => (
+                        <div key={achievement.id} className="bg-surface border border-border rounded-lg p-4 shadow-lg animate-slide-in-right max-w-sm">
+                            <div className="flex items-center gap-3">
+                                <span className="text-2xl">{achievement.icon}</span>
+                                <div className="flex-1">
+                                    <h3 className="font-bold text-text-primary">Achievement Unlocked!</h3>
+                                    <p className="text-sm text-text-secondary">{achievement.title}</p>
+                                    <p className="text-xs text-primary">+{achievement.points} points</p>
+                                </div>
+                                <button 
+                                    onClick={() => setShowAchievements(false)}
+                                    className="text-text-secondary hover:text-text-primary"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            <section className="animate-fade-in max-w-7xl mx-auto">
+                {/* Enhanced Header Section with Gamification */}
+                <div className="mb-12">
+                    <div className="flex justify-between items-start mb-6">
+                        <div>
+                            <h1 className="text-4xl lg:text-5xl font-bold font-mono text-text-primary mb-4 uppercase tracking-wider">
+                                Training Dashboard
+                            </h1>
+                            <p className="text-lg text-text-secondary max-w-2xl">
+                                Welcome to your Ontario Certified Cyber Resilience Professional journey. 
+                                Complete all modules to earn your certification.
+                            </p>
+                        </div>
+                        
+                        <div className="flex items-center gap-4">
+                            {/* Level and XP Display */}
+                            <div className="bg-surface border border-border rounded-lg p-3 text-center">
+                                <div className="text-sm text-text-secondary">Level</div>
+                                <div className="text-xl font-bold text-primary">{gamification.level}</div>
+                                <div className="w-20 bg-background rounded-full h-2 mt-1">
+                                    <div 
+                                        className="bg-primary h-2 rounded-full transition-all duration-300"
+                                        style={{ width: `${gamification.getProgressToNextLevel()}%` }}
+                                    ></div>
+                                </div>
+                                <div className="text-xs text-text-secondary mt-1">
+                                    {gamification.currentXP}/{gamification.nextLevelXP} XP
+                                </div>
+                            </div>
+
+                            {/* Streak Display */}
+                            <div className="bg-surface border border-border rounded-lg p-3 text-center">
+                                <div className="text-sm text-text-secondary">Streak</div>
+                                <div className="text-xl font-bold text-primary flex items-center gap-1 justify-center">
+                                    🔥 {gamification.streak}
+                                </div>
+                                <div className="text-xs text-text-secondary">days</div>
+                            </div>
+
+                            {/* Points Display */}
+                            <div className="bg-surface border border-border rounded-lg p-3 text-center">
+                                <div className="text-sm text-text-secondary">Points</div>
+                                <div className="text-xl font-bold text-primary">{gamification.totalPoints}</div>
+                                <div className="text-xs text-text-secondary">total</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Quick Actions Bar */}
+                    <div className="bg-surface border border-border rounded-lg p-4 mb-6">
+                        <div className="flex flex-wrap gap-3">
+                            {getDueCount() > 0 && (
+                                <button
+                                    onClick={() => setShowReviewSession(true)}
+                                    className="btn-primary text-sm flex items-center gap-2"
+                                >
+                                    🔄 Review ({getDueCount()})
+                                </button>
+                            )}
+                            
+                            <button
+                                onClick={() => setShowAnalytics(true)}
+                                className="btn-secondary text-sm flex items-center gap-2"
+                            >
+                                📊 Analytics
+                            </button>
+
+                            {recommendations.length > 0 && (
+                                <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <span className="text-blue-600">💡</span>
+                                    <span className="text-sm text-blue-800">
+                                        {recommendations[0].title}
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    
+                    {/* Motivational Message */}
+                    <div className="mt-6 p-4 bg-gradient-to-r from-primary-light to-surface-elevated border border-border-light rounded-lg">
                     <p className="text-text-primary font-medium">
                         {completedCount === 0 ? 
                             "🚀 Ready to start your cybersecurity certification journey? Begin with Module 1 to master privacy fundamentals!" :
@@ -500,6 +657,7 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                 </div>
             )}
         </section>
+        </>
     );
 };
 
