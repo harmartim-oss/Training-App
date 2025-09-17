@@ -38,7 +38,7 @@ const LearningAnalytics: React.FC<LearningAnalyticsProps> = ({ userId, currentUs
 
   useEffect(() => {
     generateAnalytics();
-  }, [selectedTimeframe, profile, gamification, items]);
+  }, [selectedTimeframe]); // Removed dependencies causing infinite loop
 
   const generateAnalytics = () => {
     // Calculate metrics based on available data
