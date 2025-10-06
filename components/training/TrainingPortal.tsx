@@ -17,6 +17,7 @@ import StudyGuide from './StudyGuide';
 import PracticeExam from './PracticeExam';
 import AccountDetails from './AccountDetails';
 import SubscriptionManagement from './SubscriptionManagement';
+import LegalBudgetCalculator from '../LegalBudgetCalculator';
 import { createAIAssistant, EducationalAssistant } from '../../services/aiAssistantService';
 import { ChatIcon, CloseIcon, SendIcon } from '../icons';
 import { User, LoginUser, SubscriptionTier } from '../../types';
@@ -333,6 +334,8 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                  return <Assessment onSubmit={handleSubmitAssessment} progress={userProgress} onNavigate={setActiveSection}/>;
             case 'certificate':
                  return <Certificate user={currentUser!} progress={userProgress} />;
+            case 'legal-budget-calculator':
+                 return <LegalBudgetCalculator />;
             case 'study-guide':
                  return <StudyGuide userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
             case 'practice-exam':
