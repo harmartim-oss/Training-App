@@ -328,6 +328,116 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
           </div>
         </Section>
 
+        {/* Additional Resources Section */}
+        <Section id="resources" className="relative">
+            {/* Background gradient */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/4 via-transparent to-primary/4"></div>
+              <div className="absolute top-20 left-20 w-80 h-80 bg-accent/8 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-20 right-20 w-60 h-60 bg-primary/8 rounded-full blur-3xl"></div>
+            </div>
+            
+            <SectionTitle title="Additional Resources" subtitle="Access standalone tools and guides for enhanced learning"/>
+            <div className={`grid grid-cols-1 ${isMobile ? 'gap-8' : 'md:grid-cols-2 gap-10'} relative z-10`}>
+                <a href="/enhanced_platform.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30">
+                    {/* Enhanced hover background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="p-4 bg-gradient-to-br from-primary/15 to-accent/15 rounded-2xl">
+                          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold font-mono text-text-primary mb-2 group-hover:text-primary transition-colors">Enhanced Platform</h3>
+                          <p className="text-text-secondary text-sm leading-relaxed">Standalone training platform with microlearning timers, spaced repetition, and gamification features</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary text-sm font-semibold mt-4">
+                        Open Tool
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                    </div>
+                </a>
+
+                <a href="/practice_exam.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.1s'}}>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="p-4 bg-gradient-to-br from-primary/15 to-accent/15 rounded-2xl">
+                          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold font-mono text-text-primary mb-2 group-hover:text-primary transition-colors">Practice Exam</h3>
+                          <p className="text-text-secondary text-sm leading-relaxed">Comprehensive practice exam system with detailed analytics and performance tracking</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary text-sm font-semibold mt-4">
+                        Open Tool
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                    </div>
+                </a>
+
+                <a href="/study_guide.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.2s'}}>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="p-4 bg-gradient-to-br from-primary/15 to-accent/15 rounded-2xl">
+                          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold font-mono text-text-primary mb-2 group-hover:text-primary transition-colors">Interactive Study Guide</h3>
+                          <p className="text-text-secondary text-sm leading-relaxed">Complete eBook with interactive quizzes, downloadable templates, and case studies</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary text-sm font-semibold mt-4">
+                        Open Tool
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                    </div>
+                </a>
+
+                <a href="/platform.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.3s'}}>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className="p-4 bg-gradient-to-br from-primary/15 to-accent/15 rounded-2xl">
+                          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                          </svg>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold font-mono text-text-primary mb-2 group-hover:text-primary transition-colors">Basic Platform</h3>
+                          <p className="text-text-secondary text-sm leading-relaxed">Lightweight training platform perfect for offline use and resource-constrained environments</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-primary text-sm font-semibold mt-4">
+                        Open Tool
+                        <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                    </div>
+                </a>
+            </div>
+        </Section>
+
         {/* Enhanced Final CTA with Improved Design */}
         <Section id="start" className="bg-gradient-to-r from-surface/70 to-surface-elevated/70 relative overflow-hidden">
             {/* Enhanced animated background elements */}
@@ -411,6 +521,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             <div className="flex items-center gap-6 mt-4 sm:mt-0">
               <a href="#why-ocrp" className="text-sm font-medium text-text-secondary hover:text-primary">Why OCRP</a>
               <a href="#curriculum" className="text-sm font-medium text-text-secondary hover:text-primary">Curriculum</a>
+              <a href="#resources" className="text-sm font-medium text-text-secondary hover:text-primary">Resources</a>
               <a href="#faq" className="text-sm font-medium text-text-secondary hover:text-primary">FAQ</a>
             </div>
         </div>
