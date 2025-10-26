@@ -9,6 +9,7 @@ import { useGamification } from '../../hooks/useGamification';
 import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning';
 import SpacedRepetitionReview from '../common/SpacedRepetitionReview';
 import LearningAnalytics from '../common/LearningAnalytics';
+import SessionTimer from '../common/SessionTimer';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -250,6 +251,17 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                                 </div>
                             )}
                         </div>
+                    </div>
+
+                    {/* Session Timer */}
+                    <div className="mb-6">
+                        <SessionTimer 
+                            sessionDuration={25}
+                            onSessionComplete={() => {
+                                // Could add XP or achievements on session completion
+                                console.log('Study session completed!');
+                            }}
+                        />
                     </div>
                     
                     {/* Motivational Message */}
