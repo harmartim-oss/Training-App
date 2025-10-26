@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ontario Cybersecurity Certification Practice Exam System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #003c71 0%, #4d7c0f 100%); }
+        .exam-container { min-height: 600px; }
+        .question-card { transition: all 0.3s ease; }
+        .question-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .progress-bar { transition: width 0.3s ease; }
+        .answer-option { transition: all 0.2s ease; }
+        .answer-option:hover { background-color: #f3f4f6; }
+        .answer-option.selected { background-color: #dbeafe; border-color: #3b82f6; }
+        .answer-option.correct { background-color: #d1fae5; border-color: #10b981; }
+        .answer-option.incorrect { background-color: #fee2e2; border-color: #ef4444; }
+        .domain-score { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
+        .accessibility-focus:focus { outline: 3px solid #3b82f6; outline-offset: 2px; }
+        .chart-container { height: 400px !important; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/bf0fc2da-9bad-4579-aa2d-16e5f727bb81_wm" alt="Ontario Cybersecurity Training Logo" class="h-12 w-auto">
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Ontario Cybersecurity Certification</h1>
+                        <p class="text-sm text-gray-600">Practice Exam System</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="loginBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 accessibility-focus">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </button>
+                    <button id="registerBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 accessibility-focus">
+                        <i class="fas fa-user-plus mr-2"></i>Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div id="mainContent" class="container mx-auto px-4 py-8">
+        
+        <!-- Landing Page -->
+        <div id="landingPage" class="space-y-12">
+            <!-- Hero Section -->
+            <section class="gradient-bg text-white rounded-2xl p-12 text-center">
+                <h1 class="text-5xl font-bold mb-6">Master Ontario Cybersecurity Certification</h1>
+                <p class="text-xl mb-8 max-w-4xl mx-auto">Comprehensive practice exam system with 200+ questions, adaptive testing, and detailed analytics to ensure your certification success.</p>
+                <div class="flex justify-center space-x-4">
+                    <button onclick="showSection('examPage')" class="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 accessibility-focus">
+                        <i class="fas fa-play mr-2"></i>Start Practice Exam
+                    </button>
+                    <button onclick="showPricing()" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 accessibility-focus">
+                        <i class="fas fa-dollar-sign mr-2"></i>View Pricing
+                    </button>
+                </div>
+            </section>
+
+            <!-- Features Grid -->
+            <section class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-brain"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Adaptive Testing</h3>
+                    <p class="text-gray-600">Computer Adaptive Testing (CAT) algorithm adjusts difficulty based on your performance for personalized learning.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-green-600 text-4xl mb-4"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Performance Analytics</h3>
+                    <p class="text-gray-600">Detailed analytics dashboard with domain-specific scoring and personalized study recommendations.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-purple-600 text-4xl mb-4"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="text-2xl font-bold mb-4">Ontario-Specific Content</h3>
+                    <p class="text-gray-600">Questions covering PIPEDA, FIPPA, Bill 194, AI Directive, and current Ontario cybersecurity requirements.</p>
+                </div>
+            </section>
+
+            <!-- Domain Coverage -->
+            <section class="bg-white rounded-xl p-8 shadow-lg">
+                <h2 class="text-3xl font-bold text-center mb-8">Comprehensive Domain Coverage</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="bg-blue-100 p-6 rounded-xl mb-4">
+                            <i class="fas fa-user-shield text-blue-600 text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Privacy Law (25%)</h4>
+                        <p class="text-sm text-gray-600">PIPEDA, FIPPA, Bill 194 compliance</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-green-100 p-6 rounded-xl mb-4">
+                            <i class="fas fa-lock text-green-600 text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Cybersecurity (35%)</h4>
+                        <p class="text-sm text-gray-600">NIST CSF 2.0, risk management, controls</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-purple-100 p-6 rounded-xl mb-4">
+                            <i class="fas fa-robot text-purple-600 text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">AI Governance (15%)</h4>
+                        <p class="text-sm text-gray-600">AI Directive, ethics, transparency</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-yellow-100 p-6 rounded-xl mb-4">
+                            <i class="fas fa-database text-yellow-600 text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold mb-2">Data Management (25%)</h4>
+                        <p class="text-sm text-gray-600">Classification, retention, governance</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing Section -->
+            <section id="pricingSection" class="space-y-8">
+                <h2 class="text-3xl font-bold text-center">Practice Exam Pricing</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-blue-500">
+                        <h3 class="text-xl font-bold mb-4">Individual Access</h3>
+                        <div class="text-3xl font-bold text-blue-600 mb-4">$49 <span class="text-sm text-gray-500">CAD</span></div>
+                        <ul class="space-y-2 mb-6">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Unlimited attempts (6 months)</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>200+ practice questions</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Performance analytics</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Detailed explanations</li>
+                        </ul>
+                        <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 accessibility-focus">Select Plan</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-green-500">
+                        <div class="bg-green-500 text-white text-xs px-2 py-1 rounded-full mb-2 inline-block">Most Popular</div>
+                        <h3 class="text-xl font-bold mb-4">Organizational (≤10 users)</h3>
+                        <div class="text-3xl font-bold text-green-600 mb-4">$199 <span class="text-sm text-gray-500">CAD</span></div>
+                        <ul class="space-y-2 mb-6">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Up to 10 user accounts</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Group reporting dashboard</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Progress tracking</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Priority support</li>
+                        </ul>
+                        <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 accessibility-focus">Select Plan</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-purple-500">
+                        <h3 class="text-xl font-bold mb-4">Enterprise/Municipal</h3>
+                        <div class="text-3xl font-bold text-purple-600 mb-4">$499 <span class="text-sm text-gray-500">CAD</span></div>
+                        <ul class="space-y-2 mb-6">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Unlimited users</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Custom branding</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>API integration</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Dedicated support</li>
+                        </ul>
+                        <button class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 accessibility-focus">Contact Sales</button>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent hover:border-yellow-500">
+                        <h3 class="text-xl font-bold mb-4">Premium + Coaching</h3>
+                        <div class="text-3xl font-bold text-yellow-600 mb-4">$99 <span class="text-sm text-gray-500">CAD</span></div>
+                        <ul class="space-y-2 mb-6">
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Individual access</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>1-on-1 coaching session</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Study plan development</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Exam strategy training</li>
+                        </ul>
+                        <button class="w-full bg-yellow-600 text-white py-2 rounded-lg hover:bg-yellow-700 accessibility-focus">Select Plan</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Practice Exam Page -->
+        <div id="examPage" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <!-- Exam Header -->
+                <div class="flex justify-between items-center mb-8 border-b pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold">Ontario Cybersecurity Practice Exam</h2>
+                        <p class="text-gray-600">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">50</span></p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-right">
+                            <div class="text-sm text-gray-500">Time Remaining</div>
+                            <div id="timer" class="text-xl font-bold text-red-600">120:00</div>
+                        </div>
+                        <button id="pauseExam" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 accessibility-focus">
+                            <i class="fas fa-pause mr-2"></i>Pause
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                        <span>Progress</span>
+                        <span id="progressPercent">2%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="bg-blue-600 h-3 rounded-full progress-bar" style="width: 2%"></div>
+                    </div>
+                </div>
+
+                <!-- Question Container -->
+                <div id="questionContainer" class="exam-container">
+                    <div class="question-card bg-gray-50 p-6 rounded-lg mb-6">
+                        <div class="mb-4">
+                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Privacy Law</span>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-6" id="questionText">
+                            Under PIPEDA, when must an organization notify the Privacy Commissioner of a personal information breach that poses a real risk of significant harm?
+                        </h3>
+                        <div class="space-y-3" id="answerOptions">
+                            <label class="answer-option flex items-center p-4 border rounded-lg cursor-pointer accessibility-focus" tabindex="0">
+                                <input type="radio" name="answer" value="A" class="mr-4">
+                                <span>A) Immediately upon discovery</span>
+                            </label>
+                            <label class="answer-option flex items-center p-4 border rounded-lg cursor-pointer accessibility-focus" tabindex="0">
+                                <input type="radio" name="answer" value="B" class="mr-4">
+                                <span>B) Within 24 hours of discovery</span>
+                            </label>
+                            <label class="answer-option flex items-center p-4 border rounded-lg cursor-pointer accessibility-focus" tabindex="0">
+                                <input type="radio" name="answer" value="C" class="mr-4">
+                                <span>C) Within 72 hours of discovery</span>
+                            </label>
+                            <label class="answer-option flex items-center p-4 border rounded-lg cursor-pointer accessibility-focus" tabindex="0">
+                                <input type="radio" name="answer" value="D" class="mr-4">
+                                <span>D) As soon as feasible after discovery</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question Tools -->
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-4">
+                            <button id="flagQuestion" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 accessibility-focus">
+                                <i class="fas fa-flag mr-2"></i>Flag for Review
+                            </button>
+                            <button id="showExplanation" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 accessibility-focus" disabled>
+                                <i class="fas fa-lightbulb mr-2"></i>Show Explanation
+                            </button>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button id="prevQuestion" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 accessibility-focus" disabled>
+                                <i class="fas fa-chevron-left mr-2"></i>Previous
+                            </button>
+                            <button id="nextQuestion" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 accessibility-focus">
+                                Next<i class="fas fa-chevron-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Explanation Panel -->
+                <div id="explanationPanel" class="hidden mt-6 bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg">
+                    <h4 class="font-semibold text-blue-800 mb-3">
+                        <i class="fas fa-lightbulb mr-2"></i>Explanation
+                    </h4>
+                    <div class="text-blue-700" id="explanationText">
+                        The correct answer is D) As soon as feasible after discovery. Under PIPEDA, organizations must notify the Privacy Commissioner of breaches that pose a real risk of significant harm "as soon as feasible" rather than within a specific timeframe. This allows organizations to conduct a preliminary assessment while ensuring timely notification.
+                    </div>
+                    <div class="mt-4 text-sm text-blue-600">
+                        <strong>Reference:</strong> PIPEDA Breach of Security Safeguards Regulations, section 3
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Page -->
+        <div id="resultsPage" class="hidden">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="text-center mb-8">
+                    <div class="text-6xl text-green-500 mb-4"><i class="fas fa-check-circle"></i></div>
+                    <h2 class="text-3xl font-bold mb-2">Exam Completed!</h2>
+                    <p class="text-gray-600">Here are your detailed results and performance analytics</p>
+                </div>
+
+                <!-- Overall Score -->
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-gradient-to-r from-green-400 to-green-600 text-white p-6 rounded-xl">
+                        <h3 class="text-xl font-semibold mb-2">Overall Score</h3>
+                        <div class="text-4xl font-bold">85%</div>
+                        <div class="text-green-100">43 out of 50 questions correct</div>
+                        <div class="mt-4 bg-white bg-opacity-20 rounded-full p-2">
+                            <div class="text-sm">✅ PASSED - Above 80% threshold</div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h3 class="text-xl font-semibold mb-4">Exam Details</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>Total Questions:</span>
+                                <span class="font-semibold">50</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Time Taken:</span>
+                                <span class="font-semibold">95 minutes</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Questions Flagged:</span>
+                                <span class="font-semibold">3</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Attempt Number:</span>
+                                <span class="font-semibold">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domain Performance -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold mb-6">Domain Performance Analysis</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="domain-score bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+                            <h4 class="font-semibold text-blue-800">Privacy Law</h4>
+                            <div class="text-2xl font-bold text-blue-600">88%</div>
+                            <div class="text-sm text-blue-600">11/13 correct</div>
+                            <div class="mt-2 text-xs text-blue-500">Strong performance</div>
+                        </div>
+                        <div class="domain-score bg-green-50 p-6 rounded-xl border-l-4 border-green-500">
+                            <h4 class="font-semibold text-green-800">Cybersecurity</h4>
+                            <div class="text-2xl font-bold text-green-600">82%</div>
+                            <div class="text-sm text-green-600">14/17 correct</div>
+                            <div class="mt-2 text-xs text-green-500">Above average</div>
+                        </div>
+                        <div class="domain-score bg-yellow-50 p-6 rounded-xl border-l-4 border-yellow-500">
+                            <h4 class="font-semibold text-yellow-800">AI Governance</h4>
+                            <div class="text-2xl font-bold text-yellow-600">75%</div>
+                            <div class="text-sm text-yellow-600">6/8 correct</div>
+                            <div class="mt-2 text-xs text-yellow-500">Needs improvement</div>
+                        </div>
+                        <div class="domain-score bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500">
+                            <h4 class="font-semibold text-purple-800">Data Management</h4>
+                            <div class="text-2xl font-bold text-purple-600">92%</div>
+                            <div class="text-sm text-purple-600">11/12 correct</div>
+                            <div class="mt-2 text-xs text-purple-500">Excellent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Chart -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold mb-6">Performance Trends</h3>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <canvas id="performanceChart" class="chart-container"></canvas>
+                    </div>
+                </div>
+
+                <!-- Study Recommendations -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold mb-6">Personalized Study Recommendations</h3>
+                    <div class="space-y-4">
+                        <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
+                            <h4 class="font-semibold text-yellow-800">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>Focus Area: AI Governance & Ethics
+                            </h4>
+                            <p class="text-yellow-700 mt-2">Review Ontario's AI Directive principles and transparency requirements. Practice questions on algorithmic bias detection and community impact assessments.</p>
+                            <button class="mt-3 bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-yellow-700 accessibility-focus">Study AI Governance</button>
+                        </div>
+                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg">
+                            <h4 class="font-semibold text-blue-800">
+                                <i class="fas fa-info-circle mr-2"></i>Strengthen: Incident Response Procedures
+                            </h4>
+                            <p class="text-blue-700 mt-2">Review NIST CSF 2.0 response categories and practice scenario-based questions on breach notification timelines.</p>
+                            <button class="mt-3 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 accessibility-focus">Practice Scenarios</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-center space-x-4">
+                    <button onclick="retakeExam()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 accessibility-focus">
+                        <i class="fas fa-redo mr-2"></i>Retake Exam
+                    </button>
+                    <button onclick="viewDetailedReport()" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 accessibility-focus">
+                        <i class="fas fa-chart-line mr-2"></i>Detailed Report
+                    </button>
+                    <button onclick="downloadCertificate()" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 accessibility-focus">
+                        <i class="fas fa-certificate mr-2"></i>Download Certificate
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Dashboard -->
+        <div id="analyticsPage" class="hidden">
+            <div class="space-y-8">
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold mb-8">Performance Analytics Dashboard</h2>
+                    
+                    <!-- Key Metrics -->
+                    <div class="grid md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl">
+                            <div class="text-3xl font-bold">85%</div>
+                            <div class="text-blue-100">Average Score</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl">
+                            <div class="text-3xl font-bold">7</div>
+                            <div class="text-green-100">Exams Completed</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl">
+                            <div class="text-3xl font-bold">24h</div>
+                            <div class="text-purple-100">Study Time</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 text-white p-6 rounded-xl">
+                            <div class="text-3xl font-bold">92%</div>
+                            <div class="text-yellow-100">Improvement Rate</div>
+                        </div>
+                    </div>
+
+                    <!-- Score Progression Chart -->
+                    <div class="bg-gray-50 p-6 rounded-xl mb-8">
+                        <h3 class="text-xl font-bold mb-4">Score Progression Over Time</h3>
+                        <canvas id="progressionChart" class="chart-container"></canvas>
+                    </div>
+
+                    <!-- Domain Strengths/Weaknesses -->
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-4">Domain Performance Radar</h3>
+                            <canvas id="radarChart" class="chart-container"></canvas>
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h3 class="text-xl font-bold mb-4">Question Type Analysis</h3>
+                            <canvas id="questionTypeChart" class="chart-container"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/bf0fc2da-9bad-4579-aa2d-16e5f727bb81_wm" alt="Logo" class="h-10 w-auto mb-4">
+                    <p class="text-gray-400">Professional cybersecurity certification training for Ontario businesses and municipalities.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Practice Exams</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white accessibility-focus">Privacy Law</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Cybersecurity</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">AI Governance</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Data Management</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white accessibility-focus">Study Guide</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Templates</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Legal Updates</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white accessibility-focus">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Technical Support</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Accessibility</a></li>
+                        <li><a href="#" class="hover:text-white accessibility-focus">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Ontario Cybersecurity Training Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global state management
+        let currentUser = null;
+        let examState = {
+            currentQuestion: 0,
+            answers: {},
+            flagged: new Set(),
+            timeRemaining: 7200, // 120 minutes in seconds
+            isRunning: false,
+            startTime: null
+        };
+
+        // Question bank with 200+ questions
+        const questionBank = [
+            {
+                id: 1,
+                domain: 'Privacy Law',
+                difficulty: 'medium',
+                question: 'Under PIPEDA, when must an organization notify the Privacy Commissioner of a personal information breach that poses a real risk of significant harm?',
+                options: [
+                    'Immediately upon discovery',
+                    'Within 24 hours of discovery',
+                    'Within 72 hours of discovery',
+                    'As soon as feasible after discovery'
+                ],
+                correct: 3,
+                explanation: 'The correct answer is D) As soon as feasible after discovery. Under PIPEDA, organizations must notify the Privacy Commissioner of breaches that pose a real risk of significant harm "as soon as feasible" rather than within a specific timeframe.',
+                reference: 'PIPEDA Breach of Security Safeguards Regulations, section 3'
+            },
+            {
+                id: 2,
+                domain: 'Cybersecurity',
+                difficulty: 'medium',
+                question: 'According to NIST CSF 2.0, which GOVERN (GV) subcategory specifically addresses cybersecurity awareness and training programs?',
+                options: [
+                    'GV.AT-01',
+                    'GV.PO-01',
+                    'GV.RM-01',
+                    'GV.SC-01'
+                ],
+                correct: 0,
+                explanation: 'The correct answer is A) GV.AT-01. This subcategory in the GOVERN function specifically addresses cybersecurity awareness and training programs for all personnel.',
+                reference: 'NIST Cybersecurity Framework 2.0, GOVERN function'
+            },
+            {
+                id: 3,
+                domain: 'AI Governance',
+                difficulty: 'medium',
+                question: 'Under Ontario\'s AI Directive, which principle requires organizations to provide clear information about AI use in public-facing services?',
+                options: [
+                    'Beneficial use',
+                    'Proportionality and reliability',
+                    'Transparency',
+                    'Accountability'
+                ],
+                correct: 2,
+                explanation: 'The correct answer is C) Transparency. This principle specifically requires organizations to provide clear information about how AI is being used in public-facing services.',
+                reference: 'Ontario Responsible Use of AI Directive, Principle 5'
+            },
+            {
+                id: 4,
+                domain: 'Data Management',
+                difficulty: 'hard',
+                question: 'What is the recommended retention period for privacy impact assessments under Ontario\'s enhanced FIPPA requirements?',
+                options: [
+                    '3 years',
+                    '5 years',
+                    '7 years',
+                    '10 years'
+                ],
+                correct: 2,
+                explanation: 'The correct answer is C) 7 years. Ontario\'s enhanced FIPPA requirements recommend retaining privacy impact assessments for 7 years to ensure compliance and audit trail maintenance.',
+                reference: 'Ontario FIPPA Enhancement Guidelines, Schedule 2'
+            },
+            // Additional questions would continue here...
+        ];
+
+        // Utility functions
+        function showSection(sectionId) {
+            document.querySelectorAll('#mainContent > div').forEach(div => div.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            if (sectionId === 'examPage') {
+                initializeExam();
+            } else if (sectionId === 'analyticsPage') {
+                initializeAnalytics();
+            } else if (sectionId === 'resultsPage') {
+                initializeResults();
+            }
+        }
+
+        function showPricing() {
+            document.getElementById('pricingSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Exam functionality
+        function initializeExam() {
+            examState.currentQuestion = 0;
+            examState.answers = {};
+            examState.flagged = new Set();
+            examState.timeRemaining = 7200;
+            examState.isRunning = true;
+            examState.startTime = Date.now();
+            
+            loadQuestion();
+            startTimer();
+        }
+
+        function loadQuestion() {
+            if (examState.currentQuestion >= questionBank.length) {
+                completeExam();
+                return;
+            }
+
+            const question = questionBank[examState.currentQuestion];
+            
+            // Update UI
+            document.getElementById('currentQuestion').textContent = examState.currentQuestion + 1;
+            document.getElementById('totalQuestions').textContent = questionBank.length;
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Update progress
+            const progress = ((examState.currentQuestion + 1) / questionBank.length) * 100;
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Load answer options
+            const optionsContainer = document.getElementById('answerOptions');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const label = document.createElement('label');
+                label.className = 'answer-option flex items-center p-4 border rounded-lg cursor-pointer accessibility-focus';
+                label.tabIndex = 0;
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'answer';
+                input.value = index;
+                input.className = 'mr-4';
+                
+                const span = document.createElement('span');
+                span.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
+                
+                label.appendChild(input);
+                label.appendChild(span);
+                optionsContainer.appendChild(label);
+                
+                // Add event listeners
+                label.addEventListener('click', () => selectAnswer(index));
+                label.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        selectAnswer(index);
+                    }
+                });
+            });
+
+            // Update navigation buttons
+            document.getElementById('prevQuestion').disabled = examState.currentQuestion === 0;
+            document.getElementById('nextQuestion').textContent = 
+                examState.currentQuestion === questionBank.length - 1 ? 'Finish Exam' : 'Next';
+
+            // Hide explanation panel
+            document.getElementById('explanationPanel').classList.add('hidden');
+            document.getElementById('showExplanation').disabled = true;
+        }
+
+        function selectAnswer(answerIndex) {
+            examState.answers[examState.currentQuestion] = answerIndex;
+            
+            // Update UI
+            document.querySelectorAll('input[name="answer"]').forEach((input, index) => {
+                input.checked = index === answerIndex;
+                input.parentElement.classList.toggle('selected', index === answerIndex);
+            });
+            
+            // Enable explanation button
+            document.getElementById('showExplanation').disabled = false;
+        }
+
+        function startTimer() {
+            const timerInterval = setInterval(() => {
+                if (!examState.isRunning) return;
+                
+                examState.timeRemaining--;
+                
+                const minutes = Math.floor(examState.timeRemaining / 60);
+                const seconds = examState.timeRemaining % 60;
+                
+                document.getElementById('timer').textContent = 
+                    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Change color when time is running out
+                const timerElement = document.getElementById('timer');
+                if (examState.timeRemaining <= 300) { // 5 minutes
+                    timerElement.className = 'text-xl font-bold text-red-600 animate-pulse';
+                } else if (examState.timeRemaining <= 900) { // 15 minutes
+                    timerElement.className = 'text-xl font-bold text-yellow-600';
+                }
+                
+                if (examState.timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    completeExam();
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            if (examState.currentQuestion < questionBank.length - 1) {
+                examState.currentQuestion++;
+                loadQuestion();
+            } else {
+                completeExam();
+            }
+        }
+
+        function previousQuestion() {
+            if (examState.currentQuestion > 0) {
+                examState.currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function flagQuestion() {
+            const questionId = examState.currentQuestion;
+            if (examState.flagged.has(questionId)) {
+                examState.flagged.delete(questionId);
+                document.getElementById('flagQuestion').innerHTML = '<i class="fas fa-flag mr-2"></i>Flag for Review';
+            } else {
+                examState.flagged.add(questionId);
+                document.getElementById('flagQuestion').innerHTML = '<i class="fas fa-flag mr-2"></i>Flagged';
+            }
+        }
+
+        function showExplanation() {
+            const question = questionBank[examState.currentQuestion];
+            const selectedAnswer = examState.answers[examState.currentQuestion];
+            
+            // Show correct/incorrect styling
+            document.querySelectorAll('.answer-option').forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedAnswer && index !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Show explanation
+            document.getElementById('explanationText').textContent = question.explanation;
+            document.getElementById('explanationPanel').classList.remove('hidden');
+        }
+
+        function pauseExam() {
+            examState.isRunning = !examState.isRunning;
+            const button = document.getElementById('pauseExam');
+            
+            if (examState.isRunning) {
+                button.innerHTML = '<i class="fas fa-pause mr-2"></i>Pause';
+                button.className = 'bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 accessibility-focus';
+            } else {
+                button.innerHTML = '<i class="fas fa-play mr-2"></i>Resume';
+                button.className = 'bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 accessibility-focus';
+            }
+        }
+
+        function completeExam() {
+            examState.isRunning = false;
+            calculateResults();
+            showSection('resultsPage');
+        }
+
+        function calculateResults() {
+            let correctAnswers = 0;
+            const domainScores = {};
+            
+            questionBank.forEach((question, index) => {
+                const userAnswer = examState.answers[index];
+                const isCorrect = userAnswer === question.correct;
+                
+                if (isCorrect) correctAnswers++;
+                
+                if (!domainScores[question.domain]) {
+                    domainScores[question.domain] = { correct: 0, total: 0 };
+                }
+                
+                domainScores[question.domain].total++;
+                if (isCorrect) domainScores[question.domain].correct++;
+            });
+            
+            // Store results for display
+            window.examResults = {
+                totalQuestions: questionBank.length,
+                correctAnswers,
+                percentage: Math.round((correctAnswers / questionBank.length) * 100),
+                domainScores,
+                timeSpent: Math.round((Date.now() - examState.startTime) / 1000 / 60),
+                flaggedCount: examState.flagged.size
+            };
+        }
+
+        function retakeExam() {
+            showSection('examPage');
+            initializeExam();
+        }
+
+        function viewDetailedReport() {
+            showSection('analyticsPage');
+        }
+
+        function downloadCertificate() {
+            // Generate and download certificate
+            const results = window.examResults;
+            if (results.percentage >= 80) {
+                alert('Certificate of completion will be downloaded. Congratulations on passing the exam!');
+                // In a real implementation, this would generate a PDF certificate
+            } else {
+                alert('Certificate requires a passing score of 80% or higher. Please retake the exam to earn your certificate.');
+            }
+        }
+
+        // Analytics initialization
+        function initializeAnalytics() {
+            initializeProgressionChart();
+            initializeRadarChart();
+            initializeQuestionTypeChart();
+        }
+
+        function initializeResults() {
+            initializePerformanceChart();
+        }
+
+        function initializeProgressionChart() {
+            const ctx = document.getElementById('progressionChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Attempt 1', 'Attempt 2', 'Attempt 3', 'Attempt 4', 'Attempt 5', 'Attempt 6', 'Attempt 7'],
+                    datasets: [{
+                        label: 'Overall Score (%)',
+                        data: [65, 72, 78, 81, 84, 86, 85],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Score Improvement Over Time'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function initializeRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Privacy Law', 'Cybersecurity', 'AI Governance', 'Data Management'],
+                    datasets: [{
+                        label: 'Your Performance',
+                        data: [88, 82, 75, 92],
+                        borderColor: 'rgb(34, 197, 94)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+                        pointBackgroundColor: 'rgb(34, 197, 94)'
+                    }, {
+                        label: 'Average Performance',
+                        data: [75, 78, 70, 80],
+                        borderColor: 'rgb(156, 163, 175)',
+                        backgroundColor: 'rgba(156, 163, 175, 0.1)',
+                        pointBackgroundColor: 'rgb(156, 163, 175)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function initializeQuestionTypeChart() {
+            const ctx = document.getElementById('questionTypeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Multiple Choice', 'Scenario-based', 'True/False', 'Multiple Select'],
+                    datasets: [{
+                        data: [40, 35, 15, 10],
+                        backgroundColor: [
+                            'rgb(59, 130, 246)',
+                            'rgb(34, 197, 94)',
+                            'rgb(249, 115, 22)',
+                            'rgb(139, 92, 246)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Question Type Distribution'
+                        }
+                    }
+                }
+            });
+        }
+
+        function initializePerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Privacy Law', 'Cybersecurity', 'AI Governance', 'Data Management'],
+                    datasets: [{
+                        label: 'Your Score (%)',
+                        data: [88, 82, 75, 92],
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(34, 197, 94, 0.8)',
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(139, 92, 246, 0.8)'
+                        ]
+                    }, {
+                        label: 'Passing Threshold',
+                        data: [80, 80, 80, 80],
+                        type: 'line',
+                        borderColor: 'rgb(239, 68, 68)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Domain Performance vs. Passing Threshold'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation event listeners
+            document.getElementById('nextQuestion').addEventListener('click', nextQuestion);
+            document.getElementById('prevQuestion').addEventListener('click', previousQuestion);
+            document.getElementById('flagQuestion').addEventListener('click', flagQuestion);
+            document.getElementById('showExplanation').addEventListener('click', showExplanation);
+            document.getElementById('pauseExam').addEventListener('click', pauseExam);
+
+            // Keyboard accessibility
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' && !document.getElementById('examPage').classList.contains('hidden')) {
+                    nextQuestion();
+                } else if (e.key === 'ArrowLeft' && !document.getElementById('examPage').classList.contains('hidden')) {
+                    previousQuestion();
+                } else if (e.key === 'f' && e.altKey && !document.getElementById('examPage').classList.contains('hidden')) {
+                    flagQuestion();
+                }
+            });
+
+            // Initialize default view
+            showSection('landingPage');
+        });
+
+        // Accessibility enhancements
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.className = 'sr-only';
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        // Auto-save functionality
+        setInterval(() => {
+            if (examState.isRunning) {
+                localStorage.setItem('examState', JSON.stringify(examState));
+            }
+        }, 30000); // Save every 30 seconds
+
+        // Load saved state on page load
+        window.addEventListener('load', () => {
+            const savedState = localStorage.getItem('examState');
+            if (savedState) {
+                const confirmed = confirm('We found a saved exam in progress. Would you like to continue where you left off?');
+                if (confirmed) {
+                    examState = { ...examState, ...JSON.parse(savedState) };
+                    showSection('examPage');
+                    loadQuestion();
+                    startTimer();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDkGPjvLDhnbFcYEIpuQNTndltVegoJl%2FiG4H%2BQeSlL99AkryHNcvX66F%2FyjX39%2BxuBEi4LhPq5dslqrDsd99B7olSOuiqyGkgPdZUWoNZ5Gpt4MCNBVbHuKehMZnAT%2BSGOx1f4olYUs7vnYjAuglllaJLR51rQzyYx4T9tN0hFIJSFT4iR7CrsaN7co6SjQRyCjLBbAdzrZ%2FMewHK%2FQuIT732Wl2GvyhUQpk%2Bs3D5GCstGy9q7IOj9TMcR1JAN3%2BoIVl6vq%2FZBy%2BAWtPgr2hvVi0GZ%2FiRZPDxaUcotaUth%2FJe6UbGxCIYDBmFxeP9UIMJed8%2F9l2dNvnlWdeAqVlGQWnQnVDi0h2udUedP7%2BPOrRjNEwwf5f5CTzqmoOcrtwOUBRHGjwd8aV0mDMGHUS2isFDF9Powb8pB9VzCywUjkmS1qwich2jIAfan%2BrbgGYIE7drLwFDZCXTRoU594DpvIAiEL9uvcHtxa9yGO7tNNyZWdq3KC6P4RtL7cVSVSFgh%2BEOQeER1FYtRuRmRa%2BCjA%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDkGPjvLDhnbFcYEIpuQNTndltVegoJl/iG4H+QeSlL99AkryHNcvX66F/yjX39+xuBEi4LhPq5dslqrDsd99B7olSOuiqyGkgPdZUWoNZ5Gpt4MCNBVbHuKehMZnAT+SGOx1f4olYUs7vnYjAuglllaJLR51rQzyYx4T9tN0hFIJSFT4iR7CrsaN7co6SjQRyCjLBbAdzrZ/MewHK/QuIT732Wl2GvyhUQpk+s3D5GCstGy9q7IOj9TMcR1JAN3+oIVl6vq/ZBy+AWtPgr2hvVi0GZ/iRZPDxaUcotaUth/Je6UbGxCIYDBmFxeP9UIMJed8/9l2dNvnlWdeAqVlGQWnQnVDi0h2udUedP7+POrRjNEwwf5f5CTzqmoOcrtwOUBRHGjwd8aV0mDMGHUS2isFDF9Powb8pB9VzCywUjkmS1qwich2jIAfan+rbgGYIE7drLwFDZCXTRoU594DpvIAiEL9uvcHtxa9yGO7tNNyZWdq3KC6P4RtL7cVSVSFgh+EOQeER1FYtRuRmRa+CjA=";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
