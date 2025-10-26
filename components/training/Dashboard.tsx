@@ -258,8 +258,9 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                         <SessionTimer 
                             sessionDuration={25}
                             onSessionComplete={() => {
-                                // Could add XP or achievements on session completion
-                                console.log('Study session completed!');
+                                // Award XP for completing a study session
+                                gamification.awardPoints(50, 'Study Session Completed');
+                                gamification.updateStreak();
                             }}
                         />
                     </div>
