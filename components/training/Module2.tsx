@@ -916,7 +916,7 @@ D. Risk Assessment Methodology`
                                     onComplete={() => setCurrentSection('quiz')}
                                 />
                             </div>
-                        ) : (
+                        ) : currentSection === 'quiz' ? (
                             /* Quiz Section */
                             <div className="quiz-container">
                                 <h3 className="text-2xl font-semibold mb-4 text-text-primary font-mono">Knowledge Check</h3>
