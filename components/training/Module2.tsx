@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
 import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasses } from '../../hooks/useMobileDetection';
 import QuizComponent from '../common/QuizComponent';
+import DownloadableResources from '../common/DownloadableResources';
 import SlideNavigation, { Slide } from '../common/SlideNavigation';
 
 interface ModuleProps {
@@ -14,80 +15,450 @@ interface ModuleProps {
 }
 
 const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
-    const [currentSection, setCurrentSection] = useState<'content' | 'quiz'>('content');
+    const [currentSection, setCurrentSection] = useState<'content' | 'quiz' | 'resources'>('content');
     const detection = useMobileDetection();
     
     const mobileClasses = getMobileOptimizedClasses(detection);
     const layoutClasses = getOptimizedLayoutClasses(detection);
 
+    const sampleResources = [
+        {
+            id: 'incident-response-checklist',
+            title: 'Incident Response Checklist',
+            description: 'A comprehensive step-by-step checklist for responding to cybersecurity incidents following the NIST framework.',
+            type: 'checklist' as const,
+            size: '3 pages',
+            previewContent: `CYBERSECURITY INCIDENT RESPONSE CHECKLIST
+
+PHASE 1: PREPARATION (Ongoing)
+□ Incident response plan documented and approved
+□ Response team roles and contacts identified
+□ Communication channels established
+□ Tools and resources prepared (forensics, backup)
+□ Regular training and drills conducted
+□ Detection systems deployed and monitored
+
+PHASE 2: DETECTION AND ANALYSIS
+□ Incident detected and reported
+□ Initial triage performed
+□ Severity assessed (Critical/High/Medium/Low)
+□ Incident response team notified
+□ Evidence preservation initiated
+□ Chain of custody documentation started
+□ Indicators of compromise (IOCs) identified
+□ Scope assessment: systems affected, data compromised
+□ Timeline of events documented
+□ Attack vector determined
+
+PHASE 3: CONTAINMENT
+Short-term Containment:
+□ Isolate affected systems from network
+□ Disable compromised accounts
+□ Block malicious IP addresses/domains
+□ Prevent further data exfiltration
+□ Preserve evidence for investigation
+
+Long-term Containment:
+□ Apply temporary fixes to allow business continuity
+□ Patch vulnerabilities exploited
+□ Implement additional monitoring
+□ Clean systems while preserving evidence
+
+PHASE 4: ERADICATION
+□ Remove malware and malicious artifacts
+□ Close attack vectors and vulnerabilities
+□ Strengthen security controls
+□ Password resets for affected accounts
+□ Review and update firewall rules
+□ Verify all threats removed before restoration
+
+PHASE 5: RECOVERY
+□ Restore systems from clean backups
+□ Rebuild compromised systems from trusted images
+□ Verify system integrity and functionality
+□ Gradually return systems to production
+□ Enhanced monitoring during recovery period
+□ Communicate restoration progress to stakeholders
+
+PHASE 6: POST-INCIDENT ACTIVITY
+□ Conduct post-incident review meeting
+□ Document lessons learned
+□ Update incident response procedures
+□ Improve security controls based on findings
+□ Staff training on identified gaps
+□ Metrics and reporting
+□ Final incident report completed
+
+NOTIFICATION REQUIREMENTS
+□ Internal: Management, Legal, PR
+□ External: Regulators (if required), Law Enforcement
+□ Affected Individuals (privacy breach notification)
+□ Insurance provider
+□ Third-party vendors (if affected)`
+        },
+        {
+            id: 'system-hardening-guide',
+            title: 'System Hardening Security Guide',
+            description: 'Practical guide for hardening servers and workstations to reduce attack surface and improve security posture.',
+            type: 'guide' as const,
+            size: '10 pages',
+            previewContent: `SYSTEM HARDENING SECURITY GUIDE
+
+1. OPERATING SYSTEM HARDENING
+
+Windows Servers/Workstations:
+□ Apply latest security patches and updates
+□ Disable unnecessary services (Telnet, FTP, SMBv1)
+□ Configure Windows Firewall with restrictive rules
+□ Enable Windows Defender / endpoint protection
+□ Disable autorun for removable media
+□ Configure User Account Control (UAC)
+□ Implement AppLocker / Software Restriction Policies
+□ Enable audit logging and log forwarding
+□ Disable guest and unnecessary accounts
+□ Set screen lock timeout (15 minutes max)
+
+Linux/Unix Servers:
+□ Apply security patches via package manager
+□ Disable unused services (xinetd, cups, avahi)
+□ Configure iptables/firewalld restrictive rules
+□ Install and configure SELinux/AppArmor
+□ Disable root SSH login (use sudo)
+□ Configure SSH key-based authentication
+□ Set password complexity requirements
+□ Enable system audit logging (auditd)
+□ Remove unnecessary packages
+□ Implement file integrity monitoring (AIDE/Tripwire)
+
+2. NETWORK HARDENING
+
+□ Implement network segmentation (VLANs)
+□ Configure firewalls at network boundaries
+□ Disable unused network services and ports
+□ Enable network intrusion detection (IDS/IPS)
+□ Implement 802.1X network access control
+□ Use VPN for remote access
+□ Disable legacy protocols (Telnet, FTP, HTTP)
+□ Configure switch port security
+□ Implement network monitoring and logging
+□ Use private IP addressing with NAT
+
+3. ACCESS CONTROL HARDENING
+
+□ Implement principle of least privilege
+□ Use role-based access control (RBAC)
+□ Enable multi-factor authentication (MFA)
+□ Set password policies (length, complexity, expiry)
+□ Implement account lockout policies
+□ Regular access reviews and recertification
+□ Remove/disable inactive accounts
+□ Separate administrative and user accounts
+□ Log all access attempts and changes
+□ Implement privileged access management (PAM)
+
+4. APPLICATION HARDENING
+
+□ Keep applications updated with security patches
+□ Remove unnecessary features and plugins
+□ Configure secure defaults
+□ Disable verbose error messages in production
+□ Implement input validation
+□ Use secure communication protocols (HTTPS, TLS)
+□ Configure strong cipher suites
+□ Implement Content Security Policy (CSP)
+□ Enable application firewalls (WAF)
+□ Regular vulnerability scanning
+
+5. DATA PROTECTION
+
+□ Encrypt data at rest (BitLocker, LUKS, FileVault)
+□ Encrypt data in transit (TLS 1.2+, IPSec)
+□ Implement database encryption (TDE)
+□ Configure secure backup procedures
+□ Test backup restoration regularly
+□ Secure backup storage (offsite, encrypted)
+□ Implement data loss prevention (DLP)
+□ Configure file integrity monitoring
+□ Secure disposal procedures for old media
+
+6. PHYSICAL SECURITY
+
+□ Secure server rooms with access controls
+□ Install environmental monitoring
+□ Implement cable locks for portable devices
+□ Enable BIOS/UEFI passwords
+□ Configure secure boot
+□ Disable unused ports (USB, Thunderbolt)
+□ Clear screen policies for unattended systems
+□ Visitor access controls and logging
+□ Security camera coverage
+□ Secure disposal of old hardware
+
+7. MONITORING AND LOGGING
+
+□ Enable comprehensive audit logging
+□ Forward logs to centralized SIEM
+□ Configure log retention policies
+□ Monitor for suspicious activities
+□ Set up alerting for security events
+□ Regular log review and analysis
+□ Implement file integrity monitoring
+□ Network traffic analysis
+□ Endpoint detection and response (EDR)
+
+8. HARDENING VALIDATION
+
+□ Regular vulnerability scans
+□ Penetration testing (annual minimum)
+□ Configuration compliance scanning
+□ Security baseline comparisons
+□ Patch compliance reporting
+□ Access review audits
+□ Document hardening procedures
+□ Maintain system inventories`
+        },
+        {
+            id: 'vulnerability-assessment-template',
+            title: 'Vulnerability Assessment Report Template',
+            description: 'Template for documenting vulnerability assessment findings and remediation tracking.',
+            type: 'template' as const,
+            size: '6 pages',
+            previewContent: `VULNERABILITY ASSESSMENT REPORT TEMPLATE
+
+EXECUTIVE SUMMARY
+Report Date: _______________
+Assessment Period: _______________
+Prepared by: _______________
+Review Status: _______________
+
+Key Findings:
+- Total Vulnerabilities Identified: ____
+- Critical: ____
+- High: ____
+- Medium: ____
+- Low: ____
+
+Overall Risk Rating: [Critical / High / Medium / Low]
+
+Top 3 Critical Issues:
+1. ________________________________
+2. ________________________________
+3. ________________________________
+
+ASSESSMENT SCOPE
+
+Systems Assessed:
+□ Web Applications
+□ Network Infrastructure
+□ Servers (Windows/Linux)
+□ Workstations
+□ Cloud Infrastructure
+□ Mobile Devices
+
+IP Ranges Scanned: _______________
+Number of Assets: _______________
+Scan Tools Used: _______________
+
+METHODOLOGY
+
+□ Automated Vulnerability Scanning
+□ Manual Testing
+□ Configuration Review
+□ Penetration Testing
+□ Social Engineering Assessment
+
+DETAILED FINDINGS
+
+CRITICAL VULNERABILITIES
+
+Vulnerability #1:
+Title: ________________________________
+Affected Systems: _____________________
+CVE ID: _______________________________
+CVSS Score: ___________________________
+
+Description:
+_____________________________________
+_____________________________________
+
+Impact:
+_____________________________________
+
+Proof of Concept:
+_____________________________________
+
+Remediation:
+_____________________________________
+
+Estimated Effort: [Hours/Days/Weeks]
+Target Date: __________________________
+
+---
+
+HIGH SEVERITY VULNERABILITIES
+
+Vulnerability #2:
+Title: ________________________________
+Affected Systems: _____________________
+CVE ID: _______________________________
+CVSS Score: ___________________________
+
+Description:
+_____________________________________
+
+Impact:
+_____________________________________
+
+Remediation:
+_____________________________________
+
+Estimated Effort: ______________
+Target Date: ______________
+
+---
+
+MEDIUM SEVERITY VULNERABILITIES
+
+Vulnerability #3:
+Title: ________________________________
+Affected Systems: _____________________
+
+[Continue for each vulnerability...]
+
+REMEDIATION PRIORITY MATRIX
+
+Priority 1 (Immediate - within 7 days):
+- Critical vulnerabilities in internet-facing systems
+- Vulnerabilities with active exploits
+- Missing critical security patches
+
+Priority 2 (Short-term - within 30 days):
+- High severity vulnerabilities
+- Weak authentication mechanisms
+- Unencrypted sensitive data transmission
+
+Priority 3 (Medium-term - within 90 days):
+- Medium severity vulnerabilities
+- Configuration weaknesses
+- Missing security controls
+
+Priority 4 (Long-term - within 180 days):
+- Low severity vulnerabilities
+- Security best practice improvements
+- Defense-in-depth enhancements
+
+REMEDIATION TRACKING
+
+Vulnerability ID | Severity | Owner | Status | Due Date | Completed
+VUL-001 | Critical | _____ | ______ | _______ | ________
+VUL-002 | High | _____ | ______ | _______ | ________
+VUL-003 | High | _____ | ______ | _______ | ________
+
+RECOMMENDATIONS
+
+Short-term Actions:
+1. ________________________________
+2. ________________________________
+3. ________________________________
+
+Long-term Strategic Improvements:
+1. ________________________________
+2. ________________________________
+3. ________________________________
+
+COMPLIANCE GAPS IDENTIFIED
+
+□ Patch Management: ________________
+□ Access Controls: __________________
+□ Encryption: _______________________
+□ Monitoring: _______________________
+□ Incident Response: ________________
+
+NEXT STEPS
+
+□ Prioritize remediation by severity and exploitability
+□ Assign ownership for each vulnerability
+□ Schedule follow-up scans to verify fixes
+□ Update security policies and procedures
+□ Plan for next assessment cycle
+
+APPENDIX
+
+A. Detailed Scan Results
+B. CVE References
+C. Remediation Procedures
+D. Risk Assessment Methodology`
+        }
+    ];
+
     const allQuestions: QuizQuestions = {
         q1: { 
-            question: "Which risk assessment methodology focuses on qualitative analysis using probability and impact matrices?", 
+            question: "Your organization is conducting a cybersecurity risk assessment for a new online payment system. Management wants to prioritize risks for mitigation planning. Which risk assessment methodology would be most appropriate for quickly categorizing risks using likelihood and impact ratings (e.g., High/Medium/Low)?", 
             answer: 'b', 
-            options: { a: "NIST 800-30", b: "OCTAVE", c: "FAIR" },
-            explanation: "OCTAVE (Operationally Critical Threat, Asset, and Vulnerability Evaluation) uses qualitative risk assessment with probability and impact matrices."
+            options: { a: "NIST 800-30 quantitative analysis with precise monetary loss calculations", b: "OCTAVE qualitative assessment using probability and impact matrices", c: "FAIR quantitative risk modeling requiring extensive data collection" },
+            explanation: "OCTAVE (Operationally Critical Threat, Asset, and Vulnerability Evaluation) is specifically designed for qualitative risk assessment using probability and impact matrices, making it ideal for rapid risk categorization and prioritization. NIST 800-30 supports both qualitative and quantitative approaches but is more comprehensive, while FAIR focuses on quantitative financial risk modeling requiring extensive data."
         },
         q2: { 
-            question: "In the context of system hardening, what is the primary purpose of disabling unnecessary services?", 
+            question: "You're hardening a new Linux web server before production deployment. The server currently runs SSH (port 22), HTTP (port 80), HTTPS (port 443), FTP (port 21), Telnet (port 23), and MySQL (port 3306). Which services should you disable to reduce the attack surface while maintaining essential web server functionality?", 
             answer: 'c', 
-            options: { a: "To improve system performance", b: "To save disk space", c: "To reduce the attack surface" },
-            explanation: "Disabling unnecessary services reduces the attack surface by eliminating potential entry points for attackers."
+            options: { a: "Only disable Telnet as it's the oldest protocol", b: "Keep all services enabled for maximum flexibility", c: "Disable FTP, Telnet, and MySQL (if not needed for web app); restrict SSH to specific IPs" },
+            explanation: "System hardening requires disabling all unnecessary services to reduce the attack surface. FTP and Telnet are unencrypted and should be replaced with secure alternatives (SFTP/SCP and SSH). MySQL should only be accessible if the web application requires database connectivity and should be bound to localhost if possible. SSH should remain enabled for secure remote administration but restricted by IP address and using key-based authentication. HTTP and HTTPS are essential for web server functionality."
         },
         q3: { 
-            question: "Which phase of incident response should include evidence preservation and chain of custody procedures?", 
+            question: "Your organization's finance department reports that several employees received suspicious emails appearing to be from the CFO requesting urgent wire transfers. You suspect this is a phishing attack. During which incident response phase must you ensure forensic evidence is properly preserved, including email headers, server logs, and affected workstations, while maintaining a documented chain of custody?", 
             answer: 'b', 
-            options: { a: "Preparation", b: "Detection and Analysis", c: "Post-Incident Activity" },
-            explanation: "Evidence preservation and chain of custody are critical during the Detection and Analysis phase to ensure legal admissibility."
+            options: { a: "Preparation - before incidents occur", b: "Detection and Analysis - while investigating the incident", c: "Post-Incident Activity - after resolution for lessons learned" },
+            explanation: "Evidence preservation and chain of custody procedures are critical during the Detection and Analysis phase. This is when you're actively investigating the incident, collecting forensic data, and documenting findings. Proper evidence handling during this phase ensures: (1) Legal admissibility if prosecution is pursued, (2) Accurate incident analysis and root cause determination, (3) Ability to track attacker tactics and techniques, (4) Regulatory compliance for breach notification requirements. The chain of custody documents who collected evidence, when, how it was secured, and who accessed it."
         },
         q4: { 
-            question: "What is the recommended approach for implementing defense in depth?", 
+            question: "Your organization recently experienced a ransomware attack that bypassed the perimeter firewall by exploiting unpatched endpoint vulnerabilities. Management asks how to prevent similar incidents. Which defense-in-depth strategy should you recommend?", 
             answer: 'a', 
-            options: { a: "Multiple layers of security controls", b: "Single strong perimeter defense", c: "Focus only on endpoint protection" },
-            explanation: "Defense in depth uses multiple layers of security controls to provide redundant protection against threats."
+            options: { a: "Implement multiple layers: network segmentation, endpoint protection, regular patching, email filtering, user training, and backup systems", b: "Invest in the strongest possible perimeter firewall and focus all resources there", c: "Deploy endpoint detection and response (EDR) only, as that's where the breach occurred" },
+            explanation: "Defense in depth is a cybersecurity strategy that uses multiple layers of security controls to protect assets. If one layer fails (like the perimeter firewall in this scenario), other layers provide continued protection. A comprehensive defense-in-depth approach for ransomware prevention includes: (1) Network layer: segmentation, firewalls, IDS/IPS, (2) Endpoint layer: antivirus, EDR, application whitelisting, (3) Application layer: patch management, secure configurations, (4) Data layer: encryption, backups, access controls, (5) Human layer: security awareness training, phishing simulations. This multi-layered approach ensures no single point of failure."
         },
         q5: {
-            question: "Which cryptographic principle states that the security of a system should not depend on the secrecy of the algorithm?",
+            question: "Your organization is evaluating encryption algorithms for a new secure messaging system. The vendor proposes a proprietary encryption algorithm they developed, claiming it's 'more secure than industry standards.' Why should you reject this proposal, and what principle does this relate to?",
             answer: 'b',
             options: { 
-                a: "Perfect forward secrecy", 
-                b: "Kerckhoffs's principle", 
-                c: "Diffusion principle",
-                d: "Non-repudiation"
+                a: "Perfect forward secrecy - keys should be regenerated frequently for each session", 
+                b: "Kerckhoffs's principle - cryptographic security should rely on key secrecy, not algorithm secrecy", 
+                c: "Diffusion principle - ciphertext should depend on all parts of the plaintext",
+                d: "Non-repudiation - users should not be able to deny sending messages"
             },
-            explanation: "Kerckhoffs's principle states that cryptographic security should rely on the secrecy of the key, not the algorithm itself."
+            explanation: "Kerckhoffs's principle (established in 1883 and still fundamental today) states that a cryptographic system should be secure even if everything about the system, except the key, is public knowledge. This means: (1) The algorithm can be published and subjected to public scrutiny, (2) Security relies solely on keeping the secret key confidential, (3) Proprietary 'secret' algorithms are dangerous because they haven't been tested by the security community and may contain undiscovered vulnerabilities. Modern secure encryption uses publicly vetted algorithms like AES-256, RSA, or elliptic curve cryptography that have withstood years of expert analysis."
         },
         q6: {
-            question: "What is the primary purpose of vulnerability scanning in a cybersecurity program?",
+            question: "Your IT security team has deployed a vulnerability scanner that runs weekly scans across all network systems. This week's scan report shows 847 vulnerabilities: 45 critical, 203 high, 412 medium, and 187 low severity. What is the primary purpose of this vulnerability scanning program, and how should you prioritize remediation?",
             answer: 'c',
             options: {
-                a: "To exploit discovered weaknesses",
-                b: "To replace penetration testing entirely",
-                c: "To identify and prioritize security weaknesses",
-                d: "To monitor network traffic"
+                a: "To exploit discovered weaknesses to test system resilience in production",
+                b: "To replace all penetration testing and security assessments entirely",
+                c: "To systematically identify, prioritize, and track security weaknesses for remediation",
+                d: "To monitor real-time network traffic and block attacks as they occur"
             },
-            explanation: "Vulnerability scanning systematically identifies and prioritizes security weaknesses across systems and applications."
+            explanation: "Vulnerability scanning serves to systematically identify and prioritize security weaknesses across systems and applications so they can be remediated before attackers exploit them. Key aspects: (1) Identification: Automated scanning discovers known vulnerabilities (CVEs) in software, configurations, and systems, (2) Prioritization: Vulnerabilities are ranked by severity, exploitability, and business impact to guide remediation efforts, (3) Tracking: Scanning provides metrics and trends over time to measure security improvement. For the scenario above, prioritize critical and high severity vulnerabilities first, especially those in internet-facing systems or protecting sensitive data. Vulnerability scanning complements (not replaces) penetration testing and is different from real-time monitoring like IDS/IPS."
         },
         q7: {
-            question: "Which type of security awareness training is most effective for reducing phishing susceptibility?",
+            question: "Despite sending monthly email reminders about phishing threats and requiring annual security awareness training, your organization continues to experience successful phishing attacks with 15% of employees clicking malicious links. What type of security awareness program has been proven most effective for reducing phishing susceptibility?",
             answer: 'a',
             options: {
-                a: "Regular simulated phishing exercises with immediate feedback",
-                b: "Annual mandatory training videos",
-                c: "Email reminders about phishing threats",
-                d: "Poster campaigns about cybersecurity"
+                a: "Monthly simulated phishing exercises with immediate feedback and targeted training for clickers",
+                b: "Longer annual mandatory training videos covering all security topics in depth",
+                c: "More frequent email reminders and posters about phishing threats throughout the office",
+                d: "Quarterly poster campaigns featuring cybersecurity tips and threat examples"
             },
-            explanation: "Simulated phishing exercises with immediate feedback provide hands-on learning and measurable improvement in user behavior."
+            explanation: "Research consistently shows that regular simulated phishing exercises with immediate feedback are the most effective approach for reducing phishing susceptibility. Here's why: (1) Hands-on Learning: Employees experience realistic phishing attempts in a safe environment, (2) Immediate Feedback: When employees click a simulated phishing link, they immediately see educational content explaining what they missed, (3) Behavioral Change: Repeated exposure with consequences (even just educational ones) changes behavior more effectively than passive learning, (4) Measurable Results: Track click rates over time to measure improvement and identify users needing additional training, (5) Targeted Training: Focus intensive training on users who consistently fail simulations. Passive methods like posters and annual videos lack the engagement and immediate reinforcement needed for lasting behavioral change."
         },
         q8: {
-            question: "In the NIST Cybersecurity Framework, which function focuses on maintaining resilience and restoring services?",
+            question: "Your organization experienced a ransomware attack that encrypted critical databases and disrupted operations for 72 hours. The incident response team successfully contained the attack, eradicated the malware, and is now restoring systems from backups. Which NIST Cybersecurity Framework function covers this restoration phase and the activities needed to return to normal operations?",
             answer: 'd',
             options: {
-                a: "Identify",
-                b: "Protect", 
-                c: "Detect",
-                d: "Recover"
+                a: "Identify - understanding the organization's assets and risks",
+                b: "Protect - implementing safeguards to prevent future attacks", 
+                c: "Detect - discovering and analyzing cybersecurity events",
+                d: "Recover - maintaining resilience and restoring capabilities and services"
             },
-            explanation: "The Recover function focuses on maintaining resilience and restoring any capabilities or services that were impaired due to a cybersecurity event."
+            explanation: "The NIST Cybersecurity Framework's Recover function focuses on maintaining resilience and restoring any capabilities or services that were impaired due to a cybersecurity incident. Recovery activities include: (1) Recovery Planning: Documented processes for restoring systems and data, (2) Improvements: Incorporating lessons learned from the incident, (3) Communications: Internal and external stakeholder notification during recovery, (4) System Restoration: Rebuilding systems from known good backups or images. The other NIST CSF functions serve different purposes: Identify (asset management, risk assessment), Protect (access control, training, data security), Detect (continuous monitoring, anomaly detection), and Respond (incident response planning, analysis, mitigation)."
         }
     };
 
@@ -504,12 +875,17 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                     <div className={`progress-step ${currentSection === 'content' ? 'current' : 'completed'}`}>
                         1
                     </div>
-                    <div className={`progress-connector ${currentSection === 'quiz' ? 'completed' : ''}`}></div>
-                    <div className={`progress-step ${currentSection === 'quiz' ? 'current' : 'pending'}`}>
+                    <div className={`progress-connector ${(currentSection === 'quiz' || currentSection === 'resources') ? 'completed' : ''}`}></div>
+                    <div className={`progress-step ${currentSection === 'quiz' ? 'current' : (currentSection === 'resources' ? 'completed' : 'pending')}`}>
                         2
                     </div>
+                    <div className={`progress-connector ${currentSection === 'resources' ? 'completed' : ''}`}></div>
+                    <div className={`progress-step ${currentSection === 'resources' ? 'current' : 'pending'}`}>
+                        3
+                    </div>
                     <div className="ml-4 text-sm text-text-secondary">
-                        {currentSection === 'content' ? 'Learning Content' : 'Knowledge Check'}
+                        {currentSection === 'content' ? 'Learning Content' : 
+                         currentSection === 'quiz' ? 'Knowledge Check' : 'Resources & Downloads'}
                     </div>
                 </div>
 
@@ -540,7 +916,7 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                     onComplete={() => setCurrentSection('quiz')}
                                 />
                             </div>
-                        ) : (
+                        ) : currentSection === 'quiz' ? (
                             /* Quiz Section */
                             <div className="quiz-container">
                                 <h3 className="text-2xl font-semibold mb-4 text-text-primary font-mono">Knowledge Check</h3>
@@ -558,16 +934,45 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                                     showExplanations={true}
                                 />
                                 
-                                <div className="mt-6">
+                                <div className="mt-6 flex gap-4">
                                     <button 
                                         onClick={() => setCurrentSection('content')}
-                                        className="btn-secondary mr-4"
+                                        className="btn-secondary"
                                     >
                                         ← Back to Content
                                     </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('resources')}
+                                        className="btn-secondary"
+                                    >
+                                        📚 View Resources
+                                    </button>
                                 </div>
                             </div>
-                        )}
+                        ) : currentSection === 'resources' ? (
+                            /* Resources Section */
+                            <div className="resources-section mt-8">
+                                <DownloadableResources 
+                                    resources={sampleResources}
+                                    moduleTitle="Module 2 Resources"
+                                />
+
+                                <div className="text-center mt-6 flex gap-4 justify-center">
+                                    <button 
+                                        onClick={() => setCurrentSection('content')}
+                                        className="btn-secondary py-2 px-6"
+                                    >
+                                        ← Back to Content
+                                    </button>
+                                    <button 
+                                        onClick={() => setCurrentSection('quiz')}
+                                        className="btn-secondary py-2 px-6"
+                                    >
+                                        🎓 Take Assessment
+                                    </button>
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
                     
                     <div className="p-6 bg-surface border-t border-border">
