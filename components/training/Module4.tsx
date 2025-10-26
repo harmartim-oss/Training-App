@@ -21,88 +21,88 @@ const Module4: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
 
     const allQuestions: QuizQuestions = {
         q1: { 
-            question: "Under MFIPPA, where must Ontario municipalities generally store personal information?", 
+            question: "Your municipal IT department is evaluating cloud storage providers for a new citizen service portal that will collect names, addresses, email addresses, and service request details. The procurement team has identified two finalists: Provider A offers servers in Toronto and Montreal (Canada), while Provider B offers servers in Buffalo, NY and Chicago, IL (USA) at 30% lower cost. Under MFIPPA Section 30.1, what is your compliance requirement?", 
             answer: 'b', 
             options: { 
-                a: "Anywhere in North America", 
-                b: "Within Canada, unless adequate safeguards are in place", 
-                c: "Within Ontario only" 
+                a: "Either provider is acceptable as long as they sign data protection agreements", 
+                b: "Must use Provider A - personal information must be stored and accessed only in Canada", 
+                c: "Can use Provider B if citizens are notified via terms of service acceptance" 
             },
-            explanation: "MFIPPA requires personal information collected by Ontario municipalities to be stored and accessed only in Canada, with limited exceptions where adequate safeguards exist."
+            explanation: "MFIPPA Section 30.1 explicitly requires that personal information collected by Ontario municipalities must be stored and accessed only in Canada, unless specific exemptions apply (individual consent or Commissioner authorization). This requirement exists to protect personal information from foreign legal frameworks such as the USA PATRIOT Act and CLOUD Act that could compel disclosure. The cost savings do not override this legal requirement. Provider A (with Canadian data centers) must be selected. If Canadian options weren't available, the municipality would need to: (1) Obtain explicit informed consent from each individual (impractical for municipal services), or (2) Seek specific authorization from the Information and Privacy Commissioner of Ontario, or (3) Not proceed with the project."
         },
         q2: { 
-            question: "What is the typical retention period for employee files after termination in Ontario?", 
+            question: "Your HR department is cleaning up storage and asks about disposing of employee personnel files. An employee named Sarah left the organization on December 15, 2018. It's now January 2025. According to Ontario employment standards and records retention best practices, what should you do with Sarah's personnel file?", 
             answer: 'c', 
             options: { 
-                a: "3 years", 
-                b: "5 years", 
-                c: "7 years" 
+                a: "Dispose immediately - she left over 3 years ago", 
+                b: "Retain until December 2023 (5 years) then dispose", 
+                c: "Retain until December 2025 (7 years after termination) before secure disposal" 
             },
-            explanation: "Ontario employment standards generally require employee records to be retained for 7 years after termination."
+            explanation: "Ontario employment standards and best practices generally require employee records to be retained for 7 years after termination. This retention period ensures: (1) Legal compliance: Supports potential legal claims, Employment Standards Act compliance, tax audits, (2) Reference verification: Enables employment verification for former employees, (3) Pension/benefits administration: Maintains records needed for pension calculations and benefits questions, (4) Historical documentation: Preserves institutional knowledge about employment relationships. Since Sarah left in December 2018, her records must be retained until December 2025 (7 full years after termination). After that date, the records should be securely destroyed using appropriate methods (e.g., shredding for paper, secure erasure for digital files) to prevent unauthorized access to personal information."
         },
         q3: { 
-            question: "What is the primary purpose of data classification in records management?", 
+            question: "Your organization receives various types of information daily: public meeting agendas, internal budget spreadsheets, employee social insurance numbers, citizen complaint details, and marketing materials. The team is confused about how to handle each type. What is the primary purpose of implementing a data classification framework in records management?", 
             answer: 'b', 
             options: { 
-                a: "To organize files alphabetically", 
-                b: "To apply appropriate security controls and retention schedules", 
-                c: "To reduce storage costs" 
+                a: "To organize all files in alphabetical order for easier retrieval", 
+                b: "To apply appropriate security controls, access restrictions, and retention schedules based on data sensitivity and value", 
+                c: "To reduce storage costs by deleting files that don't seem immediately important" 
             },
-            explanation: "Data classification ensures that appropriate security controls, access restrictions, and retention schedules are applied based on the sensitivity and value of the information."
+            explanation: "Data classification ensures that appropriate security controls, access restrictions, and retention schedules are applied based on the sensitivity and value of information. A proper classification framework: (1) Identifies sensitivity levels: Public, Internal, Confidential, Restricted (or similar categories), (2) Prescribes security controls: Confidential data requires encryption, access controls, audit logging; Public data needs minimal controls, (3) Defines handling requirements: How to store, transmit, share, and dispose of each classification, (4) Sets retention schedules: How long each type must be kept before secure disposal, (5) Assigns access rights: Who can view, edit, or share each classification level. In the scenario: Public meeting agendas = Public (minimal controls), Internal budgets = Internal (moderate controls), SINs = Confidential/Restricted (strong controls, limited access), Citizen complaints = Confidential (strong controls), Marketing = Public/Internal (varies)."
         },
         q4: { 
-            question: "Under Ontario's records management requirements, what must be considered when implementing cloud storage?", 
+            question: "Your municipality is implementing Microsoft 365 cloud storage for email and file collaboration. The IT vendor recommends using Microsoft's North American multi-region storage for 'better redundancy and performance.' Under Ontario's records management requirements and MFIPPA compliance, what critical factors must you consider and require before proceeding?", 
             answer: 'a', 
             options: { 
-                a: "Data residency, security controls, and vendor compliance", 
-                b: "Only the cost of the service", 
-                c: "Only the technical features offered" 
+                a: "Data residency (Canada-only storage), security controls (encryption, access logs), vendor MFIPPA compliance, and contractual safeguards", 
+                b: "Only the monthly subscription cost and whether it fits the department budget", 
+                c: "Only the technical features like storage capacity and collaboration tools offered" 
             },
-            explanation: "Cloud storage implementations must consider data residency requirements, appropriate security controls, and vendor compliance with applicable privacy and security standards."
+            explanation: "Cloud storage implementations by Ontario municipalities must consider multiple critical compliance factors: (1) Data residency: MFIPPA Section 30.1 requires Canadian data storage - configure Microsoft 365 to use only Canadian data centers (Toronto/Quebec regions), not 'North American' multi-region which includes USA, (2) Security controls: Encryption at rest and in transit, multi-factor authentication, access logging and monitoring, regular security assessments, (3) Vendor compliance: Vendor must acknowledge and comply with MFIPPA requirements, provide evidence of security certifications (SOC 2, ISO 27001), (4) Contractual safeguards: Data processing agreements specifying Canadian residency, breach notification requirements, right to audit, data portability and deletion rights, (5) Access controls: Role-based access, principle of least privilege. Simply accepting vendor default settings (like North American multi-region) without these considerations creates MFIPPA compliance violations and security risks."
         },
         q5: {
-            question: "What is the maximum retention period for most municipal records under Ontario's guidelines?",
+            question: "Your municipal archives department is developing retention schedules for various record types: routine correspondence (2 years), building permits (75 years), financial ledgers (permanent), historic council meeting minutes (permanent), and temporary construction signs permits (1 year). A councillor asks why some records are kept permanently while others are destroyed. What is the maximum retention period under Ontario's guidelines, and what determines this?",
             answer: 'c',
             options: {
-                a: "10 years",
-                b: "25 years", 
-                c: "Permanent retention for records of historical significance",
-                d: "50 years maximum"
+                a: "Maximum 10 years for all records to reduce storage costs and administrative burden",
+                b: "Maximum 25 years for all records as required by the Municipal Act", 
+                c: "Permanent retention for records of historical, legal, or evidential significance to the community",
+                d: "Maximum 50 years for any municipal record regardless of significance"
             },
-            explanation: "Some municipal records, particularly those of historical significance, may require permanent retention under Ontario's records management guidelines."
+            explanation: "Ontario's municipal records management guidelines recognize that certain records must be retained permanently due to their historical, legal, or evidential significance. Permanent retention is appropriate for: (1) Historical significance: Records documenting important community decisions, development, and events (e.g., council meeting minutes, historic building permits, bylaws), (2) Legal evidence: Records that may be needed indefinitely for legal proceedings or establishing property rights (e.g., land transactions, easements), (3) Accountability: Records demonstrating how government decisions were made and resources managed (e.g., financial ledgers, policy development). The retention period is determined by: value to the community, legal requirements, operational needs, and archival/historical importance. Records without ongoing value are disposed of according to approved retention schedules after their minimum retention period expires, using secure destruction methods to protect any personal information they may contain."
         },
         q6: {
-            question: "Which data classification level typically requires the highest security controls?",
+            question: "Your organization has classified various data sets and needs to implement security controls. You have: publicly available service schedules (Public), internal process documentation (Internal), employee salary information (Confidential), and ongoing police investigation files (Restricted). Which classification level requires the highest and most stringent security controls?",
             answer: 'a',
             options: {
-                a: "Confidential/Sensitive",
-                b: "Internal Use",
-                c: "Public",
-                d: "Restricted"
+                a: "Confidential/Restricted - requires encryption, strict access controls, audit logging, and need-to-know basis access",
+                b: "Internal Use - requires basic password protection and standard network access controls only",
+                c: "Public - requires no security controls since information is publicly available",
+                d: "All classification levels should have identical security controls for consistency"
             },
-            explanation: "Confidential or sensitive data classification requires the highest level of security controls including encryption, access controls, and audit logging."
+            explanation: "Confidential and Restricted data classifications require the highest level of security controls to protect sensitive information from unauthorized access, use, or disclosure. Required controls include: (1) Encryption: Data encrypted at rest (in storage) and in transit (during transmission), (2) Access controls: Role-based access, multi-factor authentication, principle of least privilege, need-to-know basis access only, (3) Audit logging: Comprehensive logging of all access and modifications for accountability and forensics, (4) Physical security: Secure storage, locked cabinets, restricted facility access, (5) Secure transmission: Encrypted channels, secure file transfer protocols, no email of unencrypted confidential data, (6) Secure disposal: Cross-cut shredding, certified destruction, secure data wiping. By contrast: Public data needs minimal controls (basic integrity protection), Internal data needs moderate controls (password protection, standard network access), while Confidential/Restricted requires maximum security throughout the data lifecycle."
         },
         q7: {
-            question: "What is the primary consideration when disposing of confidential records?",
+            question: "Your records department is disposing of 50 boxes of confidential employee health records that have reached the end of their 7-year retention period. A staff member suggests putting them in the regular recycling bins to save the cost of a shredding service. The records contain names, health conditions, and social insurance numbers. What is the primary consideration that must guide your disposal decision?",
             answer: 'b',
             options: {
-                a: "Cost efficiency",
-                b: "Secure destruction to prevent unauthorized recovery",
-                c: "Speed of disposal process",
-                d: "Environmental impact only"
+                a: "Cost efficiency - use the most economical disposal method available",
+                b: "Secure destruction to prevent unauthorized recovery of personal and health information",
+                c: "Speed of disposal process - dispose as quickly as possible to clear storage space",
+                d: "Environmental impact only - prioritize recycling over all other considerations"
             },
-            explanation: "Confidential records must be securely destroyed using methods that prevent unauthorized recovery of the information."
+            explanation: "Confidential records containing personal information must be securely destroyed using methods that prevent unauthorized recovery. This is not optional - it's required by privacy law. For these health records, appropriate disposal methods include: (1) Physical destruction: Cross-cut shredding (minimum DIN P-4 level), pulping, incineration with certified destruction certificate, (2) Digital destruction: DOD-compliant data wiping, physical destruction of storage media, cryptographic erasure for encrypted data, (3) Documentation: Maintain destruction certificates, log disposal dates and methods, track chain of custody until destruction. Simply recycling confidential records creates serious risks: Privacy breach if records are recovered from recycling bins, MFIPPA/PIPEDA violations with potential fines and Commissioner orders, Reputational damage and loss of public trust, Legal liability if individuals are harmed by information exposure. While cost and environmental impact matter, they cannot override the legal requirement for secure destruction of confidential personal information."
         },
         q8: {
-            question: "Under data governance frameworks, who is typically responsible for classifying data?",
+            question: "Your organization is implementing a new data governance framework. Various stakeholders have different ideas about who should classify data: IT says they should do it because they manage the systems, legal says they understand compliance requirements, and senior management wants centralized control. Under proper data governance frameworks, who should have primary responsibility for classifying data, and why?",
             answer: 'c',
             options: {
-                a: "IT department only",
-                b: "External consultants",
-                c: "Data owners in collaboration with IT and compliance teams",
-                d: "Only senior management"
+                a: "IT department only - they manage the systems and understand technical security requirements",
+                b: "External consultants - they provide objective, unbiased classification decisions",
+                c: "Data owners (business units) in collaboration with IT, legal, and compliance teams",
+                d: "Only senior executive management to ensure consistent enterprise-wide decisions"
             },
-            explanation: "Data owners, who understand the business context and sensitivity, should classify data in collaboration with IT and compliance teams."
+            explanation: "Data owners, who understand the business context and sensitivity of information, should classify data in collaboration with IT and compliance teams. This collaborative approach works because: (1) Data owners know the content: Business units that create and use the data best understand its sensitivity, value, and appropriate use, (2) IT provides technical expertise: IT teams understand technical security controls and feasibility of implementing protections, (3) Legal/compliance ensures requirements: Legal and compliance teams ensure classification meets regulatory requirements (PIPEDA, MFIPPA, industry standards), (4) Collaboration ensures balance: No single group has complete perspective - business value, security feasibility, and legal compliance must all be considered. The classification process typically works as follows: Data owners propose classifications based on business context, IT reviews for technical feasibility and security controls, Legal/compliance reviews for regulatory compliance, All groups agree on final classification and handling requirements. This prevents common problems like: IT over-classifying everything as 'confidential' (too restrictive for business operations), Business under-classifying sensitive data (compliance violations), Centralized decisions lacking context about actual data sensitivity."
         }
     };
 

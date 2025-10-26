@@ -22,88 +22,88 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
 
     const allQuestions: QuizQuestions = {
         q1: { 
-            question: "Which principle requires that AI use follows a 'problem-first' rather than 'technology-first' approach?", 
+            question: "Your ministry's IT team is excited about implementing a new AI-powered document processing system to improve efficiency. However, the business case shows only marginal time savings, and a manual process could achieve similar results. Which principle of Ontario's Responsible Use of AI Directive should guide your decision, and what does it require?", 
             answer: 'b', 
             options: { 
-                a: "AI is used to benefit the people of Ontario", 
-                b: "AI use is justified and proportionate", 
-                c: "AI use is transparent" 
+                a: "AI is used to benefit the people of Ontario - it must improve public services", 
+                b: "AI use is justified and proportionate - it requires a 'problem-first' not 'technology-first' approach", 
+                c: "AI use is transparent - it must clearly explain decisions to users" 
             },
-            explanation: "The 'justified and proportionate' principle ensures AI is used only when necessary and appropriate for the specific problem at hand."
+            explanation: "The 'justified and proportionate' principle requires organizations to adopt a 'problem-first' rather than 'technology-first' approach, meaning AI should only be used when it's the most appropriate solution to a clearly defined problem. In this scenario, if manual processes can achieve similar results and AI offers only marginal benefits, implementing AI may not be justified. Organizations must demonstrate: (1) Clear problem definition, (2) Evidence that AI is the best solution, (3) Benefits proportionate to risks and costs, (4) Consideration of simpler alternatives. This principle prevents 'AI for AI's sake' implementations that waste resources and introduce unnecessary risks."
         },
         q2: { 
-            question: "What is the first step in AI risk management according to Ontario's directive?", 
+            question: "Your team is preparing to implement an AI chatbot for citizen inquiries about government services. Before beginning technical development, what is the first step in AI risk management according to Ontario's directive that will ensure your risk assessment is meaningful and properly scoped?", 
             answer: 'b', 
             options: { 
-                a: "Identify risks", 
-                b: "State objectives and establish context", 
-                c: "Assess risks" 
+                a: "Identify all possible AI risks and failure scenarios comprehensively", 
+                b: "State clear objectives for the AI system and establish the organizational context", 
+                c: "Assess likelihood and impact of identified AI risks using a matrix" 
             },
-            explanation: "Establishing clear objectives and context is essential before any risk identification or assessment can be meaningful."
+            explanation: "Ontario's AI risk management framework requires organizations to first 'state objectives and establish context' before any risk identification or assessment activities. This foundational step involves: (1) Defining clear objectives: What specific problem will the AI solve? What outcomes are expected?, (2) Establishing organizational context: Stakeholder needs, regulatory requirements, existing systems, available resources, (3) Determining scope: What's included/excluded from the AI system?, (4) Setting success criteria: How will you measure if the AI achieves its objectives? Without this foundation, risk identification and assessment lack the context needed to be meaningful. You might identify irrelevant risks or miss critical ones because you haven't clearly defined what you're trying to achieve and the environment in which the AI will operate."
         },
         q3: { 
-            question: "According to Ontario's AI directive, when must organizations conduct AI risk assessments?", 
+            question: "Your ministry is considering deploying an AI system to automatically prioritize social housing applications based on urgency scores. The system will significantly affect whether families receive housing assistance and how quickly. According to Ontario's AI directive, what is your compliance obligation regarding AI risk assessment?", 
             answer: 'a', 
             options: { 
-                a: "Before implementing any AI system that significantly affects individuals", 
-                b: "Only after AI systems are fully deployed", 
-                c: "Only when requested by the public" 
+                a: "Conduct a comprehensive Algorithmic Impact Assessment (AIA) before implementation to identify and mitigate potential harms", 
+                b: "Deploy the system first and conduct risk assessment only after identifying problems in production", 
+                c: "Only conduct risk assessment if citizens specifically request one or file complaints" 
             },
-            explanation: "Risk assessments must be conducted proactively before implementation to identify and mitigate potential harms."
+            explanation: "Ontario's AI directive requires organizations to conduct AI risk assessments (specifically Algorithmic Impact Assessments for high-impact systems) before implementing any AI system that significantly affects individuals. This proactive approach is essential because: (1) High-impact decisions: Housing assistance significantly affects people's lives and wellbeing, (2) Prevention over reaction: Identifying risks before deployment prevents harm rather than responding after people are already affected, (3) Mitigation planning: Pre-implementation assessment allows organizations to design appropriate safeguards, (4) Legal compliance: Many jurisdictions require impact assessments before deploying high-risk AI. The AIA should evaluate potential bias (e.g., discrimination against protected groups), fairness issues, accuracy, transparency needs, and human oversight requirements."
         },
         q4: { 
-            question: "What does the 'human oversight' principle require in AI governance?", 
+            question: "Your organization has deployed an AI-powered fraud detection system that flags potentially fraudulent benefit applications for review. The system is highly automated but occasionally makes errors. What does the 'human oversight' principle require for this high-risk AI application?", 
             answer: 'c', 
             options: { 
-                a: "Humans must approve every AI decision", 
-                b: "AI systems can operate fully autonomously", 
-                c: "Meaningful human control over high-risk AI decisions" 
+                a: "Humans must manually review and approve every single AI decision before it takes effect", 
+                b: "The AI system can operate completely autonomously without human involvement once deployed", 
+                c: "Meaningful human control where trained staff can review AI recommendations, override decisions, and understand the reasoning" 
             },
-            explanation: "Human oversight requires meaningful human control, especially for high-risk decisions, while allowing appropriate automation for low-risk scenarios."
+            explanation: "The human oversight principle in AI governance requires meaningful human control over high-risk AI decisions, which means: (1) Reviewability: Humans can examine AI recommendations and supporting evidence, (2) Override capability: Humans have authority to disagree with and override AI decisions, (3) Understanding: Staff receive training to understand how the AI works and its limitations, (4) Accountability: Clear assignment of responsibility for final decisions, (5) Appropriate automation level: The degree of automation should match the risk level. For high-risk decisions affecting people's access to benefits, human oversight is critical to catch AI errors, ensure fairness, and maintain accountability. However, this doesn't mean humans must review every decision - low-risk cases might be fully automated while high-risk or borderline cases require human review."
         },
         q5: {
-            question: "Which of the following is a key component of an Algorithmic Impact Assessment (AIA)?",
+            question: "Your ministry completed an Algorithmic Impact Assessment (AIA) for a new AI hiring screening tool that will filter job applications. The AIA must evaluate several key components to ensure responsible AI deployment. Which component is most critical for ensuring equitable treatment of all applicants?",
             answer: 'a',
             options: {
-                a: "Evaluation of potential bias and fairness issues",
-                b: "Performance benchmarking against competitors",
-                c: "Cost-benefit analysis only",
-                d: "User satisfaction surveys"
+                a: "Comprehensive evaluation of potential bias and fairness issues across protected characteristics (race, gender, age, disability)",
+                b: "Performance benchmarking against competing AI vendors' screening accuracy rates",
+                c: "Cost-benefit analysis focused solely on hiring efficiency and budget savings",
+                d: "User satisfaction surveys from hiring managers about the interface and features"
             },
-            explanation: "AIAs must thoroughly evaluate potential bias and fairness issues to ensure equitable outcomes for all affected individuals."
+            explanation: "AIAs must thoroughly evaluate potential bias and fairness issues to ensure equitable outcomes for all affected individuals. For AI hiring tools, this is especially critical because: (1) Protected characteristics: Employment decisions cannot discriminate based on race, gender, age, disability, or other protected categories, (2) Historical bias: Training data may contain historical hiring discrimination that the AI could perpetuate or amplify, (3) Proxy discrimination: AI might use seemingly neutral factors (e.g., zip code, school names) that correlate with protected characteristics, (4) Disparate impact: Even unintentional bias can result in systematically excluding qualified candidates from disadvantaged groups. The AIA should test the AI system with diverse test data sets, analyze outcomes across demographic groups, and implement bias mitigation strategies before deployment."
         },
         q6: {
-            question: "Under Ontario's AI directive, what level of transparency is required for high-risk AI systems?",
+            question: "Your organization deployed an AI system six months ago to automatically assess environmental permit applications. The system has been working well, but Ontario's AI directive requires specific transparency measures. What level of transparency is required for this high-risk AI system that makes decisions affecting businesses and environmental protection?",
             answer: 'c',
             options: {
-                a: "No transparency required",
-                b: "Basic disclosure of AI use",
-                c: "Detailed explanations of AI decision-making processes",
-                d: "Only technical documentation"
+                a: "No transparency required since the system is working without complaints",
+                b: "Basic disclosure that 'AI is being used' posted somewhere on the government website",
+                c: "Detailed, accessible explanations of how the AI makes decisions, what factors it considers, and how to appeal decisions",
+                d: "Only technical documentation provided to internal IT staff and developers"
             },
-            explanation: "High-risk AI systems require detailed transparency, including clear explanations of how decisions are made to ensure accountability."
+            explanation: "High-risk AI systems require detailed transparency to ensure accountability and maintain public trust. For permit application assessment, this means: (1) Clear notification: Applicants must know AI is being used in their assessment, (2) Meaningful explanation: Not just 'AI was used' but 'The AI considered these 5 factors: X, Y, Z...' with understandable reasoning, (3) Appeal rights: Clear process for challenging AI decisions and requesting human review, (4) Accessibility: Explanations in plain language that non-technical stakeholders can understand, (5) Proactive disclosure: Information available before decisions are made, not just upon request. This level of transparency enables: affected parties to understand decisions, identify potential errors or bias, exercise their rights to challenge decisions, and hold the organization accountable for AI outcomes."
         },
         q7: {
-            question: "What is the primary purpose of ongoing monitoring in AI governance?",
+            question: "Your AI-powered student assessment system has been in production for one year, helping teachers evaluate student performance. Recently, parents from certain demographic groups report that their children receive consistently lower AI-generated scores despite strong traditional test performance. What is the primary purpose of ongoing monitoring in AI governance that should have detected this issue earlier?",
             answer: 'b',
             options: {
-                a: "To improve system performance only",
-                b: "To detect and mitigate emerging risks and biases",
-                c: "To reduce operational costs",
-                d: "To collect user feedback"
+                a: "To continuously improve the AI's processing speed and system performance metrics",
+                b: "To detect and mitigate emerging risks, biases, and unintended consequences that develop over time",
+                c: "To reduce operational costs by optimizing computational efficiency and resource usage",
+                d: "To collect general user feedback and satisfaction ratings about the AI interface"
             },
-            explanation: "Ongoing monitoring is essential for detecting emerging risks, biases, and unintended consequences that may develop over time."
+            explanation: "Ongoing monitoring is essential for detecting emerging risks, biases, and unintended consequences that may develop over time in AI systems. This is critical because: (1) Data drift: The characteristics of real-world data change over time, potentially causing bias not present during initial development, (2) Edge cases: Rare scenarios not in training data emerge during production use, (3) Feedback loops: AI decisions can create self-reinforcing patterns (e.g., if the AI consistently rates certain students lower, teachers might give them less attention, leading to worse actual performance), (4) Changing context: Social, regulatory, or operational environments evolve, affecting AI appropriateness. Effective monitoring includes: tracking performance metrics across demographic groups, analyzing decision patterns for emerging bias, reviewing appeals and complaints, conducting periodic bias audits, and maintaining incident response procedures for when issues are detected."
         },
         q8: {
-            question: "Which principle emphasizes that AI systems should be designed to minimize harm and maximize benefits?",
+            question: "Ontario is considering deploying an AI system to predict which infrastructure projects should receive priority funding based on community need, expected impact, and available budget. The AI will analyze demographic data, economic indicators, and historical project outcomes. Which principle requires the system to be specifically designed to maximize benefits to Ontario communities while minimizing potential harm such as perpetuating regional inequalities?",
             answer: 'a',
             options: {
-                a: "AI is used to benefit the people of Ontario",
-                b: "AI use is transparent",
-                c: "AI use is justified and proportionate",
-                d: "AI is used to support people"
+                a: "AI is used to benefit the people of Ontario - systems must be designed to maximize benefits and minimize harm",
+                b: "AI use is transparent - all AI decisions must be explainable to stakeholders",
+                c: "AI use is justified and proportionate - only use AI when it's the best solution",
+                d: "AI is used to support people - AI should augment not replace human judgment"
             },
-            explanation: "This principle specifically focuses on ensuring AI systems are designed and deployed to maximize benefits while minimizing potential harms to citizens."
+            explanation: "The principle 'AI is used to benefit the people of Ontario' specifically focuses on ensuring AI systems are designed and deployed to maximize benefits while minimizing potential harms to citizens. For infrastructure funding AI, this means: (1) Benefit maximization: Ensure the AI helps direct funding where it creates the greatest positive impact for communities, (2) Harm minimization: Prevent perpetuating historical underinvestment in marginalized communities, avoid creating or reinforcing regional inequalities, (3) Inclusive design: Consider diverse community needs and values in the AI design, (4) Stakeholder engagement: Involve affected communities in defining what 'benefit' means and validating the AI's prioritization, (5) Equity considerations: Actively design against discrimination and for equitable distribution of infrastructure investments. This principle requires organizations to go beyond technical functionality and actively ensure their AI serves the public good."
         }
     };
 
