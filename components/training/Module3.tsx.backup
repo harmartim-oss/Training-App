@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
 import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasses } from '../../hooks/useMobileDetection';
 import QuizComponent from '../common/QuizComponent';
-import SlideNavigation, { Slide } from '../common/SlideNavigation';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -286,24 +285,6 @@ const Module3: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
             ]
         }
     ];
-
-    // Convert content sections into slides for click-through navigation
-    const contentSlides: Slide[] = contentSections.map((section, index) => ({
-        id: `slide-${index}`,
-        title: section.title,
-        content: (
-            <div className="space-y-4">
-                <h2 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
-                    {section.title}
-                </h2>
-                <div className="space-y-3 text-text-secondary leading-relaxed">
-                    {section.content.map((paragraph, pIndex) => (
-                        <p key={pIndex}>{paragraph}</p>
-                    ))}
-                </div>
-            </div>
-        )
-    }));
 
     return (
         <section className={`animate-fade-in ${layoutClasses}`}>

@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
 import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasses } from '../../hooks/useMobileDetection';
 import QuizComponent from '../common/QuizComponent';
-import SlideNavigation, { Slide } from '../common/SlideNavigation';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -469,24 +468,6 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
         }
     ];
 
-    // Convert content sections into slides for click-through navigation
-    const contentSlides: Slide[] = contentSections.map((section, index) => ({
-        id: `slide-${index}`,
-        title: section.title,
-        content: (
-            <div className="space-y-4">
-                <h2 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
-                    {section.title}
-                </h2>
-                <div className="space-y-3 text-text-secondary leading-relaxed">
-                    {section.content.map((paragraph, pIndex) => (
-                        <p key={pIndex}>{paragraph}</p>
-                    ))}
-                </div>
-            </div>
-        )
-    }));
-
     return (
         <section className={`animate-fade-in ${layoutClasses}`}>
             <div className={`max-w-6xl mx-auto ${mobileClasses}`}>
@@ -532,13 +513,78 @@ const Module2: React.FC<ModuleProps> = ({ onComplete, onNavigate }) => {
                         </div>
 
                         {currentSection === 'content' ? (
-                            /* Content Section - Now with Slide Navigation */
-                            <div className="mt-8">
-                                <SlideNavigation 
-                                    slides={contentSlides}
-                                    moduleTitle="Module 2: Cybersecurity Fundamentals"
-                                    onComplete={() => setCurrentSection('quiz')}
-                                />
+                            /* Content Section */
+                            <div className="space-y-6">
+                                {contentSections.map((section, index) => (
+                                    <div key={index} className="content-section">
+                                        <h3 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
+                                            {section.title}
+                                        </h3>
+                                        <div className="space-y-3 text-text-secondary leading-relaxed">
+                                            {section.content.map((paragraph, pIndex) => (
+                                                <p key={pIndex}>{paragraph}</p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                                
+                                <div className="bg-surface-elevated border border-border-light p-6 rounded-lg">
+                                    <h4 className="text-xl font-semibold mb-4 text-text-primary font-mono">Resources & Downloads</h4>
+                                    <p className="mb-4 text-text-secondary">Access practical tools and templates for implementing cybersecurity controls.</p>
+                                    
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="space-y-4">
+                                            <div className="bg-surface p-4 border border-border rounded">
+                                                <h5 className="font-semibold text-text-primary mb-2">Risk Assessment Templates</h5>
+                                                <p className="text-sm text-text-secondary mb-3">NIST and OCTAVE-based assessment worksheets</p>
+                                                <div className="flex gap-2">
+                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
+                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
+                                                </div>
+                                            </div>
+                                            <div className="bg-surface p-4 border border-border rounded">
+                                                <h5 className="font-semibold text-text-primary mb-2">System Hardening Checklists</h5>
+                                                <p className="text-sm text-text-secondary mb-3">Comprehensive hardening guides for common systems</p>
+                                                <div className="flex gap-2">
+                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
+                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <div className="bg-surface p-4 border border-border rounded">
+                                                <h5 className="font-semibold text-text-primary mb-2">Incident Response Playbooks</h5>
+                                                <p className="text-sm text-text-secondary mb-3">Step-by-step incident handling procedures</p>
+                                                <div className="flex gap-2">
+                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
+                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
+                                                </div>
+                                            </div>
+                                            <div className="bg-surface p-4 border border-border rounded">
+                                                <h5 className="font-semibold text-text-primary mb-2">Security Awareness Materials</h5>
+                                                <p className="text-sm text-text-secondary mb-3">Training modules and assessment tools</p>
+                                                <div className="flex gap-2">
+                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
+                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <p className="mt-4 text-sm text-text-secondary">
+                                        <strong>Note:</strong> These resources are designed for enterprise and municipal environments. 
+                                        Customize them according to your organization's specific risk profile and compliance requirements.
+                                    </p>
+                                </div>
+
+                                <div className="text-center">
+                                    <button 
+                                        onClick={() => setCurrentSection('quiz')}
+                                        className="btn-primary font-semibold py-3 px-8"
+                                    >
+                                        Proceed to Knowledge Check
+                                    </button>
+                                </div>
                             </div>
                         ) : (
                             /* Quiz Section */
