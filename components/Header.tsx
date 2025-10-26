@@ -13,6 +13,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigateToTraining }) => {
   const navLinks = [
     { href: '#why-ocrp', label: 'Why OCRP' },
     { href: '#curriculum', label: 'Curriculum' },
+    { href: '#resources', label: 'Resources' },
     { href: '#faq', label: 'FAQ' },
   ];
   return (

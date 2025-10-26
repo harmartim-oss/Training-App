@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ontario Cybersecurity Training & Certification Platform - Professional Edition</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --ontario-blue: #003c71;
+            --ontario-green: #4d7c0f;
+            --ontario-light-blue: #e6f3ff;
+            --ontario-gray: #f8f9fa;
+        }
+        
+        .ontario-gradient {
+            background: linear-gradient(135deg, var(--ontario-blue) 0%, var(--ontario-green) 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .focus-visible {
+            outline: 2px solid var(--ontario-blue);
+            outline-offset: 2px;
+        }
+        
+        .btn-ontario {
+            background: var(--ontario-blue);
+            border: 2px solid var(--ontario-blue);
+            transition: all 0.3s ease;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        .btn-ontario:hover {
+            background: var(--ontario-green);
+            border-color: var(--ontario-green);
+        }
+        
+        .badge-earned {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        
+        .dark-mode .text-gray-800 {
+            color: #e2e8f0;
+        }
+        
+        .dark-mode .border-gray-200 {
+            border-color: #4a5568;
+        }
+        
+        .microlearning-timer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 60, 113, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .spaced-repetition-reminder {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #1a202c;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px #ffd700; }
+            to { box-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700; }
+        }
+        
+        .print-optimized {
+            page-break-inside: avoid;
+        }
+        
+         {
+            .no-print { display: none; }
+            .print-break { page-break-before: always; }
+        }
+
+        .chart-container {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50" id="app">
+    <!-- Microlearning Timer -->
+    <div id="microlearning-timer" class="microlearning-timer hidden">
+        <i class="fas fa-clock mr-2"></i>
+        Session: <span id="timer-display">5:00</span>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="ontario-gradient text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/33c25828-3c19-4cbe-82a4-2808b8c603c9" alt="Ontario Cybersecurity Platform Logo" class="h-8 w-auto mr-3">
+                    <h1 class="text-xl font-bold">Ontario Cybersecurity Training & Certification</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors" aria-label="Toggle theme">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                    <button id="help-btn" class="p-2 rounded-full hover:bg-white hover:bg-opacity-20 transition-colors" aria-label="Help">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                    <div id="user-menu" class="relative">
+                        <button id="user-btn" class="bg-white bg-opacity-20 px-4 py-2 rounded-lg hover:bg-opacity-30 transition-colors">
+                            <i class="fas fa-user mr-2"></i>
+                            <span id="user-name">Sign In</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div id="main-content" class="min-h-screen">
+        
+        <!-- Landing Page -->
+        <section id="landing-page" class="section-view">
+            <!-- Hero Section -->
+            <div class="ontario-gradient text-white py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center print-optimized">
+                    <h1 class="text-5xl font-bold mb-6">Professional Cybersecurity Training for Ontario</h1>
+                    <p class="text-xl mb-8 max-w-3xl mx-auto">Comprehensive, evidence-based cybersecurity training designed specifically for Ontario businesses and municipalities. Aligned with PIPEDA, FIPPA, Bill 194, and the Ontario AI Directive.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button class="btn-ontario text-white px-8 py-4 rounded-lg font-semibold text-lg" onclick="showSection('pricing')">
+                            <i class="fas fa-graduation-cap mr-2"></i>Start Training
+                        </button>
+                        <button class="bg-white text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors" onclick="showSection('demo')">
+                            <i class="fas fa-play mr-2"></i>Watch Demo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="py-20 bg-white print-optimized">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Complete Training Solution</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                            <div class="w-16 h-16 ontario-gradient rounded-lg flex items-center justify-center mb-6">
+                                <i class="fas fa-shield-alt text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Ontario Law Compliant</h3>
+                            <p class="text-gray-600">Comprehensive coverage of PIPEDA, FIPPA, Bill 194, and Ontario AI Directive with real-world applications.</p>
+                        </div>
+                        <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                            <div class="w-16 h-16 ontario-gradient rounded-lg flex items-center justify-center mb-6">
+                                <i class="fas fa-brain text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Evidence-Based Learning</h3>
+                            <p class="text-gray-600">Spaced repetition, microlearning, and adaptive pathways based on cognitive science research.</p>
+                        </div>
+                        <div class="card-hover bg-white p-8 rounded-xl shadow-lg border">
+                            <div class="w-16 h-16 ontario-gradient rounded-lg flex items-center justify-center mb-6">
+                                <i class="fas fa-certificate text-white text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-4">Professional Certification</h3>
+                            <p class="text-gray-600">Industry-recognized certification with CPD credits and LinkedIn-compatible digital badges.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Modules Overview -->
+            <div class="py-20 bg-gray-50 print-optimized">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Comprehensive Training Modules</h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user-shield text-blue-600 text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Module 1</h3>
+                                <p class="text-sm text-gray-600 mb-3">Ontario Privacy Law Foundations</p>
+                                <div class="text-xs bg-blue-50 px-2 py-1 rounded-full inline-block">6 Hours</div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-lock text-green-600 text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Module 2</h3>
+                                <p class="text-sm text-gray-600 mb-3">Cybersecurity Fundamentals</p>
+                                <div class="text-xs bg-green-50 px-2 py-1 rounded-full inline-block">8 Hours</div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-robot text-purple-600 text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Module 3</h3>
+                                <p class="text-sm text-gray-600 mb-3">AI Governance & Ethics</p>
+                                <div class="text-xs bg-purple-50 px-2 py-1 rounded-full inline-block">4 Hours</div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-database text-orange-600 text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-lg mb-2">Module 4</h3>
+                                <p class="text-sm text-gray-600 mb-3">Data Management Excellence</p>
+                                <div class="text-xs bg-orange-50 px-2 py-1 rounded-full inline-block">6 Hours</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="section-view hidden">
+            <div class="py-20 bg-white print-optimized">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl font-bold text-gray-800 mb-4">Professional Training Packages</h2>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Choose the perfect training solution for your needs. All packages include lifetime updates and professional certification.</p>
+                    </div>
+
+                    <!-- Individual Packages -->
+                    <div class="mb-16">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Individual Packages</h3>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-blue-500 transition-colors">
+                                <div class="text-center">
+                                    <h4 class="text-xl font-bold mb-2">Basic Certification</h4>
+                                    <div class="text-3xl font-bold text-blue-600 mb-4">$149 <span class="text-sm text-gray-500">CAD</span></div>
+                                    <ul class="text-left space-y-3 mb-8">
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>4 Training Modules (24 hours)</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Professional Certification</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Digital Badges</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>CPD Credit Tracking</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>3-Year Validity</li>
+                                    </ul>
+                                    <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('basic-individual', 149)">
+                                        Select Basic
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-hover bg-white border-2 border-blue-500 rounded-xl p-8 relative">
+                                <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                    <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+                                </div>
+                                <div class="text-center">
+                                    <h4 class="text-xl font-bold mb-2">Premium with Ebook</h4>
+                                    <div class="text-3xl font-bold text-blue-600 mb-2">$199 <span class="text-sm text-gray-500">CAD</span></div>
+                                    <div class="text-sm text-green-600 mb-4">Save $29</div>
+                                    <ul class="text-left space-y-3 mb-8">
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Everything in Basic</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>200+ Page Study Guide</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Downloadable Templates</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Case Studies & Scenarios</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Mobile Optimized</li>
+                                    </ul>
+                                    <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('premium-individual', 199)">
+                                        Select Premium
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-8 hover:border-blue-500 transition-colors">
+                                <div class="text-center">
+                                    <h4 class="text-xl font-bold mb-2">Complete Package</h4>
+                                    <div class="text-3xl font-bold text-blue-600 mb-2">$249 <span class="text-sm text-gray-500">CAD</span></div>
+                                    <div class="text-sm text-green-600 mb-4">Save $28</div>
+                                    <ul class="text-left space-y-3 mb-8">
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Everything in Premium</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Practice Exam (200+ Questions)</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Performance Analytics</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Multiple Attempts</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Priority Support</li>
+                                    </ul>
+                                    <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('complete-individual', 249)">
+                                        Select Complete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Organizational Packages -->
+                    <div class="mb-16">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-8 text-center">Organizational Packages</h3>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-8">
+                                <div class="text-center">
+                                    <h4 class="text-xl font-bold mb-2">Small Business</h4>
+                                    <p class="text-sm text-gray-600 mb-4">Up to 10 users</p>
+                                    <div class="space-y-4 mb-8">
+                                        <div class="border-b pb-4">
+                                            <div class="text-2xl font-bold text-blue-600">$999 <span class="text-sm text-gray-500">CAD</span></div>
+                                            <p class="text-sm">Basic Training</p>
+                                        </div>
+                                        <div class="border-b pb-4">
+                                            <div class="text-2xl font-bold text-blue-600">$1,299 <span class="text-sm text-gray-500">CAD</span></div>
+                                            <p class="text-sm">Premium with Materials</p>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-bold text-blue-600">$1,599 <span class="text-sm text-gray-500">CAD</span></div>
+                                            <p class="text-sm">Complete Enterprise</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('small-business', 1599)">
+                                        Contact Sales
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-hover bg-white border-2 border-gray-200 rounded-xl p-8">
+                                <div class="text-center">
+                                    <h4 class="text-xl font-bold mb-2">Municipal/Enterprise</h4>
+                                    <p class="text-sm text-gray-600 mb-4">Unlimited users</p>
+                                    <div class="space-y-4 mb-8">
+                                        <div class="border-b pb-4">
+                                            <div class="text-2xl font-bold text-blue-600">$2,499 <span class="text-sm text-gray-500">CAD</span></div>
+                                            <p class="text-sm">Basic Training</p>
+                                        </div>
+                                        <div class="border-b pb-4">
+                                            <div class="text-2xl font-bold text-blue-600">$3,199 <span class="text-sm text-gray-500">CAD</span></div>
+                                            <p class="text-sm">Premium Enterprise</p>
+                                        </div>
+                                        <div>
+                                            <div class="text-2xl font-bold text-blue-600">$3,999 <span class="text-sm text-gray-500">CAD</span></div>
+                                            <p class="text-sm">Complete Government Package</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('enterprise', 3999)">
+                                        Contact Sales
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add-on Services -->
+                    <div class="bg-gray-50 rounded-xl p-8 print-optimized">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">Add-on Services</h3>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold mb-2">Standalone Ebook</h4>
+                                <p class="text-2xl font-bold text-blue-600 mb-2">$79 <span class="text-sm text-gray-500">CAD</span></p>
+                                <p class="text-sm text-gray-600 mb-4">Individual license</p>
+                                <button class="btn-ontario w-full text-white py-2 rounded font-semibold" onclick="selectPackage('ebook-individual', 79)">
+                                    Purchase Ebook
+                                </button>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold mb-2">Practice Exam</h4>
+                                <p class="text-2xl font-bold text-blue-600 mb-2">$49 <span class="text-sm text-gray-500">CAD</span></p>
+                                <p class="text-sm text-gray-600 mb-4">200+ questions with analytics</p>
+                                <button class="btn-ontario w-full text-white py-2 rounded font-semibold" onclick="selectPackage('practice-exam', 49)">
+                                    Purchase Exam
+                                </button>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg border">
+                                <h4 class="font-bold mb-2">CPD Maintenance</h4>
+                                <p class="text-2xl font-bold text-blue-600 mb-2">$49 <span class="text-sm text-gray-500">CAD</span></p>
+                                <p class="text-sm text-gray-600 mb-4">Annual per person</p>
+                                <button class="btn-ontario w-full text-white py-2 rounded font-semibold" onclick="selectPackage('cpd-maintenance', 49)">
+                                    Add CPD
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authentication Section -->
+        <section id="auth" class="section-view hidden">
+            <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-md w-full space-y-8">
+                    <div class="text-center">
+                        <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/33c25828-3c19-4cbe-82a4-2808b8c603c9" alt="Logo" class="mx-auto h-12 w-auto">
+                        <h2 class="mt-6 text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
+                        <p class="mt-2 text-sm text-gray-600">
+                            Or 
+                            <button class="font-medium text-blue-600 hover:text-blue-500" onclick="toggleAuthMode()">
+                                create a new account
+                            </button>
+                        </p>
+                    </div>
+                    <form class="mt-8 space-y-6" id="auth-form">
+                        <div class="rounded-md shadow-sm -space-y-px" id="auth-fields">
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                                <input id="email" name="email" type="email" required class="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Enter your email">
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                <input id="password" name="password" type="password" required class="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Enter your password">
+                            </div>
+                            <div id="signup-fields" class="hidden">
+                                <div class="mb-4">
+                                    <label for="full-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                                    <input id="full-name" name="full-name" type="text" class="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Enter your full name">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="organization" class="block text-sm font-medium text-gray-700">Organization</label>
+                                    <input id="organization" name="organization" type="text" class="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Enter your organization">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                                    <select id="role" name="role" class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                        <option value="">Select your role</option>
+                                        <option value="executive">Executive/Manager</option>
+                                        <option value="it-admin">IT Administrator</option>
+                                        <option value="security">Security Professional</option>
+                                        <option value="privacy">Privacy Officer</option>
+                                        <option value="developer">Developer</option>
+                                        <option value="general">General Employee</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                                <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+                                    Remember me
+                                </label>
+                            </div>
+                            <div class="text-sm">
+                                <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                                    Forgot your password?
+                                </a>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white btn-ontario focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                                    <i class="fas fa-lock text-blue-300"></i>
+                                </span>
+                                <span id="auth-button-text">Sign in</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-6">
+                            <div class="relative">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-300"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 grid grid-cols-2 gap-3">
+                                <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <i class="fab fa-google text-red-500"></i>
+                                    <span class="ml-2">Google</span>
+                                </button>
+                                <button type="button" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                    <i class="fab fa-microsoft text-blue-500"></i>
+                                    <span class="ml-2">Microsoft</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section-view hidden">
+            <div class="py-8 print-optimized">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Welcome Header -->
+                    <div class="mb-8">
+                        <h1 class="text-3xl font-bold text-gray-800">Welcome back, <span id="dashboard-user-name">Professional</span>!</h1>
+                        <p class="text-gray-600">Continue your cybersecurity training journey</p>
+                    </div>
+
+                    <!-- Progress Overview -->
+                    <div class="grid md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600">Overall Progress</p>
+                                    <p class="text-2xl font-bold text-blue-600" id="overall-progress">65%</p>
+                                </div>
+                                <div class="w-16 h-16">
+                                    <svg class="progress-ring w-16 h-16">
+                                        <circle class="progress-ring-circle stroke-current text-blue-600" stroke-width="4" fill="transparent" r="30" cx="32" cy="32" style="stroke-dashoffset: 94;"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600">CPD Credits</p>
+                                    <p class="text-2xl font-bold text-green-600">8.5/12</p>
+                                </div>
+                                <i class="fas fa-award text-3xl text-green-600"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600">Modules Completed</p>
+                                    <p class="text-2xl font-bold text-purple-600">2/4</p>
+                                </div>
+                                <i class="fas fa-check-circle text-3xl text-purple-600"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-600">Streak Days</p>
+                                    <p class="text-2xl font-bold text-orange-600">12</p>
+                                </div>
+                                <i class="fas fa-fire text-3xl text-orange-600"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spaced Repetition Reminder -->
+                    <div class="spaced-repetition-reminder mb-8">
+                        <div class="flex items-center">
+                            <i class="fas fa-brain text-2xl mr-3"></i>
+                            <div>
+                                <h3 class="font-bold">Spaced Repetition Review Due!</h3>
+                                <p class="text-sm">You have 3 concepts ready for review to strengthen long-term retention.</p>
+                            </div>
+                            <button class="ml-auto bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100" onclick="startSpacedReview()">
+                                Start Review
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Grid -->
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- Training Modules -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white rounded-xl shadow-lg border p-6 mb-8">
+                                <h2 class="text-xl font-bold mb-6">Training Modules</h2>
+                                <div class="space-y-4">
+                                    <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer" onclick="startModule(1)">
+                                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-check text-green-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold">Module 1: Ontario Privacy Law Foundations</h3>
+                                            <p class="text-sm text-gray-600">PIPEDA, FIPPA, Bill 194 Compliance</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                                <div class="bg-green-600 h-2 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full">Completed</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer" onclick="startModule(2)">
+                                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-check text-green-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold">Module 2: Cybersecurity Fundamentals</h3>
+                                            <p class="text-sm text-gray-600">NIST Framework, Risk Management</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                                <div class="bg-green-600 h-2 rounded-full" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            <div class="bg-green-100 text-green-800 px-2 py-1 rounded-full">Completed</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer" onclick="startModule(3)">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-play text-blue-600"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold">Module 3: AI Governance & Ethics</h3>
+                                            <p class="text-sm text-gray-600">Ontario AI Directive, Responsible AI</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                                <div class="bg-blue-600 h-2 rounded-full" style="width: 30%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            <div class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">In Progress</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center p-4 border rounded-lg hover:bg-gray-50 cursor-pointer" onclick="startModule(4)">
+                                        <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4">
+                                            <i class="fas fa-lock text-gray-400"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-gray-500">Module 4: Data Management Excellence</h3>
+                                            <p class="text-sm text-gray-400">Classification, Lifecycle, Governance</p>
+                                            <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                                <div class="bg-gray-400 h-2 rounded-full" style="width: 0%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            <div class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Locked</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Recent Activity -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h2 class="text-xl font-bold mb-6">Recent Activity</h2>
+                                <div class="space-y-4">
+                                    <div class="flex items-center p-3 bg-green-50 rounded-lg">
+                                        <i class="fas fa-trophy text-green-600 mr-3"></i>
+                                        <div>
+                                            <p class="font-semibold text-green-800">Badge Earned!</p>
+                                            <p class="text-sm text-green-600">Privacy Law Expert - Module 1 Completed</p>
+                                        </div>
+                                        <span class="text-xs text-green-500 ml-auto">2 hours ago</span>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-blue-50 rounded-lg">
+                                        <i class="fas fa-quiz text-blue-600 mr-3"></i>
+                                        <div>
+                                            <p class="font-semibold text-blue-800">Quiz Completed</p>
+                                            <p class="text-sm text-blue-600">Cybersecurity Fundamentals - Score: 92%</p>
+                                        </div>
+                                        <span class="text-xs text-blue-500 ml-auto">1 day ago</span>
+                                    </div>
+                                    <div class="flex items-center p-3 bg-purple-50 rounded-lg">
+                                        <i class="fas fa-book text-purple-600 mr-3"></i>
+                                        <div>
+                                            <p class="font-semibold text-purple-800">Study Session</p>
+                                            <p class="text-sm text-purple-600">Completed PIPEDA case study analysis</p>
+                                        </div>
+                                        <span class="text-xs text-purple-500 ml-auto">2 days ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="space-y-6">
+                            <!-- Quick Actions -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="text-lg font-bold mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full btn-ontario text-white py-2 rounded-lg font-semibold" onclick="showSection('training')">
+                                        <i class="fas fa-play mr-2"></i>Continue Training
+                                    </button>
+                                    <button class="w-full border border-blue-600 text-blue-600 py-2 rounded-lg font-semibold hover:bg-blue-50" onclick="showSection('practice-exam')">
+                                        <i class="fas fa-clipboard-check mr-2"></i>Practice Exam
+                                    </button>
+                                    <button class="w-full border border-green-600 text-green-600 py-2 rounded-lg font-semibold hover:bg-green-50" onclick="showSection('ebook')">
+                                        <i class="fas fa-book mr-2"></i>Study Guide
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Achievements -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="text-lg font-bold mb-4">Achievements</h3>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="text-center p-2 bg-green-50 rounded-lg badge-earned">
+                                        <i class="fas fa-user-shield text-2xl text-green-600 mb-1"></i>
+                                        <p class="text-xs font-semibold text-green-800">Privacy Expert</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-blue-50 rounded-lg badge-earned">
+                                        <i class="fas fa-shield-alt text-2xl text-blue-600 mb-1"></i>
+                                        <p class="text-xs font-semibold text-blue-800">Security Pro</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-gray-100 rounded-lg opacity-50">
+                                        <i class="fas fa-robot text-2xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs font-semibold text-gray-500">AI Expert</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-gray-100 rounded-lg opacity-50">
+                                        <i class="fas fa-database text-2xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs font-semibold text-gray-500">Data Master</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-orange-50 rounded-lg badge-earned">
+                                        <i class="fas fa-fire text-2xl text-orange-600 mb-1"></i>
+                                        <p class="text-xs font-semibold text-orange-800">Streak Week</p>
+                                    </div>
+                                    <div class="text-center p-2 bg-gray-100 rounded-lg opacity-50">
+                                        <i class="fas fa-trophy text-2xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs font-semibold text-gray-500">Certified</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CPD Tracker -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="text-lg font-bold mb-4">CPD Credits</h3>
+                                <div class="mb-4">
+                                    <div class="flex justify-between text-sm mb-2">
+                                        <span>Progress to Renewal</span>
+                                        <span>8.5/12 hours</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-3">
+                                        <div class="bg-green-600 h-3 rounded-full" style="width: 71%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-sm space-y-2">
+                                    <div class="flex justify-between">
+                                        <span>Group A (Domain):</span>
+                                        <span class="font-semibold">6.5 hours</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Group B (Professional):</span>
+                                        <span class="font-semibold">2.0 hours</span>
+                                    </div>
+                                </div>
+                                <button class="w-full mt-4 text-blue-600 border border-blue-600 py-2 rounded-lg font-semibold hover:bg-blue-50" onclick="showSection('cpd')">
+                                    Manage CPD
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Module Section -->
+        <section id="training" class="section-view hidden">
+            <div class="py-8 print-optimized">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Module Header -->
+                    <div class="bg-white rounded-xl shadow-lg border p-6 mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h1 class="text-2xl font-bold text-gray-800" id="module-title">Module 3: AI Governance & Ethics</h1>
+                                <p class="text-gray-600" id="module-description">Ontario AI Directive and Responsible AI Implementation</p>
+                            </div>
+                            <button class="text-gray-500 hover:text-gray-700" onclick="showSection('dashboard')">
+                                <i class="fas fa-times text-2xl"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2 text-gray-500"></i>
+                                <span class="text-sm text-gray-600">4 hours total</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line mr-2 text-gray-500"></i>
+                                <span class="text-sm text-gray-600">30% completed</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-award mr-2 text-gray-500"></i>
+                                <span class="text-sm text-gray-600">1.2 CPD credits earned</span>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mt-4">
+                            <div class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: 30%" id="module-progress-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Learning Content -->
+                    <div class="grid lg:grid-cols-4 gap-8">
+                        <!-- Main Content -->
+                        <div class="lg:col-span-3">
+                            <div class="bg-white rounded-xl shadow-lg border p-8" id="learning-content">
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-bold mb-4">3.1 Introduction to Ontario's AI Directive</h2>
+                                    <p class="text-gray-700 mb-4">
+                                        Ontario's Responsible Use of Artificial Intelligence Directive, effective December 1, 2024, establishes six core principles for the ethical and accountable use of AI systems in government operations. This comprehensive framework ensures that AI technologies benefit the people of Ontario while managing associated risks.
+                                    </p>
+                                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                                        <h3 class="font-semibold text-blue-800 mb-2">Key Learning Objective</h3>
+                                        <p class="text-blue-700 text-sm">By the end of this section, you will understand how to implement the six AI principles in your organization and create effective AI governance structures.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Interactive Content -->
+                                <div class="space-y-6">
+                                    <div class="border rounded-lg p-6">
+                                        <h3 class="font-bold mb-4">The Six Principles of Responsible AI</h3>
+                                        <div class="grid md:grid-cols-2 gap-4">
+                                            <div class="p-4 bg-green-50 rounded-lg">
+                                                <h4 class="font-semibold text-green-800 mb-2">1. Beneficial Use</h4>
+                                                <p class="text-sm text-green-700">AI must benefit the people of Ontario and consider diverse user needs.</p>
+                                            </div>
+                                            <div class="p-4 bg-blue-50 rounded-lg">
+                                                <h4 class="font-semibold text-blue-800 mb-2">2. Justified & Proportionate</h4>
+                                                <p class="text-sm text-blue-700">AI use must serve well-defined purposes with reliable, valid systems.</p>
+                                            </div>
+                                            <div class="p-4 bg-purple-50 rounded-lg">
+                                                <h4 class="font-semibold text-purple-800 mb-2">3. Safe & Privacy-Protective</h4>
+                                                <p class="text-sm text-purple-700">Maintain data privacy and security while minimizing risks.</p>
+                                            </div>
+                                            <div class="p-4 bg-red-50 rounded-lg">
+                                                <h4 class="font-semibold text-red-800 mb-2">4. Non-Discriminatory</h4>
+                                                <p class="text-sm text-red-700">Respect human rights and ensure fairness across all communities.</p>
+                                            </div>
+                                            <div class="p-4 bg-yellow-50 rounded-lg">
+                                                <h4 class="font-semibold text-yellow-800 mb-2">5. Transparent</h4>
+                                                <p class="text-sm text-yellow-700">Provide meaningful explanations of AI decisions and processes.</p>
+                                            </div>
+                                            <div class="p-4 bg-orange-50 rounded-lg">
+                                                <h4 class="font-semibold text-orange-800 mb-2">6. Accountable</h4>
+                                                <p class="text-sm text-orange-700">Maintain clear human oversight and responsibility for AI systems.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interactive Scenario -->
+                                    <div class="border rounded-lg p-6 bg-gray-50">
+                                        <h3 class="font-bold mb-4 flex items-center">
+                                            <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                                            Interactive Scenario: Municipal Chatbot Implementation
+                                        </h3>
+                                        <p class="mb-4">Your municipality wants to implement an AI chatbot to help residents with service inquiries. Apply the six principles:</p>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center p-3 bg-white rounded border">
+                                                <input type="checkbox" class="mr-3" id="principle1">
+                                                <label for="principle1" class="text-sm">Clearly disclose that users are interacting with an AI system</label>
+                                            </div>
+                                            <div class="flex items-center p-3 bg-white rounded border">
+                                                <input type="checkbox" class="mr-3" id="principle2">
+                                                <label for="principle2" class="text-sm">Provide alternative channels for human assistance</label>
+                                            </div>
+                                            <div class="flex items-center p-3 bg-white rounded border">
+                                                <input type="checkbox" class="mr-3" id="principle3">
+                                                <label for="principle3" class="text-sm">Test for bias across different demographic groups</label>
+                                            </div>
+                                            <div class="flex items-center p-3 bg-white rounded border">
+                                                <input type="checkbox" class="mr-3" id="principle4">
+                                                <label for="principle4" class="text-sm">Implement data privacy safeguards and encryption</label>
+                                            </div>
+                                        </div>
+                                        <button class="mt-4 btn-ontario text-white px-6 py-2 rounded-lg" onclick="checkScenario()">
+                                            Check Answers
+                                        </button>
+                                    </div>
+
+                                    <!-- Knowledge Check -->
+                                    <div class="border rounded-lg p-6" id="knowledge-check">
+                                        <h3 class="font-bold mb-4 flex items-center">
+                                            <i class="fas fa-question-circle text-blue-500 mr-2"></i>
+                                            Knowledge Check (3-Minute Retrieval Practice)
+                                        </h3>
+                                        <div id="quiz-question">
+                                            <p class="mb-4 font-semibold">Which principle requires organizations to provide accessible channels for public inquiries about AI use?</p>
+                                            <div class="space-y-2">
+                                                <label class="flex items-center p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                                    <input type="radio" name="quiz" value="a" class="mr-3">
+                                                    <span>A) Beneficial Use</span>
+                                                </label>
+                                                <label class="flex items-center p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                                    <input type="radio" name="quiz" value="b" class="mr-3">
+                                                    <span>B) Transparent</span>
+                                                </label>
+                                                <label class="flex items-center p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                                    <input type="radio" name="quiz" value="c" class="mr-3">
+                                                    <span>C) Accountable</span>
+                                                </label>
+                                                <label class="flex items-center p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                                    <input type="radio" name="quiz" value="d" class="mr-3">
+                                                    <span>D) Non-Discriminatory</span>
+                                                </label>
+                                            </div>
+                                            <button class="mt-4 btn-ontario text-white px-6 py-2 rounded-lg" onclick="submitQuiz()">
+                                                Submit Answer
+                                            </button>
+                                        </div>
+                                        <div id="quiz-feedback" class="hidden">
+                                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                                <h4 class="font-semibold text-green-800 mb-2">Correct! ✓</h4>
+                                                <p class="text-green-700 text-sm">The "Transparent" principle specifically requires providing accessible channels for public inquiries about AI use in processes, services, or programs.</p>
+                                            </div>
+                                            <button class="mt-4 btn-ontario text-white px-6 py-2 rounded-lg" onclick="nextSection()">
+                                                Continue to Next Section
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="space-y-6">
+                            <!-- Section Navigation -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="font-bold mb-4">Module Sections</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-center p-2 bg-green-50 rounded text-green-800">
+                                        <i class="fas fa-check-circle mr-2"></i>
+                                        <span>3.1 AI Directive Overview</span>
+                                    </div>
+                                    <div class="flex items-center p-2 bg-blue-50 rounded text-blue-800">
+                                        <i class="fas fa-play-circle mr-2"></i>
+                                        <span>3.2 Six Principles Deep Dive</span>
+                                    </div>
+                                    <div class="flex items-center p-2 text-gray-500">
+                                        <i class="fas fa-circle mr-2"></i>
+                                        <span>3.3 Risk Assessment Framework</span>
+                                    </div>
+                                    <div class="flex items-center p-2 text-gray-500">
+                                        <i class="fas fa-circle mr-2"></i>
+                                        <span>3.4 Implementation Guide</span>
+                                    </div>
+                                    <div class="flex items-center p-2 text-gray-500">
+                                        <i class="fas fa-circle mr-2"></i>
+                                        <span>3.5 Case Studies</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progress Tracker -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="font-bold mb-4">Your Progress</h3>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between text-sm">
+                                        <span>Section Progress:</span>
+                                        <span class="font-semibold">2/5 sections</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span>Quiz Score:</span>
+                                        <span class="font-semibold">100%</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span>Time Spent:</span>
+                                        <span class="font-semibold">1.2 hours</span>
+                                    </div>
+                                    <div class="flex justify-between text-sm">
+                                        <span>CPD Credits:</span>
+                                        <span class="font-semibold">1.2/4.0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Resources -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="font-bold mb-4">Resources</h3>
+                                <div class="space-y-3">
+                                    <a href="#" class="flex items-center p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-download mr-2"></i>
+                                        <span class="text-sm">AI Directive Full Text</span>
+                                    </a>
+                                    <a href="#" class="flex items-center p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-file-pdf mr-2"></i>
+                                        <span class="text-sm">Risk Assessment Template</span>
+                                    </a>
+                                    <a href="#" class="flex items-center p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-checklist mr-2"></i>
+                                        <span class="text-sm">Implementation Checklist</span>
+                                    </a>
+                                    <a href="#" class="flex items-center p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-comments mr-2"></i>
+                                        <span class="text-sm">Discussion Forum</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Help -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="font-bold mb-4">Need Help?</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full text-left p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-question-circle mr-2"></i>
+                                        <span class="text-sm">Ask a Question</span>
+                                    </button>
+                                    <button class="w-full text-left p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-bookmark mr-2"></i>
+                                        <span class="text-sm">Bookmark This Section</span>
+                                    </button>
+                                    <button class="w-full text-left p-2 text-blue-600 hover:bg-blue-50 rounded">
+                                        <i class="fas fa-notes-medical mr-2"></i>
+                                        <span class="text-sm">Take Notes</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ebook Section -->
+        <section id="ebook" class="section-view hidden">
+            <div class="py-8 print-optimized">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Ebook Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold text-gray-800 mb-4">Comprehensive Cybersecurity Study Guide</h1>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">EPUB 3.3 compliant digital publication with full accessibility features and Ontario-specific legal compliance content.</p>
+                        <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/4b7f7fb3-ed1e-4f3e-a079-34ae216a9ab2" alt="Study Guide Cover" class="mx-auto mt-8 max-w-md rounded-xl shadow-lg">
+                    </div>
+
+                    <!-- Ebook Features -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-mobile-alt text-3xl text-blue-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Mobile Optimized</h3>
+                            <p class="text-sm text-gray-600">Read seamlessly on any device with responsive design</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-universal-access text-3xl text-green-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Fully Accessible</h3>
+                            <p class="text-sm text-gray-600">WCAG 2.2 AA compliant with screen reader support</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-download text-3xl text-purple-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Offline Reading</h3>
+                            <p class="text-sm text-gray-600">Download and read without internet connection</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-print text-3xl text-orange-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Print Friendly</h3>
+                            <p class="text-sm text-gray-600">Professional formatting for physical workbooks</p>
+                        </div>
+                    </div>
+
+                    <!-- Pricing Options -->
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white rounded-xl shadow-lg border p-8">
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-4">Individual License</h3>
+                                <div class="text-4xl font-bold text-blue-600 mb-6">$79 <span class="text-lg text-gray-500">CAD</span></div>
+                                <ul class="text-left space-y-3 mb-8">
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>200+ page comprehensive study guide</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>EPUB 3.3 format with accessibility features</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Downloadable templates and checklists</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Interactive assessments and case studies</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Lifetime updates and revisions</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Mobile and tablet compatible</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Printable workbook version</li>
+                                </ul>
+                                <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('ebook-individual', 79)">
+                                    Purchase Individual License
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg border p-8 border-blue-500 relative">
+                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Best Value</span>
+                            </div>
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-4">Organizational License</h3>
+                                <div class="text-4xl font-bold text-blue-600 mb-6">$199 <span class="text-lg text-gray-500">CAD</span></div>
+                                <ul class="text-left space-y-3 mb-8">
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Everything in Individual License</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited internal distribution</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Custom organizational branding option</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Bulk deployment support</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Administrator training session</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Priority customer support</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Usage analytics and reporting</li>
+                                </ul>
+                                <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('ebook-organizational', 199)">
+                                    Purchase Organizational License
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table of Contents -->
+                    <div class="bg-white rounded-xl shadow-lg border p-8 mb-12">
+                        <h2 class="text-2xl font-bold mb-6 text-center">Complete Table of Contents</h2>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-lg font-bold mb-4 text-blue-600">Part 1: Ontario Privacy Law Mastery</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">1.1</span><span>PIPEDA Fundamentals and Fair Information Principles</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">1.2</span><span>FIPPA Requirements for Municipalities</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">1.3</span><span>Bill 194 Implementation Guide</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">1.4</span><span>Privacy Impact Assessments (PIAs)</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">1.5</span><span>Breach Response and Notification</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">1.6</span><span>Cross-Border Data Transfers</span></li>
+                                </ul>
+
+                                <h3 class="text-lg font-bold mb-4 mt-8 text-green-600">Part 2: Cybersecurity Fundamentals</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">2.1</span><span>NIST Cybersecurity Framework 2.0</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">2.2</span><span>Risk Assessment Methodologies</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">2.3</span><span>Technical Security Controls</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">2.4</span><span>Incident Response Planning</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">2.5</span><span>Security Awareness Programs</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">2.6</span><span>Vendor Risk Management</span></li>
+                                </ul>
+
+                                <h3 class="text-lg font-bold mb-4 mt-8 text-purple-600">Part 3: AI Governance and Ethics</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">3.1</span><span>Ontario AI Directive Deep Dive</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">3.2</span><span>Six Principles Implementation</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">3.3</span><span>AI Risk Assessment Frameworks</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">3.4</span><span>Algorithmic Bias Detection</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">3.5</span><span>AI Transparency Requirements</span></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-4 text-orange-600">Part 4: Data Management Excellence</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">4.1</span><span>Data Classification Schemes</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">4.2</span><span>Records Management Lifecycle</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">4.3</span><span>Data Governance Frameworks</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">4.4</span><span>Cloud Security Considerations</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">4.5</span><span>Data Loss Prevention Strategies</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">4.6</span><span>Compliance Auditing</span></li>
+                                </ul>
+
+                                <h3 class="text-lg font-bold mb-4 mt-8 text-red-600">Part 5: Implementation Toolkits</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">5.1</span><span>Policy Templates and Examples</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">5.2</span><span>Assessment Checklists</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">5.3</span><span>Training Program Templates</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">5.4</span><span>Incident Response Playbooks</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">5.5</span><span>Compliance Monitoring Tools</span></li>
+                                </ul>
+
+                                <h3 class="text-lg font-bold mb-4 mt-8 text-teal-600">Part 6: Case Studies & Scenarios</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">6.1</span><span>Municipal Cybersecurity Incidents</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">6.2</span><span>Small Business Privacy Breaches</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">6.3</span><span>AI Implementation Challenges</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">6.4</span><span>Vendor Management Failures</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">6.5</span><span>Successful Compliance Programs</span></li>
+                                </ul>
+
+                                <h3 class="text-lg font-bold mb-4 mt-8 text-gray-600">Appendices</h3>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">A</span><span>Legal References and Citations</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">B</span><span>Quick Reference Guides</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">C</span><span>Glossary of Terms</span></li>
+                                    <li class="flex items-start"><span class="w-8 text-gray-500">D</span><span>Contact Information and Resources</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Content Preview -->
+                    <div class="bg-white rounded-xl shadow-lg border p-8">
+                        <h2 class="text-2xl font-bold mb-6 text-center">Sample Content Preview</h2>
+                        <div class="max-w-4xl mx-auto">
+                            <div class="border-l-4 border-blue-500 pl-6 mb-6">
+                                <h3 class="text-xl font-bold mb-3">1.1 Understanding PIPEDA's Fair Information Principles</h3>
+                                <p class="text-gray-700 mb-4">
+                                    The Personal Information Protection and Electronic Documents Act (PIPEDA) governs how private-sector organizations collect, use, and disclose personal information in the course of commercial activities. Understanding its ten Fair Information Principles is crucial for Ontario businesses operating under federal jurisdiction.
+                                </p>
+                                <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                                    <h4 class="font-semibold mb-2">Principle 1: Accountability</h4>
+                                    <p class="text-sm">An organization is responsible for personal information under its control and shall designate an individual or individuals who are accountable for the organization's compliance with the following principles.</p>
+                                </div>
+                                <p class="text-gray-700 mb-4">
+                                    <strong>Practical Application for Small Businesses:</strong> This means your organization must designate a privacy officer or assign privacy responsibilities to a specific role. For small businesses, this might be the owner, manager, or HR director. The key is ensuring someone has clear accountability for privacy compliance.
+                                </p>
+                                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                                    <h4 class="font-semibold mb-2">💡 Implementation Tip</h4>
+                                    <p class="text-sm">Create a simple organizational chart showing privacy responsibilities and ensure all staff know who to contact with privacy questions or concerns.</p>
+                                </div>
+                            </div>
+
+                            <div class="border-l-4 border-green-500 pl-6 mb-6">
+                                <h3 class="text-xl font-bold mb-3">2.3 Implementing Multi-Factor Authentication</h3>
+                                <p class="text-gray-700 mb-4">
+                                    Multi-factor authentication (MFA) adds critical security layers beyond passwords. The NIST Cybersecurity Framework 2.0 emphasizes identity verification as a core protective measure.
+                                </p>
+                                <div class="grid md:grid-cols-3 gap-4 mb-4">
+                                    <div class="p-4 bg-green-50 rounded-lg text-center">
+                                        <i class="fas fa-key text-green-600 text-2xl mb-2"></i>
+                                        <h5 class="font-semibold">Something You Know</h5>
+                                        <p class="text-xs">Password or PIN</p>
+                                    </div>
+                                    <div class="p-4 bg-blue-50 rounded-lg text-center">
+                                        <i class="fas fa-mobile text-blue-600 text-2xl mb-2"></i>
+                                        <h5 class="font-semibold">Something You Have</h5>
+                                        <p class="text-xs">Phone or token</p>
+                                    </div>
+                                    <div class="p-4 bg-purple-50 rounded-lg text-center">
+                                        <i class="fas fa-fingerprint text-purple-600 text-2xl mb-2"></i>
+                                        <h5 class="font-semibold">Something You Are</h5>
+                                        <p class="text-xs">Biometrics</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <p class="text-gray-600 mb-4">This is just a small preview. The complete study guide contains over 200 pages of detailed content, templates, and practical guidance.</p>
+                                <button class="btn-ontario text-white px-8 py-3 rounded-lg font-semibold" onclick="selectPackage('ebook-preview', 79)">
+                                    Get Full Study Guide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Exam Section -->
+        <section id="practice-exam" class="section-view hidden">
+            <div class="py-8 print-optimized">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Practice Exam Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold text-gray-800 mb-4">Professional Practice Examination</h1>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive practice exam with 200+ questions, immediate feedback, and detailed performance analytics. Aligned with Modified Angoff standard-setting methodology.</p>
+                    </div>
+
+                    <!-- Exam Features -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-question-circle text-3xl text-blue-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">200+ Questions</h3>
+                            <p class="text-sm text-gray-600">Comprehensive question bank with detailed explanations</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-chart-bar text-3xl text-green-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Performance Analytics</h3>
+                            <p class="text-sm text-gray-600">Detailed scoring and weakness identification</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-clock text-3xl text-purple-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Timed Simulation</h3>
+                            <p class="text-sm text-gray-600">Real exam conditions with time management</p>
+                        </div>
+                        <div class="text-center p-6 bg-white rounded-xl shadow-lg border">
+                            <i class="fas fa-redo text-3xl text-orange-600 mb-4"></i>
+                            <h3 class="font-bold mb-2">Multiple Attempts</h3>
+                            <p class="text-sm text-gray-600">Different question sets for each attempt</p>
+                        </div>
+                    </div>
+
+                    <!-- Pricing -->
+                    <div class="grid md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white rounded-xl shadow-lg border p-8">
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-4">Individual Access</h3>
+                                <div class="text-4xl font-bold text-blue-600 mb-6">$49 <span class="text-lg text-gray-500">CAD</span></div>
+                                <ul class="text-left space-y-3 mb-8">
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>200+ practice questions with explanations</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Timed exam simulation (120 minutes)</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Detailed performance analytics</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></li>Domain-based scoring and feedback</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Multiple attempts with different questions</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Study recommendations based on performance</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Mobile-compatible interface</li>
+                                </ul>
+                                <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('practice-exam-individual', 49)">
+                                    Purchase Individual Access
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-lg border p-8 border-blue-500 relative">
+                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                                <span class="bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-semibold">Enterprise</span>
+                            </div>
+                            <div class="text-center">
+                                <h3 class="text-2xl font-bold mb-4">Organizational License</h3>
+                                <div class="text-4xl font-bold text-blue-600 mb-6">$199 <span class="text-lg text-gray-500">CAD</span></div>
+                                <ul class="text-left space-y-3 mb-8">
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Everything in Individual Access</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited organizational users</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Organizational performance dashboards</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Bulk user management and enrollment</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Custom reporting and analytics</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Integration with training platform</li>
+                                    <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Priority technical support</li>
+                                </ul>
+                                <button class="btn-ontario w-full text-white py-3 rounded-lg font-semibold" onclick="selectPackage('practice-exam-organizational', 199)">
+                                    Purchase Organizational License
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exam Blueprint -->
+                    <div class="bg-white rounded-xl shadow-lg border p-8 mb-12">
+                        <h2 class="text-2xl font-bold mb-6 text-center">Examination Blueprint</h2>
+                        <p class="text-center text-gray-600 mb-8">Based on Modified Angoff standard-setting methodology with Minimum Competent Candidate (MCC) criteria</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-lg font-bold mb-4">Domain Distribution</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                                        <div>
+                                            <h4 class="font-semibold">Privacy Law & Compliance</h4>
+                                            <p class="text-sm text-gray-600">PIPEDA, FIPPA, Bill 194</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-2xl font-bold text-blue-600">25%</div>
+                                            <div class="text-sm text-gray-500">~25 questions</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                                        <div>
+                                            <h4 class="font-semibold">Cybersecurity Fundamentals</h4>
+                                            <p class="text-sm text-gray-600">NIST Framework, Risk Management</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-2xl font-bold text-green-600">35%</div>
+                                            <div class="text-sm text-gray-500">~35 questions</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
+                                        <div>
+                                            <h4 class="font-semibold">AI Governance & Ethics</h4>
+                                            <p class="text-sm text-gray-600">Ontario AI Directive</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-2xl font-bold text-purple-600">15%</div>
+                                            <div class="text-sm text-gray-500">~15 questions</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
+                                        <div>
+                                            <h4 class="font-semibold">Data Management</h4>
+                                            <p class="text-sm text-gray-600">Classification, Lifecycle</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-2xl font-bold text-orange-600">25%</div>
+                                            <div class="text-sm text-gray-500">~25 questions</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-4">Assessment Details</h3>
+                                <div class="space-y-4">
+                                    <div class="p-4 border rounded-lg">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-semibold">Total Questions:</span>
+                                            <span>100</span>
+                                        </div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-semibold">Time Limit:</span>
+                                            <span>120 minutes</span>
+                                        </div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-semibold">Passing Score:</span>
+                                            <span>80%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-semibold">Question Types:</span>
+                                            <span>Multiple Choice</span>
+                                        </div>
+                                        <div class="flex justify-between items-center">
+                                            <span class="font-semibold">Retakes:</span>
+                                            <span>Unlimited</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                        <h4 class="font-semibold text-yellow-800 mb-2">Minimum Competent Candidate (MCC)</h4>
+                                        <p class="text-sm text-yellow-700">Questions are calibrated to test knowledge and skills that a minimally competent cybersecurity professional should possess for Ontario compliance requirements.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sample Questions -->
+                    <div class="bg-white rounded-xl shadow-lg border p-8 mb-12">
+                        <h2 class="text-2xl font-bold mb-6 text-center">Sample Practice Questions</h2>
+                        
+                        <div class="space-y-8">
+                            <div class="border rounded-lg p-6">
+                                <div class="mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-semibold">Privacy Law & Compliance</span>
+                                </div>
+                                <h3 class="font-bold mb-4">Question 1 of 100</h3>
+                                <p class="mb-4">Under PIPEDA, which of the following best describes the "Limiting Use, Disclosure, and Retention" principle?</p>
+                                <div class="space-y-2">
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample1" value="a" class="mr-3 mt-1">
+                                        <span>A) Personal information shall not be used or disclosed for purposes other than those for which it was collected, except with consent or as required by law</span>
+                                    </label>
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample1" value="b" class="mr-3 mt-1">
+                                        <span>B) Organizations must obtain explicit written consent for all uses of personal information</span>
+                                    </label>
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample1" value="c" class="mr-3 mt-1">
+                                        <span>C) Personal information can be retained indefinitely for business purposes</span>
+                                    </label>
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample1" value="d" class="mr-3 mt-1">
+                                        <span>D) Third-party sharing requires approval from the Privacy Commissioner</span>
+                                    </label>
+                                </div>
+                                <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                    <h4 class="font-semibold text-green-800 mb-2">Correct Answer: A</h4>
+                                    <p class="text-sm text-green-700">This principle requires that personal information only be used for the stated purpose unless consent is obtained or law requires disclosure. It also mandates that information be retained only as long as necessary.</p>
+                                </div>
+                            </div>
+
+                            <div class="border rounded-lg p-6">
+                                <div class="mb-4">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-semibold">Cybersecurity Fundamentals</span>
+                                </div>
+                                <h3 class="font-bold mb-4">Question 45 of 100</h3>
+                                <p class="mb-4">According to the NIST Cybersecurity Framework 2.0, which function focuses on developing and implementing appropriate activities to identify the occurrence of a cybersecurity event?</p>
+                                <div class="space-y-2">
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample2" value="a" class="mr-3 mt-1">
+                                        <span>A) Govern (GV)</span>
+                                    </label>
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample2" value="b" class="mr-3 mt-1">
+                                        <span>B) Identify (ID)</span>
+                                    </label>
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample2" value="c" class="mr-3 mt-1">
+                                        <span>C) Detect (DE)</span>
+                                    </label>
+                                    <label class="flex items-start p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                        <input type="radio" name="sample2" value="d" class="mr-3 mt-1">
+                                        <span>D) Respond (RS)</span>
+                                    </label>
+                                </div>
+                                <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                    <h4 class="font-semibold text-green-800 mb-2">Correct Answer: C</h4>
+                                    <p class="text-sm text-green-700">The Detect (DE) function focuses on developing and implementing appropriate activities to identify the occurrence of a cybersecurity event. This includes continuous monitoring and detection processes.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-8">
+                            <p class="text-gray-600 mb-4">These are just 2 examples from our comprehensive 200+ question bank.</p>
+                            <button class="btn-ontario text-white px-8 py-3 rounded-lg font-semibold" onclick="selectPackage('practice-exam-demo', 49)">
+                                Start Practice Exam
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Performance Analytics Preview -->
+                    <div class="bg-white rounded-xl shadow-lg border p-8">
+                        <h2 class="text-2xl font-bold mb-6 text-center">Performance Analytics Dashboard</h2>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-lg font-bold mb-4">Domain Performance</h3>
+                                <div class="chart-container">
+                                    <canvas id="domainChart" style="height: 300px;"></canvas>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-4">Progress Over Time</h3>
+                                <div class="chart-container">
+                                    <canvas id="progressChart" style="height: 300px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 grid md:grid-cols-4 gap-4">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-600">87%</div>
+                                <div class="text-sm text-gray-600">Overall Score</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">3</div>
+                                <div class="text-sm text-gray-600">Attempts</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600">92 min</div>
+                                <div class="text-sm text-gray-600">Average Time</div>
+                            </div>
+                            <div class="text-center p-4 bg-orange-50 rounded-lg">
+                                <div class="text-2xl font-bold text-orange-600">Ready</div>
+                                <div class="text-sm text-gray-600">Certification Status</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CPD Section -->
+        <section id="cpd" class="section-view hidden">
+            <div class="py-8 print-optimized">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- CPD Header -->
+                    <div class="text-center mb-12">
+                        <h1 class="text-4xl font-bold text-gray-800 mb-4">Continuing Professional Development (CPD)</h1>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Maintain your certification with our comprehensive CPD credit tracking system. Meet annual requirements and stay current with evolving cybersecurity practices.</p>
+                    </div>
+
+                    <!-- CPD Overview Cards -->
+                    <div class="grid md:grid-cols-4 gap-6 mb-12">
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm text-gray-600">Current Year Progress</p>
+                                    <p class="text-2xl font-bold text-blue-600">8.5/12</p>
+                                    <p class="text-xs text-gray-500">Hours completed</p>
+                                </div>
+                                <div class="w-16 h-16">
+                                    <svg class="progress-ring w-16 h-16">
+                                        <circle class="progress-ring-circle stroke-current text-blue-600" stroke-width="4" fill="transparent" r="30" cx="32" cy="32" style="stroke-dashoffset: 94;"></circle>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 71%"></div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <i class="fas fa-calendar-alt text-3xl text-green-600 mb-2"></i>
+                                <p class="text-sm text-gray-600">Renewal Date</p>
+                                <p class="text-lg font-bold">Dec 15, 2025</p>
+                                <p class="text-xs text-green-600">127 days remaining</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <i class="fas fa-trophy text-3xl text-orange-600 mb-2"></i>
+                                <p class="text-sm text-gray-600">Activities Completed</p>
+                                <p class="text-lg font-bold">12</p>
+                                <p class="text-xs text-orange-600">This year</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-lg border">
+                            <div class="text-center">
+                                <i class="fas fa-star text-3xl text-purple-600 mb-2"></i>
+                                <p class="text-sm text-gray-600">Compliance Status</p>
+                                <p class="text-lg font-bold text-green-600">On Track</p>
+                                <p class="text-xs text-purple-600">71% complete</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CPD Requirements -->
+                    <div class="bg-white rounded-xl shadow-lg border p-8 mb-12">
+                        <h2 class="text-2xl font-bold mb-6">Annual CPD Requirements</h2>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 class="text-lg font-bold mb-4 text-blue-600">Group A: Domain-Related Activities</h3>
+                                <p class="text-sm text-gray-600 mb-4">Cybersecurity, privacy, data protection, and AI governance content</p>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                        <span class="font-semibold">Required:</span>
+                                        <span>8 hours minimum</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                        <span class="font-semibold">Completed:</span>
+                                        <span class="text-green-600">6.5 hours</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                                        <span class="font-semibold">Remaining:</span>
+                                        <span class="text-orange-600">1.5 hours</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4 class="font-semibold mb-2">Eligible Activities:</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Training courses and webinars</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Professional conferences</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Industry certifications</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Technical publications</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Research activities</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold mb-4 text-green-600">Group B: Professional Skills</h3>
+                                <p class="text-sm text-gray-600 mb-4">Leadership, communication, project management, and business skills</p>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                        <span class="font-semibold">Required:</span>
+                                        <span>4 hours maximum</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                        <span class="font-semibold">Completed:</span>
+                                        <span class="text-green-600">2.0 hours</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                        <span class="font-semibold">Available:</span>
+                                        <span class="text-blue-600">2.0 hours</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4 class="font-semibold mb-2">Eligible Activities:</h4>
+                                    <ul class="text-sm space-y-1">
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Leadership development</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Communication skills training</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Project management courses</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Business strategy workshops</li>
+                                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Ethics and compliance training</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <!-- Main Activity Log -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-white rounded-xl shadow-lg border p-8">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-2xl font-bold">CPD Activity Log</h2>
+                                    <button class="btn-ontario text-white px-4 py-2 rounded-lg font-semibold" onclick="showAddActivity()">
+                                        <i class="fas fa-plus mr-2"></i>Add Activity
+                                    </button>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div>
+                                                <h3 class="font-semibold">Ontario Privacy Commissioner Webinar</h3>
+                                                <p class="text-sm text-gray-600">PIPEDA Enforcement Updates and Guidance</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">Group A</span>
+                                                <div class="text-sm font-bold mt-1">2.0 hours</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm text-gray-500">
+                                            <span>Completed: March 15, 2025</span>
+                                            <span>Verified: Auto</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div>
+                                                <h3 class="font-semibold">NIST Cybersecurity Framework 2.0 Training</h3>
+                                                <p class="text-sm text-gray-600">Implementation Guide and Best Practices</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-semibold">Group A</span>
+                                                <div class="text-sm font-bold mt-1">4.0 hours</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm text-gray-500">
+                                            <span>Completed: February 28, 2025</span>
+                                            <span>Verified: Certificate</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div>
+                                                <h3 class="font-semibold">Leadership in Crisis Management</h3>
+                                                <p class="text-sm text-gray-600">Professional Skills Development Course</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Group B</span>
+                                                <div class="text-sm font-bold mt-1">1.5 hours</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm text-gray-500">
+                                            <span>Completed: January 20, 2025</span>
+                                            <span>Verified: Manual</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="border rounded-lg p-4 hover:bg-gray-50 bg-yellow-50 border-yellow-200">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <div>
+                                                <h3 class="font-semibold">AI Ethics in Government Workshop</h3>
+                                                <p class="text-sm text-gray-600">Pending verification - Documentation submitted</p>
+                                            </div>
+                                            <div class="text-right">
+                                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Pending</span>
+                                                <div class="text-sm font-bold mt-1">0.5 hours</div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between items-center text-sm text-gray-500">
+                                            <span>Completed: March 10, 2025</span>
+                                            <span>Status: Under Review</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 text-center">
+                                    <button class="text-blue-600 hover:text-blue-800 font-semibold">View All Activities</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="space-y-6">
+                            <!-- Quick Actions -->
+                            <div class="bg-white rounded-xl shadow-lg border p-6">
+                                <h3 class="text-lg font-bold mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full btn-ontario text-white py-2 rounded-lg font-semibold" onclick="showAddActivity()">
+                                        <i class="fas fa-plus mr-2"></i>Add Activity
+                                    </button>
+                                    <button class="w-full border border-blue-600 text-blue-600 py-2 rounded-lg font-semibold hover:bg-blue-50
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDiOz2p718l3w9gmlBxjglUAcVdEcF6tSE17XB1rRgDpVDEA2sMVZ01SS2XphvNPQClRVFExWisL1kTDZNP%2BjmIeGqNRu6egxh%2Fko7XPfPSwuHE79wTisQrXB%2FN62yCVs%2Fk17CYK6FdMabBNM%2FsnNTafmoTJwgLJLet8q1GoGrNy7xocEH9%2BrpxPQ3IpUZ2yOucbTuJD6htHmoVzC%2F5tEUgZUaA8Rexv5qsuWALI%2B9%2BS6SNn7fvkYrTCT39rIfOSP9A02oDGXkUJuPBJhONvA8%2Fsnpi9LEsoAk8nxZQxE3eomd9sI8v%2FF%2BWyMH5xDt9ZCExs8FQuXRQZQn3B6nLNC6Z0lkACULdlYWy3qgGHvldm%2B4U82Hhd50lnU7NECwQW7bIzkjWR6cVFtSelXWQHmvNPplyvEp9IveY0%2BO15Lu1i4UmlHI%2F4oxRiJv6h2ETR%2BudQcWw0ArkZ8gndGPynUXj5U6rXLRulTZ%2FIslg6rXgVAhTq6EKl367oai2RUxOd7GMGceenvAYIT1GfoHj1p898%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDiOz2p718l3w9gmlBxjglUAcVdEcF6tSE17XB1rRgDpVDEA2sMVZ01SS2XphvNPQClRVFExWisL1kTDZNP+jmIeGqNRu6egxh/ko7XPfPSwuHE79wTisQrXB/N62yCVs/k17CYK6FdMabBNM/snNTafmoTJwgLJLet8q1GoGrNy7xocEH9+rpxPQ3IpUZ2yOucbTuJD6htHmoVzC/5tEUgZUaA8Rexv5qsuWALI+9+S6SNn7fvkYrTCT39rIfOSP9A02oDGXkUJuPBJhONvA8/snpi9LEsoAk8nxZQxE3eomd9sI8v/F+WyMH5xDt9ZCExs8FQuXRQZQn3B6nLNC6Z0lkACULdlYWy3qgGHvldm+4U82Hhd50lnU7NECwQW7bIzkjWR6cVFtSelXWQHmvNPplyvEp9IveY0+O15Lu1i4UmlHI/4oxRiJv6h2ETR+udQcWw0ArkZ8gndGPynUXj5U6rXLRulTZ/Islg6rXgVAhTq6EKl367oai2RUxOd7GMGceenvAYIT1GfoHj1p898=";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    

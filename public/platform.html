@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ontario Cybersecurity Training & Certification Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --ontario-blue: #003c71;
+            --ontario-green: #4d7c0f;
+            --ontario-light-blue: #e6f3ff;
+            --ontario-dark-blue: #002a52;
+        }
+
+        .ontario-gradient {
+            background: linear-gradient(135deg, var(--ontario-blue) 0%, var(--ontario-green) 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--ontario-green), var(--ontario-blue));
+            transition: width 0.5s ease;
+        }
+
+        .tab-active {
+            background: var(--ontario-blue);
+            color: white;
+        }
+
+        .dark-theme {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .certificate-template {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border: 3px double var(--ontario-blue);
+            position: relative;
+        }
+
+        .certificate-seal {
+            width: 80px;
+            height: 80px;
+            background: var(--ontario-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+         {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Notification System -->
+    <div id="notification" class="notification bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
+        <span id="notificationText"></span>
+    </div>
+
+    <!-- Header -->
+    <header class="ontario-gradient text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/33c25828-3c19-4cbe-82a4-2808b8c603c9" alt="Ontario Cybersecurity Training Platform" class="h-12 w-auto">
+                    <div>
+                        <h1 class="text-2xl font-bold">Ontario Cybersecurity Training Platform</h1>
+                        <p class="text-sm opacity-90">Professional Certification for Businesses & Municipalities</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="themeToggle" class="p-2 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div id="userArea" class="hidden">
+                        <span id="userName" class="mr-4"></span>
+                        <button id="logoutBtn" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition">Logout</button>
+                    </div>
+                    <div id="authArea">
+                        <button id="loginBtn" class="bg-white text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition mr-2">Login</button>
+                        <button id="registerBtn" class="border-2 border-white px-4 py-2 rounded-lg font-semibold hover:bg-white hover:text-blue-900 transition">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <ul class="flex space-x-8 py-4">
+                <li><a href="#" onclick="showTab('home')" class="tab-link text-gray-700 hover:text-blue-900 font-medium transition">Home</a></li>
+                <li><a href="#" onclick="showTab('courses')" class="tab-link text-gray-700 hover:text-blue-900 font-medium transition">Training Modules</a></li>
+                <li><a href="#" onclick="showTab('pricing')" class="tab-link text-gray-700 hover:text-blue-900 font-medium transition">Pricing</a></li>
+                <li><a href="#" onclick="showTab('dashboard')" class="tab-link text-gray-700 hover:text-blue-900 font-medium transition hidden" id="dashboardTab">Dashboard</a></li>
+                <li><a href="#" onclick="showTab('certificates')" class="tab-link text-gray-700 hover:text-blue-900 font-medium transition hidden" id="certificatesTab">Certificates</a></li>
+                <li><a href="#" onclick="showTab('cpd')" class="tab-link text-gray-700 hover:text-blue-900 font-medium transition hidden" id="cpdTab">CPD Credits</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Home Tab -->
+        <div id="home" class="tab-content">
+            <!-- Hero Section -->
+            <section class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-6">Professional Cybersecurity Training for Ontario</h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-4xl mx-auto">Comprehensive training program designed specifically for Ontario businesses and municipalities, covering PIPEDA, FIPPA, Bill 194, and AI governance requirements.</p>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="card-hover bg-white p-8 rounded-xl shadow-lg">
+                        <div class="text-blue-900 text-4xl mb-4"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Ontario Compliant</h3>
+                        <p class="text-gray-600">Fully aligned with Ontario privacy laws, Bill 194, and AI governance requirements.</p>
+                    </div>
+                    <div class="card-hover bg-white p-8 rounded-xl shadow-lg">
+                        <div class="text-green-700 text-4xl mb-4"><i class="fas fa-certificate"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Professional Certification</h3>
+                        <p class="text-gray-600">Industry-recognized certification with CPD credits and ongoing maintenance.</p>
+                    </div>
+                    <div class="card-hover bg-white p-8 rounded-xl shadow-lg">
+                        <div class="text-purple-600 text-4xl mb-4"><i class="fas fa-users"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Enterprise Ready</h3>
+                        <p class="text-gray-600">Scalable solutions for small businesses, municipalities, and large organizations.</p>
+                    </div>
+                </div>
+
+                <button onclick="showTab('courses')" class="ontario-gradient text-white px-8 py-4 rounded-lg text-lg font-semibold hover:opacity-90 transition">Start Training Now</button>
+            </section>
+
+            <!-- Key Features -->
+            <section class="mb-16">
+                <h3 class="text-3xl font-bold text-center text-gray-800 mb-12">Comprehensive Training Program</h3>
+                
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h4 class="text-2xl font-bold mb-6 text-blue-900">Legislative Compliance</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>PIPEDA - Personal Information Protection</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>FIPPA - Freedom of Information Act</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Bill 194 - Cybersecurity & Trust Act</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>AI Governance & Ethics</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Data Management Best Practices</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h4 class="text-2xl font-bold mb-6 text-blue-900">Professional Features</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Progress Tracking & Analytics</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>CPD Credit Management</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Interactive Simulations</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>Digital Certificates & Badges</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-3"></i>24/7 Support & Resources</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Training Modules Tab -->
+        <div id="courses" class="tab-content hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Training Modules</h2>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Module 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="ontario-gradient p-6 text-white">
+                        <h3 class="text-2xl font-bold mb-2">Module 1: Ontario Privacy Law Foundations</h3>
+                        <p class="opacity-90">6 Hours • Beginner to Intermediate</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Learning Objectives:</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Master PIPEDA's 10 Fair Information Principles</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Understand FIPPA requirements for municipalities</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Implement Bill 194 cybersecurity requirements</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Conduct Privacy Impact Assessments</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Key Topics:</h4>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">PIPEDA Compliance</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">Consent Management</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">Breach Response</span>
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full">Municipal FIPPA</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Interactive Elements:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• Privacy Policy Generator Tool</li>
+                                <li>• Breach Response Simulation</li>
+                                <li>• PIA Template & Walkthrough</li>
+                                <li>• Real Case Study Analysis</li>
+                            </ul>
+                        </div>
+                        
+                        <button onclick="startModule(1)" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Start Module 1</button>
+                    </div>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="ontario-gradient p-6 text-white">
+                        <h3 class="text-2xl font-bold mb-2">Module 2: Cybersecurity Fundamentals</h3>
+                        <p class="opacity-90">8 Hours • Intermediate to Advanced</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Learning Objectives:</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Implement NIST Cybersecurity Framework</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Develop incident response capabilities</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Deploy technical security controls</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Build security awareness programs</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Key Topics:</h4>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full">Risk Assessment</span>
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">Network Security</span>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">Incident Response</span>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">Security Training</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Hands-On Labs:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• Risk Assessment Workshop</li>
+                                <li>• Incident Response Tabletop</li>
+                                <li>• Phishing Simulation Setup</li>
+                                <li>• Security Controls Implementation</li>
+                            </ul>
+                        </div>
+                        
+                        <button onclick="startModule(2)" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Start Module 2</button>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="ontario-gradient p-6 text-white">
+                        <h3 class="text-2xl font-bold mb-2">Module 3: AI Governance & Ethics</h3>
+                        <p class="opacity-90">4 Hours • Intermediate</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Learning Objectives:</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Apply Ontario's AI Directive principles</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Conduct AI risk assessments</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Implement bias detection methods</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Establish AI governance frameworks</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Key Topics:</h4>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">AI Ethics</span>
+                                <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full">Bias Detection</span>
+                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">Risk Management</span>
+                                <span class="bg-teal-100 text-teal-800 px-3 py-1 rounded-full">Transparency</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Practical Exercises:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• AI Risk Assessment Tool</li>
+                                <li>• Bias Testing Scenarios</li>
+                                <li>• Policy Template Development</li>
+                                <li>• Transparency Report Creation</li>
+                            </ul>
+                        </div>
+                        
+                        <button onclick="startModule(3)" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Start Module 3</button>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="ontario-gradient p-6 text-white">
+                        <h3 class="text-2xl font-bold mb-2">Module 4: Data Management Excellence</h3>
+                        <p class="opacity-90">6 Hours • Intermediate to Advanced</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Learning Objectives:</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Implement data classification schemes</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Manage records lifecycle effectively</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Assess third-party risks</li>
+                                <li class="flex items-start"><i class="fas fa-chevron-right text-blue-500 mr-2 mt-1"></i>Ensure compliance across systems</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Key Topics:</h4>
+                            <div class="grid grid-cols-2 gap-2 text-sm">
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full">Data Classification</span>
+                                <span class="bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full">Records Management</span>
+                                <span class="bg-lime-100 text-lime-800 px-3 py-1 rounded-full">Vendor Risk</span>
+                                <span class="bg-rose-100 text-rose-800 px-3 py-1 rounded-full">Compliance</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3">Tools & Templates:</h4>
+                            <ul class="space-y-1 text-sm text-gray-600">
+                                <li>• Data Classification Matrix</li>
+                                <li>• Retention Schedule Builder</li>
+                                <li>• Vendor Assessment Forms</li>
+                                <li>• Compliance Checklists</li>
+                            </ul>
+                        </div>
+                        
+                        <button onclick="startModule(4)" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Start Module 4</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Assessment -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+                <h3 class="text-2xl font-bold mb-6 text-center">Final Certification Examination</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-lg mb-4">Exam Details:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-clock text-blue-500 mr-3"></i>120 minutes duration</li>
+                            <li class="flex items-center"><i class="fas fa-question-circle text-blue-500 mr-3"></i>100 multiple choice & scenario questions</li>
+                            <li class="flex items-center"><i class="fas fa-percentage text-blue-500 mr-3"></i>80% passing score required</li>
+                            <li class="flex items-center"><i class="fas fa-redo text-blue-500 mr-3"></i>3 attempts allowed</li>
+                            <li class="flex items-center"><i class="fas fa-shield-alt text-blue-500 mr-3"></i>Proctored online examination</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-4">Upon Completion:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-certificate text-green-500 mr-3"></i>Professional Digital Certificate</li>
+                            <li class="flex items-center"><i class="fas fa-badge-check text-green-500 mr-3"></i>LinkedIn Digital Badge</li>
+                            <li class="flex items-center"><i class="fas fa-calendar-check text-green-500 mr-3"></i>12 CPD Credits Earned</li>
+                            <li class="flex items-center"><i class="fas fa-download text-green-500 mr-3"></i>Downloadable Resources</li>
+                            <li class="flex items-center"><i class="fas fa-support text-green-500 mr-3"></i>Ongoing Support Access</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Tab -->
+        <div id="pricing" class="tab-content hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Pricing Plans</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Individual Plan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="bg-blue-50 p-6 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Individual Certification</h3>
+                        <div class="text-4xl font-bold text-blue-600 mb-2">$149<span class="text-lg text-gray-500"> CAD</span></div>
+                        <p class="text-gray-600">Perfect for professionals</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Complete 4-module training</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Professional certification</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Digital badge & LinkedIn integration</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>12 CPD credits</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>3-year validity</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Email support</li>
+                        </ul>
+                        <button onclick="selectPlan('individual')" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Choose Individual</button>
+                    </div>
+                </div>
+
+                <!-- Small Business Plan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover border-4 border-green-500 relative">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-4 py-1 rounded-full text-sm font-bold">
+                        MOST POPULAR
+                    </div>
+                    <div class="bg-green-50 p-6 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Small Business Package</h3>
+                        <div class="text-4xl font-bold text-green-600 mb-2">$999<span class="text-lg text-gray-500"> CAD</span></div>
+                        <p class="text-gray-600">Up to 10 users</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Everything in Individual plan</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Admin dashboard & reporting</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Bulk user management</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Organization certificates</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Priority support</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Custom branding options</li>
+                        </ul>
+                        <button onclick="selectPlan('small-business')" class="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">Choose Small Business</button>
+                    </div>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                    <div class="bg-purple-50 p-6 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Municipal/Enterprise</h3>
+                        <div class="text-4xl font-bold text-purple-600 mb-2">$2,499<span class="text-lg text-gray-500"> CAD</span></div>
+                        <p class="text-gray-600">Unlimited users</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Everything in Small Business</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited users</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Advanced analytics & reporting</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>API integration</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Dedicated support manager</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Custom content development</li>
+                        </ul>
+                        <button onclick="selectPlan('enterprise')" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition">Choose Enterprise</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CPD Maintenance -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-center mb-6">Continuing Professional Development (CPD)</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">Annual CPD Requirements</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-center"><i class="fas fa-clock text-blue-500 mr-3"></i>Minimum 12 hours annually</li>
+                            <li class="flex items-center"><i class="fas fa-calendar text-blue-500 mr-3"></i>Certificate valid for 3 years</li>
+                            <li class="flex items-center"><i class="fas fa-sync text-blue-500 mr-3"></i>Automatic renewal with compliance</li>
+                            <li class="flex items-center"><i class="fas fa-file-alt text-blue-500 mr-3"></i>Digital transcript tracking</li>
+                        </ul>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-yellow-100 p-6 rounded-lg">
+                            <div class="text-3xl font-bold text-yellow-700 mb-2">$49 CAD</div>
+                            <p class="text-yellow-800 font-semibold">Per person, per year</p>
+                            <p class="text-sm text-yellow-700 mt-2">Includes updates, webinars, and compliance tracking</p>
+                        </div>
+                        <button onclick="selectPlan('cpd')" class="mt-4 bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-yellow-600 transition">Enroll in CPD</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Learning Dashboard</h2>
+            
+            <!-- Progress Overview -->
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2" id="overallProgress">0%</div>
+                    <p class="text-gray-600">Overall Progress</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-green-600 mb-2" id="modulesCompleted">0/4</div>
+                    <p class="text-gray-600">Modules Completed</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-2" id="cpdCredits">0</div>
+                    <p class="text-gray-600">CPD Credits</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-orange-600 mb-2" id="studyTime">0h</div>
+                    <p class="text-gray-600">Study Time</p>
+                </div>
+            </div>
+
+            <!-- Module Progress -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Module Progress</h3>
+                <div class="space-y-6">
+                    <div class="module-progress" data-module="1">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold">Module 1: Ontario Privacy Law Foundations</span>
+                            <span class="text-blue-600 font-bold" id="progress-1">0%</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="module-progress" data-module="2">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold">Module 2: Cybersecurity Fundamentals</span>
+                            <span class="text-blue-600 font-bold" id="progress-2">0%</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="module-progress" data-module="3">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold">Module 3: AI Governance & Ethics</span>
+                            <span class="text-blue-600 font-bold" id="progress-3">0%</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="module-progress" data-module="4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold">Module 4: Data Management Excellence</span>
+                            <span class="text-blue-600 font-bold" id="progress-4">0%</span>
+                        </div>
+                        <div class="bg-gray-200 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Chart -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold mb-6">Learning Analytics</h3>
+                <div style="height: 400px;">
+                    <canvas id="learningChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certificates Tab -->
+        <div id="certificates" class="tab-content hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Certificates & Credentials</h2>
+            
+            <!-- Current Certificate -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Your Professional Certificate</h3>
+                
+                <div class="certificate-template p-8 rounded-lg mb-6" id="userCertificate">
+                    <div class="text-center mb-8">
+                        <img src="https://cdn1.genspark.ai/user-upload-image/3_generated/33c25828-3c19-4cbe-82a4-2808b8c603c9" alt="Ontario Cybersecurity Platform" class="h-16 mx-auto mb-4">
+                        <h2 class="text-3xl font-bold text-blue-900 mb-2">Certificate of Completion</h2>
+                        <p class="text-lg text-gray-700">Ontario Cybersecurity Training & Certification Program</p>
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <p class="text-xl mb-4">This certifies that</p>
+                        <div class="text-4xl font-bold text-blue-900 mb-4 border-b-2 border-blue-900 pb-2 inline-block" id="certificateName">
+                            [Your Name Here]
+                        </div>
+                        <p class="text-lg">has successfully completed the comprehensive cybersecurity training program covering Ontario privacy laws, cybersecurity fundamentals, AI governance, and data management practices.</p>
+                    </div>
+                    
+                    <div class="flex justify-between items-end">
+                        <div class="text-center">
+                            <div class="certificate-seal mb-4 mx-auto">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <p class="text-sm font-semibold">Official Seal</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <p class="text-sm">Completion Date: <span id="completionDate">TBD</span></p>
+                                <p class="text-sm">Certificate ID: <span id="certificateId">ONTCS-2025-000001</span></p>
+                                <p class="text-sm">Valid Until: <span id="validUntil">TBD</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="mb-4 h-16 flex items-end">
+                                <div class="border-t border-black w-32 text-center">
+                                    <p class="text-sm mt-2">Program Director</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center space-x-4">
+                    <button onclick="downloadCertificate()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                        <i class="fas fa-download mr-2"></i>Download Certificate
+                    </button>
+                    <button onclick="shareCertificate()" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                        <i class="fas fa-share mr-2"></i>Share on LinkedIn
+                    </button>
+                    <button onclick="verifyCertificate()" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition">
+                        <i class="fas fa-search mr-2"></i>Verify Certificate
+                    </button>
+                </div>
+            </div>
+
+            <!-- Digital Badge -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold mb-6">Digital Badge</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="w-32 h-32 bg-gradient-to-br from-blue-500 to-green-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-4xl">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Ontario Cybersecurity Certified Professional</h4>
+                        <p class="text-gray-600 mb-4">Issued by Ontario Cybersecurity Training Platform</p>
+                        <button onclick="addToLinkedIn()" class="bg-blue-700 text-white px-6 py-2 rounded-lg hover:bg-blue-800 transition">
+                            Add to LinkedIn Profile
+                        </button>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Badge Criteria:</h4>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Completed all 4 training modules</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Passed comprehensive examination (80%+)</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Demonstrated competency in Ontario cybersecurity law</li>
+                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Earned 12 CPD credits</li>
+                        </ul>
+                        
+                        <h4 class="text-lg font-bold mb-4 mt-6">Skills Validated:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">PIPEDA Compliance</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">FIPPA Implementation</span>
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">AI Governance</span>
+                            <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm">Risk Management</span>
+                            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Incident Response</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">Data Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CPD Tab -->
+        <div id="cpd" class="tab-content hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Continuing Professional Development (CPD)</h2>
+            
+            <!-- CPD Overview -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-green-600 mb-2" id="currentCPD">0</div>
+                    <p class="text-gray-600">Current Year Credits</p>
+                    <div class="text-sm text-gray-500 mt-2">Required: 12 hours</div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-blue-600 mb-2" id="totalCPD">0</div>
+                    <p class="text-gray-600">Total Credits Earned</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl font-bold text-orange-600 mb-2" id="daysToRenewal">365</div>
+                    <p class="text-gray-600">Days to Renewal</p>
+                </div>
+            </div>
+
+            <!-- CPD Progress -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Annual CPD Progress</h3>
+                <div class="mb-4">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Progress to Annual Requirement</span>
+                        <span class="font-bold text-blue-600" id="cpdProgress">0/12 hours</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-4">
+                        <div class="bg-green-500 h-4 rounded-full transition-all duration-500" style="width: 0%" id="cpdProgressBar"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600">Complete your annual 12-hour requirement to maintain your certification.</p>
+            </div>
+
+            <!-- CPD Activities -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Available CPD Activities</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-3">Online Webinars</h4>
+                        <p class="text-gray-600 mb-4">Monthly webinars covering current topics in cybersecurity and privacy law.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm"><i class="fas fa-calendar text-blue-500 mr-2"></i>Monthly schedule</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-clock text-blue-500 mr-2"></i>1-2 CPD credits per session</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-video text-blue-500 mr-2"></i>Live and recorded options</li>
+                        </ul>
+                        <button onclick="viewWebinars()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">View Schedule</button>
+                    </div>
+                    
+                    <div class="border rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-3">Professional Conferences</h4>
+                        <p class="text-gray-600 mb-4">Attend approved cybersecurity and privacy conferences for CPD credits.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm"><i class="fas fa-users text-green-500 mr-2"></i>Industry networking</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-trophy text-green-500 mr-2"></i>Up to 8 CPD credits</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-globe text-green-500 mr-2"></i>Virtual and in-person</li>
+                        </ul>
+                        <button onclick="viewConferences()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition">Find Conferences</button>
+                    </div>
+                    
+                    <div class="border rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-3">Self-Study Courses</h4>
+                        <p class="text-gray-600 mb-4">Complete additional online courses and training materials.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm"><i class="fas fa-book text-purple-500 mr-2"></i>Flexible scheduling</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-certificate text-purple-500 mr-2"></i>Various credit values</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-laptop text-purple-500 mr-2"></i>Online platform</li>
+                        </ul>
+                        <button onclick="viewCourses()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">Browse Courses</button>
+                    </div>
+                    
+                    <div class="border rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-3">Professional Activities</h4>
+                        <p class="text-gray-600 mb-4">Volunteer work, mentoring, and industry contributions.</p>
+                        <ul class="space-y-2 mb-4">
+                            <li class="flex items-center text-sm"><i class="fas fa-hands-helping text-orange-500 mr-2"></i>Volunteer opportunities</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-user-graduate text-orange-500 mr-2"></i>Mentoring programs</li>
+                            <li class="flex items-center text-sm"><i class="fas fa-edit text-orange-500 mr-2"></i>Content creation</li>
+                        </ul>
+                        <button onclick="submitActivity()" class="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">Submit Activity</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CPD History -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="text-2xl font-bold mb-6">CPD History</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-4 py-3 text-left">Date</th>
+                                <th class="px-4 py-3 text-left">Activity</th>
+                                <th class="px-4 py-3 text-left">Type</th>
+                                <th class="px-4 py-3 text-left">Credits</th>
+                                <th class="px-4 py-3 text-left">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cpdHistory">
+                            <tr>
+                                <td colspan="5" class="px-4 py-8 text-center text-gray-500">No CPD activities recorded yet. Start learning to earn credits!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="bg-white rounded-xl p-8 w-full max-w-md mx-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                </div>
+                <button type="submit" class="w-full ontario-gradient text-white py-3 rounded-lg font-semibold hover:opacity-90 transition">Login</button>
+                <div class="text-center mt-4">
+                    <a href="#" class="text-blue-600 hover:underline text-sm">Forgot Password?</a>
+                </div>
+            </form>
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+        <div class="bg-white rounded-xl p-8 w-full max-w-md mx-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Create Your Account</h2>
+            <form id="registerForm">
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">First Name</label>
+                        <input type="text" id="firstName" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Last Name</label>
+                        <input type="text" id="lastName" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="registerEmail" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Organization</label>
+                    <input type="text" id="organization" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="registerPassword" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                    <div class="text-sm text-gray-500 mt-1">Must be at least 8 characters with uppercase, lowercase, and number</div>
+                </div>
+                <button type="submit" class="w-full ontario-gradient text-white py-3 rounded-lg font-semibold hover:opacity-90 transition">Create Account</button>
+            </form>
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="bg-white rounded-xl p-8 w-full max-w-2xl mx-4">
+            <h2 class="text-2xl font-bold mb-6 text-center">Complete Your Purchase</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Order Summary</h3>
+                    <div id="orderSummary" class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <!-- Order details will be populated here -->
+                    </div>
+                    
+                    <h3 class="text-xl font-bold mb-4">Payment Method</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center p-3 border rounded-lg cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="card" checked class="mr-3">
+                            <i class="fas fa-credit-card mr-2"></i>Credit/Debit Card
+                        </label>
+                        <label class="flex items-center p-3 border rounded-lg cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="paypal" class="mr-3">
+                            <i class="fab fa-paypal mr-2"></i>PayPal
+                        </label>
+                        <label class="flex items-center p-3 border rounded-lg cursor-pointer">
+                            <input type="radio" name="paymentMethod" value="wire" class="mr-3">
+                            <i class="fas fa-university mr-2"></i>Wire Transfer
+                        </label>
+                    </div>
+                </div>
+                
+                <div id="cardPayment">
+                    <h3 class="text-xl font-bold mb-4">Card Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Card Number</label>
+                            <input type="text" placeholder="1234 5678 9012 3456" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Expiry</label>
+                                <input type="text" placeholder="MM/YY" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">CVC</label>
+                                <input type="text" placeholder="123" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Cardholder Name</label>
+                            <input type="text" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+                    
+                    <button onclick="processPayment()" class="w-full ontario-gradient text-white py-3 rounded-lg font-semibold hover:opacity-90 transition mt-6">
+                        Complete Purchase
+                    </button>
+                </div>
+            </div>
+            
+            <button onclick="closeModal('paymentModal')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        let currentUser = null;
+        let currentTab = 'home';
+        let userProgress = {
+            modules: [0, 0, 0, 0],
+            completedModules: 0,
+            totalProgress: 0,
+            cpdCredits: 0,
+            studyTime: 0,
+            certificates: [],
+            paymentHistory: [],
+            cpdHistory: []
+        };
+
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('darkMode', isDarkMode);
+            document.body.classList.toggle('dark-theme', isDarkMode);
+            themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // Initialize theme
+        if (isDarkMode) {
+            document.body.classList.add('dark-theme');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Tab Management
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Remove active class from all links
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.classList.remove('tab-active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.remove('hidden');
+            
+            // Add active class to clicked link
+            event.target.classList.add('tab-active');
+            
+            currentTab = tabName;
+            
+            // Initialize tab-specific content
+            if (tabName === 'dashboard' && currentUser) {
+                updateDashboard();
+            } else if (tabName === 'certificates' && currentUser) {
+                updateCertificate();
+            } else if (tabName === 'cpd' && currentUser) {
+                updateCPD();
+            }
+        }
+
+        // Authentication
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('show');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `notification ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white px-6 py-3 rounded-lg shadow-lg show`;
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Login functionality
+        document.getElementById('loginBtn').addEventListener('click', () => showModal('loginModal'));
+        document.getElementById('registerBtn').addEventListener('click', () => showModal('registerModal'));
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Simulate login
+            currentUser = {
+                id: 1,
+                name: `${email.split('@')[0]}`,
+                email: email,
+                organization: 'Sample Organization',
+                joinDate: new Date(),
+                isActive: true
+            };
+            
+            // Update UI
+            document.getElementById('authArea').style.display = 'none';
+            document.getElementById('userArea').classList.remove('hidden');
+            document.getElementById('userName').textContent = `Welcome, ${currentUser.name}`;
+            
+            // Show authenticated tabs
+            ['dashboardTab', 'certificatesTab', 'cpdTab'].forEach(id => {
+                document.getElementById(id).classList.remove('hidden');
+            });
+            
+            closeModal('loginModal');
+            showNotification('Login successful! Welcome back.');
+            
+            // Load user progress from localStorage
+            const savedProgress = localStorage.getItem('userProgress_' + currentUser.id);
+            if (savedProgress) {
+                userProgress = JSON.parse(savedProgress);
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('registerEmail').value;
+            const organization = document.getElementById('organization').value;
+            
+            // Simulate registration
+            currentUser = {
+                id: Math.floor(Math.random() * 10000),
+                name: `${firstName} ${lastName}`,
+                email: email,
+                organization: organization || 'Individual',
+                joinDate: new Date(),
+                isActive: true
+            };
+            
+            // Update UI
+            document.getElementById('authArea').style.display = 'none';
+            document.getElementById('userArea').classList.remove('hidden');
+            document.getElementById('userName').textContent = `Welcome, ${currentUser.name}`;
+            
+            // Show authenticated tabs
+            ['dashboardTab', 'certificatesTab', 'cpdTab'].forEach(id => {
+                document.getElementById(id).classList.remove('hidden');
+            });
+            
+            closeModal('registerModal');
+            showNotification('Account created successfully! Welcome to the platform.');
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            // Save progress before logout
+            if (currentUser) {
+                localStorage.setItem('userProgress_' + currentUser.id, JSON.stringify(userProgress));
+            }
+            
+            currentUser = null;
+            
+            // Update UI
+            document.getElementById('authArea').style.display = 'block';
+            document.getElementById('userArea').classList.add('hidden');
+            
+            // Hide authenticated tabs
+            ['dashboardTab', 'certificatesTab', 'cpdTab'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            
+            // Reset to home tab
+            showTab('home');
+            showNotification('Logged out successfully.');
+        });
+
+        // Training Module Functions
+        function startModule(moduleNumber) {
+            if (!currentUser) {
+                showNotification('Please login to start training.', 'error');
+                showModal('loginModal');
+                return;
+            }
+            
+            // Simulate module progress
+            const progress = Math.min(userProgress.modules[moduleNumber - 1] + 25, 100);
+            userProgress.modules[moduleNumber - 1] = progress;
+            
+            // Update completed modules count
+            userProgress.completedModules = userProgress.modules.filter(m => m === 100).length;
+            
+            // Update total progress
+            userProgress.totalProgress = Math.round(userProgress.modules.reduce((a, b) => a + b, 0) / 4);
+            
+            // Add study time
+            userProgress.studyTime += 2;
+            
+            // Add CPD credits if module completed
+            if (progress === 100) {
+                const credits = [6, 8, 4, 6][moduleNumber - 1];
+                userProgress.cpdCredits += credits;
+                showNotification(`Module ${moduleNumber} completed! You earned ${credits} CPD credits.`);
+            } else {
+                showNotification(`Module ${moduleNumber} progress updated to ${progress}%.`);
+            }
+            
+            // Save progress
+            localStorage.setItem('userProgress_' + currentUser.id, JSON.stringify(userProgress));
+            
+            // Update dashboard if visible
+            if (currentTab === 'dashboard') {
+                updateDashboard();
+            }
+        }
+
+        // Pricing and Payment
+        function selectPlan(planType) {
+            if (!currentUser) {
+                showNotification('Please login to purchase a plan.', 'error');
+                showModal('loginModal');
+                return;
+            }
+            
+            const plans = {
+                'individual': { name: 'Individual Certification', price: 149, users: 1 },
+                'small-business': { name: 'Small Business Package', price: 999, users: 10 },
+                'enterprise': { name: 'Municipal/Enterprise', price: 2499, users: 'Unlimited' },
+                'cpd': { name: 'Annual CPD Maintenance', price: 49, users: 1 }
+            };
+            
+            const selectedPlan = plans[planType];
+            
+            document.getElementById('orderSummary').innerHTML = `
+                <div class="flex justify-between py-2">
+                    <span>${selectedPlan.name}</span>
+                    <span class="font-bold">$${selectedPlan.price} CAD</span>
+                </div>
+                <div class="flex justify-between py-2 text-sm text-gray-600">
+                    <span>Users: ${selectedPlan.users}</span>
+                </div>
+                <hr class="my-3">
+                <div class="flex justify-between py-2 font-bold">
+                    <span>Total</span>
+                    <span>$${selectedPlan.price} CAD</span>
+                </div>
+            `;
+            
+            showModal('paymentModal');
+        }
+
+        function processPayment() {
+            // Simulate payment processing
+            setTimeout(() => {
+                closeModal('paymentModal');
+                showNotification('Payment processed successfully! Your access has been activated.');
+                
+                // Add payment to history
+                userProgress.paymentHistory.push({
+                    date: new Date(),
+                    plan: 'Individual Certification',
+                    amount: 149,
+                    status: 'Completed'
+                });
+                
+                // Save progress
+                localStorage.setItem('userProgress_' + currentUser.id, JSON.stringify(userProgress));
+            }, 2000);
+        }
+
+        // Dashboard Functions
+        function updateDashboard() {
+            document.getElementById('overallProgress').textContent = userProgress.totalProgress + '%';
+            document.getElementById('modulesCompleted').textContent = `${userProgress.completedModules}/4`;
+            document.getElementById('cpdCredits').textContent = userProgress.cpdCredits;
+            document.getElementById('studyTime').textContent = userProgress.studyTime + 'h';
+            
+            // Update module progress bars
+            userProgress.modules.forEach((progress, index) => {
+                const moduleElement = document.querySelector(`.module-progress[data-module="${index + 1}"]`);
+                const progressBar = moduleElement.querySelector('.progress-bar');
+                const progressText = document.getElementById(`progress-${index + 1}`);
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = progress + '%';
+            });
+            
+            // Update chart
+            updateLearningChart();
+        }
+
+        function updateLearningChart() {
+            const ctx = document.getElementById('learningChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Module 1', 'Module 2', 'Module 3', 'Module 4'],
+                    datasets: [{
+                        label: 'Progress (%)',
+                        data: userProgress.modules,
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(16, 185, 129, 0.8)',
+                            'rgba(139, 92, 246, 0.8)',
+                            'rgba(245, 158, 11, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(59, 130, 246)',
+                            'rgb(16, 185, 129)',
+                            'rgb(139, 92, 246)',
+                            'rgb(245, 158, 11)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Certificate Functions
+        function updateCertificate() {
+            if (userProgress.completedModules === 4) {
+                document.getElementById('certificateName').textContent = currentUser.name;
+                document.getElementById('completionDate').textContent = new Date().toLocaleDateString();
+                
+                const validUntil = new Date();
+                validUntil.setFullYear(validUntil.getFullYear() + 3);
+                document.getElementById('validUntil').textContent = validUntil.toLocaleDateString();
+                
+                // Generate unique certificate ID
+                const certificateId = `ONTCS-2025-${String(currentUser.id).padStart(6, '0')}`;
+                document.getElementById('certificateId').textContent = certificateId;
+            }
+        }
+
+        function downloadCertificate() {
+            if (userProgress.completedModules !== 4) {
+                showNotification('Complete all modules to download your certificate.', 'error');
+                return;
+            }
+            
+            showNotification('Certificate download started. Check your downloads folder.');
+            // In a real application, this would generate and download a PDF
+        }
+
+        function shareCertificate() {
+            if (userProgress.completedModules !== 4) {
+                showNotification('Complete all modules to share your certificate.', 'error');
+                return;
+            }
+            
+            showNotification('Certificate shared to LinkedIn successfully!');
+            // In a real application, this would integrate with LinkedIn API
+        }
+
+        function verifyCertificate() {
+            const certificateId = document.getElementById('certificateId').textContent;
+            showNotification(`Certificate ${certificateId} verified successfully.`);
+        }
+
+        function addToLinkedIn() {
+            showNotification('Digital badge added to LinkedIn profile!');
+        }
+
+        // CPD Functions
+        function updateCPD() {
+            document.getElementById('currentCPD').textContent = userProgress.cpdCredits;
+            document.getElementById('totalCPD').textContent = userProgress.cpdCredits;
+            
+            const progress = Math.min((userProgress.cpdCredits / 12) * 100, 100);
+            document.getElementById('cpdProgressBar').style.width = progress + '%';
+            document.getElementById('cpdProgress').textContent = `${userProgress.cpdCredits}/12 hours`;
+            
+            // Calculate days to renewal (assuming annual renewal)
+            const joinDate = new Date(currentUser.joinDate);
+            const renewalDate = new Date(joinDate.getFullYear() + 1, joinDate.getMonth(), joinDate.getDate());
+            const today = new Date();
+            const daysToRenewal = Math.ceil((renewalDate - today) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysToRenewal').textContent = Math.max(0, daysToRenewal);
+        }
+
+        function viewWebinars() {
+            showNotification('Webinar schedule will be available soon. Check back for updates.');
+        }
+
+        function viewConferences() {
+            showNotification('Conference listings will be available soon. Check back for updates.');
+        }
+
+        function viewCourses() {
+            showNotification('Additional courses will be available soon. Check back for updates.');
+        }
+
+        function submitActivity() {
+            showNotification('CPD activity submission form will be available soon.');
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial tab
+            showTab('home');
+            
+            // Check for saved user session
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                // Restore authenticated UI state
+                document.getElementById('authArea').style.display = 'none';
+                document.getElementById('userArea').classList.remove('hidden');
+                document.getElementById('userName').textContent = `Welcome, ${currentUser.name}`;
+                
+                ['dashboardTab', 'certificatesTab', 'cpdTab'].forEach(id => {
+                    document.getElementById(id).classList.remove('hidden');
+                });
+                
+                // Load user progress
+                const savedProgress = localStorage.getItem('userProgress_' + currentUser.id);
+                if (savedProgress) {
+                    userProgress = JSON.parse(savedProgress);
+                }
+            }
+        });
+
+        // Save user session on page unload
+        window.addEventListener('beforeunload', function() {
+            if (currentUser) {
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('userProgress_' + currentUser.id, JSON.stringify(userProgress));
+            }
+        });
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDnS2wTwnEM5OereQR9Sfpuv7ASI9%2BxVfXb8YehDHJIiyZp7wh5vu9TSg1v3pVlXMMoAZIu3oraSMYv9jNpMFMktY230Hyqb2UU%2BF91A8Xss5Zt8D69MMoKZz3iPSE4pm7G0JyGxZ0WytL7RAVuWnrH8%2B7JxbakCKIkXsEE%2FxDsT49NwiJGCD4zzpufb52VQgN9Kq16EmdPHNBX7lnHN4d7fZna4cxChZAmMpCeSQjisAZRSDzypK03%2FAmOKYt7txdONcSOVt8F3hqTUojlDSHRrOWZ0uRj0AXBr%2F5O1T91Ca14umvyTs8d1eZHj6003dTPcIkJwHx9Lwf2hZtkDou96ToeKE%2FEZLiciV8n5wBsvfU6QaCkne71Wi8BY%2Flaixs8s4dX6wotn%2FDwI1tUwfIkV9SjRBM0xsAaFDLMZu7gykUPZEIScySWwHBKw0XizYgLcDLHqCTvr1et3b2uAV%2F51OQCO6n1sUC3atB%2FU5M5v4mZG%2BevF7WCh09aZw2suiECiKCXOfaP4%2B2py3vquppymWGLjbzuMv4TzAdmOoCPot";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDnS2wTwnEM5OereQR9Sfpuv7ASI9+xVfXb8YehDHJIiyZp7wh5vu9TSg1v3pVlXMMoAZIu3oraSMYv9jNpMFMktY230Hyqb2UU+F91A8Xss5Zt8D69MMoKZz3iPSE4pm7G0JyGxZ0WytL7RAVuWnrH8+7JxbakCKIkXsEE/xDsT49NwiJGCD4zzpufb52VQgN9Kq16EmdPHNBX7lnHN4d7fZna4cxChZAmMpCeSQjisAZRSDzypK03/AmOKYt7txdONcSOVt8F3hqTUojlDSHRrOWZ0uRj0AXBr/5O1T91Ca14umvyTs8d1eZHj6003dTPcIkJwHx9Lwf2hZtkDou96ToeKE/EZLiciV8n5wBsvfU6QaCkne71Wi8BY/laixs8s4dX6wotn/DwI1tUwfIkV9SjRBM0xsAaFDLMZu7gykUPZEIScySWwHBKw0XizYgLcDLHqCTvr1et3b2uAV/51OQCO6n1sUC3atB/U5M5v4mZG+evF7WCh09aZw2suiECiKCXOfaP4+2py3vquppymWGLjbzuMv4TzAdmOoCPot";
+    </script>
+    
+        <script id="html_badge_script2" src="https://www.genspark.ai/html_badge.js"></script>
+        
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
