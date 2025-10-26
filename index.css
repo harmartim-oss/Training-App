@@ -3365,3 +3365,240 @@ details[open] .chevron-icon {
     color: white;
   }
 }
+/* ============================================
+   Slide Navigation Styles
+   ============================================ */
+
+.slide-navigation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 600px;
+}
+
+.slide-progress-header {
+  background: var(--surface-elevated);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.slide-progress-bar {
+  height: 8px;
+  background: var(--border-light);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.slide-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.slide-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 100%
+  );
+  animation: slide-shine 2s infinite;
+}
+
+@keyframes slide-shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.slide-content {
+  flex: 1;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 16px var(--shadow-light);
+  animation: slide-fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  max-height: calc(100vh - 400px);
+  min-height: 400px;
+}
+
+@keyframes slide-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-navigation-controls {
+  background: var(--surface-elevated);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px var(--shadow-light);
+}
+
+.slide-nav-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.slide-nav-button:hover:not(:disabled) {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.3);
+}
+
+.slide-nav-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.slide-nav-next, .slide-nav-complete {
+  flex-direction: row-reverse;
+}
+
+.slide-nav-complete {
+  background: var(--success);
+  color: white;
+  border-color: var(--success);
+}
+
+.slide-nav-complete:hover:not(:disabled) {
+  background: #00A844;
+  border-color: #00A844;
+  box-shadow: 0 4px 12px rgba(var(--success-rgb), 0.3);
+}
+
+.slide-indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.slide-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-indicator:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  transform: scale(1.3);
+}
+
+.slide-indicator.active {
+  width: 40px;
+  border-radius: 6px;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.slide-indicator.visited {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.slide-indicator.visited svg {
+  color: var(--primary);
+}
+
+.slide-keyboard-hints {
+  text-align: center;
+  padding: 0.5rem;
+  opacity: 0.8;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+  .slide-content {
+    padding: 1.5rem;
+    max-height: calc(100vh - 450px);
+    min-height: 300px;
+  }
+
+  .slide-navigation-controls {
+    padding: 1rem;
+  }
+
+  .slide-nav-button {
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    min-width: 100px;
+  }
+
+  .slide-nav-button span {
+    display: none;
+  }
+
+  .slide-nav-button svg {
+    margin: 0;
+  }
+
+  .slide-indicators {
+    padding: 0 0.5rem;
+    gap: 0.4rem;
+  }
+
+  .slide-indicator {
+    width: 10px;
+    height: 10px;
+  }
+
+  .slide-indicator.active {
+    width: 30px;
+  }
+
+  .slide-keyboard-hints {
+    display: none;
+  }
+
+  .slide-progress-header {
+    padding: 1rem;
+  }
+
+  .slide-progress-header .flex {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+}
