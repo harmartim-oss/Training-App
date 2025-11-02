@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React from 'react';
-import { ODDILogo, DashboardIcon, ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, AssessmentIcon, CertificateIcon, LogoutIcon, CheckCircleIcon } from '../icons';
+import { ODDILogo, DashboardIcon, ModuleIcon1, ModuleIcon2, ModuleIcon3, ModuleIcon4, AssessmentIcon, CertificateIcon, LogoutIcon, CheckCircleIcon, CalculatorIcon } from '../icons';
 
 interface User {
     fullname: string;
@@ -79,6 +79,12 @@ const Nav: React.FC<NavProps> = ({ activeSection, onNavigate, currentUser, onLog
                 { id: 'module2', label: 'Cybersecurity & Incident Response', icon: <ModuleIcon2 className="w-5 h-5"/> },
                 { id: 'module3', label: 'AI Governance & Responsible Use', icon: <ModuleIcon3 className="w-5 h-5"/> },
                 { id: 'module4', label: 'Secure Data & Records Management', icon: <ModuleIcon4 className="w-5 h-5"/> },
+            ]
+        },
+        {
+            title: 'Professional Tools',
+            items: [
+                { id: 'legal-budget-calculator', label: 'Legal Budget Calculator', icon: <CalculatorIcon className="w-5 h-5"/> }
             ]
         },
         {
