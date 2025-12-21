@@ -8,6 +8,15 @@ import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasse
 import QuizComponent from '../common/QuizComponent';
 import DownloadableResources from '../common/DownloadableResources';
 import SlideNavigation, { Slide } from '../common/SlideNavigation';
+import { 
+    ProcessFlow, 
+    ComparisonTable, 
+    InfoGraphic, 
+    InteractiveScenario, 
+    ProgressVisualizer,
+    ConceptMap 
+} from '../common/VisualLearningElements';
+import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon, ProgressIcon, VisualFrameworkIcon, AssessmentIcon } from '../icons';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -840,7 +849,7 @@ D. Risk Assessment Methodology`
         }
     ];
 
-    // Convert content sections into slides for click-through navigation
+    // Convert content sections into slides for click-through navigation with visual learning elements
     const contentSlides: Slide[] = contentSections.map((section, index) => ({
         id: `slide-${index}`,
         title: section.title,
@@ -854,6 +863,518 @@ D. Risk Assessment Methodology`
                         <p key={pIndex}>{paragraph}</p>
                     ))}
                 </div>
+                
+                {/* Add visual learning elements based on section */}
+                {index === 0 && (
+                    <div className="mt-8 space-y-6">
+                        <ProcessFlow
+                            title="NIST Risk Management Framework"
+                            steps={[
+                                {
+                                    title: "Categorize",
+                                    description: "Classify information systems and data based on impact levels",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Select",
+                                    description: "Choose appropriate security controls from NIST SP 800-53",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Implement",
+                                    description: "Deploy security controls within enterprise architecture",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Assess",
+                                    description: "Evaluate security controls effectiveness",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Authorize",
+                                    description: "Make risk-based decision to authorize system operation",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Monitor",
+                                    description: "Continuously monitor security controls and update risk assessments",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                        
+                        <ComparisonTable
+                            title="Risk Assessment Methodology Comparison"
+                            columns={["NIST RMF", "OCTAVE", "FAIR"]}
+                            rows={[
+                                {
+                                    label: "Approach",
+                                    values: ["Comprehensive framework", "Organizational focus", "Quantitative modeling"]
+                                },
+                                {
+                                    label: "Best For",
+                                    values: ["Federal systems & large orgs", "Self-directed teams", "Financial risk analysis"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "Complexity",
+                                    values: ["High - detailed process", "Medium - workshop-based", "High - statistical modeling"]
+                                },
+                                {
+                                    label: "Output",
+                                    values: ["Authorization decisions", "Risk mitigation plans", "Monetary risk values"]
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Risk Assessment in Practice"
+                            scenario="Your organization is launching a new customer portal that will process credit card payments and store customer data. Management has tasked you with conducting a risk assessment before deployment."
+                            considerations={[
+                                "What assets need protection? (customer data, payment info, system availability)",
+                                "What are the potential threats? (data breaches, payment fraud, DDoS attacks)",
+                                "What vulnerabilities exist? (unpatched software, weak authentication, insecure APIs)",
+                                "What is the likelihood and impact of each risk?",
+                                "What controls can mitigate the identified risks?"
+                            ]}
+                            solution="Apply NIST RMF: (1) Categorize the system as HIGH impact due to payment card data, (2) Select controls from PCI-DSS and NIST 800-53 including encryption, access controls, logging, (3) Implement WAF, encryption, MFA, network segmentation, (4) Assess through vulnerability scanning and penetration testing, (5) Authorize with documented residual risks, (6) Monitor continuously with SIEM and regular scans."
+                            learningPoints={[
+                                "Payment card data elevates system categorization to HIGH impact",
+                                "Multiple frameworks may apply (PCI-DSS + organizational standards)",
+                                "Risk assessment informs control selection and prioritization",
+                                "Continuous monitoring is essential for evolving threats"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 1 && (
+                    <div className="mt-8 space-y-6">
+                        <InfoGraphic
+                            title="System Hardening Layers"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <AssessmentIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "OS Layer",
+                                    content: [
+                                        "Disable unnecessary services",
+                                        "Apply security patches",
+                                        "Configure secure boot",
+                                        "Implement MAC (SELinux/AppArmor)"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <VisualFrameworkIcon className="w-8 h-8 text-green-600" />,
+                                    title: "Network Layer",
+                                    content: [
+                                        "Configure firewalls",
+                                        "Use strong encryption (TLS 1.3)",
+                                        "Implement port security",
+                                        "Enable intrusion detection"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Application Layer",
+                                    content: [
+                                        "Input validation & sanitization",
+                                        "Secure session management",
+                                        "CSRF/XSS protection",
+                                        "Regular code reviews"
+                                    ],
+                                    color: "purple"
+                                },
+                                {
+                                    icon: <ConceptIcon className="w-8 h-8 text-orange-600" />,
+                                    title: "Data Layer",
+                                    content: [
+                                        "Encryption at rest & in transit",
+                                        "Access controls (RBAC)",
+                                        "Database firewalls",
+                                        "Data classification"
+                                    ],
+                                    color: "orange"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Web Server Hardening Challenge"
+                            scenario="You're deploying a new Apache web server for a public-facing application. The server will handle customer data and must meet PCI-DSS requirements."
+                            considerations={[
+                                "What services should be removed or disabled?",
+                                "How should SSL/TLS be configured?",
+                                "What file permissions are appropriate?",
+                                "How should you handle error messages and server information disclosure?",
+                                "What logging and monitoring should be implemented?"
+                            ]}
+                            solution="Hardening steps: (1) Remove unnecessary modules (mod_status, mod_info), (2) Configure TLS 1.2+ only with strong cipher suites, (3) Set restrictive file permissions (644 for files, 755 for directories), (4) Disable directory listing and customize error pages, (5) Hide server version with ServerTokens Prod, (6) Enable mod_security WAF, (7) Configure comprehensive logging to SIEM, (8) Implement rate limiting and request size restrictions."
+                            learningPoints={[
+                                "Defense in depth applies multiple security layers",
+                                "PCI-DSS has specific requirements for web servers handling card data",
+                                "Information disclosure (version numbers, error details) aids attackers",
+                                "Regular security audits verify hardening configuration persists"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 2 && (
+                    <div className="mt-8 space-y-6">
+                        <ConceptMap
+                            title="Defense in Depth Strategy"
+                            centralConcept="Network Security"
+                            connections={[
+                                {
+                                    concept: "Perimeter Defense",
+                                    relationship: "protects",
+                                    description: "Firewalls, IDS/IPS, DMZ segmentation"
+                                },
+                                {
+                                    concept: "Internal Segmentation",
+                                    relationship: "isolates",
+                                    description: "VLANs, microsegmentation, zero trust"
+                                },
+                                {
+                                    concept: "Access Controls",
+                                    relationship: "restricts",
+                                    description: "NAC, 802.1X, VPN, MFA"
+                                },
+                                {
+                                    concept: "Monitoring & Detection",
+                                    relationship: "identifies",
+                                    description: "SIEM, network flow analysis, anomaly detection"
+                                },
+                                {
+                                    concept: "Encryption",
+                                    relationship: "secures",
+                                    description: "TLS, IPsec, VPN tunnels"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Network Breach Scenario"
+                            scenario="An attacker compromised a user's laptop through a phishing email. The laptop has VPN access to the corporate network. How does defense in depth limit the damage?"
+                            considerations={[
+                                "What prevents the attacker from accessing the entire network?",
+                                "How can we detect the compromised system?",
+                                "What limits lateral movement within the network?",
+                                "How do we prevent data exfiltration?",
+                                "What forensic evidence should be available?"
+                            ]}
+                            solution="Defense in depth protection: (1) Network segmentation limits access to only authorized resources, (2) IDS/IPS detects unusual traffic patterns from the compromised laptop, (3) SIEM correlates multiple indicators (off-hours access, unusual destinations, large data transfers), (4) Data loss prevention (DLP) blocks exfiltration attempts, (5) MFA requirements prevent attacker from accessing critical systems even with stolen credentials, (6) Comprehensive logging provides incident timeline and scope."
+                            learningPoints={[
+                                "Single compromised endpoint shouldn't lead to complete network breach",
+                                "Multiple layers provide detection opportunities even if prevention fails",
+                                "Network segmentation is critical for limiting blast radius",
+                                "Monitoring and logging enable rapid incident response"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 3 && (
+                    <div className="mt-8 space-y-6">
+                        <ProcessFlow
+                            title="Incident Response Lifecycle (NIST)"
+                            steps={[
+                                {
+                                    title: "Preparation",
+                                    description: "Establish IR capabilities, tools, training, and procedures before incidents occur",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Detection & Analysis",
+                                    description: "Identify security incidents through monitoring, alerts, and user reports",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Containment",
+                                    description: "Prevent further damage and isolate affected systems while preserving evidence",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Eradication",
+                                    description: "Remove malware, close attack vectors, and strengthen defenses",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Recovery",
+                                    description: "Restore systems to normal operation and verify integrity",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Post-Incident",
+                                    description: "Document lessons learned and improve security posture",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                        
+                        <InfoGraphic
+                            title="Digital Forensics Evidence Types"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <ConceptIcon className="w-8 h-8 text-red-600" />,
+                                    title: "Volatile Evidence",
+                                    content: [
+                                        "RAM contents (running processes)",
+                                        "Network connections",
+                                        "Logged-in users",
+                                        "Temporary files"
+                                    ],
+                                    color: "red"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "Non-Volatile Evidence",
+                                    content: [
+                                        "Hard drive contents",
+                                        "Registry entries",
+                                        "Log files",
+                                        "Configuration files"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <VisualFrameworkIcon className="w-8 h-8 text-green-600" />,
+                                    title: "Network Evidence",
+                                    content: [
+                                        "Packet captures",
+                                        "Firewall logs",
+                                        "IDS/IPS alerts",
+                                        "NetFlow records"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <AssessmentIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Cloud Evidence",
+                                    content: [
+                                        "API logs",
+                                        "Container snapshots",
+                                        "Cloud storage access logs",
+                                        "Identity provider logs"
+                                    ],
+                                    color: "purple"
+                                }
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 4 && (
+                    <div className="mt-8 space-y-6">
+                        <ComparisonTable
+                            title="Encryption Algorithm Comparison"
+                            columns={["Algorithm", "Type", "Key Size", "Best Use Case"]}
+                            rows={[
+                                {
+                                    label: "AES",
+                                    values: ["AES-256", "Symmetric", "128/192/256-bit", "Data at rest, bulk encryption"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "RSA",
+                                    values: ["RSA-2048/4096", "Asymmetric", "2048/4096-bit", "Key exchange, digital signatures"]
+                                },
+                                {
+                                    label: "ECC",
+                                    values: ["ECDSA/ECDH", "Asymmetric", "256/384-bit", "Mobile devices, IoT (efficient)"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "ChaCha20",
+                                    values: ["ChaCha20-Poly1305", "Symmetric", "256-bit", "Mobile encryption, TLS alternative"]
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Encryption Implementation Decision"
+                            scenario="Your organization needs to encrypt a 500GB database containing customer PII. The database must be accessible by multiple application servers for real-time queries. What encryption approach should you implement?"
+                            considerations={[
+                                "Should you use symmetric or asymmetric encryption for the data?",
+                                "How will encryption keys be managed and distributed?",
+                                "What's the performance impact on database queries?",
+                                "How will key rotation be handled?",
+                                "What happens if keys are lost or compromised?"
+                            ]}
+                            solution="Recommended approach: (1) Use AES-256 symmetric encryption for the database (fast for large data volumes), (2) Implement Transparent Data Encryption (TDE) at database level for minimal application changes, (3) Store encryption keys in a Hardware Security Module (HSM) or key management service, (4) Use envelope encryption: data encrypted with Data Encryption Keys (DEKs), DEKs encrypted with Key Encryption Key (KEK) stored in HSM, (5) Implement automated key rotation with versioning, (6) Maintain secure key backups with split-knowledge protection, (7) Enable column-level encryption for especially sensitive fields (SSN, credit cards)."
+                            learningPoints={[
+                                "Symmetric encryption (AES) is appropriate for large data volumes due to performance",
+                                "Key management is often more critical than algorithm choice",
+                                "Envelope encryption provides key rotation without re-encrypting all data",
+                                "HSMs provide hardware-based key protection and compliance requirements"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 5 && (
+                    <div className="mt-8 space-y-6">
+                        <ProcessFlow
+                            title="Vulnerability Management Cycle"
+                            steps={[
+                                {
+                                    title: "Discovery",
+                                    description: "Scan networks and systems to identify assets and vulnerabilities",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Prioritization",
+                                    description: "Rank vulnerabilities by severity, exploitability, and business impact",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Remediation",
+                                    description: "Patch, configure, or implement compensating controls",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Verification",
+                                    description: "Rescan to confirm vulnerabilities are resolved",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Reporting",
+                                    description: "Track metrics and communicate risk reduction to stakeholders",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                        
+                        <InfoGraphic
+                            title="CVSS Score Interpretation"
+                            layout="flow"
+                            sections={[
+                                {
+                                    icon: <span className="text-2xl">🔴</span>,
+                                    title: "Critical (9.0-10.0)",
+                                    content: [
+                                        "Immediate remediation required",
+                                        "Remotely exploitable",
+                                        "No authentication needed",
+                                        "High impact on CIA triad"
+                                    ],
+                                    color: "red"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟠</span>,
+                                    title: "High (7.0-8.9)",
+                                    content: [
+                                        "Remediate within 30 days",
+                                        "Significant impact",
+                                        "Active exploits may exist",
+                                        "Requires attention"
+                                    ],
+                                    color: "orange"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟡</span>,
+                                    title: "Medium (4.0-6.9)",
+                                    content: [
+                                        "Remediate within 90 days",
+                                        "Moderate impact",
+                                        "Schedule with next patch cycle",
+                                        "Apply risk-based approach"
+                                    ],
+                                    color: "yellow"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟢</span>,
+                                    title: "Low (0.1-3.9)",
+                                    content: [
+                                        "Address opportunistically",
+                                        "Limited impact",
+                                        "Consider compensating controls",
+                                        "Document accepted risk"
+                                    ],
+                                    color: "green"
+                                }
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 6 && (
+                    <div className="mt-8 space-y-6">
+                        <InfoGraphic
+                            title="Security Awareness Training Components"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <ScenarioIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "Simulated Phishing",
+                                    content: [
+                                        "Monthly realistic simulations",
+                                        "Immediate feedback on clicks",
+                                        "Track improvement over time",
+                                        "Target high-risk users"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <ConceptIcon className="w-8 h-8 text-green-600" />,
+                                    title: "Interactive Training",
+                                    content: [
+                                        "Role-specific content",
+                                        "Scenario-based learning",
+                                        "Microlearning modules (5-10 min)",
+                                        "Gamification elements"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Continuous Reinforcement",
+                                    content: [
+                                        "Security tips in emails",
+                                        "Lunch & learn sessions",
+                                        "Security champions program",
+                                        "Regular communications"
+                                    ],
+                                    color: "purple"
+                                },
+                                {
+                                    icon: <InteractiveIcon className="w-8 h-8 text-orange-600" />,
+                                    title: "Metrics & Reporting",
+                                    content: [
+                                        "Training completion rates",
+                                        "Phishing click rates",
+                                        "Incident reporting metrics",
+                                        "Behavioral change tracking"
+                                    ],
+                                    color: "orange"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Improving Security Culture"
+                            scenario="Your organization's phishing simulation results show a 15% click rate despite mandatory annual training. The CEO wants to see improvement within 3 months."
+                            considerations={[
+                                "Why is annual training insufficient for behavior change?",
+                                "What makes some training programs more effective than others?",
+                                "How can you make security awareness engaging rather than burdensome?",
+                                "What metrics should you track to demonstrate improvement?",
+                                "How do you handle repeat offenders without creating fear?"
+                            ]}
+                            solution="Improvement strategy: (1) Implement monthly phishing simulations with increasing difficulty, (2) Provide immediate training when users click (just-in-time learning), (3) Launch 5-minute microlearning modules on specific topics (password security, social engineering tactics, secure browsing), (4) Create security champions program with representatives from each department, (5) Gamify training with points, badges, and friendly competition, (6) Share anonymized 'caught phishing' stories to reinforce lessons, (7) Implement positive reinforcement: recognize employees who report phishing attempts, (8) Track multiple metrics: click rate, reporting rate, time to report, training completion, incident trends."
+                            learningPoints={[
+                                "Behavior change requires frequent reinforcement, not annual training",
+                                "Immediate feedback is more effective than delayed training",
+                                "Positive reinforcement (rewarding good behavior) works better than punishment",
+                                "Metrics should measure both knowledge and behavioral outcomes"
+                            ]}
+                        />
+                    </div>
+                )}
             </div>
         )
     }));
@@ -894,16 +1415,50 @@ D. Risk Assessment Methodology`
                         <h1 className="text-3xl font-bold font-mono mb-2 uppercase">Module 2: Cybersecurity Fundamentals</h1>
                         <p className="mb-6">Comprehensive risk assessment, system hardening, and incident response</p>
                         
-                        <div className="learning-objectives">
-                            <h3 className="font-semibold mb-2 text-lg font-mono uppercase">Learning Objectives</h3>
+                        <div className="learning-objectives-enhanced">
+                            <h3>
+                                <span>🎯</span>
+                                Learning Objectives
+                            </h3>
+                            
+                            {/* Progress Visualizer */}
+                            <ProgressVisualizer
+                                title="Module 2 Learning Path"
+                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                                totalSteps={3}
+                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                                description="Follow this structured path to master cybersecurity fundamentals and risk management"
+                            />
+                            
                             <ul>
-                                <li>Master comprehensive risk assessment methodologies including NIST, OCTAVE, and FAIR</li>
-                                <li>Implement system hardening and security controls across multiple layers</li>
-                                <li>Design and deploy network security architecture with defense in depth</li>
-                                <li>Develop structured incident response and recovery capabilities</li>
-                                <li>Apply cryptographic controls for data protection throughout its lifecycle</li>
-                                <li>Establish effective vulnerability management and remediation processes</li>
-                                <li>Create security awareness programs to address human factor risks</li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Master comprehensive risk assessment methodologies including NIST, OCTAVE, and FAIR</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Implement system hardening and security controls across multiple layers</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Design and deploy network security architecture with defense in depth</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Develop structured incident response and recovery capabilities</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Apply cryptographic controls for data protection throughout its lifecycle</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Establish effective vulnerability management and remediation processes</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Create security awareness programs to address human factor risks</span>
+                                </li>
                             </ul>
                         </div>
 

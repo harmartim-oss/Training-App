@@ -7,6 +7,16 @@ import { useQuiz, QuizQuestions } from '../../hooks/useQuiz';
 import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasses } from '../../hooks/useMobileDetection';
 import QuizComponent from '../common/QuizComponent';
 import DownloadableResources from '../common/DownloadableResources';
+import SlideNavigation, { Slide } from '../common/SlideNavigation';
+import { 
+    ProcessFlow, 
+    ComparisonTable, 
+    InfoGraphic, 
+    InteractiveScenario, 
+    ProgressVisualizer,
+    ConceptMap 
+} from '../common/VisualLearningElements';
+import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon, ProgressIcon, VisualFrameworkIcon, AssessmentIcon, ResourceIcon } from '../icons';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1089,6 +1099,429 @@ Email: _______________`
         }
     ];
 
+    // Convert content sections into slides for click-through navigation with visual learning elements
+    const contentSlides: Slide[] = contentSections.map((section, index) => ({
+        id: `slide-${index}`,
+        title: section.title,
+        content: (
+            <div className="space-y-4">
+                <h2 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
+                    {section.title}
+                </h2>
+                <div className="space-y-3 text-text-secondary leading-relaxed">
+                    {section.content.map((paragraph, pIndex) => (
+                        <p key={pIndex}>{paragraph}</p>
+                    ))}
+                </div>
+                
+                {/* Add visual learning elements based on section */}
+                {index === 0 && (
+                    <div className="mt-8 space-y-6">
+                        <InfoGraphic
+                            title="Data Classification Levels"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <span className="text-2xl">🔴</span>,
+                                    title: "Confidential/Restricted",
+                                    content: [
+                                        "Personal health information",
+                                        "Financial records",
+                                        "Legal documents",
+                                        "Strict access controls required"
+                                    ],
+                                    color: "red"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟠</span>,
+                                    title: "Internal Use Only",
+                                    content: [
+                                        "Internal policies",
+                                        "Draft documents",
+                                        "Employee directories",
+                                        "Limited distribution"
+                                    ],
+                                    color: "orange"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟡</span>,
+                                    title: "Business Use",
+                                    content: [
+                                        "General business communications",
+                                        "Internal reports",
+                                        "Project documentation",
+                                        "Standard access controls"
+                                    ],
+                                    color: "yellow"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟢</span>,
+                                    title: "Public",
+                                    content: [
+                                        "Published reports",
+                                        "Press releases",
+                                        "Public website content",
+                                        "No access restrictions"
+                                    ],
+                                    color: "green"
+                                }
+                            ]}
+                        />
+                        
+                        <ComparisonTable
+                            title="Data Classification Security Controls"
+                            columns={["Classification", "Storage", "Transmission", "Disposal"]}
+                            rows={[
+                                {
+                                    label: "Confidential",
+                                    values: ["Encrypted storage, restricted access", "End-to-end encryption, secure protocols", "Certified destruction, documented"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "Internal Use",
+                                    values: ["Access-controlled systems", "Encrypted channels", "Secure shredding/deletion"]
+                                },
+                                {
+                                    label: "Business Use",
+                                    values: ["Standard security controls", "Standard protocols", "Normal disposal procedures"]
+                                },
+                                {
+                                    label: "Public",
+                                    values: ["Basic security", "Standard protocols", "Standard recycling/deletion"]
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Data Classification Decision"
+                            scenario="Your organization has collected survey responses from employees about workplace satisfaction. The survey includes demographic information (department, job level, years of service) and free-text comments. How should this data be classified?"
+                            considerations={[
+                                "Is this personal information under privacy legislation?",
+                                "What are the sensitivity and privacy implications?",
+                                "What access controls are appropriate?",
+                                "How should it be stored and transmitted?",
+                                "What disposal requirements apply?"
+                            ]}
+                            solution="Classification: INTERNAL USE ONLY (potentially CONFIDENTIAL if individual responses are identifiable). Rationale: (1) Contains personal information if responses can be linked to individuals, (2) Disclosure could harm employee privacy and organizational culture, (3) Requires access controls limiting to HR and management, (4) Should be stored encrypted with role-based access, (5) Aggregate for reporting; delete individual responses after analysis period, (6) Apply records retention schedule for HR data, (7) If anonymized effectively (k-anonymity, l-diversity), could be downgraded to BUSINESS USE. Key considerations: Check if demographic combinations could identify individuals; implement data minimization; aggregate before wider distribution; document classification decision and rationale."
+                            learningPoints={[
+                                "Data classification depends on identifiability and sensitivity",
+                                "Aggregated/anonymized data may warrant lower classification",
+                                "Consider both current and potential future harms",
+                                "Document classification decisions with clear rationale"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 1 && (
+                    <div className="mt-8 space-y-6">
+                        <ProcessFlow
+                            title="Records Lifecycle Management"
+                            steps={[
+                                {
+                                    title: "Creation/Receipt",
+                                    description: "Record created or received; metadata captured; initial classification applied",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Active Use",
+                                    description: "Record actively used for business operations; maintained in accessible systems",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Inactive Storage",
+                                    description: "Record no longer actively used but retained for reference; moved to archives",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Retention Review",
+                                    description: "Retention period evaluated; legal holds checked; disposition decision made",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Disposition",
+                                    description: "Record permanently preserved, transferred, or securely destroyed",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                        
+                        <InfoGraphic
+                            title="Retention Requirements by Record Type"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <ResourceIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "Financial Records",
+                                    content: [
+                                        "Tax records: 7 years minimum",
+                                        "Invoices: 7 years",
+                                        "Payroll: Permanent or 7+ years",
+                                        "Audit reports: Permanent"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <ConceptIcon className="w-8 h-8 text-green-600" />,
+                                    title: "HR Records",
+                                    content: [
+                                        "Personnel files: 7 years post-employment",
+                                        "Applications: 1-2 years",
+                                        "Training records: Duration + 1 year",
+                                        "Benefits: 7 years"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <AssessmentIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Legal Records",
+                                    content: [
+                                        "Contracts: 7 years post-expiry",
+                                        "Litigation files: Permanent",
+                                        "Correspondence: 2-7 years",
+                                        "Insurance claims: 10 years"
+                                    ],
+                                    color: "purple"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-orange-600" />,
+                                    title: "Operational Records",
+                                    content: [
+                                        "Policies: Permanent (superseded versions: 7 years)",
+                                        "Meeting minutes: Permanent",
+                                        "Correspondence: 2-7 years",
+                                        "Project files: Completion + 7 years"
+                                    ],
+                                    color: "orange"
+                                }
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 2 && (
+                    <div className="mt-8 space-y-6">
+                        <ConceptMap
+                            title="Cross-Border Data Compliance"
+                            centralConcept="International Data Transfers"
+                            connections={[
+                                {
+                                    concept: "Legal Requirements",
+                                    relationship: "governs",
+                                    description: "PIPEDA, MFIPPA s.30.1, GDPR, sector laws"
+                                },
+                                {
+                                    concept: "Risk Assessment",
+                                    relationship: "evaluates",
+                                    description: "Foreign surveillance laws, data protection standards"
+                                },
+                                {
+                                    concept: "Safeguards",
+                                    relationship: "implements",
+                                    description: "Encryption, contracts, data localization"
+                                },
+                                {
+                                    concept: "Vendor Management",
+                                    relationship: "monitors",
+                                    description: "Due diligence, agreements, ongoing compliance"
+                                },
+                                {
+                                    concept: "Documentation",
+                                    relationship: "records",
+                                    description: "Transfer mechanisms, safeguards, approvals"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Cloud Service Selection"
+                            scenario="Your organization needs a cloud-based document management system. Vendor A offers Canadian data residency for $15/user/month. Vendor B offers US data storage for $8/user/month with better features. You have 500 users and the organization is subject to MFIPPA."
+                            considerations={[
+                                "What are the legal requirements for your organization?",
+                                "Can cost savings justify foreign data storage?",
+                                "What are the risks of US data storage?",
+                                "Are there any exceptions that would allow US storage?",
+                                "What due diligence should you conduct?"
+                            ]}
+                            solution="Decision: Select Vendor A (Canadian data residency). Analysis: (1) MFIPPA Section 30.1 prohibits storing personal information outside Canada without specific authorization, (2) Cost difference: $3,500/month or $42,000/year - significant but not justify non-compliance, (3) Vendor B's features don't outweigh legal requirements, (4) US CLOUD Act allows US government access to data held by US companies regardless of location, (5) Exceptions are limited and require individual consent or Commissioner authorization (impractical for operational system), (6) Due diligence for Vendor A: Verify Canadian data center locations; Review data processing agreement; Confirm no cross-border data transfers; Validate backup/DR locations; Request SOC 2 Type II audit; Include breach notification requirements. Alternative: Negotiate with Vendor B for Canadian hosting or consider other Canadian vendors with comparable features."
+                            learningPoints={[
+                                "Legal compliance is non-negotiable for public sector organizations",
+                                "MFIPPA's data residency requirements are strict with limited exceptions",
+                                "Cost savings don't justify non-compliance risk",
+                                "Due diligence must verify actual data storage and access locations"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 3 && (
+                    <div className="mt-8 space-y-6">
+                        <InfoGraphic
+                            title="Access Control Principles"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <ConceptIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "Least Privilege",
+                                    content: [
+                                        "Grant minimum access necessary",
+                                        "Role-based permissions",
+                                        "Regular access reviews",
+                                        "Remove unused permissions"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <AssessmentIcon className="w-8 h-8 text-green-600" />,
+                                    title: "Separation of Duties",
+                                    content: [
+                                        "No single person controls entire process",
+                                        "Critical functions require dual authorization",
+                                        "Prevents fraud and errors",
+                                        "Reduces insider threat risk"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Need-to-Know",
+                                    content: [
+                                        "Access based on job requirements",
+                                        "Data segmentation by sensitivity",
+                                        "Contextual access controls",
+                                        "Just-in-time privileged access"
+                                    ],
+                                    color: "purple"
+                                },
+                                {
+                                    icon: <VisualFrameworkIcon className="w-8 h-8 text-orange-600" />,
+                                    title: "Defense in Depth",
+                                    content: [
+                                        "Multiple layers of security",
+                                        "Authentication + Authorization",
+                                        "Encryption + Access controls",
+                                        "Monitoring + Audit logging"
+                                    ],
+                                    color: "orange"
+                                }
+                            ]}
+                        />
+                        
+                        <ProcessFlow
+                            title="Access Control Lifecycle"
+                            steps={[
+                                {
+                                    title: "Request",
+                                    description: "User requests access to specific resources with business justification",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Approval",
+                                    description: "Manager and data owner review and approve based on need-to-know",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Provisioning",
+                                    description: "IT implements access following least privilege principle",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Review",
+                                    description: "Regular recertification of access rights (quarterly/annually)",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Revocation",
+                                    description: "Remove access when no longer needed or upon termination",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 4 && (
+                    <div className="mt-8 space-y-6">
+                        <ConceptMap
+                            title="Data Governance Framework"
+                            centralConcept="Data Governance"
+                            connections={[
+                                {
+                                    concept: "Policies & Standards",
+                                    relationship: "defines",
+                                    description: "Rules, procedures, data quality standards"
+                                },
+                                {
+                                    concept: "Roles & Accountability",
+                                    relationship: "assigns",
+                                    description: "Data owners, stewards, custodians"
+                                },
+                                {
+                                    concept: "Data Quality",
+                                    relationship: "ensures",
+                                    description: "Accuracy, completeness, consistency, timeliness"
+                                },
+                                {
+                                    concept: "Compliance",
+                                    relationship: "maintains",
+                                    description: "Privacy laws, retention, security requirements"
+                                },
+                                {
+                                    concept: "Continuous Improvement",
+                                    relationship: "drives",
+                                    description: "Metrics, monitoring, audits, optimization"
+                                }
+                            ]}
+                        />
+                        
+                        <ComparisonTable
+                            title="Data Governance Roles"
+                            columns={["Role", "Responsibilities", "Authority"]}
+                            rows={[
+                                {
+                                    label: "Data Owner",
+                                    values: ["Business accountability for data assets", "Approves access, defines policies, accepts risks", "Decision authority over data use"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "Data Steward",
+                                    values: ["Implements policies, manages quality", "Monitors compliance, resolves issues", "Operational authority within policies"]
+                                },
+                                {
+                                    label: "Data Custodian",
+                                    values: ["Technical implementation and maintenance", "Manages systems, backups, security controls", "Technical implementation authority"]
+                                },
+                                {
+                                    label: "Data User",
+                                    values: ["Uses data within authorized scope", "Follows policies, reports issues", "Use within granted permissions"]
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Data Quality Issue"
+                            scenario="Multiple departments report that customer contact information in the CRM system is frequently outdated or incorrect. This causes failed communications, duplicate marketing efforts, and customer complaints. Analysis shows 30% of email addresses bounce and 15% of phone numbers are disconnected."
+                            considerations={[
+                                "What are the root causes of poor data quality?",
+                                "Who is accountable for fixing this issue?",
+                                "What processes need to be implemented?",
+                                "How do you measure improvement?",
+                                "What technology solutions could help?"
+                            ]}
+                            solution="Data governance solution: (1) Accountability: Assign Data Owner (VP Customer Experience); Data Steward (CRM Manager); Data Custodians (IT team), (2) Root causes: No validation at entry; Infrequent updates; No data quality monitoring; Multiple systems with inconsistent data; Lack of customer self-service updates, (3) Processes: Implement validation rules (email format, phone format); Mandatory field checks; Regular data cleansing (quarterly); Customer portal for self-updates; Integration with verification services; Deduplication procedures, (4) Metrics: Track bounce rates, phone disconnect rates, duplicate records, data completeness, days since last update, (5) Technology: Email verification API; Phone validation service; Data quality monitoring dashboard; Automated deduplication; Customer self-service portal, (6) Continuous improvement: Monthly data quality reports; Quarterly review with stakeholders; User training on data entry; Feedback loop from customer service."
+                            learningPoints={[
+                                "Data quality requires clear ownership and accountability",
+                                "Technical solutions must be combined with process improvements",
+                                "Measurement is essential for managing data quality",
+                                "User behavior drives data quality - training and usability matter"
+                            ]}
+                        />
+                    </div>
+                )}
+            </div>
+        )
+    }));
+
     return (
         <section className={`animate-fade-in ${layoutClasses}`}>
             <div className={`max-w-6xl mx-auto ${mobileClasses}`}>
@@ -1125,92 +1558,61 @@ Email: _______________`
                         <h1 className="text-3xl font-bold font-mono mb-2 uppercase">Module 4: Data Management</h1>
                         <p className="mb-6">Ensuring data is classified, retained, and handled securely</p>
                         
-                        <div className="learning-objectives">
-                            <h3 className="font-semibold mb-2 text-lg font-mono uppercase">Learning Objectives</h3>
+                        <div className="learning-objectives-enhanced">
+                            <h3>
+                                <span>🎯</span>
+                                Learning Objectives
+                            </h3>
+                            
+                            {/* Progress Visualizer */}
+                            <ProgressVisualizer
+                                title="Module 4 Learning Path"
+                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                                totalSteps={3}
+                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                                description="Follow this structured path to master data management and governance"
+                            />
+                            
                             <ul>
-                                <li>Implement comprehensive data classification and handling procedures</li>
-                                <li>Establish effective records management and retention policies</li>
-                                <li>Ensure compliance with cross-border data storage requirements</li>
-                                <li>Deploy robust data security and access control systems</li>
-                                <li>Create data governance frameworks for quality management</li>
-                                <li>Navigate complex regulatory requirements for data management</li>
-                                <li>Optimize data lifecycle management and disposition processes</li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Implement comprehensive data classification and handling procedures</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Establish effective records management and retention policies</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Ensure compliance with cross-border data storage requirements</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Deploy robust data security and access control systems</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Create data governance frameworks for quality management</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Navigate complex regulatory requirements for data management</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Optimize data lifecycle management and disposition processes</span>
+                                </li>
                             </ul>
                         </div>
 
                         {currentSection === 'content' ? (
-                            /* Content Section */
-                            <div className="space-y-6">
-                                {contentSections.map((section, index) => (
-                                    <div key={index} className="content-section">
-                                        <h3 className="text-2xl font-semibold mb-4 text-text-primary font-mono">
-                                            {section.title}
-                                        </h3>
-                                        <div className="space-y-3 text-text-secondary leading-relaxed">
-                                            {section.content.map((paragraph, pIndex) => (
-                                                <p key={pIndex}>{paragraph}</p>
-                                            ))}
-                                        </div>
-                                    </div>
-                                ))}
-                                
-                                <div className="bg-surface-elevated border border-border-light p-6 rounded-lg">
-                                    <h4 className="text-xl font-semibold mb-4 text-text-primary font-mono">Resources & Downloads</h4>
-                                    <p className="mb-4 text-text-secondary">Access practical tools and templates for implementing secure data management practices.</p>
-                                    
-                                    <div className="grid md:grid-cols-2 gap-6">
-                                        <div className="space-y-4">
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">Data Classification Templates</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Comprehensive frameworks for classifying and protecting data</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">Records Retention Schedules</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Ontario-specific retention requirements and guidelines</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">Cross-Border Compliance Checklist</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Guidelines for managing data across jurisdictions</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                            <div className="bg-surface p-4 border border-border rounded">
-                                                <h5 className="font-semibold text-text-primary mb-2">Data Governance Framework</h5>
-                                                <p className="text-sm text-text-secondary mb-3">Organizational structures and quality management processes</p>
-                                                <div className="flex gap-2">
-                                                    <button className="btn-secondary text-xs px-3 py-1">.MD</button>
-                                                    <button className="btn-secondary text-xs px-3 py-1">.PDF</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <p className="mt-4 text-sm text-text-secondary">
-                                        <strong>Note:</strong> These resources are designed for compliance with Ontario regulations and should be 
-                                        reviewed with legal counsel for organization-specific requirements.
-                                    </p>
-                                </div>
-
-                                <div className="text-center">
-                                    <button 
-                                        onClick={() => setCurrentSection('quiz')}
-                                        className="btn-primary font-semibold py-3 px-8"
-                                    >
-                                        Proceed to Knowledge Check
-                                    </button>
-                                </div>
+                            /* Content Section - Now with Slide Navigation */
+                            <div className="mt-8">
+                                <SlideNavigation 
+                                    slides={contentSlides}
+                                    moduleTitle="Module 4: Data Management"
+                                    onComplete={() => setCurrentSection('quiz')}
+                                />
                             </div>
                         ) : currentSection === 'quiz' ? (
                             /* Quiz Section */

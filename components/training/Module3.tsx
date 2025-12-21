@@ -8,6 +8,15 @@ import { useMobileDetection, getMobileOptimizedClasses, getOptimizedLayoutClasse
 import QuizComponent from '../common/QuizComponent';
 import DownloadableResources from '../common/DownloadableResources';
 import SlideNavigation, { Slide } from '../common/SlideNavigation';
+import { 
+    ProcessFlow, 
+    ComparisonTable, 
+    InfoGraphic, 
+    InteractiveScenario, 
+    ProgressVisualizer,
+    ConceptMap 
+} from '../common/VisualLearningElements';
+import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon, ProgressIcon, VisualFrameworkIcon, AssessmentIcon, LearningPathIcon } from '../icons';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1083,7 +1092,7 @@ Date: __________________________________`
         }
     ];
 
-    // Convert content sections into slides for click-through navigation
+    // Convert content sections into slides for click-through navigation with visual learning elements
     const contentSlides: Slide[] = contentSections.map((section, index) => ({
         id: `slide-${index}`,
         title: section.title,
@@ -1097,6 +1106,403 @@ Date: __________________________________`
                         <p key={pIndex}>{paragraph}</p>
                     ))}
                 </div>
+                
+                {/* Add visual learning elements based on section */}
+                {index === 0 && (
+                    <div className="mt-8 space-y-6">
+                        <InfoGraphic
+                            title="Ontario's Responsible Use of AI Directive - Key Requirements"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <ConceptIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "Transparency",
+                                    content: [
+                                        "Disclose AI use to affected individuals",
+                                        "Explain how decisions are made",
+                                        "Provide information about data sources",
+                                        "Document AI system capabilities and limitations"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <AssessmentIcon className="w-8 h-8 text-green-600" />,
+                                    title: "Risk Assessment",
+                                    content: [
+                                        "Conduct impact assessments before deployment",
+                                        "Identify and document potential harms",
+                                        "Implement mitigation strategies",
+                                        "Regular reassessment of risks"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Accountability",
+                                    content: [
+                                        "Assign clear ownership and governance",
+                                        "Establish oversight mechanisms",
+                                        "Maintain audit trails and documentation",
+                                        "Create appeal and review processes"
+                                    ],
+                                    color: "purple"
+                                },
+                                {
+                                    icon: <VisualFrameworkIcon className="w-8 h-8 text-orange-600" />,
+                                    title: "Human Oversight",
+                                    content: [
+                                        "Maintain meaningful human involvement",
+                                        "Enable human override of AI decisions",
+                                        "Ensure human review for high-impact decisions",
+                                        "Train staff on AI system operation"
+                                    ],
+                                    color: "orange"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="AI Directive Compliance Scenario"
+                            scenario="Your municipal government is considering implementing an AI system to prioritize building permit applications based on complexity, completeness, and workload. The system would recommend which applications to process first, but final decisions remain with human staff."
+                            considerations={[
+                                "Does this fall under the Responsible Use of AI Directive?",
+                                "What transparency requirements apply?",
+                                "What risk assessment is needed?",
+                                "How should accountability be structured?",
+                                "What human oversight is appropriate?"
+                            ]}
+                            solution="This AI system falls under the Directive as it's an automated decision-support tool in a government context. Required compliance steps: (1) Transparency: Inform applicants that AI assists in prioritization; explain the criteria used; provide contact for questions, (2) Risk Assessment: Conduct Algorithmic Impact Assessment (AIA) before deployment; evaluate fairness across different applicant types; assess potential for bias in training data, (3) Accountability: Designate AI system owner; establish governance committee; document decision-making logic; create appeal process, (4) Human Oversight: Maintain human review of AI recommendations; enable staff to override prioritization; train staff on system operation and limitations; monitor system performance regularly."
+                            learningPoints={[
+                                "AI systems supporting government decisions require compliance even if humans make final decisions",
+                                "Transparency must be proactive, not just responsive to requests",
+                                "Risk assessments should be completed before deployment, not after",
+                                "Human oversight means more than just having a human present - it requires meaningful involvement"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 1 && (
+                    <div className="mt-8 space-y-6">
+                        <ConceptMap
+                            title="Six Principles of Responsible AI"
+                            centralConcept="Responsible AI Use"
+                            connections={[
+                                {
+                                    concept: "Fairness",
+                                    relationship: "ensures",
+                                    description: "Equitable treatment, bias mitigation, discrimination prevention"
+                                },
+                                {
+                                    concept: "Accountability",
+                                    relationship: "establishes",
+                                    description: "Clear ownership, governance, audit trails, review mechanisms"
+                                },
+                                {
+                                    concept: "Transparency",
+                                    relationship: "enables",
+                                    description: "Disclosure of AI use, explainability, documentation"
+                                },
+                                {
+                                    concept: "Safety & Security",
+                                    relationship: "protects",
+                                    description: "Robust systems, adversarial resistance, privacy safeguards"
+                                },
+                                {
+                                    concept: "Inclusiveness",
+                                    relationship: "considers",
+                                    description: "Accessibility, diverse stakeholder input, universal design"
+                                },
+                                {
+                                    concept: "Privacy",
+                                    relationship: "respects",
+                                    description: "Data minimization, consent, purpose limitation, security"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Balancing Competing Principles"
+                            scenario="A healthcare AI system achieves 95% accuracy in predicting patient readmission risk, but the prediction model is a complex neural network that provides limited explainability. Transparency would be improved by using a simpler model, but accuracy would drop to 88%."
+                            considerations={[
+                                "How do you balance transparency with performance?",
+                                "What does 'explainability' really mean for different stakeholders?",
+                                "How much transparency is 'enough'?",
+                                "Can you achieve transparency without sacrificing performance?",
+                                "What are the consequences of lower accuracy in this context?"
+                            ]}
+                            solution="Balancing approach: (1) Use the more accurate model for better patient outcomes (safety principle), but implement multiple transparency measures: model cards documenting performance metrics, SHAP values or LIME for individual prediction explanations, regular validation against known health risk factors, (2) Create tiered transparency: detailed technical documentation for clinical staff, simplified explanations for patients, compliance documentation for regulators, (3) Implement strong governance: clinical oversight committee, regular bias audits, patient appeal process, continuous monitoring for fairness and accuracy, (4) Consider hybrid approach: use complex model for prediction but validate predictions against interpretable criteria, (5) Document trade-offs transparently in risk assessment."
+                            learningPoints={[
+                                "Responsible AI principles can sometimes conflict and require careful balancing",
+                                "Transparency doesn't always mean complete explainability - appropriate transparency varies by stakeholder",
+                                "Performance and explainability trade-offs should be documented and justified",
+                                "Multiple transparency mechanisms can compensate for black-box models"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 2 && (
+                    <div className="mt-8 space-y-6">
+                        <ProcessFlow
+                            title="AI Risk Management Lifecycle"
+                            steps={[
+                                {
+                                    title: "Identify",
+                                    description: "Catalog AI systems and document their functions, stakeholders, and data sources",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Assess",
+                                    description: "Evaluate risks including bias, privacy, security, and societal impacts",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Prioritize",
+                                    description: "Rank risks by likelihood and impact to guide mitigation efforts",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Mitigate",
+                                    description: "Implement controls, safeguards, and governance measures",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Monitor",
+                                    description: "Continuously track system performance and emerging risks",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Review",
+                                    description: "Periodically reassess risks and update controls as systems and context evolve",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                        
+                        <ComparisonTable
+                            title="AI Risk Categories"
+                            columns={["Risk Type", "Examples", "Mitigation Strategies"]}
+                            rows={[
+                                {
+                                    label: "Technical Risks",
+                                    values: ["Model accuracy, robustness, adversarial attacks", "Overfitting, data poisoning, model drift", "Validation testing, monitoring, red teaming"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "Fairness Risks",
+                                    values: ["Bias, discrimination, disparate impact", "Training data bias, proxy discrimination", "Bias audits, fairness metrics, diverse data"]
+                                },
+                                {
+                                    label: "Privacy Risks",
+                                    values: ["Re-identification, data leakage, inference", "Model inversion, membership inference", "Differential privacy, data minimization, access controls"],
+                                    highlight: true
+                                },
+                                {
+                                    label: "Societal Risks",
+                                    values: ["Automation bias, job displacement, trust erosion", "Over-reliance on AI, accessibility barriers", "Human oversight, transparency, stakeholder engagement"]
+                                }
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 3 && (
+                    <div className="mt-8 space-y-6">
+                        <ProcessFlow
+                            title="Algorithmic Impact Assessment (AIA) Process"
+                            steps={[
+                                {
+                                    title: "Scoping",
+                                    description: "Define AI system scope, stakeholders, and assessment objectives",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Data Assessment",
+                                    description: "Evaluate data quality, representativeness, and potential biases",
+                                    status: 'completed'
+                                },
+                                {
+                                    title: "Impact Analysis",
+                                    description: "Identify potential impacts on individuals, groups, and society",
+                                    status: 'current'
+                                },
+                                {
+                                    title: "Risk Rating",
+                                    description: "Calculate overall risk level based on impact and likelihood",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Mitigation Planning",
+                                    description: "Develop strategies to address identified risks and impacts",
+                                    status: 'pending'
+                                },
+                                {
+                                    title: "Documentation",
+                                    description: "Create comprehensive AIA report for governance and accountability",
+                                    status: 'pending'
+                                }
+                            ]}
+                        />
+                        
+                        <InfoGraphic
+                            title="AIA Impact Levels"
+                            layout="flow"
+                            sections={[
+                                {
+                                    icon: <span className="text-2xl">🟢</span>,
+                                    title: "Level 1: Low Impact",
+                                    content: [
+                                        "Minimal decisions or recommendations",
+                                        "Limited personal information involved",
+                                        "No significant consequences for individuals",
+                                        "Simple documentation requirements"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟡</span>,
+                                    title: "Level 2: Medium Impact",
+                                    content: [
+                                        "Moderate influence on decisions",
+                                        "Some personal information processed",
+                                        "Potential for limited consequences",
+                                        "Standard AIA process required"
+                                    ],
+                                    color: "yellow"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🟠</span>,
+                                    title: "Level 3: High Impact",
+                                    content: [
+                                        "Significant automated decisions",
+                                        "Sensitive personal information",
+                                        "Substantial impact on rights/opportunities",
+                                        "Comprehensive assessment needed"
+                                    ],
+                                    color: "orange"
+                                },
+                                {
+                                    icon: <span className="text-2xl">🔴</span>,
+                                    title: "Level 4: Very High Impact",
+                                    content: [
+                                        "Critical automated decisions",
+                                        "Fundamental rights affected",
+                                        "Potential for serious harm",
+                                        "Extensive governance & oversight"
+                                    ],
+                                    color: "red"
+                                }
+                            ]}
+                        />
+                        
+                        <InteractiveScenario
+                            title="Conducting an AIA"
+                            scenario="Your organization is implementing an AI system to screen job applications and rank candidates for interviews. The system analyzes resumes, cover letters, and online professional profiles to predict candidate success."
+                            considerations={[
+                                "What impact level should this system be rated?",
+                                "What data quality issues might exist?",
+                                "What fairness concerns should be examined?",
+                                "What transparency measures are needed?",
+                                "What human oversight is appropriate?"
+                            ]}
+                            solution="AIA approach for hiring AI: (1) Impact Level: HIGH - hiring decisions significantly affect individuals' employment opportunities and livelihoods, (2) Data Assessment: Examine historical hiring data for bias (gender, age, ethnicity); Ensure training data represents desired candidate diversity; Check for proxy variables that correlate with protected characteristics, (3) Fairness Analysis: Test for disparate impact across demographic groups; Validate that screening criteria relate to actual job performance; Monitor for systematic bias against certain groups, (4) Transparency: Inform candidates about AI use in screening; Explain key factors in ranking decisions; Provide appeal mechanism for rejected candidates, (5) Human Oversight: Require human review of all AI-ranked candidates before final decisions; Train HR staff on AI system limitations and bias risks; Prohibit automated rejection without human review, (6) Ongoing Monitoring: Regular fairness audits comparing outcomes across demographics; Continuous validation of prediction accuracy; Annual AIA updates."
+                            learningPoints={[
+                                "Hiring AI is typically high-impact due to significant consequences for individuals",
+                                "Historical hiring data often contains bias that AI can perpetuate",
+                                "Proxy variables (e.g., school names, hobbies) can introduce indirect discrimination",
+                                "Transparency in hiring AI builds trust and enables accountability"
+                            ]}
+                        />
+                    </div>
+                )}
+                
+                {index === 4 && (
+                    <div className="mt-8 space-y-6">
+                        <ConceptMap
+                            title="AI Governance Framework"
+                            centralConcept="AI Governance"
+                            connections={[
+                                {
+                                    concept: "Policy & Standards",
+                                    relationship: "defines",
+                                    description: "Rules, principles, requirements, compliance criteria"
+                                },
+                                {
+                                    concept: "Roles & Responsibilities",
+                                    relationship: "assigns",
+                                    description: "AI ethics officer, system owners, oversight committees"
+                                },
+                                {
+                                    concept: "Risk Management",
+                                    relationship: "implements",
+                                    description: "Assessment, mitigation, monitoring, continuous improvement"
+                                },
+                                {
+                                    concept: "Documentation",
+                                    relationship: "maintains",
+                                    description: "Model cards, AIAs, audit logs, decisions records"
+                                },
+                                {
+                                    concept: "Oversight Mechanisms",
+                                    relationship: "ensures",
+                                    description: "Ethics review boards, audits, appeals, external review"
+                                }
+                            ]}
+                        />
+                        
+                        <InfoGraphic
+                            title="AI Governance Roles"
+                            layout="grid"
+                            sections={[
+                                {
+                                    icon: <LearningPathIcon className="w-8 h-8 text-blue-600" />,
+                                    title: "AI Ethics Officer",
+                                    content: [
+                                        "Develops and maintains AI policies",
+                                        "Reviews high-impact AI proposals",
+                                        "Chairs AI ethics committee",
+                                        "Coordinates training programs"
+                                    ],
+                                    color: "blue"
+                                },
+                                {
+                                    icon: <ImplementationIcon className="w-8 h-8 text-green-600" />,
+                                    title: "System Owners",
+                                    content: [
+                                        "Accountable for specific AI systems",
+                                        "Conducts regular risk assessments",
+                                        "Ensures compliance with policies",
+                                        "Responds to incidents and appeals"
+                                    ],
+                                    color: "green"
+                                },
+                                {
+                                    icon: <AssessmentIcon className="w-8 h-8 text-purple-600" />,
+                                    title: "Ethics Review Board",
+                                    content: [
+                                        "Reviews high-risk AI proposals",
+                                        "Provides independent oversight",
+                                        "Evaluates fairness and ethics",
+                                        "Advises on complex cases"
+                                    ],
+                                    color: "purple"
+                                },
+                                {
+                                    icon: <VisualFrameworkIcon className="w-8 h-8 text-orange-600" />,
+                                    title: "Internal Audit",
+                                    content: [
+                                        "Verifies compliance with policies",
+                                        "Audits AI system performance",
+                                        "Tests for bias and fairness",
+                                        "Reports to senior management"
+                                    ],
+                                    color: "orange"
+                                }
+                            ]}
+                        />
+                    </div>
+                )}
             </div>
         )
     }));
@@ -1161,6 +1567,16 @@ Date: __________________________________`
                                 <span>🎯</span>
                                 Learning Objectives
                             </h3>
+                            
+                            {/* Progress Visualizer */}
+                            <ProgressVisualizer
+                                title="Module 3 Learning Path"
+                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                                totalSteps={3}
+                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                                description="Follow this structured path to master AI governance and responsible AI use"
+                            />
+                            
                             <ul>
                                 <li>
                                     <span className="objective-icon">🎯</span>
