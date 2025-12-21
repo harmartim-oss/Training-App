@@ -7,9 +7,10 @@ import { ODDILogo } from './icons';
 
 interface HeaderProps {
     onNavigateToTraining: () => void;
+    onNavigateToAdmin?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onNavigateToTraining }) => {
+const Header: React.FC<HeaderProps> = ({ onNavigateToTraining, onNavigateToAdmin }) => {
   const navLinks = [
     { href: '#why-ocrp', label: 'Why OCRP' },
     { href: '#curriculum', label: 'Curriculum' },
@@ -35,6 +36,15 @@ const Header: React.FC<HeaderProps> = ({ onNavigateToTraining }) => {
         </nav>
 
         <div className="flex items-center gap-4 sm:gap-6">
+            {onNavigateToAdmin && (
+              <button
+                  onClick={onNavigateToAdmin}
+                  className="text-sm text-text-secondary hover:text-primary transition-colors"
+                  title="Admin Portal"
+                >
+                  Admin
+              </button>
+            )}
             <button
                 onClick={onNavigateToTraining}
                 className="btn-primary py-2 px-6 text-sm"
