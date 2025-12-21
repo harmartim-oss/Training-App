@@ -17,23 +17,34 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBackToPortal }) => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Simple admin authentication - in production, this should use proper backend authentication
+    // SECURITY WARNING: This is a DEMO implementation for development/testing only!
+    // For production, you MUST implement:
+    // 1. Backend authentication API with proper security
+    // 2. Bcrypt/Argon2 password hashing
+    // 3. JWT tokens for session management
+    // 4. Rate limiting and brute force protection
+    // 5. Two-factor authentication (2FA)
+    // 6. Audit logging
+    // See ADMIN_SETUP.md for detailed security recommendations
+    
     const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL || 'admin@oddi.ca';
-    const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123'; // Change this!
+    const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
         setLoading(true);
 
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Simulate API call delay for better UX
+        await new Promise(resolve => setTimeout(resolve, 800));
 
-        // Simple authentication check
+        // IMPORTANT: This simple comparison is for DEMO purposes only
+        // In production, credentials should be verified server-side with proper hashing
         if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
             onLogin(email);
         } else {
-            setError('Invalid email or password. Please try again.');
+            // Generic error message to prevent user enumeration
+            setError('Authentication failed. Please check your credentials and try again.');
         }
         
         setLoading(false);
@@ -43,6 +54,13 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onBackToPortal }) => {
         <div className="min-h-screen flex items-center justify-center bg-background p-4 animate-fade-in">
             <div className="w-full max-w-md">
                 <div className="bg-surface border border-border p-10 shadow-lg">
+                    {/* Security Warning Banner */}
+                    <div className="mb-6 p-4 bg-warning/10 border border-warning/30 rounded-lg">
+                        <p className="text-xs text-warning font-semibold">
+                            ⚠️ DEMO MODE: For production, implement proper backend authentication
+                        </p>
+                    </div>
+
                     {/* Header */}
                     <div className="flex flex-col items-center mb-8">
                         <ODDILogo className="w-10 h-10 mb-4 text-primary" />

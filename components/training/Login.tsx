@@ -78,14 +78,26 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                 onLogin(user);
             }
         } catch (err: any) {
+            // Log the full error for debugging but show sanitized messages to users
             console.error('Social login error:', err);
-            if (err.code === 'auth/popup-closed-by-user') {
-                setError('Sign in was cancelled. Please try again.');
-            } else if (err.code === 'auth/popup-blocked') {
-                setError('Pop-up was blocked. Please enable pop-ups for this site and try again.');
-            } else {
-                setError(`Sign in failed: ${err.message || 'Please try again or use email login.'}`);
-            }
+            
+            // Map Firebase error codes to user-friendly messages
+            const errorMessages: Record<string, string> = {
+                'auth/popup-closed-by-user': 'Sign in was cancelled. Please try again.',
+                'auth/popup-blocked': 'Pop-up was blocked. Please enable pop-ups for this site and try again.',
+                'auth/account-exists-with-different-credential': 'An account already exists with the same email address but different sign-in credentials.',
+                'auth/auth-domain-config-required': 'Authentication configuration error. Please contact support.',
+                'auth/cancelled-popup-request': 'Sign in was cancelled. Please try again.',
+                'auth/operation-not-allowed': 'This sign-in method is not enabled. Please contact support.',
+                'auth/unauthorized-domain': 'This domain is not authorized for authentication. Please contact support.',
+                'auth/network-request-failed': 'Network error. Please check your internet connection and try again.'
+            };
+            
+            // Use a generic error message if the specific code isn't mapped
+            const userFriendlyMessage = errorMessages[err.code] || 
+                'Sign in failed. Please try again or use email login.';
+            
+            setError(userFriendlyMessage);
         } finally {
             setLoading(false);
         }
