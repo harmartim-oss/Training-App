@@ -5,10 +5,17 @@
 import React, { useState } from 'react';
 import { ODDILogo, GoogleIcon, FacebookIcon, LinkedInIcon, InstagramIcon } from '../icons';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
-import { LoginUser } from '../../types';
+import { LoginUser, User } from '../../types';
+import { 
+    signInWithGoogle, 
+    signInWithFacebook, 
+    signInWithLinkedIn,
+    convertFirebaseUser,
+    isFirebaseConfigured 
+} from '../../config/firebase';
 
 interface LoginProps {
-    onLogin: (user: LoginUser) => void;
+    onLogin: (user: LoginUser | User) => void;
     onSignUp: () => void;
 }
 
@@ -17,7 +24,10 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
     const [organizationType, setOrganizationType] = useState('');
     const [organizationName, setOrganizationName] = useState('');
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const { isMobile, isTablet } = useMobileDetection();
+    const firebaseConfigured = isFirebaseConfigured();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -31,10 +41,66 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
         onLogin(user);
     };
 
-    const handleSocialLogin = (provider: string) => {
-        // Placeholder for social login integration
-        console.log(`Social login with ${provider}`);
-        // In a real app, this would trigger OAuth flow
+    const handleSocialLogin = async (provider: 'google' | 'facebook' | 'linkedin' | 'instagram') => {
+        if (!firebaseConfigured) {
+            setError('Social login is not configured. Please contact the administrator or use email login.');
+            return;
+        }
+
+        setLoading(true);
+        setError('');
+
+        try {
+            let firebaseUser;
+            
+            switch (provider) {
+                case 'google':
+                    firebaseUser = await signInWithGoogle();
+                    break;
+                case 'facebook':
+                    firebaseUser = await signInWithFacebook();
+                    break;
+                case 'linkedin':
+                    firebaseUser = await signInWithLinkedIn();
+                    break;
+                case 'instagram':
+                    // Instagram auth requires Facebook Login with Instagram permissions
+                    setError('Instagram login is coming soon. Please use Google, Facebook, or email to sign in.');
+                    setLoading(false);
+                    return;
+                default:
+                    throw new Error('Unsupported provider');
+            }
+
+            if (firebaseUser) {
+                const user = convertFirebaseUser(firebaseUser);
+                // User will need to complete organization details
+                onLogin(user);
+            }
+        } catch (err: any) {
+            // Log the full error for debugging but show sanitized messages to users
+            console.error('Social login error:', err);
+            
+            // Map Firebase error codes to user-friendly messages
+            const errorMessages: Record<string, string> = {
+                'auth/popup-closed-by-user': 'Sign in was cancelled. Please try again.',
+                'auth/popup-blocked': 'Pop-up was blocked. Please enable pop-ups for this site and try again.',
+                'auth/account-exists-with-different-credential': 'An account already exists with the same email address but different sign-in credentials.',
+                'auth/auth-domain-config-required': 'Authentication configuration error. Please contact support.',
+                'auth/cancelled-popup-request': 'Sign in was cancelled. Please try again.',
+                'auth/operation-not-allowed': 'This sign-in method is not enabled. Please contact support.',
+                'auth/unauthorized-domain': 'This domain is not authorized for authentication. Please contact support.',
+                'auth/network-request-failed': 'Network error. Please check your internet connection and try again.'
+            };
+            
+            // Use a generic error message if the specific code isn't mapped
+            const userFriendlyMessage = errorMessages[err.code] || 
+                'Sign in failed. Please try again or use email login.';
+            
+            setError(userFriendlyMessage);
+        } finally {
+            setLoading(false);
+        }
     };
     
     const labelStyles = "block text-sm font-bold font-mono text-text-secondary mb-2 uppercase tracking-wider";
@@ -63,11 +129,20 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                     {/* Social Login Options */}
                     <div className="mb-6">
                         <p className="text-center text-sm font-mono text-text-secondary mb-4 uppercase tracking-wider">Quick Sign In</p>
+                        
+                        {/* Error Message */}
+                        {error && (
+                            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                <p className="text-sm text-red-800">{error}</p>
+                            </div>
+                        )}
+                        
                         <div className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('google')}
-                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded"
+                                disabled={loading}
+                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <GoogleIcon className="w-5 h-5" />
                                 <span className="text-sm font-medium">Google</span>
@@ -75,7 +150,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('linkedin')}
-                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded"
+                                disabled={loading}
+                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <LinkedInIcon className="w-5 h-5" />
                                 <span className="text-sm font-medium">LinkedIn</span>
@@ -85,7 +161,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('facebook')}
-                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded"
+                                disabled={loading}
+                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <FacebookIcon className="w-5 h-5" />
                                 <span className="text-sm font-medium">Facebook</span>
@@ -93,12 +170,19 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                             <button
                                 type="button"
                                 onClick={() => handleSocialLogin('instagram')}
-                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded"
+                                disabled={loading}
+                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <InstagramIcon className="w-5 h-5" />
                                 <span className="text-sm font-medium">Instagram</span>
                             </button>
                         </div>
+                        
+                        {!firebaseConfigured && (
+                            <div className="mt-3 text-xs text-center text-text-muted">
+                                Note: Social login requires Firebase configuration
+                            </div>
+                        )}
                     </div>
 
                     {/* Divider */}
