@@ -147,7 +147,7 @@ export const BloomsLevelIndicators: BloomsLevelIndicator[] = [
   },
   {
     level: BloomsLevel.CREATE,
-    color: '#8B5CF6', // purple (darker)
+    color: '#6B46C1', // purple (darker/distinct from Remember)
     icon: '✨',
     description: 'Produce new or original work',
     examples: ['Design incident response plan', 'Develop privacy policy', 'Create AI governance framework']

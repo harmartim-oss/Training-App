@@ -91,7 +91,11 @@ export const assessmentBloomsMapping: Record<number, BloomsLevel> = {
 
 // Helper function to get Bloom's level for a question by index
 export const getQuestionBloomsLevel = (questionIndex: number): BloomsLevel => {
-  return assessmentBloomsMapping[questionIndex] || BloomsLevel.APPLY;
+  const level = assessmentBloomsMapping[questionIndex];
+  if (!level) {
+    console.warn(`No Bloom's level mapped for question index ${questionIndex}, defaulting to APPLY`);
+  }
+  return level || BloomsLevel.APPLY;
 };
 
 // Helper function to get statistics about Bloom's levels in assessment

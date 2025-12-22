@@ -151,13 +151,9 @@ export const CognitiveProgressIndicator: React.FC<CognitiveProgressIndicatorProp
   className = ''
 }) => {
   const calculateProgress = () => {
-    // This would integrate with the bloomsTaxonomy config
-    // For now, showing a simple implementation
-    return {
-      lowerOrder: 65,
-      higherOrder: 40,
-      overallLevel: 'Core Knowledge Established'
-    };
+    // Import the actual calculation function
+    const { calculateCognitiveProgress } = require('../../config/bloomsTaxonomy');
+    return calculateCognitiveProgress(completedObjectives);
   };
 
   const progress = calculateProgress();

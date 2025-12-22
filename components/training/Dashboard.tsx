@@ -380,10 +380,18 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                 <div className="mt-6">
                     <CognitiveProgressIndicator 
                         completedObjectives={
-                            // Track completed objectives based on module completion
+                            // Build list of completed objective IDs based on module completion
+                            // Each completed module unlocks its course and lesson objectives
                             Object.keys(progress)
-                                .filter(key => key.startsWith('module') && progress[key as keyof Progress]?.completed)
-                                .map(key => `m${key.replace('module', '')}-completed`)
+                                .filter(key => key.startsWith('module') && (progress[key as keyof Progress] as any)?.completed)
+                                .flatMap(key => {
+                                    const moduleNum = parseInt(key.replace('module', ''));
+                                    const { getModuleLearningObjectives } = require('../../config/bloomsTaxonomy');
+                                    const objectives = getModuleLearningObjectives(moduleNum);
+                                    if (!objectives) return [];
+                                    // Return all objective IDs for completed module
+                                    return [...objectives.courseLevel, ...objectives.lessonLevel].map(obj => obj.id);
+                                })
                         }
                     />
                 </div>
