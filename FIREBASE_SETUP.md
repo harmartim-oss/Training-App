@@ -1,6 +1,6 @@
 # Firebase OAuth Setup Guide
 
-This guide explains how to configure Firebase authentication for social login (Google, Facebook, LinkedIn).
+This guide explains how to configure Firebase authentication for social login (Google, Facebook, Microsoft).
 
 ## Prerequisites
 
@@ -25,10 +25,12 @@ This guide explains how to configure Firebase authentication for social login (G
      - Get your App ID and App Secret
      - Add them to Firebase Facebook provider settings
      - Add OAuth redirect URI from Firebase to your Facebook App settings
-   - **LinkedIn**: (via OAuthProvider)
-     - Create a LinkedIn App at [LinkedIn Developers](https://www.linkedin.com/developers)
-     - Get Client ID and Client Secret
-     - Configure redirect URIs
+     - Note: Instagram login requires Facebook Login with Instagram permissions
+   - **Microsoft**: 
+     - Firebase supports Microsoft via OAuthProvider
+     - You may need to register your app with Microsoft Azure AD
+     - Configure OAuth redirect URIs
+     - Get Client ID and configure in Firebase
 
 ### 3. Get Firebase Configuration
 
@@ -75,6 +77,16 @@ This guide explains how to configure Firebase authentication for social login (G
 
 2. Navigate to the login page and test each social login button
 3. Verify that authentication works correctly
+
+## Supported OAuth Providers
+
+### ✅ Implemented
+- **Google Sign-In**: Fully supported via Firebase GoogleAuthProvider
+- **Facebook Login**: Fully supported via Firebase FacebookAuthProvider  
+- **Microsoft Authentication**: Implemented via Firebase OAuthProvider
+
+### 🔜 Coming Soon
+- **Instagram**: Requires Facebook Login with Instagram permissions (Facebook Graph API)
 
 ## Security Best Practices
 
