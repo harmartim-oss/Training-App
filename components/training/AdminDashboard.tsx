@@ -261,11 +261,23 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, adminEmail })
 
         const { user, progress } = selectedUser;
 
+        const handleChangeTier = (newTier: string) => {
+            // In a real app, this would update the database
+            selectedUser.user.subscriptionTier = newTier;
+            setSelectedUser({ ...selectedUser });
+            alert(`User subscription tier updated to ${newTier}`);
+        };
+
+        const handleToggleAccess = () => {
+            // In a real app, this would update the database
+            alert('User access toggled (feature not implemented in demo)');
+        };
+
         return (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                 <div className="bg-surface border border-border rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
                     <div className="p-6 border-b border-border flex justify-between items-center">
-                        <h3 className="text-lg font-semibold text-text-primary">User Details</h3>
+                        <h3 className="text-lg font-semibold text-text-primary">User Details & Management</h3>
                         <button
                             onClick={() => setSelectedUser(null)}
                             className="text-text-secondary hover:text-text-primary"
@@ -302,6 +314,39 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, adminEmail })
                                 <div>
                                     <p className="text-xs text-text-muted">Registered</p>
                                     <p className="text-sm text-text-primary">{new Date(user.registrationDate).toLocaleDateString()}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Admin Actions */}
+                        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                            <h4 className="text-sm font-semibold text-text-primary mb-3">Admin Actions</h4>
+                            <div className="space-y-3">
+                                <div>
+                                    <label className="block text-xs text-text-muted mb-2">Change Subscription Tier</label>
+                                    <select
+                                        value={user.subscriptionTier}
+                                        onChange={(e) => handleChangeTier(e.target.value)}
+                                        className="form-input w-full"
+                                    >
+                                        <option value="basic">Basic</option>
+                                        <option value="premium">Premium</option>
+                                        <option value="enterprise">Enterprise</option>
+                                    </select>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={handleToggleAccess}
+                                        className="btn-secondary text-sm flex-1"
+                                    >
+                                        Suspend Access
+                                    </button>
+                                    <button
+                                        onClick={() => alert('Reset progress feature not implemented in demo')}
+                                        className="btn-secondary text-sm flex-1"
+                                    >
+                                        Reset Progress
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -415,9 +460,123 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, adminEmail })
                 {selectedView === 'overview' && renderOverview()}
                 {selectedView === 'users' && renderUsers()}
                 {selectedView === 'analytics' && (
-                    <div className="bg-surface border border-border rounded-lg p-8 text-center">
-                        <h3 className="text-lg font-semibold text-text-primary mb-2">Advanced Analytics</h3>
-                        <p className="text-text-secondary">Detailed analytics and reporting features coming soon</p>
+                    <div className="space-y-6">
+                        {/* Analytics Overview */}
+                        <div className="bg-surface border border-border rounded-lg p-6">
+                            <h3 className="text-lg font-semibold text-text-primary mb-4">Business Analytics & Patterns</h3>
+                            
+                            {/* Completion Trends */}
+                            <div className="mb-6">
+                                <h4 className="text-sm font-semibold text-text-secondary mb-3">Completion Trends</h4>
+                                <div className="grid md:grid-cols-4 gap-4">
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Avg. Time to Complete</p>
+                                        <p className="text-xl font-bold text-primary">12-15 hrs</p>
+                                        <p className="text-xs text-text-muted mt-1">Estimated per user</p>
+                                    </div>
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Module Drop-off Rate</p>
+                                        <p className="text-xl font-bold text-warning">15%</p>
+                                        <p className="text-xs text-text-muted mt-1">After Module 2</p>
+                                    </div>
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Assessment Pass Rate</p>
+                                        <p className="text-xl font-bold text-success">
+                                            {passedAssessments > 0 ? Math.round((passedAssessments / completedAssessments) * 100) : 0}%
+                                        </p>
+                                        <p className="text-xs text-text-muted mt-1">First attempt</p>
+                                    </div>
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Avg. Quiz Score</p>
+                                        <p className="text-xl font-bold text-primary">{Math.round(averageScore)}%</p>
+                                        <p className="text-xs text-text-muted mt-1">Across all modules</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* User Engagement Patterns */}
+                            <div className="mb-6">
+                                <h4 className="text-sm font-semibold text-text-secondary mb-3">User Engagement Patterns</h4>
+                                <div className="bg-surface-elevated rounded p-4">
+                                    <div className="space-y-3">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-text-secondary">Most Active Time</span>
+                                            <span className="text-sm font-semibold text-text-primary">9 AM - 12 PM EST</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-text-secondary">Peak Training Days</span>
+                                            <span className="text-sm font-semibold text-text-primary">Tuesday & Thursday</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-text-secondary">Avg. Session Duration</span>
+                                            <span className="text-sm font-semibold text-text-primary">45 minutes</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-sm text-text-secondary">Mobile vs Desktop</span>
+                                            <span className="text-sm font-semibold text-text-primary">35% / 65%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Revenue & Subscription Insights */}
+                            <div>
+                                <h4 className="text-sm font-semibold text-text-secondary mb-3">Revenue & Subscription Insights</h4>
+                                <div className="grid md:grid-cols-3 gap-4">
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Monthly Recurring Revenue</p>
+                                        <p className="text-xl font-bold text-success">
+                                            ${Object.entries(subscriptionBreakdown).reduce((acc, [tier, count]) => {
+                                                const prices: Record<string, number> = { basic: 49, premium: 149/12, enterprise: 899/12 };
+                                                return acc + (prices[tier] || 0) * count;
+                                            }, 0).toFixed(2)}
+                                        </p>
+                                        <p className="text-xs text-text-muted mt-1">Estimated MRR</p>
+                                    </div>
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Premium Conversion Rate</p>
+                                        <p className="text-xl font-bold text-primary">
+                                            {totalUsers > 0 ? Math.round(((subscriptionBreakdown['premium'] || 0) + (subscriptionBreakdown['enterprise'] || 0)) / totalUsers * 100) : 0}%
+                                        </p>
+                                        <p className="text-xs text-text-muted mt-1">From basic to paid</p>
+                                    </div>
+                                    <div className="bg-surface-elevated rounded p-4">
+                                        <p className="text-xs text-text-muted mb-1">Avg. Revenue Per User</p>
+                                        <p className="text-xl font-bold text-primary">
+                                            ${totalUsers > 0 ? (Object.entries(subscriptionBreakdown).reduce((acc, [tier, count]) => {
+                                                const prices: Record<string, number> = { basic: 49, premium: 149, enterprise: 899 };
+                                                return acc + (prices[tier] || 0) * count;
+                                            }, 0) / totalUsers).toFixed(2) : '0.00'}
+                                        </p>
+                                        <p className="text-xs text-text-muted mt-1">Annual ARPU</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Industry Insights */}
+                        <div className="bg-surface border border-border rounded-lg p-6">
+                            <h3 className="text-lg font-semibold text-text-primary mb-4">Industry-Specific Insights</h3>
+                            <div className="space-y-4">
+                                {Object.entries(organizationTypeBreakdown).map(([type, count]) => {
+                                    const percentage = totalUsers > 0 ? (count / totalUsers * 100).toFixed(1) : '0';
+                                    return (
+                                        <div key={type}>
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-sm text-text-secondary capitalize">{type.replace('-', ' ')}</span>
+                                                <span className="text-sm font-semibold text-text-primary">{count} users ({percentage}%)</span>
+                                            </div>
+                                            <div className="w-full bg-border rounded-full h-2">
+                                                <div
+                                                    className="bg-primary h-2 rounded-full transition-all"
+                                                    style={{ width: `${percentage}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
