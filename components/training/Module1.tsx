@@ -264,81 +264,30 @@ PREVENTION MEASURES
             explanation: "PIPEDA's 'Identifying Purposes' principle requires organizations to identify and document purposes before or at the time of collection. This ensures transparency and enables meaningful consent. The purposes must be clear, specific, and communicated to individuals in a way they can understand."
         },
         q2: {
-            type: 'scenario',
-            question: "Your municipal office is implementing a new citizen portal that will collect names, addresses, phone numbers, and email addresses for service requests. The IT vendor strongly recommends using a US-based cloud service (AWS US-East) citing 40% cost savings and 50% better performance compared to Canadian alternatives. As the privacy officer, what is your recommendation and why?",
-            answer: 'scenario',
-            options: {},
-            scenarioAnswer: `**Recommended Decision: Decline the US-based cloud service and insist on Canadian data residency**
-
-**Legal Analysis:**
-
-1. **MFIPPA Section 30.1 Requirements**:
-   - Personal information collected by Ontario municipalities must be stored and accessed only in Canada
-   - This is a mandatory requirement, not a suggestion
-   - Violations can result in privacy commissioner orders and reputational damage
-
-2. **Why Cost and Performance Don't Override Compliance**:
-   - Legal compliance is non-negotiable
-   - Privacy breach costs far exceed any potential savings
-   - MFIPPA Section 30.1 was enacted specifically to protect Canadian data from foreign surveillance laws (e.g., USA PATRIOT Act, CLOUD Act)
-
-3. **Acceptable Alternatives**:
-   - AWS Canada (Montreal, Calgary regions) - provides Canadian data residency
-   - Microsoft Azure Canada (Toronto, Quebec regions)
-   - Canadian cloud providers (CIRA, OVH Canada, etc.)
-   - Hybrid solution with Canadian data residency guarantees
-
-4. **Limited Exceptions** (rarely applicable):
-   - Individual provides explicit informed consent (impractical for public services)
-   - Commissioner grants specific authorization (rare, time-consuming)
-   - Both require documented risk assessment
-
-5. **Implementation Steps**:
-   - Request Canadian hosting options from vendor
-   - Document the decision-making process
-   - Ensure contracts specify Canadian data residency
-   - Regular compliance audits
-
-**Bottom Line:** MFIPPA Section 30.1 is clear - personal information must stay in Canada. The cost and performance benefits don't justify the legal and privacy risks.`,
-            explanation: "This scenario tests understanding of MFIPPA's strict Canadian data residency requirements and the balance between operational efficiency and legal compliance. Section 30.1 was specifically enacted to protect personal information from foreign legal frameworks."
+            question: "Your municipal office is implementing a new citizen portal. The IT vendor recommends a US-based cloud service with 40% cost savings and better performance. Under MFIPPA Section 30.1, what should the privacy officer recommend?",
+            answer: 'c',
+            options: {
+                a: "Accept the US cloud service if the vendor signs a confidentiality agreement",
+                b: "Accept it but notify citizens their data is stored in the US",
+                c: "Decline and insist on Canadian data residency to comply with MFIPPA",
+                d: "Accept it since cost savings justify the business decision"
+            },
+            explanation: "MFIPPA Section 30.1 explicitly requires personal information collected by Ontario municipalities to be stored and accessed only in Canada. This is a mandatory requirement enacted to protect Canadian data from foreign surveillance laws. Cost and performance benefits do not override legal compliance requirements."
         },
         q3: {
-            type: 'text-input',
-            question: "As a privacy officer, you need to explain to your board of directors the key operational differences between PIPEDA and MFIPPA. Provide at least four specific differences that impact how your organization handles personal information, including examples.",
-            answer: 'text-input',
-            options: {},
-            sampleAnswer: `Key operational differences between PIPEDA and MFIPPA:
-
-**1. Scope and Applicability**:
-   - **PIPEDA**: Applies to private sector organizations in federal jurisdiction and provinces without substantially similar legislation. Covers personal information collected during commercial activities.
-   - **MFIPPA**: Applies specifically to Ontario municipalities, local boards, and police services. Covers both personal information and general government records.
-   - **Example**: A retail store follows PIPEDA; a city hall follows MFIPPA.
-
-**2. Cross-Border Data Storage Requirements**:
-   - **PIPEDA**: No geographic restrictions on where personal information can be stored. Organizations can use international cloud services as long as appropriate safeguards exist.
-   - **MFIPPA**: Section 30.1 explicitly prohibits storing or accessing personal information outside Canada, with limited exceptions requiring consent or Commissioner authorization.
-   - **Example**: A Toronto-based company can use US cloud services under PIPEDA, but Toronto City Hall cannot without special authorization.
-
-**3. Access to Information Rights**:
-   - **PIPEDA**: Provides individuals with access rights specifically to their own personal information held by organizations.
-   - **MFIPPA**: Provides broader rights of access to both personal information and general government records, supporting government transparency and accountability.
-   - **Example**: Citizens can request copies of municipal meeting minutes under MFIPPA, beyond just their personal information.
-
-**4. Enforcement and Oversight**:
-   - **PIPEDA**: Enforced by the Privacy Commissioner of Canada (federal jurisdiction). Commissioner issues findings and recommendations; Federal Court can order compliance.
-   - **MFIPPA**: Enforced by the Information and Privacy Commissioner of Ontario (provincial jurisdiction). Commissioner has order-making power for compliance.
-   - **Example**: PIPEDA complaints go to federal Privacy Commissioner; MFIPPA complaints go to Ontario IPC.
-
-**5. Purpose and Intent**:
-   - **PIPEDA**: Balances privacy rights with business needs for personal information in commercial activities.
-   - **MFIPPA**: Balances privacy protection with government accountability and transparency through public access to government records.`,
-            explanation: "Understanding these differences is essential for organizations that may be subject to both acts or for municipal employees working with personal information. The differences significantly impact operational procedures, technology choices, and compliance strategies."
+            question: "What is a key operational difference between PIPEDA and MFIPPA regarding cross-border data storage?",
+            answer: 'b',
+            options: {
+                a: "Both PIPEDA and MFIPPA prohibit storing personal information outside Canada",
+                b: "PIPEDA allows international storage with safeguards, while MFIPPA requires Canadian storage only",
+                c: "PIPEDA requires Canadian storage, while MFIPPA allows international storage",
+                d: "Both acts allow international storage without restrictions"
+            },
+            explanation: "PIPEDA has no geographic restrictions on data storage as long as appropriate safeguards exist, allowing use of international cloud services. In contrast, MFIPPA Section 30.1 explicitly prohibits storing or accessing personal information outside Canada, with limited exceptions requiring consent or Commissioner authorization. This difference significantly impacts technology choices for private sector vs. public sector organizations."
         },
         q4: {
-            type: 'image-based',
-            question: "Based on privacy breach notification best practices and Ontario's Bill 194 requirements, what is the immediate first action an organization must take upon discovering a potential data breach involving personal information?",
+            question: "Upon discovering a potential data breach involving personal information, what is the immediate first action an organization must take under Ontario's Bill 194 requirements?",
             answer: 'a',
-            imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&crop=center", // Placeholder - represents breach response workflow
             options: {
                 a: "Contain the breach to prevent further unauthorized access and assess the scope of compromised data",
                 b: "Immediately notify the Privacy Commissioner before taking any other action",
@@ -348,24 +297,15 @@ PREVENTION MEASURES
             explanation: "The immediate priority upon discovering a breach is containment to stop ongoing unauthorized access and prevent additional data exposure. This includes isolating affected systems, changing credentials, and securing vulnerabilities. Only after containment should you assess scope, notify authorities and individuals, and document the incident. Bill 194 requires notification to the IPC 'as soon as reasonably possible' after containment and assessment, with a detailed report within 30 days."
         },
         q5: {
-            type: 'drag-drop',
-            question: "A comprehensive MFIPPA compliance program requires safeguards across multiple categories. Match each privacy protection measure to its appropriate safeguard category:",
-            answer: 'drag-drop',
-            options: {},
-            dragItems: [
-                { id: 'item1', content: 'Annual privacy training for all staff', correctZone: 'Zone A' },
-                { id: 'item2', content: 'Encryption of data at rest and in transit', correctZone: 'Zone B' },
-                { id: 'item3', content: 'Multi-factor authentication and role-based access controls', correctZone: 'Zone B' },
-                { id: 'item4', content: 'Written privacy policies and procedures', correctZone: 'Zone A' },
-                { id: 'item5', content: 'Secure shredding and locked disposal bins', correctZone: 'Zone C' },
-                { id: 'item6', content: 'Records retention schedules and destruction procedures', correctZone: 'Zone C' }
-            ],
-            dropZones: [
-                { id: 'Zone A', label: 'Administrative Safeguards', description: 'Policies, procedures, and training' },
-                { id: 'Zone B', label: 'Technical Safeguards', description: 'Technology-based controls' },
-                { id: 'Zone C', label: 'Physical Safeguards', description: 'Physical security and handling' }
-            ],
-            explanation: "MFIPPA compliance requires a comprehensive approach using all three safeguard categories: Administrative (policies, training, governance), Technical (encryption, access controls, monitoring), and Physical (secure disposal, locked storage, facility access). All three categories work together to protect personal information throughout its lifecycle."
+            question: "A comprehensive MFIPPA compliance program requires safeguards across multiple categories. Which of the following is an example of an administrative safeguard?",
+            answer: 'b',
+            options: {
+                a: "Encryption of data at rest and in transit",
+                b: "Annual privacy training for all staff and written privacy policies",
+                c: "Multi-factor authentication and role-based access controls",
+                d: "Secure shredding and locked disposal bins"
+            },
+            explanation: "MFIPPA compliance requires three safeguard categories: Administrative (policies, training, governance), Technical (encryption, access controls, monitoring), and Physical (secure disposal, locked storage, facility access). Annual privacy training and written privacy policies are administrative safeguards. Technical safeguards include encryption and authentication, while physical safeguards include secure disposal and locked storage."
         },
         q6: { 
             question: "Your municipality is planning to deploy body-worn cameras for bylaw enforcement officers that will record interactions with the public. This involves collecting new video and audio recordings containing personal information. Under MFIPPA, when is a Privacy Impact Assessment (PIA) required for this initiative?", 
