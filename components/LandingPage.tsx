@@ -51,7 +51,6 @@ const faqs = [
 
 interface LandingPageProps {
     onNavigateToTraining: () => void;
-    onNavigateToAdmin?: () => void;
 }
 
 const Section: React.FC<{id: string, children: React.ReactNode, className?: string}> = ({id, children, className}) => (
@@ -68,12 +67,12 @@ const SectionTitle: React.FC<{title: string, subtitle: string}> = ({title, subti
 );
 
 
-const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining, onNavigateToAdmin }) => {
+const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
   const { isMobile, isTablet, preferredLayout, touchCapable } = useMobileDetection();
   
   return (
     <div className={`min-h-screen text-text-primary flex flex-col bg-background ${touchCapable ? 'touch-enabled' : ''}`}>
-      <Header onNavigateToTraining={onNavigateToTraining} onNavigateToAdmin={onNavigateToAdmin} />
+      <Header onNavigateToTraining={onNavigateToTraining} />
       <main className="flex-grow animate-fade-in">
         
         {/* Enhanced Hero Section with Improved Visual Design */}

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState } from 'react';
-import { ODDILogo, GoogleIcon, FacebookIcon, LinkedInIcon, InstagramIcon } from '../icons';
+import { ODDILogo, GoogleIcon, FacebookIcon, MicrosoftIcon, InstagramIcon } from '../icons';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import { LoginUser, User } from '../../types';
 import { 
     signInWithGoogle, 
     signInWithFacebook, 
-    signInWithLinkedIn,
+    signInWithMicrosoft,
     convertFirebaseUser,
     isFirebaseConfigured 
 } from '../../config/firebase';
@@ -41,7 +41,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
         onLogin(user);
     };
 
-    const handleSocialLogin = async (provider: 'google' | 'facebook' | 'linkedin' | 'instagram') => {
+    const handleSocialLogin = async (provider: 'google' | 'facebook' | 'microsoft' | 'instagram') => {
         if (!firebaseConfigured) {
             setError('Social login is not configured. Please contact the administrator or use email login.');
             return;
@@ -60,12 +60,12 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                 case 'facebook':
                     firebaseUser = await signInWithFacebook();
                     break;
-                case 'linkedin':
-                    firebaseUser = await signInWithLinkedIn();
+                case 'microsoft':
+                    firebaseUser = await signInWithMicrosoft();
                     break;
                 case 'instagram':
                     // Instagram auth requires Facebook Login with Instagram permissions
-                    setError('Instagram login is coming soon. Please use Google, Facebook, or email to sign in.');
+                    setError('Instagram login is coming soon. Please use Google, Facebook, Microsoft, or email to sign in.');
                     setLoading(false);
                     return;
                 default:
@@ -149,23 +149,23 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                             </button>
                             <button
                                 type="button"
-                                onClick={() => handleSocialLogin('linkedin')}
-                                disabled={loading}
-                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                <LinkedInIcon className="w-5 h-5" />
-                                <span className="text-sm font-medium">LinkedIn</span>
-                            </button>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3 mt-3">
-                            <button
-                                type="button"
                                 onClick={() => handleSocialLogin('facebook')}
                                 disabled={loading}
                                 className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 <FacebookIcon className="w-5 h-5" />
                                 <span className="text-sm font-medium">Facebook</span>
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3 mt-3">
+                            <button
+                                type="button"
+                                onClick={() => handleSocialLogin('microsoft')}
+                                disabled={loading}
+                                className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <MicrosoftIcon className="w-5 h-5" />
+                                <span className="text-sm font-medium">Microsoft</span>
                             </button>
                             <button
                                 type="button"

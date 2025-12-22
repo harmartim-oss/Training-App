@@ -20,6 +20,7 @@ const App: React.FC = () => {
 
   const navigateToLanding = () => {
     setView('landing');
+    window.history.pushState({}, '', '/');
   }
 
   const navigateToAdmin = () => {
@@ -46,7 +47,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      {view === 'landing' && <LandingPage onNavigateToTraining={navigateToTraining} onNavigateToAdmin={navigateToAdmin} />}
+      {view === 'landing' && <LandingPage onNavigateToTraining={navigateToTraining} />}
       {view === 'training' && <TrainingPortal onNavigateToLanding={navigateToLanding} />}
       {view === 'admin-login' && <AdminLogin onLogin={handleAdminLogin} onBackToPortal={navigateToLanding} />}
       {view === 'admin-dashboard' && <AdminDashboard onLogout={handleAdminLogout} adminEmail={adminEmail} />}

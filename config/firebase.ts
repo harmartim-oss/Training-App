@@ -47,7 +47,7 @@ if (isFirebaseConfigured()) {
 // Authentication providers
 const googleProvider = auth ? new GoogleAuthProvider() : null;
 const facebookProvider = auth ? new FacebookAuthProvider() : null;
-const linkedInProvider = auth ? new OAuthProvider('linkedin.com') : null;
+const microsoftProvider = auth ? new OAuthProvider('microsoft.com') : null;
 // Note: Instagram doesn't support OAuth via Firebase Auth, would need Facebook Login with Instagram permissions
 
 // Social login functions
@@ -78,14 +78,20 @@ export const signInWithFacebook = async () => {
 };
 
 export const signInWithLinkedIn = async () => {
-    if (!auth || !linkedInProvider) {
+    // LinkedIn OAuth provider would need to be configured separately
+    // Firebase doesn't have built-in LinkedIn support, would require custom implementation
+    throw new Error('LinkedIn sign-in requires custom OAuth implementation. Please use Google, Facebook, or Microsoft.');
+};
+
+export const signInWithMicrosoft = async () => {
+    if (!auth || !microsoftProvider) {
         throw new Error('Firebase not configured. Please set up Firebase credentials in .env.local');
     }
     try {
-        const result = await signInWithPopup(auth, linkedInProvider);
+        const result = await signInWithPopup(auth, microsoftProvider);
         return result.user;
     } catch (error: any) {
-        console.error('LinkedIn sign in error:', error);
+        console.error('Microsoft sign in error:', error);
         throw error;
     }
 };

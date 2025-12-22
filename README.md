@@ -14,37 +14,93 @@ A comprehensive cybersecurity training platform for the Ontario Certified Cyber 
 - **Module 3**: AI Governance & Responsible Use
 - **Module 4**: Secure Data & Records Management
 
+### 📚 Sequential Learning System
+- **Enforced Progression**: Users must complete modules in order
+- **Content-First Approach**: Quiz unlocked only after viewing all module content
+- **Final Exam Lockdown**: Assessment available only after completing all 4 modules
+- **Progress Tracking**: Visual indicators show completion status and locked content
+
+### 💎 Subscription Tiers
+- **Basic ($49/month)**: Access to all 4 training modules with quizzes and certification
+- **Premium ($149/year)**: Everything in Basic PLUS:
+  - 15+ professional PDF resources (templates, checklists, guides)
+  - All tools and practice exams
+  - Advanced AI study assistant (unlimited)
+  - CPD tracking (20 hours/year)
+- **Enterprise ($899/year)**: Everything in Premium PLUS:
+  - Multi-user access (up to 25 users)
+  - Admin dashboard with analytics
+  - User management capabilities
+  - Business intelligence and revenue tracking
+  - CPD tracking (25 hours/year)
+
+### 📄 Professional Resources (Premium & Enterprise Only)
+All resources in professionally formatted PDF:
+- Privacy Impact Assessment (PIA) Checklist
+- Breach Notification Templates
+- PIPEDA vs MFIPPA Comparison Guide
+- Consent Management Framework
+- Incident Response Plan Template
+- Risk Assessment Worksheet
+- Security Controls Checklist
+- Advanced Incident Response Playbook
+- Algorithmic Impact Assessment (AIA) Template
+- AI Bias Testing Checklist
+- AI Transparency Documentation
+- AI Governance Framework
+- Data Classification Matrix
+- Records Retention Schedule
+- Microlearning Modules Guide
+
 ### 📝 Assessment System
 - **60+ Questions**: 15 questions per module covering all key concepts
 - **Proper Randomization**: Fisher-Yates shuffle algorithm ensures fair question distribution
 - **Passing Score**: 80% required for certification
 - **Randomized Options**: Answer choices are shuffled for each attempt
+- **Sequential Access**: Must complete previous modules before accessing next
 
 ### 🔐 Authentication
 - **Traditional Login**: Email and organization-based authentication
 - **Social Login**: OAuth integration with Firebase
-  - Google Sign-In
-  - Facebook Login
-  - LinkedIn Authentication
+  - Google Sign-In ✅
+  - Facebook Login ✅
+  - Microsoft Authentication ✅
   - Instagram (coming soon)
-- **Admin Access**: Secure admin portal for platform management
+- **Admin Access**: Secure admin portal accessible via /admin URL
 
-### 📊 Admin Dashboard
-- **User Analytics**: Track user progress, completion rates, and scores
-- **Module Statistics**: View completion rates across all modules
-- **Organization Insights**: Breakdown by organization type and subscription tier
-- **User Management**: View detailed user profiles and progress
-- **Real-time Metrics**: Monitor platform usage and performance
+### 📊 Enhanced Admin Dashboard
+- **User Management**:
+  - View all users with detailed profiles
+  - Change user subscription tiers
+  - Suspend/restore user access
+  - Reset user progress
+- **Business Analytics**:
+  - Monthly Recurring Revenue (MRR) tracking
+  - Average Revenue Per User (ARPU)
+  - Premium conversion rates
+  - User engagement patterns
+  - Industry-specific insights
+- **Completion Tracking**:
+  - Module completion trends
+  - Assessment pass rates
+  - Average quiz scores
+  - Drop-off rate analysis
+- **User Patterns**:
+  - Peak training times
+  - Session duration analytics
+  - Mobile vs Desktop usage
+  - Organization type breakdown
 
 ### 🎯 Additional Features
 - AI Study Assistant (powered by Google Gemini)
-- Interactive learning elements
-- Downloadable resources
+- Interactive learning elements with visual frameworks
+- Tier-based access control with visual lock indicators
 - Practice examinations
 - Certificate generation
 - Progress tracking with gamification
 - Spaced repetition learning
 - Mobile-responsive design
+- Profile management
 
 ## Run Locally
 
@@ -88,7 +144,7 @@ A comprehensive cybersecurity training platform for the Ontario Certified Cyber 
 - **Email**: `admin@oddi.ca`
 - **Password**: `admin123`
 
-Access the admin panel at: `/admin` or click "Admin" in the header
+Access the admin panel at: `/admin` (note: no longer visible in header - direct URL access only)
 
 ## Key Technologies
 
