@@ -17,8 +17,6 @@ import {
     ConceptMap 
 } from '../common/VisualLearningElements';
 import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon, ProgressIcon, VisualFrameworkIcon, AssessmentIcon, ResourceIcon } from '../icons';
-import LearningObjectivesDisplay from '../common/LearningObjectivesDisplay';
-import { module4Objectives } from '../../data/learningObjectives';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1560,22 +1558,52 @@ Email: _______________`
                         <h1 className="text-3xl font-bold font-mono mb-2 uppercase">Module 4: Data Management</h1>
                         <p className="mb-6">Ensuring data is classified, retained, and handled securely</p>
                         
-                        {/* Learning Objectives - Enhanced with Bloom's Taxonomy */}
-                        <LearningObjectivesDisplay 
-                            moduleDesign={module4Objectives}
-                            showCourseLevel={true}
-                            showLessonLevel={true}
-                            compact={false}
-                        />
-                        
-                        {/* Progress Visualizer */}
-                        <ProgressVisualizer
-                            title="Module 4 Learning Path"
-                            currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
-                            totalSteps={3}
-                            stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
-                            description="Follow this structured path to master data management and governance"
-                        />
+                        <div className="learning-objectives-enhanced">
+                            <h3>
+                                <span>🎯</span>
+                                Learning Objectives
+                            </h3>
+                            
+                            {/* Progress Visualizer */}
+                            <ProgressVisualizer
+                                title="Module 4 Learning Path"
+                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                                totalSteps={3}
+                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                                description="Follow this structured path to master data management and governance"
+                            />
+                            
+                            <ul>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Implement comprehensive data classification and handling procedures</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Establish effective records management and retention policies</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Ensure compliance with cross-border data storage requirements</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Deploy robust data security and access control systems</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Create data governance frameworks for quality management</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Navigate complex regulatory requirements for data management</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Optimize data lifecycle management and disposition processes</span>
+                                </li>
+                            </ul>
+                        </div>
 
                         {currentSection === 'content' ? (
                             /* Content Section - Now with Slide Navigation */

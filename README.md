@@ -4,23 +4,7 @@
 
 # Ontario Digital Defence Institute - Training Portal
 
-A comprehensive cybersecurity training platform for the Ontario Certified Cyber Resilience Professional (OCRP) certification program, designed using **Bloom's Taxonomy** best practices for effective online learning.
-
-## 🎯 Learning Design Philosophy
-
-This training platform is built on evidence-based instructional design principles:
-
-- **🏗️ Bloom's Taxonomy Framework**: All learning objectives are structured across six cognitive levels (Remember → Understand → Apply → Analyze → Evaluate → Create), ensuring progressive skill development from foundational knowledge to professional mastery.
-
-- **📊 SMART Objectives**: Every learning objective includes a Condition (context), Action (measurable verb), and Criteria (performance standard), providing clear expectations and enabling self-assessment.
-
-- **🎓 Course vs Lesson Objectives**: Distinction between broad course-level goals and specific lesson-level objectives that build cumulatively, with 6-8 lesson objectives supporting each course objective.
-
-- **🧭 Aligned Assessment**: Quiz questions are tagged with Bloom's levels and mapped to specific objectives, ensuring comprehensive evaluation from recall to critical thinking.
-
-- **📈 Progressive Complexity**: Content and assessments move systematically from lower-order thinking (knowledge, comprehension) to higher-order thinking (analysis, evaluation, creation).
-
-**📖 [Read the Complete Bloom's Taxonomy Integration Guide](BLOOMS_TAXONOMY_GUIDE.md)**
+A comprehensive cybersecurity training platform for the Ontario Certified Cyber Resilience Professional (OCRP) certification program.
 
 ## Features
 
