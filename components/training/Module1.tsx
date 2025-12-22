@@ -18,6 +18,8 @@ import {
     ConceptMap 
 } from '../common/VisualLearningElements';
 import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon } from '../icons';
+import LearningObjectivesDisplay from '../common/LearningObjectivesDisplay';
+import { module1Objectives } from '../../data/learningObjectives';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1005,73 +1007,22 @@ PREVENTION MEASURES
                             </div>
                         )}
 
-                        {/* Learning Objectives */}
-                        <div className="learning-objectives-enhanced">
-                            <h3>
-                                <span>🎯</span>
-                                Learning Objectives
-                            </h3>
-                            
-                            {/* Progress Visualizer */}
-                            <ProgressVisualizer
-                                title="Module 1 Learning Path"
-                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
-                                totalSteps={3}
-                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
-                                description="Follow this structured path to master Ontario's privacy law framework"
-                            />
-                            
-                            <ul>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Understand PIPEDA's 10 Fair Information Principles and their application</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Master PHIPA requirements for health information protection and circle of care</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Navigate FIPPA provisions for provincial institutions and access rights</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Determine jurisdictional application of federal vs provincial privacy laws</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Execute FOI requests under FIPPA, MFIPPA, and federal legislation</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Apply MFIPPA requirements for municipal organizations including collection, use, and disclosure rules</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Learn to conduct comprehensive Privacy Impact Assessments (PIAs)</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Implement data governance frameworks and safeguards</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Navigate cross-border data management requirements</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Develop breach response and notification procedures</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Apply new Bill 194 privacy impact assessment requirements</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Create practical compliance frameworks for organizational operations</span>
-                                </li>
-                            </ul>
-                        </div>
+                        {/* Learning Objectives - Enhanced with Bloom's Taxonomy */}
+                        <LearningObjectivesDisplay 
+                            moduleDesign={module1Objectives}
+                            showCourseLevel={true}
+                            showLessonLevel={true}
+                            compact={false}
+                        />
+                        
+                        {/* Progress Visualizer */}
+                        <ProgressVisualizer
+                            title="Module 1 Learning Path"
+                            currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                            totalSteps={3}
+                            stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                            description="Follow this structured path to master Ontario's privacy law framework"
+                        />
 
                         {currentSection === 'content' ? (
                             /* Content Section - Now with Slide Navigation */
