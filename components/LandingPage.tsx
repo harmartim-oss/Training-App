@@ -70,6 +70,9 @@ const SectionTitle: React.FC<{title: string, subtitle: string}> = ({title, subti
 const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
   const { isMobile, isTablet, preferredLayout, touchCapable } = useMobileDetection();
   
+  // Get base path for GitHub Pages compatibility
+  const basePath = import.meta.env.BASE_URL || '/';
+  
   return (
     <div className={`min-h-screen text-text-primary flex flex-col bg-background ${touchCapable ? 'touch-enabled' : ''}`}>
       <Header onNavigateToTraining={onNavigateToTraining} />
@@ -339,7 +342,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
             
             <SectionTitle title="Additional Resources" subtitle="Access standalone tools and guides for enhanced learning"/>
             <div className={`grid grid-cols-1 ${isMobile ? 'gap-8' : 'md:grid-cols-2 gap-10'} relative z-10`}>
-                <a href="/enhanced_platform.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30">
+                <a href={`${basePath}enhanced_platform.html`} target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30">
                     {/* Enhanced hover background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
@@ -364,7 +367,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
                     </div>
                 </a>
 
-                <a href="/practice_exam.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.1s'}}>
+                <a href={`${basePath}practice_exam.html`} target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.1s'}}>
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <div className="relative z-10">
@@ -388,7 +391,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
                     </div>
                 </a>
 
-                <a href="/study_guide.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.2s'}}>
+                <a href={`${basePath}study_guide.html`} target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.2s'}}>
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <div className="relative z-10">
@@ -412,7 +415,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToTraining }) => {
                     </div>
                 </a>
 
-                <a href="/platform.html" target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.3s'}}>
+                <a href={`${basePath}platform.html`} target="_blank" rel="noopener noreferrer" className="group relative bg-surface border border-border rounded-3xl p-8 flex flex-col animate-fade-in transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-primary/30" style={{animationDelay: '0.3s'}}>
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <div className="relative z-10">

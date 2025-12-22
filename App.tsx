@@ -14,35 +14,73 @@ const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'training' | 'admin-login' | 'admin-dashboard'>('landing');
   const [adminEmail, setAdminEmail] = useState<string>('');
 
+  // Helper function to determine view from path
+  const getViewFromPath = (path: string): 'landing' | 'training' | 'admin-login' | 'admin-dashboard' => {
+    if (path.includes('admin/dashboard')) {
+      return 'admin-dashboard';
+    } else if (path.includes('admin')) {
+      return 'admin-login';
+    } else if (path.includes('training')) {
+      return 'training';
+    }
+    return 'landing';
+  };
+
   const navigateToTraining = () => {
     setView('training');
+    window.history.pushState({}, '', `${import.meta.env.BASE_URL}training`);
   };
 
   const navigateToLanding = () => {
     setView('landing');
-    window.history.pushState({}, '', '/');
+    window.history.pushState({}, '', import.meta.env.BASE_URL);
   }
 
   const navigateToAdmin = () => {
     setView('admin-login');
+    window.history.pushState({}, '', `${import.meta.env.BASE_URL}admin`);
   };
 
   const handleAdminLogin = (email: string) => {
     setAdminEmail(email);
     setView('admin-dashboard');
+    window.history.pushState({}, '', `${import.meta.env.BASE_URL}admin/dashboard`);
   };
 
   const handleAdminLogout = () => {
     setAdminEmail('');
     setView('landing');
+    window.history.pushState({}, '', import.meta.env.BASE_URL);
   };
 
-  // Check URL for admin route (simple routing)
+  // Handle initial routing and session storage redirect
   React.useEffect(() => {
-    const path = window.location.pathname;
-    if (path.includes('/admin')) {
-      setView('admin-login');
+    const basePath = import.meta.env.BASE_URL || '/';
+    
+    // Check for redirect from 404.html
+    const redirect = sessionStorage.getItem('redirect');
+    if (redirect) {
+      sessionStorage.removeItem('redirect');
+      const path = redirect.replace(basePath, '');
+      setView(getViewFromPath(path));
+      return;
     }
+    
+    // Check URL for routing
+    const path = window.location.pathname.replace(basePath, '');
+    setView(getViewFromPath(path));
+  }, []);
+
+  // Handle browser back/forward buttons
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const basePath = import.meta.env.BASE_URL || '/';
+      const path = window.location.pathname.replace(basePath, '');
+      setView(getViewFromPath(path));
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   return (
