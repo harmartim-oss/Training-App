@@ -10,6 +10,7 @@ import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning';
 import SpacedRepetitionReview from '../common/SpacedRepetitionReview';
 import LearningAnalytics from '../common/LearningAnalytics';
 import SessionTimer from '../common/SessionTimer';
+import { getCPDRequirementForTier, calculateCPDProgress } from '../../config/cpd';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -252,6 +253,52 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                             )}
                         </div>
                     </div>
+
+                    {/* CPD Status Quick View */}
+                    {(() => {
+                        const cpdRequirement = getCPDRequirementForTier(currentUser?.subscriptionTier || 'basic');
+                        if (cpdRequirement.annualHoursRequired > 0) {
+                            const cpdHours = currentUser?.cpdHours || {
+                                total: 0,
+                                required: cpdRequirement.annualHoursRequired,
+                                byCategory: { training: 0, thirdParty: 0, formalStudy: 0, conferences: 0, other: 0 },
+                                periodStart: new Date().toISOString().split('T')[0],
+                                periodEnd: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+                            };
+                            const progress = calculateCPDProgress(cpdHours, cpdRequirement);
+
+                            return (
+                                <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-4">
+                                            <div className="text-3xl">📊</div>
+                                            <div>
+                                                <h3 className="font-semibold text-text-primary">CPD Progress</h3>
+                                                <p className="text-sm text-text-secondary">
+                                                    {cpdHours.total} of {cpdRequirement.annualHoursRequired} hours completed
+                                                </p>
+                                                <div className="w-40 bg-background rounded-full h-2 mt-1">
+                                                    <div 
+                                                        className={`h-2 rounded-full transition-all ${
+                                                            progress >= 100 ? 'bg-success' : 'bg-primary'
+                                                        }`}
+                                                        style={{ width: `${Math.min(100, progress)}%` }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={() => onNavigate('cpd-tracking')}
+                                            className="btn-secondary text-sm"
+                                        >
+                                            Manage CPD →
+                                        </button>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return null;
+                    })()}
 
                     {/* Session Timer */}
                     <div className="mb-6">

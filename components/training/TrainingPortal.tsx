@@ -18,6 +18,7 @@ import ExamStudyGuide from './ExamStudyGuide';
 import PracticeExam from './PracticeExam';
 import AccountDetails from './AccountDetails';
 import SubscriptionManagement from './SubscriptionManagement';
+import CPDTracking from './CPDTracking';
 import { createAIAssistant, EducationalAssistant } from '../../services/aiAssistantService';
 import { ChatIcon, CloseIcon, SendIcon } from '../icons';
 import { User, LoginUser, SubscriptionTier } from '../../types';
@@ -344,6 +345,8 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                  return <AccountDetails user={currentUser!} onNavigate={setActiveSection} onUpdateUser={handleUpdateUser} />;
             case 'subscription':
                  return <SubscriptionManagement user={currentUser!} onNavigate={setActiveSection} onUpgradeSubscription={handleUpgradeSubscription} />;
+            case 'cpd-tracking':
+                 return <CPDTracking user={currentUser!} onNavigate={setActiveSection} />;
             default:
                 if (authView === 'signup') {
                     return <SignUp onSignUp={handleSignUp} onBackToLogin={() => setAuthView('login')} />;

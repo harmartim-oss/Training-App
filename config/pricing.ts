@@ -18,14 +18,18 @@ export const PRICING_TIERS: PricingTier[] = [
             'Basic AI study assistant',
             'Module quizzes and assessments',
             'Digital certificate upon completion',
-            'Community support forum'
+            'Community support forum',
+            'Basic Platform tool access'
         ],
         studyGuideAccess: false,
         practiceExamAccess: false,
         certificateAccess: true,
         aiAssistantAccess: true,
         supportLevel: 'community',
-        isPopular: false
+        isPopular: false,
+        toolsAccess: ['tool-basic-platform'],
+        resourcesAccess: [],
+        cpdTrackingEnabled: false
     },
     {
         id: 'individual',
@@ -40,7 +44,10 @@ export const PRICING_TIERS: PricingTier[] = [
             'Advanced AI study assistant with unlimited queries',
             'Email support',
             'Module completion certificates',
-            'LinkedIn certification badge'
+            'LinkedIn certification badge',
+            'Interactive Study Guide tool',
+            'Practice Exam System tool',
+            'CPD tracking (20 hours/year required)'
         ],
         studyGuideAccess: true,
         practiceExamAccess: true,
@@ -48,7 +55,10 @@ export const PRICING_TIERS: PricingTier[] = [
         aiAssistantAccess: true,
         supportLevel: 'email',
         maxUsers: 1,
-        isPopular: true
+        isPopular: true,
+        toolsAccess: ['tool-basic-platform', 'tool-practice-exam', 'tool-study-guide'],
+        resourcesAccess: [],
+        cpdTrackingEnabled: true
     },
     {
         id: 'enterprise',
@@ -59,13 +69,16 @@ export const PRICING_TIERS: PricingTier[] = [
         features: [
             'Everything in Individual Professional',
             'Multi-user access (up to 25 users)',
+            'All tools: Enhanced Platform, Practice Exam, Study Guide',
+            'Complete resource library (all templates & checklists)',
             'Custom organization branding',
             'Advanced analytics and reporting',
             'Priority support with dedicated account manager',
             'Custom training modules for organization',
             'Bulk certificate generation',
             'SCORM compliance for LMS integration',
-            'Quarterly compliance updates'
+            'Quarterly compliance updates',
+            'CPD tracking (25 hours/year required)'
         ],
         studyGuideAccess: true,
         practiceExamAccess: true,
@@ -73,7 +86,26 @@ export const PRICING_TIERS: PricingTier[] = [
         aiAssistantAccess: true,
         supportLevel: 'priority',
         maxUsers: 25,
-        isPopular: false
+        isPopular: false,
+        toolsAccess: ['tool-basic-platform', 'tool-practice-exam', 'tool-study-guide', 'tool-enhanced-platform'],
+        resourcesAccess: [
+            'PIA_Checklist',
+            'Breach_Notification_Templates',
+            'Consent_Management',
+            'PIPEDA_MFIPPA_Comparison',
+            'Incident_Response_Plan',
+            'Risk_Assessment_Worksheet',
+            'Security_Controls_Checklist',
+            'Advanced_Incident_Response_Playbook',
+            'AIA_Template',
+            'AI_Bias_Testing',
+            'AI_Transparency',
+            'AI_Governance_Framework',
+            'Data_Classification_Matrix',
+            'Records_Retention_Schedule',
+            'Microlearning_Modules'
+        ],
+        cpdTrackingEnabled: true
     }
 ];
 

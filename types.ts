@@ -16,6 +16,10 @@ export interface User {
     loginDate: string;
     registrationDate: string;
     isEnterprise: boolean;
+    cpdHours?: CPDHours;
+    certificationDate?: string;
+    certificationExpiry?: string;
+    purchasedResources?: string[]; // IDs of individually purchased resources/tools
 }
 
 export interface LoginUser {
@@ -43,6 +47,9 @@ export interface PricingTier {
     supportLevel: 'community' | 'email' | 'priority';
     maxUsers?: number;
     isPopular?: boolean;
+    toolsAccess?: string[]; // List of tool IDs accessible with this tier
+    resourcesAccess?: string[]; // List of resource IDs accessible with this tier
+    cpdTrackingEnabled?: boolean;
 }
 
 // Study Materials Types
@@ -84,4 +91,70 @@ export interface Message {
     role: 'user' | 'assistant';
     content: string;
     timestamp: Date;
+}
+
+// CPD (Continuing Professional Development) Types
+export interface CPDHours {
+    total: number;
+    required: number;
+    byCategory: {
+        training: number;
+        thirdParty: number;
+        formalStudy: number;
+        conferences: number;
+        other: number;
+    };
+    periodStart: string;
+    periodEnd: string;
+}
+
+export interface CPDActivity {
+    id: string;
+    userId: string;
+    title: string;
+    description: string;
+    category: 'training' | 'thirdParty' | 'formalStudy' | 'conferences' | 'other';
+    hours: number;
+    date: string;
+    provider?: string;
+    certificateUrl?: string;
+    status: 'pending' | 'approved' | 'rejected';
+    submittedDate: string;
+    reviewedDate?: string;
+    reviewedBy?: string;
+    notes?: string;
+}
+
+export interface CPDRequirement {
+    tier: SubscriptionTier;
+    annualHoursRequired: number;
+    renewalPeriodMonths: number;
+    categoryMinimums?: {
+        [key: string]: number;
+    };
+    description: string;
+}
+
+// Resource and Tool Purchase Types
+export interface PurchasableItem {
+    id: string;
+    type: 'tool' | 'resource' | 'bundle';
+    name: string;
+    description: string;
+    price: number;
+    currency: string;
+    includedInTiers: SubscriptionTier[];
+    availableForPurchase: SubscriptionTier[]; // Which tiers can buy this individually
+    url?: string; // For tools, the URL to access
+    files?: string[]; // For resources, the file names
+}
+
+export interface Purchase {
+    id: string;
+    userId: string;
+    itemId: string;
+    purchaseDate: string;
+    price: number;
+    status: 'completed' | 'pending' | 'refunded';
+    expiryDate?: string;
 }
