@@ -263,8 +263,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, adminEmail })
 
         const handleChangeTier = (newTier: string) => {
             // In a real app, this would update the database
-            selectedUser.user.subscriptionTier = newTier;
-            setSelectedUser({ ...selectedUser });
+            const updatedUser = { ...selectedUser.user, subscriptionTier: newTier };
+            setSelectedUser({ ...selectedUser, user: updatedUser });
             alert(`User subscription tier updated to ${newTier}`);
         };
 

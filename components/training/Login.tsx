@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 import React, { useState } from 'react';
-import { ODDILogo, GoogleIcon, FacebookIcon, LinkedInIcon, InstagramIcon } from '../icons';
+import { ODDILogo, GoogleIcon, FacebookIcon, MicrosoftIcon, InstagramIcon } from '../icons';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import { LoginUser, User } from '../../types';
 import { 
@@ -164,7 +164,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, onSignUp }) => {
                                 disabled={loading}
                                 className="flex items-center justify-center gap-2 p-3 border border-border hover:border-primary hover:bg-primary/5 transition-colors rounded disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                <LinkedInIcon className="w-5 h-5" />
+                                <MicrosoftIcon className="w-5 h-5" />
                                 <span className="text-sm font-medium">Microsoft</span>
                             </button>
                             <button
