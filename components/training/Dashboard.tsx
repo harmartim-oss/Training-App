@@ -10,6 +10,7 @@ import { useAdaptiveLearning } from '../../hooks/useAdaptiveLearning';
 import SpacedRepetitionReview from '../common/SpacedRepetitionReview';
 import LearningAnalytics from '../common/LearningAnalytics';
 import SessionTimer from '../common/SessionTimer';
+import { getCPDRequirementForTier, calculateCPDProgress } from '../../config/cpd';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
