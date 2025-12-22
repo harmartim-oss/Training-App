@@ -175,6 +175,71 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user, onNavigate, onUpd
                     </div>
                 </div>
 
+                {/* CPD Information */}
+                {(() => {
+                    const cpdRequirement = getCPDRequirementForTier(user.subscriptionTier);
+                    if (cpdRequirement.annualHoursRequired > 0) {
+                        const cpdHours = user.cpdHours || {
+                            total: 0,
+                            required: cpdRequirement.annualHoursRequired,
+                            byCategory: { training: 0, thirdParty: 0, formalStudy: 0, conferences: 0, other: 0 },
+                            periodStart: new Date().toISOString().split('T')[0],
+                            periodEnd: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+                        };
+                        const progress = calculateCPDProgress(cpdHours, cpdRequirement);
+
+                        return (
+                            <div className="mt-8 pt-6 border-t border-border">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-lg font-semibold text-text-primary">
+                                        CPD Status
+                                    </h3>
+                                    <button
+                                        onClick={() => onNavigate('cpd-tracking')}
+                                        className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
+                                    >
+                                        View Details →
+                                    </button>
+                                </div>
+                                <div className="bg-surface-elevated rounded-lg p-4">
+                                    <div className="grid md:grid-cols-3 gap-4 mb-3">
+                                        <div>
+                                            <p className="text-xs text-text-muted mb-1">Annual Requirement</p>
+                                            <p className="text-xl font-bold text-text-primary">
+                                                {cpdRequirement.annualHoursRequired} hours
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-text-muted mb-1">Completed</p>
+                                            <p className="text-xl font-bold text-primary">
+                                                {cpdHours.total} hours
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs text-text-muted mb-1">Progress</p>
+                                            <p className={`text-xl font-bold ${progress >= 100 ? 'text-success' : 'text-warning'}`}>
+                                                {Math.round(progress)}%
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="w-full bg-border rounded-full h-2 overflow-hidden">
+                                        <div 
+                                            className={`h-full rounded-full transition-all ${
+                                                progress >= 100 ? 'bg-success' : 'bg-primary'
+                                            }`}
+                                            style={{ width: `${Math.min(100, progress)}%` }}
+                                        />
+                                    </div>
+                                    <p className="text-xs text-text-muted mt-2">
+                                        Period: {new Date(cpdHours.periodStart).toLocaleDateString()} - {new Date(cpdHours.periodEnd).toLocaleDateString()}
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    }
+                    return null;
+                })()}
+
                 {/* Action Buttons */}
                 {isEditing ? (
                     <div className="flex justify-end gap-4 mt-8 pt-6 border-t border-border">
@@ -192,7 +257,15 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({ user, onNavigate, onUpd
                         </button>
                     </div>
                 ) : (
-                    <div className="flex justify-end mt-8 pt-6 border-t border-border">
+                    <div className="flex justify-end gap-4 mt-8 pt-6 border-t border-border">
+                        {getCPDRequirementForTier(user.subscriptionTier).annualHoursRequired > 0 && (
+                            <button
+                                onClick={() => onNavigate('cpd-tracking')}
+                                className="btn-secondary"
+                            >
+                                📊 Manage CPD Hours
+                            </button>
+                        )}
                         <button
                             onClick={() => onNavigate('subscription')}
                             className="btn-primary"
