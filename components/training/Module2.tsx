@@ -17,8 +17,6 @@ import {
     ConceptMap 
 } from '../common/VisualLearningElements';
 import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon, ProgressIcon, VisualFrameworkIcon, AssessmentIcon } from '../icons';
-import LearningObjectivesDisplay from '../common/LearningObjectivesDisplay';
-import { module2Objectives } from '../../data/learningObjectives';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1417,22 +1415,52 @@ D. Risk Assessment Methodology`
                         <h1 className="text-3xl font-bold font-mono mb-2 uppercase">Module 2: Cybersecurity Fundamentals</h1>
                         <p className="mb-6">Comprehensive risk assessment, system hardening, and incident response</p>
                         
-                        {/* Learning Objectives - Enhanced with Bloom's Taxonomy */}
-                        <LearningObjectivesDisplay 
-                            moduleDesign={module2Objectives}
-                            showCourseLevel={true}
-                            showLessonLevel={true}
-                            compact={false}
-                        />
-                        
-                        {/* Progress Visualizer */}
-                        <ProgressVisualizer
-                            title="Module 2 Learning Path"
-                            currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
-                            totalSteps={3}
-                            stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
-                            description="Follow this structured path to master cybersecurity fundamentals and risk management"
-                        />
+                        <div className="learning-objectives-enhanced">
+                            <h3>
+                                <span>🎯</span>
+                                Learning Objectives
+                            </h3>
+                            
+                            {/* Progress Visualizer */}
+                            <ProgressVisualizer
+                                title="Module 2 Learning Path"
+                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                                totalSteps={3}
+                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                                description="Follow this structured path to master cybersecurity fundamentals and risk management"
+                            />
+                            
+                            <ul>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Master comprehensive risk assessment methodologies including NIST, OCTAVE, and FAIR</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Implement system hardening and security controls across multiple layers</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Design and deploy network security architecture with defense in depth</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Develop structured incident response and recovery capabilities</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Apply cryptographic controls for data protection throughout its lifecycle</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Establish effective vulnerability management and remediation processes</span>
+                                </li>
+                                <li>
+                                    <span className="objective-icon">🎯</span>
+                                    <span className="objective-text">Create security awareness programs to address human factor risks</span>
+                                </li>
+                            </ul>
+                        </div>
 
                         {currentSection === 'content' ? (
                             /* Content Section - Now with Slide Navigation */
