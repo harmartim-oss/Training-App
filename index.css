@@ -3601,4 +3601,142 @@ details[open] .chevron-icon {
     gap: 0.5rem;
     align-items: flex-start;
   }
+
+  /* Resources Panel Mobile Optimization */
+  .resources-panel {
+    padding: 1rem;
+  }
+
+  .resources-panel .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Exam Study Guide Mobile Optimization */
+  .study-guide-section {
+    padding: 1rem;
+  }
+
+  /* Better touch targets for mobile */
+  button, .btn-primary, .btn-secondary {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improve text readability on mobile */
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Tablet Responsive Adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .resources-panel .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Study Materials Dashboard Grid */
+  .study-materials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop Optimization */
+@media (min-width: 1025px) {
+  .resources-panel .grid.md\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Study Materials Dashboard Grid */
+  .study-materials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Ensure responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsive container utilities */
+.container-responsive {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-responsive {
+    max-width: 768px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    max-width: 1024px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-responsive {
+    max-width: 1280px;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase interactive element sizes on touch devices */
+  .quiz-option,
+  .module-card-enhanced,
+  .resource-item {
+    min-height: 60px;
+    padding: 1rem;
+  }
+
+  /* Improve button spacing */
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+/* Line clamping for long text on mobile */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }

@@ -92,13 +92,15 @@ interface AssessmentProps {
 }
 
 const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate }) => {
-    // Shuffle questions and their options once when component mounts
+    const [retakeCount, setRetakeCount] = useState(0);
+    
+    // Shuffle questions and their options - reshuffle on retake
     const questions = useMemo(() => 
         shuffle(assessmentQuestions).map(q => ({
             ...q,
             options: shuffle(q.options)
         })),
-    []);
+    [retakeCount]); // Depend on retakeCount to reshuffle questions
     const [answers, setAnswers] = useState<Record<number, string>>({});
     
     const handleAnswerChange = (qIndex: number, answer: string) => {
@@ -116,12 +118,17 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
         onSubmit(score);
     };
     
+    const handleRetake = () => {
+        setRetakeCount(prev => prev + 1); // Increment to trigger reshuffling
+        setAnswers({}); // Clear all answers
+    };
+    
     const getOptionClass = (qIndex: number, option: string) => {
         if (answers[qIndex] === option) return 'selected';
         return '';
     }
 
-    if (progress.assessment.completed) {
+    if (progress.assessment.completed && retakeCount === 0) {
         return (
              <section className="animate-fade-in">
                  <div className="max-w-4xl mx-auto bg-surface border border-border p-8">
@@ -137,12 +144,14 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
                         <div className="text-lg text-text-secondary mb-8">
                             {progress.assessment.passed 
                                 ? "Congratulations! You have successfully passed the assessment." 
-                                : "A score of 80% is required to pass. Please review the modules and try again."}
+                                : "A score of 80% is required to pass. You can retake the assessment with new randomized questions."}
                         </div>
                         <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
                              <button onClick={() => onNavigate('dashboard')} className="w-full sm:w-auto bg-surface hover:bg-border transition-colors text-text-primary font-bold uppercase tracking-widest py-2.5 px-6 border border-border">Back to Dashboard</button>
-                             {progress.assessment.passed && (
+                             {progress.assessment.passed ? (
                                  <button onClick={() => onNavigate('certificate')} className="w-full sm:w-auto btn-primary font-semibold py-2.5 px-6">View Certificate</button>
+                             ) : (
+                                 <button onClick={handleRetake} className="w-full sm:w-auto btn-primary font-semibold py-2.5 px-6">Retake Assessment</button>
                              )}
                         </div>
                     </div>

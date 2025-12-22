@@ -14,6 +14,7 @@ import Module4 from './Module4';
 import Assessment from './Assessment';
 import Certificate from './Certificate';
 import StudyGuide from './StudyGuide';
+import ExamStudyGuide from './ExamStudyGuide';
 import PracticeExam from './PracticeExam';
 import AccountDetails from './AccountDetails';
 import SubscriptionManagement from './SubscriptionManagement';
@@ -335,6 +336,8 @@ const TrainingPortal: React.FC<TrainingPortalProps> = ({ onNavigateToLanding }) 
                  return <Certificate user={currentUser!} progress={userProgress} />;
             case 'study-guide':
                  return <StudyGuide userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
+            case 'exam-study-guide':
+                 return <ExamStudyGuide onNavigate={setActiveSection} />;
             case 'practice-exam':
                  return <PracticeExam userTier={currentUser?.subscriptionTier || 'basic'} onUpgrade={() => setAuthView('signup')} />;
             case 'account-details':

@@ -499,7 +499,29 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                 <h3 className="text-2xl font-bold font-mono text-text-primary mb-6 uppercase tracking-wider">
                     Study Materials
                 </h3>
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid md:grid-cols-3 gap-6">
+                    {/* Exam Study Guide Card */}
+                    <div className="module-card-enhanced p-6 border-2 border-primary">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="module-icon-container bg-primary/10">
+                                <span className="text-2xl">📖</span>
+                            </div>
+                            <div>
+                                <h4 className="text-lg font-semibold text-text-primary">Exam Study Guide</h4>
+                                <p className="text-sm text-text-secondary">Complete exam preparation guide</p>
+                            </div>
+                        </div>
+                        <p className="text-text-secondary mb-4 text-sm">
+                            Comprehensive review of all modules with key concepts, summaries, and practice questions. Free for all users!
+                        </p>
+                        <button 
+                            onClick={() => onNavigate('exam-study-guide')} 
+                            className="btn-primary w-full py-2 px-4"
+                        >
+                            View Study Guide
+                        </button>
+                    </div>
+                    
                     {/* Study Guide Card */}
                     <div className="module-card-enhanced p-6">
                         <div className="flex items-center gap-4 mb-4">
