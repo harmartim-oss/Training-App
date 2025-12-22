@@ -31,7 +31,7 @@ export interface LoginUser {
 }
 
 // Subscription and Pricing Types
-export type SubscriptionTier = 'basic' | 'individual' | 'enterprise';
+export type SubscriptionTier = 'basic' | 'premium' | 'enterprise';
 
 export interface PricingTier {
     id: SubscriptionTier;
