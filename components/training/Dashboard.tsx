@@ -11,6 +11,7 @@ import SpacedRepetitionReview from '../common/SpacedRepetitionReview';
 import LearningAnalytics from '../common/LearningAnalytics';
 import SessionTimer from '../common/SessionTimer';
 import { getCPDRequirementForTier, calculateCPDProgress } from '../../config/cpd';
+import { CognitiveProgressIndicator } from '../common/BloomsTaxonomyIndicator';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -373,6 +374,18 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                             </div>
                         ))}
                     </div>
+                </div>
+                
+                {/* Bloom's Taxonomy Cognitive Progress */}
+                <div className="mt-6">
+                    <CognitiveProgressIndicator 
+                        completedObjectives={
+                            // Track completed objectives based on module completion
+                            Object.keys(progress)
+                                .filter(key => key.startsWith('module') && progress[key as keyof Progress]?.completed)
+                                .map(key => `m${key.replace('module', '')}-completed`)
+                        }
+                    />
                 </div>
             </div>
 
