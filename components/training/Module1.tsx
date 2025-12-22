@@ -18,6 +18,8 @@ import {
     ConceptMap 
 } from '../common/VisualLearningElements';
 import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon } from '../icons';
+import { getModuleLearningObjectives } from '../../config/bloomsTaxonomy';
+import { LearningObjectivesDisplay, BloomsTaxonomyLegend } from '../common/BloomsTaxonomyIndicator';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1072,6 +1074,29 @@ PREVENTION MEASURES
                                 </li>
                             </ul>
                         </div>
+
+                        {/* Bloom's Taxonomy Learning Objectives */}
+                        {currentSection === 'content' && (() => {
+                            const moduleObjectives = getModuleLearningObjectives(1);
+                            if (!moduleObjectives) return null;
+                            return (
+                                <>
+                                    <LearningObjectivesDisplay
+                                        moduleId={1}
+                                        objectives={moduleObjectives.courseLevel}
+                                        type="course"
+                                        className="mt-8"
+                                    />
+                                    <LearningObjectivesDisplay
+                                        moduleId={1}
+                                        objectives={moduleObjectives.lessonLevel}
+                                        type="lesson"
+                                        className="mt-6"
+                                    />
+                                    <BloomsTaxonomyLegend className="mt-6" />
+                                </>
+                            );
+                        })()}
 
                         {currentSection === 'content' ? (
                             /* Content Section - Now with Slide Navigation */

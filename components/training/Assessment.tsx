@@ -4,6 +4,8 @@
 */
 import React, { useState, useMemo } from 'react';
 import { CheckCircleIcon, XCircleIcon } from '../icons';
+import { getQuestionBloomsLevel } from '../../config/assessmentBloomsMapping';
+import { BloomsTaxonomyIndicator } from '../common/BloomsTaxonomyIndicator';
 
 const assessmentQuestions = [
     // Module 1 - Privacy & Legal Framework (15 questions)
@@ -169,9 +171,14 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
                         <p className="text-text-secondary">Complete this assessment to earn your certificate. A score of 80% is required to pass.</p>
                     </div>
                     <div className="space-y-8">
-                        {questions.map((q, index) => (
+                        {questions.map((q, index) => {
+                            const bloomsLevel = getQuestionBloomsLevel(index);
+                            return (
                             <div key={index} className="bg-background border border-border p-6">
-                                <p className="font-semibold text-lg mb-4 text-text-primary">{index + 1}. {q.question}</p>
+                                <div className="flex items-start justify-between mb-3 gap-4">
+                                    <p className="font-semibold text-lg text-text-primary flex-1">{index + 1}. {q.question}</p>
+                                    <BloomsTaxonomyIndicator level={bloomsLevel} size="small" />
+                                </div>
                                 <div className="space-y-3">
                                     {q.options.map(option => (
                                         <label key={option} className={`quiz-option flex items-center p-4 cursor-pointer ${getOptionClass(index, option)}`}>
@@ -181,7 +188,7 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
                                     ))}
                                 </div>
                             </div>
-                        ))}
+                        );})}
                     </div>
                     <div className="text-center mt-8 border-t border-border pt-6">
                         <button onClick={handleSubmit} disabled={Object.keys(answers).length < questions.length} className="btn-primary px-8 py-3 text-base">
