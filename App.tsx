@@ -14,6 +14,18 @@ const App: React.FC = () => {
   const [view, setView] = useState<'landing' | 'training' | 'admin-login' | 'admin-dashboard'>('landing');
   const [adminEmail, setAdminEmail] = useState<string>('');
 
+  // Helper function to determine view from path
+  const getViewFromPath = (path: string): 'landing' | 'training' | 'admin-login' | 'admin-dashboard' => {
+    if (path.includes('admin/dashboard')) {
+      return 'admin-dashboard';
+    } else if (path.includes('admin')) {
+      return 'admin-login';
+    } else if (path.includes('training')) {
+      return 'training';
+    }
+    return 'landing';
+  };
+
   const navigateToTraining = () => {
     setView('training');
     window.history.pushState({}, '', `${import.meta.env.BASE_URL}training`);
@@ -50,23 +62,13 @@ const App: React.FC = () => {
     if (redirect) {
       sessionStorage.removeItem('redirect');
       const path = redirect.replace(basePath, '');
-      
-      if (path.includes('admin')) {
-        setView('admin-login');
-        return;
-      } else if (path.includes('training')) {
-        setView('training');
-        return;
-      }
+      setView(getViewFromPath(path));
+      return;
     }
     
     // Check URL for routing
     const path = window.location.pathname.replace(basePath, '');
-    if (path.includes('admin')) {
-      setView('admin-login');
-    } else if (path.includes('training')) {
-      setView('training');
-    }
+    setView(getViewFromPath(path));
   }, []);
 
   // Handle browser back/forward buttons
@@ -74,16 +76,7 @@ const App: React.FC = () => {
     const handlePopState = () => {
       const basePath = import.meta.env.BASE_URL || '/';
       const path = window.location.pathname.replace(basePath, '');
-      
-      if (path.includes('admin/dashboard')) {
-        setView('admin-dashboard');
-      } else if (path.includes('admin')) {
-        setView('admin-login');
-      } else if (path.includes('training')) {
-        setView('training');
-      } else {
-        setView('landing');
-      }
+      setView(getViewFromPath(path));
     };
 
     window.addEventListener('popstate', handlePopState);
