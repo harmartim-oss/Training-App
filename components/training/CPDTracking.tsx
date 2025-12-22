@@ -13,7 +13,6 @@ interface CPDTrackingProps {
 
 const CPDTracking: React.FC<CPDTrackingProps> = ({ user, onNavigate }) => {
     const [showSubmitForm, setShowSubmitForm] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState<keyof typeof CPD_CATEGORIES>('training');
 
     // Initialize CPD hours if not present
     const cpdHours: CPDHours = user.cpdHours || {

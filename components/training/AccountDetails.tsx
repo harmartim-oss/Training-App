@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import { UserIcon, EditIcon } from '../icons';
 import { User } from '../../types';
+import { getCPDRequirementForTier, calculateCPDProgress } from '../../config/cpd';
 
 interface AccountDetailsProps {
     user: User;
