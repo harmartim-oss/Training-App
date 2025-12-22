@@ -11,6 +11,7 @@ import SpacedRepetitionReview from '../common/SpacedRepetitionReview';
 import LearningAnalytics from '../common/LearningAnalytics';
 import SessionTimer from '../common/SessionTimer';
 import { getCPDRequirementForTier, calculateCPDProgress } from '../../config/cpd';
+import { CognitiveProgressIndicator } from '../common/BloomsTaxonomyIndicator';
 
 interface Progress {
     module1: { completed: boolean; score: number; progress: number };
@@ -373,6 +374,26 @@ const Dashboard: React.FC<DashboardProps> = ({ progress, onNavigate, currentUser
                             </div>
                         ))}
                     </div>
+                </div>
+                
+                {/* Bloom's Taxonomy Cognitive Progress */}
+                <div className="mt-6">
+                    <CognitiveProgressIndicator 
+                        completedObjectives={
+                            // Build list of completed objective IDs based on module completion
+                            // Each completed module unlocks its course and lesson objectives
+                            Object.keys(progress)
+                                .filter(key => key.startsWith('module') && (progress[key as keyof Progress] as any)?.completed)
+                                .flatMap(key => {
+                                    const moduleNum = parseInt(key.replace('module', ''));
+                                    const { getModuleLearningObjectives } = require('../../config/bloomsTaxonomy');
+                                    const objectives = getModuleLearningObjectives(moduleNum);
+                                    if (!objectives) return [];
+                                    // Return all objective IDs for completed module
+                                    return [...objectives.courseLevel, ...objectives.lessonLevel].map(obj => obj.id);
+                                })
+                        }
+                    />
                 </div>
             </div>
 
