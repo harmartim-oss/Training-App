@@ -356,11 +356,12 @@ const ExamStudyGuide: React.FC<ExamStudyGuideProps> = ({ onNavigate }) => {
     ];
 
     const downloadStudyGuide = () => {
-        // Create text content for download
-        let content = 'OCRP CERTIFICATION - COMPREHENSIVE EXAM STUDY GUIDE\n';
-        content += '=' .repeat(60) + '\n\n';
-        content += 'Ontario Certified Cyber Resilience Professional\n';
-        content += 'Training Program Study Guide\n\n';
+        try {
+            // Create text content for download
+            let content = 'OCRP CERTIFICATION - COMPREHENSIVE EXAM STUDY GUIDE\n';
+            content += '=' .repeat(60) + '\n\n';
+            content += 'Ontario Certified Cyber Resilience Professional\n';
+            content += 'Training Program Study Guide\n\n';
         
         studyGuideContent.forEach((module) => {
             content += '\n' + '='.repeat(60) + '\n';
@@ -401,16 +402,29 @@ const ExamStudyGuide: React.FC<ExamStudyGuideProps> = ({ onNavigate }) => {
         content += '- Can retake with new randomized questions if needed\n\n';
         content += 'Good luck with your certification!\n';
         
-        // Create download
+        // Create download with error handling
         const blob = new Blob([content], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
         link.download = 'OCRP_Exam_Study_Guide.txt';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+        
+        // Check if download attribute is supported
+        if ('download' in link) {
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            // Fallback for browsers that don't support download attribute
+            window.open(url, '_blank');
+        }
+        
+        // Clean up the URL object
+        setTimeout(() => URL.revokeObjectURL(url), 100);
+        } catch (error) {
+            console.error('Download failed:', error);
+            // Graceful fallback - user can still view content on screen
+        }
     };
 
     return (

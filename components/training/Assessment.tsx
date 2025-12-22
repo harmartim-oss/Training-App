@@ -92,7 +92,7 @@ interface AssessmentProps {
 }
 
 const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate }) => {
-    const [isRetaking, setIsRetaking] = useState(false);
+    const [retakeCount, setRetakeCount] = useState(0);
     
     // Shuffle questions and their options - reshuffle on retake
     const questions = useMemo(() => 
@@ -100,7 +100,7 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
             ...q,
             options: shuffle(q.options)
         })),
-    [isRetaking]); // Depend on isRetaking to reshuffle questions
+    [retakeCount]); // Depend on retakeCount to reshuffle questions
     const [answers, setAnswers] = useState<Record<number, string>>({});
     
     const handleAnswerChange = (qIndex: number, answer: string) => {
@@ -116,11 +116,10 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
         });
         const score = Math.round((correctAnswers / questions.length) * 100);
         onSubmit(score);
-        setIsRetaking(false); // Reset retaking flag after submit
     };
     
     const handleRetake = () => {
-        setIsRetaking(prev => !prev); // Toggle to trigger reshuffling
+        setRetakeCount(prev => prev + 1); // Increment to trigger reshuffling
         setAnswers({}); // Clear all answers
     };
     
@@ -129,7 +128,7 @@ const Assessment: React.FC<AssessmentProps> = ({ progress, onSubmit, onNavigate 
         return '';
     }
 
-    if (progress.assessment.completed && !isRetaking) {
+    if (progress.assessment.completed && retakeCount === 0) {
         return (
              <section className="animate-fade-in">
                  <div className="max-w-4xl mx-auto bg-surface border border-border p-8">

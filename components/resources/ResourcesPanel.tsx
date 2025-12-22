@@ -148,10 +148,8 @@ const ResourcesPanel: React.FC = () => {
         link.download = `${filename}.${extension}`;
         link.target = '_blank';
         
-        // Add error handling for missing resources
-        link.onerror = () => {
-            alert(`Resource ${filename}.${extension} is not available yet. Please contact support.`);
-        };
+        // Note: Resource files may not be available yet
+        // In production, these should be generated or made available
         
         document.body.appendChild(link);
         link.click();
