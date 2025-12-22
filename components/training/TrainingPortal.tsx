@@ -34,18 +34,18 @@ interface Message {
 }
 
 interface Progress {
-    module1: { completed: boolean; score: number; progress: number };
-    module2: { completed: boolean; score: number; progress: number };
-    module3: { completed: boolean; score: number; progress: number };
-    module4: { completed: boolean; score: number; progress: number };
+    module1: { completed: boolean; score: number; progress: number; contentCompleted: boolean };
+    module2: { completed: boolean; score: number; progress: number; contentCompleted: boolean };
+    module3: { completed: boolean; score: number; progress: number; contentCompleted: boolean };
+    module4: { completed: boolean; score: number; progress: number; contentCompleted: boolean };
     assessment: { completed: boolean; score: number; passed: boolean };
 }
 
 const initialProgress: Progress = {
-    module1: { completed: false, score: 0, progress: 0 },
-    module2: { completed: false, score: 0, progress: 0 },
-    module3: { completed: false, score: 0, progress: 0 },
-    module4: { completed: false, score: 0, progress: 0 },
+    module1: { completed: false, score: 0, progress: 0, contentCompleted: false },
+    module2: { completed: false, score: 0, progress: 0, contentCompleted: false },
+    module3: { completed: false, score: 0, progress: 0, contentCompleted: false },
+    module4: { completed: false, score: 0, progress: 0, contentCompleted: false },
     assessment: { completed: false, score: 0, passed: false }
 };
 
