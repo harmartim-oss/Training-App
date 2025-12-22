@@ -17,6 +17,8 @@ import {
     ConceptMap 
 } from '../common/VisualLearningElements';
 import { ConceptIcon, ScenarioIcon, ImplementationIcon, InteractiveIcon, ProgressIcon, VisualFrameworkIcon, AssessmentIcon, LearningPathIcon } from '../icons';
+import LearningObjectivesDisplay from '../common/LearningObjectivesDisplay';
+import { module3Objectives } from '../../data/learningObjectives';
 
 interface ModuleProps {
     onComplete: (score: number) => void;
@@ -1612,52 +1614,22 @@ Date: __________________________________`
                             </div>
                         )}
                         
-                        <div className="learning-objectives-enhanced">
-                            <h3>
-                                <span>🎯</span>
-                                Learning Objectives
-                            </h3>
-                            
-                            {/* Progress Visualizer */}
-                            <ProgressVisualizer
-                                title="Module 3 Learning Path"
-                                currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
-                                totalSteps={3}
-                                stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
-                                description="Follow this structured path to master AI governance and responsible AI use"
-                            />
-                            
-                            <ul>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Understand Ontario's Responsible Use of AI Directive and its scope</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Apply the six principles of responsible AI use in practice</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Implement comprehensive AI risk management frameworks</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Conduct effective Algorithmic Impact Assessments (AIA)</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Establish robust AI governance and accountability structures</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Ensure compliance with ethical AI deployment standards</span>
-                                </li>
-                                <li>
-                                    <span className="objective-icon">🎯</span>
-                                    <span className="objective-text">Create transparent and explainable AI systems</span>
-                                </li>
-                            </ul>
-                        </div>
+                        {/* Learning Objectives - Enhanced with Bloom's Taxonomy */}
+                        <LearningObjectivesDisplay 
+                            moduleDesign={module3Objectives}
+                            showCourseLevel={true}
+                            showLessonLevel={true}
+                            compact={false}
+                        />
+                        
+                        {/* Progress Visualizer */}
+                        <ProgressVisualizer
+                            title="Module 3 Learning Path"
+                            currentStep={currentSection === 'content' ? 1 : currentSection === 'quiz' ? 2 : 3}
+                            totalSteps={3}
+                            stepLabels={['Master Content', 'Practice Assessment', 'Access Resources']}
+                            description="Follow this structured path to master AI governance and responsible AI use"
+                        />
 
                         {currentSection === 'content' ? (
                             /* Content Section */
